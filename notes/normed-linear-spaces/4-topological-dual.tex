@@ -1,0 +1,101 @@
+% vim: spl=en_us
+\section{Topological dual}
+Recall from Linear Algebra that the \emph{algebraic dual} \(V'\) of a complex linear space \(V\) is the linear space of linear functionals \(\ell : V \to \mathbb{C}\).
+\begin{definition}{Topological dual}{topological_dual}
+    Let \((V, \norm{\noarg})\) be a normed linear space. The \emph{topological dual} \((V^\dag, \norm{\noarg})\) with respect to \((V, \norm{\noarg})\) is the Banach space of bounded linear functionals \((\bounded(V, \mathbb{C}), \norm{\noarg})\) with the operator norm.
+\end{definition}
+\begin{remark}
+    Clearly, \(V^\dag \subset V'\). Moreover, from \cref{thm:bounded_operators_Banach} we know \((V^\dag, \norm{\noarg})\) is a Banach space.
+\end{remark}
+
+We may use Hahn-Banach theorem to show the non-triviality of the topological dual of a non-trivial normed linear space, that is, it contains more than just the zero linear functional.
+\begin{lemma}{Existence of a bounded linear functional}{topological_dual_nontrivial}
+    Let \((V, \norm{\noarg})\) be a non-trivial normed linear space. For every \(u \in V\), there exists a bounded linear functional \(\ell_{u} : V \to \mathbb{C}\) such that \(\norm{\ell_u} = 1\) and \(\ell_u(u) = \norm{u}\).
+\end{lemma}
+\begin{proof}
+    Let \(u \in V \setminus \set{0}\) and consider the linear subspace \(U\) spanned by \(u\),
+    \begin{equation*}
+        U = \setc{v \in V}{\exists \alpha \in \mathbb{C}: v = \alpha u}.
+    \end{equation*}
+    Since \(u \neq 0\), for every \(v \in U\), there exists a unique \(\alpha_v \in \mathbb{C}\) such that \(v = \alpha_v u\).
+    Indeed, suppose \(v = \alpha_v u\) and \(v = \tilde{\alpha}_v u\), then \((\alpha_v - \tilde{\alpha}_v)u = 0\), hence \(\alpha_v = \tilde{\alpha}_v\). In other words, the linear functional
+    \begin{align*}
+        f : U &\to \mathbb{C}\\
+            v &\mapsto \alpha_v
+    \end{align*}
+    exists. In particular, we consider the linear functional \(g = \norm{u} f\) defined on \(U\), then
+    \begin{equation*}
+        \sup_{v \in U} \frac{\abs{g(v)}}{\norm{v}} = \sup_{\alpha \in \mathbb{C}\setminus\set{0}} \frac{\abs*{\norm{u} f(\alpha u)}}{\norm{\alpha u}} = \sup_{\alpha \in \mathbb{C}\setminus\set{0}} \frac{\abs*{\alpha\norm{u}}}{\abs{\alpha}\cdot \norm{u}} = 1.
+    \end{equation*}
+    The \nameref{thm:Hahn_Banach_normed} ensures the existence of \(\ell_u \in \bounded(V, \mathbb{C})\) that extends \(g\) with \(\norm{\ell_v} = 1\). Moreover, \(\ell_u(u) = g(u) = \norm{u}\).
+
+    For \(\ell_0\), we may take any bounded linear functional constructed as above and set \(\ell_0 = \ell_u\), which satisfies \(\ell_0(0) = 0\) by linearity.
+\end{proof}
+\begin{corollary}
+    If \(V\) is a non-trivial normed linear space, then its topological dual \(V^\dag\) is non-trivial.
+\end{corollary}
+\begin{corollary}
+    Let \((V, \norm{\noarg})\) be a normed linear space. Then
+    \begin{equation*}
+        \bigcap_{\ell \in V^\dag} \ker \ell = \set{0},
+    \end{equation*}
+    that is, if \(v \in V\) is such that for all \(\ell \in V^\dag\) we have \(\ell(v) = 0\), then \(v = 0\).
+\end{corollary}
+\begin{proof}
+    Let \(v \in \bigcap_{\ell \in V^\dag}\ker\ell\). In particular, \(v \in \ker\ell_v\), where \(\ell_v \in \bounded(V, \mathbb{C})\) is the map guaranteed to exist by \cref{lem:topological_dual_nontrivial}. Then \(\ell_v(v) = \norm{v} = 0\), that is, \(v = 0\).
+\end{proof}
+
+In a finite dimensional linear space \(V\), we know there is a linear isomorphism between \(V\) and its \emph{algebraic bidual} \((V')'\). Similarly, we may construct an injective linear map from \(V\) to its \emph{topological bidual} \((V^\dag)^\dag\).
+\begin{proposition}{Natural linear map to topological bidual}{topological_bidual}
+    Let \((V, \norm{\noarg})\) be a complex normed linear space. The evaluation map \(\eval : V \to (V^\dag)^\dag\) defined by \(v\mapsto \eval_v\), where
+    \begin{align*}
+        \eval_v : V^\dag &\to \mathbb{C}\\
+                          \ell &\mapsto \ell v,
+    \end{align*}
+    is a natural injective linear map. Moreover, for every \(v \in V\), we have \(\norm{\eval_v} = \norm{v}\).
+\end{proposition}
+\begin{proof}
+    Let \(v, u \in V\) and \(z \in \mathbb{C}\), then for all \(\ell \in V^\dag\),
+    \begin{equation*}
+        \eval_{v + zu}\ell = \ell(v + zu) = \ell v + z \ell u = \eval_v \ell + z \eval_{u} \ell = (\eval_v + z \eval_u) \ell,
+    \end{equation*}
+    hence \(\eval(v + zu) = \eval(v) + z\eval(u)\), as desired.
+
+    For all \(v \in V\) and \(\ell \in V^\dag \setminus\set{0}\) we have
+    \begin{equation*}
+        \abs{\eval_v\ell} = \abs{\ell v} \leq \norm{\ell} \norm{v}.
+    \end{equation*}
+    For any given \(v\), we have thus \(\norm{v}\) as an upper bound to the set \(\setc*{\frac{\abs{\eval_v\ell}}{\norm{\ell}}}{\ell \in V^\dag\setminus\set{0}}\), hence \(\eval_v\) is bounded. That is, \(\eval_v \in (V^\dag)^\dag\). Furthermore, consider the family of maps \(\family{\ell_v}{v \in V} \subset V^\dag\) guaranteed to exist by \cref{lem:topological_dual_nontrivial}. Then for every \(v \in V\), we have
+    \begin{equation*}
+        \norm{\eval_v} = \sup_{\ell \in V^\dag} \frac{\abs*{\eval_v\ell}}{\norm{\ell}} \geq \frac{\abs*{\ell_vv}}{\norm{\ell_v}} = \norm{v},
+    \end{equation*}
+    hence \(\norm{\eval_v} = \norm{v}\).
+
+    Suppose \(u \in \ker{\eval} \subset V\). Then, for all \(\ell \in V^\dag\), we have \(\ell u = 0\). That is, the kernel of \(\eval\) is a subset of the intersection of all kernels of bounded linear functionals in \(V\), hence \(u = 0\).
+\end{proof}
+
+
+
+As opposed to the case of the algebraic dual of infinite linear spaces, it may be so that a Banach space \(W\) is isomorphic to its topological bidual, that is \(\eval(W) = (W^\dag)^\dag\).
+\begin{definition}{Reflexive spaces}{reflexive_spaces}
+    A \emph{reflexive space} is a Banach space \(W\) with the property \(\eval(W) = (W^\dag)^\dag\), and we say \(W\) is \emph{reflexive}.
+\end{definition}
+\begin{remark}
+    We will see later that every Hilbert space is reflexive.
+\end{remark}
+
+With the topological dual we may define another notion of convergence.
+\begin{definition}{Weak convergence}{weak_convergence}
+    A sequence \(\family{f_n}{n\in \mathbb{N}} \subset V\) is said to \emph{weakly converge} to \(f \in V\) if for all \(\ell \in V^\dagger\) we have a sequence \(\family{\ell f_n}{n\in \mathbb{N}} \subset \mathbb{C}\) that converges to \(\ell(f)\), and we denote \(\displaystyle\wlim_{n\to\infty} f_n = f\) or \(f_n \wto f\). Moreover, when there is a need to distinguish them, the usual notion of convergence will be called \emph{strong convergence}, and we may denote it by \(\displaystyle\slim_{n\to\infty}f_n = f\) whenever the sequence \emph{strongly converges} to \(f\).
+\end{definition}
+
+\begin{proposition}{Weak convergence of a strongly convergent sequence}{weak_strong}
+    Let \((V, \norm{\noarg})\) be a normed linear space. If \(\family{f_n}{n \in \mathbb{N}}\subset V\) strongly converges to \(f\), then \(f_n \wto f\).
+\end{proposition}
+\begin{proof}
+    If we have \(f_n \to f\), then for all \(\ell \in \bounded(V, \mathbb{C})\), we have
+    \begin{equation*}
+        \lim_{n\to \infty} \ell f_n = \ell\left(\lim_{n\to \infty} f_n\right) = \ell f,
+    \end{equation*}
+    by continuity. Hence \(f_n \wto f\).
+\end{proof}
