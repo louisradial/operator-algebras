@@ -1,0 +1,142 @@
+% vim: spl=en_us
+\chapter{Normed linear spaces}
+A particular case of a metric space is a \emph{normed linear space}. In fact, we will show that there is a certain equivalence of a metric on a linear space with normed linear spaces. We begin by defining a normed linear space.
+\begin{definition}{Normed linear space}{norm}
+    Let \((V, +, \cdot)\) be a linear space over a field \(\mathbb{K}\) (either \(\mathbb{R}\) or \(\mathbb{C}\)). A \emph{norm} is a map \(\norm{\noarg} : V \to \mathbb{R}\) satisfying
+    \begin{enumerate}[label=(\alph*)]
+        \item absolute homogeneity: \(\norm{\lambda f} = \abs{\lambda}\cdot \norm{f}\) for all \(\lambda \in \mathbb{K}\) and for all \(f \in V\);
+        \item subadditivity: \(\norm{f + g} \leq \norm{f} + \norm{g}\), for all \(f, g \in V\);
+        \item nonnegativity: \(\norm{f} \geq 0\) for all \(f \in V\); and
+        \item positive-definiteness: \(\norm{f} = 0 \iff f = 0\).
+    \end{enumerate}
+    A \emph{normed linear space} \((V,+, \cdot, \norm{\noarg})\) is a linear space equipped with a distinguished norm \(\norm{\noarg}\).
+\end{definition}
+\begin{remark}
+    From now on we will suppress the linear space operations in notation, denoting \((V, \norm{\noarg})\) as a normed linear space.
+\end{remark}
+
+We now give a possible construction that turns a normed linear space into a metric space. This construction is the usual way to define such a metric space, albeit non-unique.
+\begin{definition}{Metric induced by a norm}{metric_norm}
+    Let \((V, \norm{\noarg})\) be a normed linear space. The map
+    \begin{align*}
+        d : V \times V &\to [0, \infty)\\
+        (x,y) &\mapsto \norm{x - y}
+    \end{align*}
+    is called a metric induced by the norm \(\norm{\noarg}\).
+\end{definition}
+Let us verify this map is indeed a metric. From positive-definiteness and nonnegativity of the norm, it follows that \(d(x, y) \geq 0\) for all \(x,y \in V\) and \(d(x,y) = 0\) if and only if \(x = y\). We show the triangle inequality by using the subadditivity property:
+\begin{equation*}
+    d(x,y) = \norm{x - y} = \norm{x - z + z - y} \leq \norm{x - z} + \norm{z - y} = d(x,z) + d(z, y),
+\end{equation*}
+for all \(x,y,z \in V\). Thus, every normed linear space is a metric space, and we may express the convergence of sequences, the Cauchy property, and completeness in terms of a norm, by way of the construction in \cref{def:metric_norm}. Precisely, we say the normed linear space \((V, \norm{\noarg})\) is complete if the metric space \((V,d)\) is complete, where \(d\) is the metric induced by the norm \(\norm{\noarg}\).
+
+The \cref{prop:metric_norm} shows a property of such a metric, but also determines conditions under which a metric space \((V, d)\), where \(V\) is a linear space, is a normed linear space.
+\begin{proposition}{Metric induced by a norm}{metric_norm}
+    Let \(V\) be a linear space over a field \(\mathbb{K}\). A metric \(d : V \times V \to [0, \infty)\) is induced by a norm in \(V\) if and only if \(d\) is
+    \begin{enumerate}[label=(\alph*)]
+        \item translation invariant, that is, \(d(u + t, v + t) = d(u, v)\) for all \(u,v,t \in V\); and
+        \item homogeneous, that is, \(d(\alpha u , \alpha v) = \abs{\alpha}d(u, v)\) for all \(u,v \in V\) and \(\alpha \in \mathbb{K}\).
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Suppose \(d\) is a metric induced by the norm \(\norm{\noarg}\). For all \(u,v,t\in V\) and \(\alpha \in \mathbb{K}\), we have
+    \begin{equation*}
+        d(u + t, v + t) = \norm{(u+t) - (v + t)} = \norm{u - v} = d(u,v)
+    \end{equation*}
+    and
+    \begin{equation*}
+        d(\alpha u, \alpha v) = \norm{\alpha (u - v)} = \abs{\alpha} \norm{u-v} = \abs{\alpha} d(u,v).
+    \end{equation*}
+    Thus, if \(d\) is induced by a norm, then \(d\) satisfies (a) e (b).
+
+    Now suppose \(d\) has properties (a) e (b). We now show the map
+    \begin{align*}
+        \norm{\noarg} : V &\to [0, \infty)\\
+                                 v &\mapsto d(v, 0)
+    \end{align*}
+    is a norm in \(V\). Note that
+    \begin{align*}
+        v = 0 &\iff d(v, 0) = 0\\
+              &\iff \norm{v} = 0,
+    \end{align*}
+    and
+    \begin{equation*}
+        \norm{\lambda u} = d(\lambda u, 0) = \abs{\lambda} d(u,0) = \abs{\lambda}\norm{u}
+    \end{equation*}
+    for all \(\lambda \in \mathbb{K}\) and \(u \in V\). From the homogeneity property it follows that
+    \begin{equation*}
+        \norm{x + y} = d(x + y, 0) = d(x, -y),
+    \end{equation*}
+    therefore by translation invariance e by the triangle inequality for \(d\), we have
+    \begin{equation*}
+        \norm{x+y} \leq d(x, 0) + d(0, y)
+    \end{equation*}
+    or, equivalently, \(\norm{x+y} \leq \norm{x} + \norm{y}\) for all \(x,y\in V\). Thus, \(\norm{\noarg}\) is a norm in \(V\). Furthermore,
+    \begin{equation*}
+        d(u, v) = d(u-v, 0) = \norm{u - v},
+    \end{equation*}
+    hence \(d\) is a metric induced by the norm \(\norm{\noarg}\). That is, if \(d\) has the properties (a) and (b), then \(d\) is a metric induced by a norm.
+\end{proof}
+
+We have thus finished defining every notion needed to define a Banach space.
+\begin{definition}{Banach space}{banach_space}
+    A \emph{Banach space} is a normed linear space complete with respect to its norm.
+\end{definition}
+Following \cref{exam:continuous_complex_ab,exam:sup_norm_complete}, we use the construction used in the proof of \cref{prop:metric_norm} to show the linear space of continuous complex-valued functions is a Banach space with respect to the sup norm.
+\begin{example}{Supremum norm of continuous complex-valued functions}{sup_norm}
+    The \emph{supremum norm}, or \emph{sup norm}, is the map defined by
+    \begin{align*}
+        \norm{\noarg}_{\infty} : \mathcal{C}([a,b];\mathbb{C}) &\to \mathbb{R}\\
+                                                             f &\mapsto \norm{f}_\infty = \sup_{x \in [a,b]}\abs*{f(x)}.
+    \end{align*}
+    Then, \(\left(\mathcal{C}([a,b];\mathbb{C}), \norm{\noarg}_\infty\right)\) is a Banach space.
+\end{example}
+\begin{proof}
+    We must show the sup metric is translation invariant and homogeneous. First, let \(f, g, h \in \mathcal{C}([a,b];\mathbb{C})\), then
+    \begin{align*}
+        d_\infty(f + h, g + h) &= \sup_{x \in [a,b]}\abs*{f(x) + h(x) - g(x) - h(x)} \\&= \sup_{x \in [a,b]} \abs*{f(x) - g(x)} \\&= d_\infty(f, g),
+    \end{align*}
+    that is, \(d_\infty\) is translation invariant. Let \(z \in \mathbb{C}\), then
+    \begin{equation*}
+        d_\infty(zf, zg) = \sup_{x\in[a,b]}\abs*{zf(x) - zg(x)} = \abs{z} \sup_{x\in[a,b]}\abs*{f(x) - g(x)} =  \abs{z} d_\infty(f,g),
+    \end{equation*}
+    then \(d_\infty\) is homogeneous. By \cref{prop:metric_norm}, we have shown the sup metric is induced by a norm given by \(v \mapsto d_\infty(v, 0)\), which is precisely the sup norm. Hence, \((\mathcal{C}([a,b];\mathbb{C})\) is a normed linear space. By the result from \cref{exam:sup_norm_complete}, this linear space is complete with respect to the metric induced by this norm, and we conclude it is a Banach space.
+\end{proof}
+
+Finally, we show that the usual operations of a complex normed linear space are continuous by use of \cref{thm:convergence_continuity}.
+\begin{proposition}{Addition, scalar multiplication, and the norm are continuous}{norm_continuous}
+    Let \((V, \norm{\noarg})\) be a normed linear space over the field \(\mathbb{C}\). For any sequences \(\family{x_n}{n\in \mathbb{N}} \subset V\), \(\family{y_n}{n \in \mathbb{N}} \subset V\) and \(\family{z_n}{n \in \mathbb{N}} \subset \mathbb{C}\) that converge to \(x, y \in V\) with respect to \((V, \norm{\noarg})\) and to \(z \in \mathbb{C}\) with respect to \((\mathbb{C}, \abs{\noarg})\), we have
+    \begin{equation*}
+        \lim_{n\to \infty} (x_n + y_n) = x + y, \lim_{n \to \infty} z_n x_n = zx,\quad\text{and} \lim_{n \to \infty} \norm{x_n} = \norm{x},
+    \end{equation*}
+    that is, addition, scalar multiplication and the norm are continuous maps.
+\end{proposition}
+\begin{proof}
+    By the triangle inequality, we have
+    \begin{equation*}
+        \norm{(x_n + y_n) - (x - y)} \leq \norm{x_n - x} + \norm{y_n - y}.
+    \end{equation*}
+    By convergence of these two sequences, it follows that \(x_n + y_n \to x + y\). Hence, addition is continuous with respect to \((V \times V, d_{V\times V})\) and \((V, \norm{\noarg})\), where \(d_{\mathbb{V}\times V}\) is the product metric.
+
+    Since \family{z_n}{n\in \mathbb{N}} is a convergent sequence, we have \(\abs{z_n} \leq M\) for all \(n \in \mathbb{N}\). Recalling \cref{prop:Cauchy_bounded}, we let \(M = \sup\setc{\abs{z_n - z_m}}{n,m \in \mathbb{N}} + \abs{z_0}\), then by the triangle inequality, for all \(n \in \mathbb{N}\)
+    \begin{equation*}
+        \abs{z_n} \leq \abs{z_n - z_0} + \abs{z_0} \leq \sup_{i,j \in \mathbb{N}}{\abs{z_i - z_j}} + \abs{z_0} = M.
+    \end{equation*}
+    From the triangle inequality, we have
+    \begin{align*}
+        \norm{z_n x_n - zx} &\leq \norm{z_n x_n - z_n x} + \norm{z_n x - zx}\\
+                            &\leq \abs{z_n}\cdot \norm{x_n - x} + \abs{z_n - z}\cdot \norm{x}\\
+                            &\leq M \norm{x_n - x} + \abs{z_n - z}\cdot\norm{x}
+    \end{align*}
+    for all \(n \in \mathbb{N}\). From the convergence \(x_n \to x\) and \(z_n \to z\), it follows that \(z_n x_n \to zx\). Hence, scalar multiplication is continuous with respect to \((\mathbb{C} \times V, d_{\mathbb{C}\times V})\) and \((V, \norm{\noarg})\), where \(d_{\mathbb{C}\times V}\) is the product metric constructed from \((\mathbb{C}, \abs{\noarg})\) and \((V, \norm{\noarg})\).
+
+    By the triangle inequality, it follows that
+    \begin{equation*}
+        \norm{x_n} \leq \norm{x_n - x} + \norm{x}\quad\text{and}\quad \norm{x} \leq \norm{x - x_n} + \norm{x_n},
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). That is,
+    \begin{equation*}
+        \abs*{\norm*{x_n} - \norm*{x}} \leq \norm{x_n - x}
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). By the convergence \(x_n \to x\), it follows that \(\norm{x_n} \to \norm{x}\), hence the norm is continuous with respect to \((V, \norm{\noarg})\) and \((\mathbb{R}, \abs{\noarg})\).
+\end{proof}
