@@ -1,0 +1,120 @@
+% vim: spl=en_us
+\section{Complete orthonormal basis}
+We now define a different basis and prove its existence on any Hilbert space.
+\begin{definition}{Complete orthonormal basis}{complete_basis}
+    A \emph{complete orthonormal basis} \(F\) is an orthonormal subset of a Hilbert space \(\hilbert\) such that the only vector of \(\hilbert\) that is orthogonal to every vector of \(F\) is the zero vector.
+\end{definition}
+\begin{remark}
+    Recall \cref{exam:dense_l2}. The (countable) Hamel basis \(\family{e_n}{n \in \mathbb{N}} \subset \mathfrak{d}\) there defined is in fact a complete orthonormal basis for the space of square-summable sequences \(\ell_2\).
+\end{remark}
+
+The existence of a complete orthonormal basis is shown with Zorn's lemma.
+\begin{theorem}{Existence of a complete orthonormal basis}{complete_orthonormal_basis_exists}
+    Every non-trivial Hilbert space has at least one complete orthonormal basis.
+\end{theorem}
+\begin{proof}
+    Let \((\mathfrak{O}, \subset)\) be the collection of orthonormal sets in some non-trivial Hilbert space \(\hilbert\) partially ordered by inclusion. Notice \(\mathfrak{O}\) is not empty since every finite-dimensional linear subspace of \(\hilbert\) admits an orthonormal Hamel basis, in particular we may construct orthonormal sets from any collection of vectors in \(\hilbert\).
+
+    Let \(\mathcal{E} \subset \mathfrak{O}\) be a non-empty linearly ordered subset of \(\mathfrak{O}\). We claim the union
+    \begin{equation*}
+        F = \bigcup \mathcal{E} = \setc{v \in \hilbert}{\exists A \in \mathcal{E} : v \in A}
+    \end{equation*}
+    is an upper bound for \(\mathcal{E}\) in \(\mathfrak{O}\). Let \(u \in F\), then there exists an element \(A \in \mathcal{E}\) such that \(u \in A\). Since \(A\) is orthonormal, \(\norm{u} = 1\) and \(\inner{a}{u} = 0\) for all \(a \in A \setminus{u}\). Let \(v \in F\) with \(v \neq u\), then, analogously, it belongs to some element \(B \in \mathcal{E}\), with \(\norm{v} = 1\) and \(\inner{b}{v} = 0\) for all \(b \in B\). Since \(\mathcal{E}\) is a linearly ordered subset, we either have \(B \subset A\) or \(A \subset B\). For the former we have \(v \in A\) and for the latter, \(u \in B\); then either case yields the same conclusion, \(\inner{u}{v} = 0\). That is, for all \(u \in F\), \(\norm{u} = 1\) and \(v \in F \setminus{u} \implies \inner{v}{u} = 0\), hence \(F\) is an orthonormal set. We have thus shown every linearly ordered subset of \(\mathfrak{O}\) has an upper bound in \(\mathfrak{O}\).
+
+    By \nameref{thm:zorn}, \(\mathfrak{O}\) has at least one maximal element, \(\mathcal{B}\) say. That is, \(\mathcal{B}\) is an orthonormal set in \(\hilbert\) that is not properly contained in any other orthonormal set. Suppose, by contradiction, \(\mathcal{B}\) is not a complete orthonormal basis, then there exists \(u \in \hilbert\setminus\set{0}\) that is orthogonal to every vector in \(\mathcal{B}\). Notice \(u \notin \mathcal{B}\), otherwise \(\inner{u}{u} = 0\), contrary to the hypothesis \(u \neq 0\). In this case, \(\mathcal{B} \cup \set{\frac{1}{\norm{u}}u} \in \mathfrak{O}\) is an orthonormal set that contains \(\mathcal{B}\). Then, \(\mathcal{B}\) is not a maximal element of \((\mathfrak{O}, \subset)\). This contradiction shows \(\mathcal{B}\) is a complete orthonormal basis.
+\end{proof}
+
+To motivate the \enquote{basis} name in \cref{def:complete_basis}, we will show a complete orthonormal basis is a \emph{topological basis} on a Hilbert space.
+\begin{definition}{Topological basis}{topological_basis}
+    Let \(V\) be a topological vector space. A \emph{topological basis} is a linearly independent subset \(F\subset V\) such that \(\cl(\lspan F) = V\).
+\end{definition}
+In contrast to a Hamel basis (or algebraic basis), elements in the topological vector space can be expressed as a limit of a sequence of linear combinations of elements of a topological basis.
+
+Before showing a complete orthonormal basis on a Hilbert space is indeed a topological basis, we show the existence of a useful countable subset of an orthonormal set.
+\begin{lemma}{Countable subset of an orthonormal set}{countable_orthonormal}
+    Let \(F\) be a non-empty orthonormal subset of a Hilbert space \(\hilbert\). For all \(x \in \hilbert\), the subset \(F^x = \setc{v \in F}{\inner{x}{v} \neq 0}\) is countable.
+\end{lemma}
+\begin{proof}
+    If \(x = 0\), the subset \(F^x\) is empty, therefore the statement holds vacuously. In what follows, we assume \(x \neq 0\).
+
+    Notice \(v \in F^x\) if and only if \(\abs*{\inner{x}{v}}^2 \neq 0\). Moreover, by \cref{lem:Bessel_inequality}, \(0 < \abs*{\inner{x}{v}}^2 \leq \norm{x}^2\) if and only if \(v \in F^x\), since \(\set{v}\) is a finite orthonormal set. Then, \(F^x = \setc{v \in F}{0 < \abs*{\inner{x}{v}}^2 \leq \norm{x}^2}\).
+
+    For all \(n \in \mathbb{N}\), we claim the subset
+    \begin{equation*}
+        F^x_n = \setc*{v \in F^x}{\abs*{\inner{x}{v}}^2 \in \left(\frac{\norm{x}^2}{n+1}, \frac{\norm{x}^2}{n}\right]}
+    \end{equation*}
+    has at most \(n\) elements. Suppose by contradiction it has \(m > n\) elements, then
+    \begin{equation*}
+        \forall v \in F^x_n, \abs*{\inner{v}{x}}^2 > \frac{\norm{x}^2}{n+1} \implies \sum_{v \in F^x_n} \abs*{\inner{v}{x}}^2 > \frac{m}{n+1} \norm{x}^2 \geq \norm{x}^2.
+    \end{equation*}
+    This contradicts the Bessel inequality, proving our claim.
+
+    Let \(n,m \in \mathbb{N}\), and consider the intersection \(F^x_n \cap F^x_m\). Suppose this intersection is not the empty set, then let \(v \in F^x_n \cap F^x_m\). Since \(v \in F^x\), there exists \(\lambda \geq 1\) such that \(\abs*{\inner{x}{v}}^2 = \frac{\norm{x}^2}{\lambda}\). Since \(v \in F^x_n\) and \(v \in F^x_m\), it follows that \(n \leq \lambda < n+1\) and \(m \leq \lambda < m+1\). Then \(\lambda \in [n, n+1) \cap [m,m+1)\), from which we conclude \(n = m\), as there are no natural numbers between a natural number and its successor and this intersection would be empty otherwise.
+
+    The contrapositive yields \(n \neq m \implies F^x_n \cap F^x_m = \emptyset,\) then \(F^x\) is the disjoint union
+    \begin{equation*}
+        F^x = \bigcupdot_{n=1}^\infty F^x_n.
+    \end{equation*}
+    Indeed, let \(v \in F^x\), then there exists \(\lambda \geq 1\) such that \(\abs*{\inner{x}{v}}^2 = \frac{\norm{x}^2}{\lambda}\). Since the natural numbers are not bounded above, there exists \(n \in \mathbb{N}\) such that \(n \leq \lambda < n+1\), that is, \(v \in F^x_n \subset \bigcupdot_{n=1}^\infty F^x_n\). This yields \(F^x \subset \bigcupdot_{n=1}^\infty F^x_n\), which proves our claim, as \(F^x_n \subset F^x\) by construction. We have thus shown \(F^x\) is countable, as it is a countable disjoint union of finite sets.
+\end{proof}
+
+We finally show the linear span of a complete orthonormal basis is dense in the Hilbert space, concluding it is a topological basis.
+\begin{theorem}{Complete orthonormal basis is a topological basis}{closure_basis}
+    Let \(F\) be a complete orthonormal basis on a Hilbert space \(\hilbert\). For each \(x \in \hilbert\), there exists a sequence \(\family{e_n}{n\in \mathbb{N}} \subset F\) such that \(x \in \cl(\lspan \family{e_n}{n\in \mathbb{N}})\), with
+    \begin{equation*}
+        x = \sum_{n=1}^\infty \inner{e_n}{x} e_n\quad\text{and}\quad
+        \norm{x}^2 = \sum_{n=1}^\infty \abs*{\inner{e_n}{x}}^2.
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    Let \(x \in \hilbert\), then by \cref{lem:countable_orthonormal} the subset
+    \begin{equation*}
+        F^x = \setc{v \in F}{\inner{x}{v} \neq 0}
+    \end{equation*}
+    is a countable subset of \(F\). Let \(\family{e_n}{n\in \mathbb{N}} \subset F^x\) be an enumeration of \(F^x\), then we consider the sequence \(\family{\tilde{x}_n}{n\in \mathbb{N}} \subset \lspan F^x\), where
+    \begin{equation*}
+        \tilde{x}_n = \sum_{i=1}^n \inner{e_i}{x}e_i.
+    \end{equation*}
+    By \nameref{lem:Bessel_inequality}, we have \(\sum_{i=1}^\infty \abs*{\inner{e_i}{x}}^2 \leq \norm{x}^2\), then by \cref{prop:convergent_series}, we conclude \(\family{\tilde{x}_n}{n\in \mathbb{N}}\) converges to some \(\tilde{x} \in \hilbert\).
+
+    Let \(v \in F\) and consider \(\tilde{x} - x \in \hilbert\). Continuity of the inner product yields
+    \begin{equation*}
+        \inner{v}{x - \tilde{x}} = \inner{v}{x} - \lim_{n\to\infty}\inner{v}{\tilde{x}_n} = \inner{v}{x}{ - \lim_{n\to\infty}} \sum_{i=1}^n \inner{e_i}{x}\inner{v}{e_i}.
+    \end{equation*}
+    Clearly, we have the disjoint union \(F = (F \setminus F^x) \cup F^x\), that is, either \(v \in F \setminus F^x\) or \(v \in F^x\). In the former, \(\inner{x}{v} = 0\) by construction, and \(\inner{v}{e_i} = 0\) for all \(i \in \mathbb{N}\), since \(F\) is orthonormal, hence \(\inner{v}{x - \tilde{x}} = 0\). In the latter, \(v = e_j\) for some \(j \in \mathbb{N}\), which yields \(\inner{v}{e_i} = \delta_{ji}\), then
+    \begin{equation*}
+        \inner{v}{x - \tilde{x}} = \inner{e_j}{x} - \lim_{n\to\infty} \sum_{i=1}^n \inner{e_i}{x} \delta_{ji} = \inner{e_j}{x} - \inner{e_j}{x} = 0.
+    \end{equation*}
+    We have shown \(\inner{v}{x - \tilde{x}} = 0\) for all \(v \in F\). That is, \(x - \tilde{x}\) is a vector orthogonal to every vector of \(F\), hence \(x = \tilde{x}\) since \(F\) is a complete orthonormal basis.
+
+    By \cref{prop:best_approximation_finite}, for every \(n \in \mathbb{N}\), \(\tilde{x}_n\) is the best approximation of \(x\) in the finite-dimensional linear subspace generated by the finite orthonormal set \ffamily{e_i}{i=1}{n} and satisfies
+    \begin{equation*}
+        \norm{x - \tilde{x}_n}^2 = \norm{x}^2 - \sum_{i=1}^n \abs*{\inner{e_i}{x}}^2.
+    \end{equation*}
+    Let \(\varepsilon > 0\), then there exists \(N \in \mathbb{N}\) such that \(\norm{x - \tilde{x}_n} < \sqrt{\varepsilon}\) for all \(n \geq N\). Consequently,
+    \begin{equation*}
+        n \geq N \implies \abs*{\norm{x}^2 - \sum_{i=1}^n \abs*{\inner{e_i}{x}}^2} < \varepsilon,
+    \end{equation*}
+    that is,
+    \begin{equation*}
+        \sum_{i=1}^\infty \abs*{\inner{e_i}{x}}^2 = \norm{x}^2
+    \end{equation*}
+    as desired.
+\end{proof}
+
+Furthermore, we show the equivalence of orthonormal topological basis and complete orthonormal basis.
+    \begin{theorem}{A orthonormal topological basis is a complete orthonormal basis}{complete_topological_basis}
+    Let \(F\) be an orthonormal subset of a Hilbert space \(\hilbert\). The following statements are equivalent
+    \begin{enumerate}[label=(\alph*)]
+        \item \(F\) is a complete orthonormal basis for \(\hilbert\);
+        \item \(F\) is a topological basis for \(\hilbert\); and
+        \item For all \(x \in \hilbert\), the set \(F^x = \setc{v \in F}{\inner{x}{v} \neq 0}\) is countable and \(\norm{x}^2 = \sum_{v \in F^x} \abs*{\inner{v}{x}}^2\).
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Along with \cref{lem:linear_independent_orthogonal,lem:countable_orthonormal}, \cref{thm:closure_basis} shows \(\text{(a)} \implies \text{(b)}\) and \(\text{(a)}\implies \text{(c)}\). It remains to show \(\text{(b)}\implies \text{(a)}\) and \(\text{(c)}\implies \text{(a)}\).
+
+    Suppose (b) holds. Suppose, by contradiction, there exists \(x \in \hilbert\setminus \set{0}\) that is orthogonal to every vector in \(F\). In particular, any vector in \(F\) is orthogonal to \(x,\) that is, \(F \subset \set{x}^\perp\). Since the orthogonal complement is a closed linear subspace, we have \(F \subset \lspan F \subset \subset \cl(\lspan F) \subset \set{x}^\perp\) since the linear span of \(F\) is the smallest linear subspace that contains \(F\) and since the closure of \(\lspan F\) is the smallest subset that contains \(\lspan F\). By hypothesis, \(F\) is a topological basis, thus \(\hilbert \subset \set{x}^\perp\), that is, \(x \neq 0\) is orthogonal to every vector in the Hilbert space. This contradiction shows no such \(x\) exists, therefore \(F\) is a complete orthonormal basis, hence \(\text{(b)}\implies \text{(a)}\).
+
+    Suppose (c) holds. Suppose, by contradiction, there exists \(x \in \hilbert\setminus\set{0}\) that is orthogonal to every vector in \(F\). By construction, \(F^x = \emptyset\) and, by (c), \(\norm{x}^2 = 0\). This contradiction, shows \(F\) is a complete orthonormal basis, hence \(\text{(c)}\implies \text{(a)}\).
+\end{proof}
