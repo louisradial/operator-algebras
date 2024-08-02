@@ -1,0 +1,242 @@
+% vim: spl=en_us
+\section{Pre-Hilbert spaces and the parallelogram identity}
+It is not the case that every normed linear space is an inner product space. It was in this sense that we meant that Banach spaces are a generalization of Hilbert spaces. We will now show the equivalent of inner product spaces and a subset of normed linear spaces.
+\begin{definition}{Pre-Hilbert space}{pre_hilbert}
+    A \emph{pre-Hilbert space} is a normed linear space \((V, \norm{\noarg})\) where the norm satisfies the \emph{parallelogram identity}, that is,
+    \begin{equation*}
+        \norm{x + y}^2 + \norm{x - y}^2 = 2\left(\norm{x}^2 + \norm{y}^2\right)
+    \end{equation*}
+    for all \(x, y \in V\).
+\end{definition}
+
+Let us verify every inner product space is a pre-Hilbert space.
+\begin{proposition}{Inner product space is a pre-Hilbert space}{pre_hilbert}
+    Let \((V, \inner{\noarg}{\noarg})\) be a inner product space and let \(\norm{\noarg}\) be the norm induced by the inner product on \(V\). Then, \((V, \norm{\noarg})\) is a pre-Hilbert space and the inner product satisfies the \emph{polarization identity},
+    \begin{equation*}
+        \inner{x}{y} = \frac14\left(\norm{x + y}^2 + i\norm{x - iy}^2 - \norm{x - y}^2 - i\norm{x + iy}^2\right)
+    \end{equation*}
+    for all \(x, y \in V\).
+\end{proposition}
+\begin{proof}
+    Notice
+    \begin{align*}
+        \norm{x + y}^2 + \norm{x - y}^2 &= \inner{x+y}{x+y} + \inner{x - y}{x - y}\\
+                                        &= \left(\norm{x}^2 + 2\Re(\inner{x}{y}) + \norm{y}^2\right) + \left(\norm{x}^2 + 2\Re(\inner{x}{y}) - \norm{y}^2\right) \\
+                                        &= 2\left(\norm{x}^2 + \norm{y}^2\right)
+    \end{align*}
+    holds for all \(x,y \in V\). Hence, \((V, \norm{\noarg})\) is a pre-Hilbert space.
+
+    Recall that \(\norm{x + \alpha y}^2 = \norm{x}^2 + 2\Re(\alpha \inner{x}{y}) + \abs{\alpha}^2 \norm{y}^2\) for all \(\alpha \in \mathbb{C}\) and all \(x,y \in V\). Then
+    \begin{equation*}
+        \norm{x + \alpha y}^2 - \norm{x - \alpha y}^2 = 4 \Re(\alpha \inner{x}{y}).
+    \end{equation*}
+    Using \(\alpha = 1\) and \(\alpha = -i\) yields
+    \begin{equation*}
+        4\Re(\inner{x}{y}) = \norm{x + y}^2 - \norm{x - y}^2\quad\text{and}\quad 4\Re(-i\inner{x}{y}) = \norm{x - iy}^2 - \norm{x + iy}^2.
+    \end{equation*}
+    Since for all \(z \in \mathbb{C}\) we have \(\Im(z) = \Re(-iz)\), we have
+    \begin{equation*}
+        \inner{x}{y} = \Re(\inner{x}{y}) + i \Re(-i\inner{x}{y}) = \frac14\left(\norm{x + y}^2 + i \norm{x - iy}^2 - \norm{x - y}^2 - i \norm{x + iy}^2\right),
+    \end{equation*}
+    as claimed.
+\end{proof}
+
+We now show that the polarization identity defines an inner product in a pre-Hilbert space, and that it is the inner product that induces the norm.
+\begin{theorem}{Fréchet-von Neumann-Jordan theorem}{parallelogram}
+    Let \((V, \norm{\noarg})\) be a pre-Hilbert space. The map given by the \emph{polarization identity}
+    \begin{align*}
+        \inner{\noarg}{\noarg} : V \times V &\to \mathbb{C}\\
+                                      (x,y) &\mapsto \frac14\left(\norm{x + y}^2 + i \norm{x - iy}^2 - \norm{x - y}^2 - i \norm{x + iy}^2\right)
+    \end{align*}
+    defines an inner product in \(V\). Moreover, the norm is induced by this inner product.
+\end{theorem}
+\begin{proof}
+    We first show conjugate symmetry and positive-definiteness. Notice that \(\norm*{e^{i\theta}x} = \norm{x}\) for all \(x \in V\) and \(\theta \in \mathbb{R}\). For all \(x, y \in V\) it follows that
+    \begin{align*}
+        \conj{\inner{x}{y}} &= \frac14\conj{\left(\norm{x + y}^2 + i \norm{x - iy}^2 - \norm{x - y}^2 - i \norm{x + iy}^2\right)}\\
+                            &= \frac14\left(\norm{x + y}^2 - i \norm{x - iy}^2 - \norm{x - y}^2 + i \norm{x + iy}^2\right)\\
+                            &= \frac14\left(\norm{y + x}^2 - i \norm{ix + y}^2 - \norm{-x + y}^2 + i \norm{-ix + y}^2\right)\\
+                            &= \inner{y}{x},
+    \end{align*}
+    hence \(\inner{\noarg}{\noarg}\) is conjugate symmetric. For all \(x \in V\) we have
+    \begin{align*}
+        \inner{x}{x} &= \frac14\left(\norm{x + x}^2 + i \norm{x - ix}^2 - \norm{x - x}^2 - i \norm{x + ix}^2\right)\\
+                     &= \frac14\left(\norm{2x}^2 + i \norm*{\sqrt{2}e^{-i\frac{\pi}{4}}x}^2 - i \norm*{\sqrt{2}e^{i\frac{\pi}{4}}x}^2\right)\\
+                     &= \frac14\left(4\norm{x}^2 + 2i \norm{x}^2 - 2i\norm{x}^2\right)\\
+                     &= \norm{x}^2.
+    \end{align*}
+    Thus, \(\inner{\noarg}{\noarg}\) is positive-definite. Moreover, when \(\inner{\noarg}{\noarg}\) is shown to be an inner product on \(V\), we have shown that \(\sqrt{\inner{x}{x}} = \norm{x}\) for all \(x \in V\), thus the inner product induces the norm.
+
+    We consider the family of maps
+    \begin{align*}
+        F_{\alpha} : V \times V &\to \mathbb{R}\\
+        (u,v) &\mapsto \frac{\norm*{u + \alpha v}^2 - \norm{u - \alpha v}^2}{4},
+    \end{align*}
+    with \(\alpha \in \mathbb{C}\), and notice that
+    \begin{equation*}
+        \inner{u}{v} = F_{1}(u,v) + iF_{-i}(u,v)\quad\text{and}\quad\inner{u}{\lambda v} = F_{\lambda}(u, v) + i F_{-i \lambda}(u, v),
+    \end{equation*}
+    for all \(u, v \in V\) and \(\lambda \in \mathbb{C}\). Let us show that \(F_{\alpha}\) is additive in the second argument,
+    for all \(\alpha \in \mathbb{C}\). First, notice that for all \(\alpha \in \mathbb{C}\) and all \(z,x,y \in V\), we have
+    \begin{align*}
+        \norm{z + \alpha x}^2 + \norm{z + \alpha y}^2 &= \norm*{z + \frac{\alpha x + \alpha y}{2} + \frac{\alpha x - \alpha y}{2}}^2 + \norm*{z + \frac{\alpha x + \alpha y}{2} - \frac{\alpha x - \alpha y}{2}}^2\\
+                                                      &= 2 \left(\norm*{z + \frac{\alpha x + \alpha y}{2}}^2 + \norm*{\frac{\alpha x - \alpha y}{2}}^2\right),
+    \end{align*}
+    by the parallelogram identity, then
+    \begin{align*}
+        F_{\alpha}(z,x) + F_{\alpha}(z,y) &= \frac14\left(\norm{z +\alpha x}^2 - \norm{z - \alpha x}^2 + \norm{z + \alpha y}^2 - \norm{z - \alpha y}^2\right)\\
+                                            &=  \frac12\left(\norm*{z + \frac{\alpha x + \alpha y}{2}}^2 + \norm*{\frac{\alpha x - \alpha y}{2}}^2\right) - \frac12 \left(\norm*{z - \frac{\alpha x + \alpha y}{2}}^2 + \norm*{\frac{\alpha y - \alpha x}{2}}^2\right)\\
+                                            &= \frac12 \left(\norm*{z + \alpha \frac{x+y}{2}}^2 - \norm*{z - \alpha \frac{x + y}{2}}^2\right)\\
+                                            &= 2 F_{\alpha}\left(z, \frac{x + y}{2}\right).
+    \end{align*}
+    Since \(F_{\alpha}(0, \noarg) = F_{\alpha}(\noarg, 0) = 0\), setting \(y = 0\) yields \(\frac12F_{\alpha}(u, v) = F_{\alpha}(u, \frac12 v)\) for all \(\alpha \in \mathbb{C}\) and \(u, v \in V\). By the previous result, we have
+    \begin{equation*}
+        F_{\alpha}(z,x) + F_{\alpha}(z,y) = F_{\alpha}(z,x + y),
+    \end{equation*}
+    for all \(x,y,z \in V\), that is, \(F_{\alpha}\) is additive in the second argument for all \(\alpha \in \mathbb{C}\). In particular, \(F_1\) and \(F_{-i}\) are additive in the second argument, hence \(\inner{\noarg}{\noarg}\) is additive in the second argument.
+
+    Let us show that \(F_{\alpha}\) is real homogeneous in the second argument, that is, \(F_{\alpha}(u,\lambda v) = \lambda F_{\alpha}(u,v)\) for all \(u,v \in V\) and \(\lambda \in \mathbb{R}\). First, by the definition of the map \(F_{\alpha}\), we have for all \(\alpha, \beta \in \mathbb{C}\) and all \(u, v \in V\) that
+    \begin{equation*}
+        F_{\alpha}(u, \beta v) = F_{\alpha \beta}(u, v),
+    \end{equation*}
+    then we want to show \(F_{\alpha \lambda}(u, v) = \lambda F_{\alpha}(u,v)\) for all \(\lambda \in \mathbb{R}\). By the definition, we know this holds for \(\lambda = 0\), and when showing additivity we've found it holds for \(\lambda = \frac12\). Hence, with an inductive argument, it must hold for all \(\lambda \in \mathbb{N}\) by additivity. From the definition it is easy to see that \(F_{\alpha}(u,v) + F_{-\alpha}(u,v) = 0\), then homogeneity holds for \(\lambda = \mathbb{Z}\):
+    \begin{equation*}
+        F_{\alpha p}(u, v) = p F_{\alpha}(u, v),
+    \end{equation*}
+    for all \(p \in \mathbb{Z}\). If we replace \(p \mapsto q\) and \(v \mapsto \frac1q v\), with \(q \in \mathbb{N}\), we obtain
+    \begin{equation*}
+        F_{\alpha q}\left(u, \frac{1}{q}v\right) = F_{\alpha}(u,v)\quad\text{and}\quad qF_{\alpha}\left(u, \frac{1}{q}v\right) = q F_{\frac{\alpha}{q}}(u,v) \implies F_{\frac{\alpha}{q}}(u,v) = \frac{1}{q}F_{\alpha}(u,v),
+    \end{equation*}
+    then from the additivity and homogeneity thus far shown it follows that homogeneity holds for all \(\lambda \in \mathbb{Q}\). Recall the rationals are dense in the real numbers with respect to the usual metric, then for all \(\lambda \in \mathbb{R}\) there is a sequence \(\family{r_n}{n\in \mathbb{N}}\subset \mathbb{Q}\) such that \(r_n \to \lambda\), then by the continuity of the norm,
+    \begin{align*}
+        F_{\alpha \lambda}(u,v) &= F_{\alpha}\left(u, \lim_{n\to\infty} r_n v\right)\\
+                                &= \frac14 \left[\norm*{u + \alpha \left(\lim_{n\to\infty} r_n\right) v}^2 - \norm*{u - \alpha \left(\lim_{n\to\infty} r_n\right) v}^2\right]\\
+                                &= \lim_{n\to\infty}\frac{\norm*{u + \alpha r_n v}^2 + \norm*{u - \alpha r_n v}^2}{4}\\
+                                &= \lim_{n\to\infty} F_{\alpha r_n}(u,v)\\
+                                &= \left(\lim_{n\to \infty} r_n\right)F_{\alpha}(u,v)\\
+                                &= \lambda F_{\alpha}(u,v),
+    \end{align*}
+    hence \(F_{\alpha}\) is real homogeneous as claimed.
+
+    To complete the proof, we show complex homogeneity in the second argument of \(\inner{\noarg}{\noarg}\). Let \(\lambda \in \mathbb{C}\) with \(\lambda = a + ib\), \(a,b \in \mathbb{R}\), and let \(u, v \in V\), then as \(\inner{\noarg}{\noarg}\) was shown to be additive in the second argument,
+    \begin{equation*}
+        \inner{u}{\lambda v} = \inner{u}{av} + \inner{u}{ibv} = \left[F_a(u,v) + iF_{-ia}(u,v)\right] + \left[F_{ib}(u,v) + iF_{b}(u,v)\right].
+    \end{equation*}
+    The real homogeneity of \(F_{\alpha}\) yields
+    \begin{align*}
+        \inner{u}{\lambda v} &= a\left[F_1(u,v) + iF_{-i}(u,v)\right] + ib\left[F_{1}(u,v)-iF_{i}(u,v)\right]\\
+                             &= a\inner{u}{v} + ib\left[F_{1}(u,v) + F_{-i}(u,v)\right]\\
+                             &= a\inner{u}{v} + ib \inner{u}{v}\\
+                             &= \lambda \inner{u}{v},
+    \end{align*}
+    hence \(\inner{\noarg}{\noarg}\) is complex homogeneous in the second argument. We've thus shown \(\inner{\noarg}{\noarg}\) is linear in the second argument, hence \(\inner{\noarg}{\noarg}\) is the inner product that induces the norm in this pre-Hilbert space.
+\end{proof}
+
+We may sum up the previous results in the following statement.
+\begin{corollary}
+    Let \(V\) be a linear space. A norm \(\norm{\noarg} : V \to \mathbb{R}\) on \(V\) is induced by an inner product if and only if \((V, \norm{\noarg})\) is a pre-Hilbert space. Furthermore, the inner product satisfies the \emph{polarization identity}.
+\end{corollary}
+
+Therefore, a Banach space \((V, \norm{\noarg})\) is a Hilbert space if and only if \((V, \norm{\noarg})\) is a pre-Hilbert space.
+\begin{example}{The Banach space \((\mathcal{C}([0,1];\mathbb{C}), \norm{\noarg}_\infty)\) is not a Hilbert space}{continuous_sup_not_hilbert}
+    The Banach space \((\mathcal{C}([0,1];\mathbb{C}), \norm{\noarg}_\infty)\) of continuous complex functions defined in the interval \([0,1]\) is not a Hilbert space.
+\end{example}
+\begin{proof}
+    We consider the continuous functions \(f,g \in \mathcal{C}([0,1;\mathbb{C}])\) defined by \(f(x) = x\) and \(g(x) = 1\), then \(\norm{f}_\infty = \norm{g}_\infty = 1\), \(\norm{f + g}_\infty = 2\), and \(\norm{f - g}_\infty = 1\). The parallelogram identity does not hold for such vectors,
+    \begin{equation*}
+        \norm{f+g}_\infty^2 + \norm{f-g}_\infty^2 = 5\quad\text{and}\quad2\left(\norm{f}_\infty^2 + \norm{g}_\infty^2\right) = 4,
+    \end{equation*}
+    therefore this Banach space is not a pre-Hilbert space.
+\end{proof}
+
+\begin{lemma}{Necessary condition for a pre-Hilbert space}{parallelogram_inequality}
+    Let \((V, \norm{\noarg})\) be a normed linear space. If for all \(x,y \in V\)
+    \begin{equation*}
+        2\left(\norm{x}^2 + \norm{y}^2\right) \leq \norm{x+y}^2 + \norm{x - y}^2,
+    \end{equation*}
+    then \((V, \norm{\noarg})\) is a pre-Hilbert space.
+\end{lemma}
+\begin{proof}
+    Let \(u, v \in V\). Setting \(x = \frac12(u + v)\) and \(y = \frac12(u - v)\) in the inequality yields
+    \begin{equation*}
+        2\left(\norm{u}^2 + \norm{v}^2\right) \geq \norm{u+v}^2 + \norm{u - v}^2,
+    \end{equation*}
+    from which we conclude the parallelogram identity.
+\end{proof}
+\begin{remark}
+    It is obvious we could start from the inequality in the proof and conclude the same result.
+\end{remark}
+\begin{theorem}{The topological dual of a Hilbert space is a Hilbert space}{dual_hilbert_maybe}
+    Let \(\hilbert\) be a Hilbert space. Then, \(\hilbert^\dag\) is a Hilbert space.
+\end{theorem}
+\begin{proof}
+From \cref{thm:bounded_operators_Banach}, we know \(\hilbert^\dag\) is a Banach space with respect to the operator norm. Let \(f, g \in \hilbert^\dag\), then
+    \begin{align*}
+        \norm{f + g}^2 + \norm{f - g}^2 &= \left(\sup_{\psi \in \hilbert}\frac{\norm{(f+g)\psi}}{\norm{\psi}}\right)^2 + \left(\sup_{\psi \in \hilbert}\frac{\norm{(f-g)\psi}}{\norm{\psi}}\right)^2
+    \end{align*}
+    \todo[I don't think I can show it now. Plus, I must use the inner product on \(\hilbert\) somehow, otherwise this would be true for topological dual of any Banach space.]
+\end{proof}
+
+We may use the parallelogram identity to show the best approximation theorem.
+\begin{definition}{Convex sets}{convex_sets}
+    Let \(V\) be a linear space. A linear combination of the form \(\lambda u + (1 - \lambda)v\) for \(u, v \in V\) and \(\lambda \in [0,1]\) is said to be a \emph{convex linear combination of \(u\) and \(v\)}. A \emph{convex set} \(A \subset V\) is a set such that contains every convex linear combination of vectors in \(A\).
+\end{definition}
+\begin{remark}
+    It should be obvious linear subspaces are convex spaces. Indeed, a subspace contains any linear combination of its vectors, in particular it contains any convex linear combination of its vectors.
+\end{remark}
+
+\begin{proposition}{The closure of a convex set is convex}{closure_convex}
+    Let \((V, \norm{\noarg})\) be a normed linear space. If \(U \subset V\) is a convex subset of \(V\), then \(\cl{U}\) is convex.
+\end{proposition}
+\begin{proof}
+    Let \(x, y \in \cl{U}\), then there exists sequences \(\family{x_n}{n\in \mathbb{N}}, \family{y_n}{n\in \mathbb{N}} \subset U\) that converge to \(x\) and \(y\) respectively. Let \(\lambda \in [0,1]\), then the convex linear combination \(\lambda x_n + (1-\lambda)y_n\) belongs to \(U\) for all \(n \in \mathbb{N}\). By continuity of scalar multiplication and vector addition, \(\family{\lambda x_n + (1- \lambda)y_n}{n\in \mathbb{N}}\subset U\) is a sequence of elements in \(U\) that converges to the convex linear combination \(\lambda x + (1 - \lambda)y\). We have thus shown \(\lambda x + (1 - \lambda)y \in \cl{U}\), that is, \(\cl{U}\) is convex.
+\end{proof}
+
+\begin{theorem}{Best approximation}{best_approximation}
+    Let \(A\) be a closed convex subset of a Hilbert space \(\hilbert\). Then, for every \(x \in \hilbert\), there exists a unique \emph{best approximation \(\eta \in A\) of \(x\) in \(A\)} satisfying
+    \begin{equation*}
+        \norm{x - \eta} = \inf_{y \in A}\norm{x - y},
+    \end{equation*}
+    that is, \(\eta\) minimizes the distance of \(x\) to \(A\).
+\end{theorem}
+\begin{proof}
+    We define \(R = \inf_{y \in A}\norm{x - y}\) and show there exists a unique element in \(A\) that satisfies \(\norm{x - y} = R\). Consider a sequence \(\family{y_n}{n \in \mathbb{N}} \subset A\) satisfying the property
+    \begin{equation*}
+        \norm{x - y_n}^2 < R^2 + \frac1{n+1},
+    \end{equation*}
+    for all \(n \in \mathbb{N}\), which is guaranteed to exist since \(R\) is the greatest lower bound for the distance \(\norm{x - y}\) with \(y \in A\). Indeed, suppose there exists \(M \in \mathbb{N}\) such that there is no \(y \in A\) such that \(\norm{x - y} < R^2 + \frac{1}{M}\). Then every \(y \in A\) satisfies \(\norm{x - y} \geq R^2 + \frac{1}{M} > R\), and \(R\) wouldn't be the greatest lower bound.
+
+    Next we show such a sequence is a Cauchy. For all \(m,n \in \mathbb{N}\), we have
+    \begin{equation*}
+        \norm{(y_n - x) + (y_m - x)}^2 + \norm{(y_n - x) - (y_m - x)}^2 = 2\norm{y_n - x}^2 + 2\norm{y_m - x}^2
+    \end{equation*}
+    by the parallelogram identity. Then
+    \begin{equation*}
+        \norm{y_n - y_m}^2 \leq 4R^2 + \frac2{n} + \frac{2}{m} - 4\norm*{\frac12y_n + \frac12y_m - x}^2,
+    \end{equation*}
+    by the sequence definition.
+    Since \(\frac12 y_n + \frac12 y_m\) is a convex linear combination of elements in \(A\), it is an element of \(A\), therefore \(\norm*{\frac12 y_n + \frac12 y_m - x} \geq R\), then
+    \begin{equation*}
+        \norm{y_n - y_m}^2 \leq \frac{2}{n} + \frac{2}{m} \implies \norm{y_n - y_m} \leq \sqrt{\frac{2}{n} + \frac{2}{m}}
+    \end{equation*}
+    for all \(m,n \in \mathbb{N}\). Let \(\varepsilon > 0\), then \(N > \frac{4}{\varepsilon^2}\) yields \(\norm{y_n - y_m} < \varepsilon\) for all \(n,m \geq N\). Hence, the sequence is Cauchy.
+
+    Since \(A\) is a closed set in a Hilbert space, it follows from \cref{thm:complete_closed} that this sequence converges to some element in \(A\), \(\eta\) say. We show this is the vector that minimizes the distance. By the triangle inequality,
+    \begin{equation*}
+        \norm{\eta - x} \leq \norm{\eta - y_n} + \norm{y_n - x} < \norm{\eta - y_n} + \sqrt{R^2 + \frac1{n}},
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). Taking the limit as \(n \to \infty\), we get \(\norm{\eta - x} \leq R\). Since \(\eta \in A,\) we have \(\norm{\eta - x} \geq R\), then we conclude \(\norm{\eta - x} = R\).
+
+    Suppose there is another such vector in \(A\), \(\tilde{\eta}\) say, that minimizes the distance to \(x\). By the parallelogram identity, we have
+    \begin{equation*}
+        \norm{\eta - \tilde{\eta}}^2 = 2\norm{\eta - x}^2 + 2\norm{\tilde{\eta} - x}^2 - 4\norm*{\frac{\eta + \tilde{\eta}}{2} - x}^2 = 4\left(R^2 - \norm*{\frac12\eta + \frac12\tilde{\eta} - x}^2\right).
+\end{equation*}
+    By the same argument as before, we have \(\norm*{\frac12\eta + \frac12 \tilde{\eta} - x}^2 \geq R^2\), which yields
+    \begin{equation*}
+        \norm{\eta - \tilde{\eta}}^2 \leq 0.
+    \end{equation*}
+    That is, \(\tilde{\eta} = \eta\), thus showing uniqueness.
+\end{proof}
+\begin{remark}
+    In the particular case \(x = 0\), the theorem states there exists a vector \(\eta \in A\) that minimizes the norm in \(A\), \(\norm{\eta} = \inf_{y \in A} \norm{y}\).
+\end{remark}
