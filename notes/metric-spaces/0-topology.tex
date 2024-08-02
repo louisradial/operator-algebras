@@ -1,0 +1,323 @@
+% vim: spl=en_us
+\chapter{Topological spaces and Metric spaces}
+
+\section{Topological spaces}
+Throughout these notes, the power set \(\mathbb{P}(X)\) denotes the collection of subsets of the set \(X\).
+\begin{definition}{Topological space}{topology}
+    A \emph{topological space} \topology{X} is a set \(X\) with a choice of \emph{topology} \(\tau_X\), a subset \(\tau_X\) of the power set \(\mathbb{P}(X)\) satisfying
+    \begin{enumerate}[label=(\alph*)]
+        \item \(X \in \tau_X\) and \(\emptyset \in \tau_X\);
+        \item a finite intersection of elements of \(\tau_X\) is an element of \(\tau_X\); and
+        \item an arbitrary union of elements of \(\tau_X\) is an element of \(\tau_X\).
+    \end{enumerate}
+    An \emph{open set} \(U\) on a topological space is a subset \(U \subset X\) such that \(U \in \tau_X\) and a \emph{closed set} \(V\) on a topological space is a subset \(V \subset X\) such that \(X \setminus V \in \tau_X\). A \emph{neighborhood of a point \(x \in X\)} is an open set \(U \in \tau_X\) that contains it, \(x \in U\).
+\end{definition}
+\begin{remark}
+    Notice \(X\) and \(\emptyset\) are both open and closed sets in any topology on \(X\).
+\end{remark}
+
+We may show results for the union and intersection of closed sets similar to those of open sets.
+\begin{lemma}{Complement of an arbitrary union}{complement_union}
+    Let \(J\) be an arbitrary index set and let \(\family{E_j}{j\in J}\) be a family of subsets of \(X\). Then
+    \begin{equation*}
+        X \setminus \left(\bigcup_{j\in J} E_j\right) = \bigcap_{j \in J} \left(X \setminus E_j\right).
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    Let \(A = X \setminus\left(\bigcup_{j \in J} E_j\right)\) and let \(B = \bigcap_{j \in J} \left(X \setminus E_j\right)\). Then, we want to show \(A = B\).
+
+    Let \(a \in A\), then \(a \notin \bigcup_{j \in J} E_j\). That is, there is no \(i \in J\) such that \(a \in U_i\). Hence, for all \(j \in J\) we have \(a \in a \setminus E_j\). As a result, \(a \in B\), thus \(A \subset B\).
+
+    Let \(b \in B\), then \(b \in X \setminus E_j\) for all \(j \in J\). That is, for all \(j \in J\) we have \(b \notin E_j\), and as a result, \(b \notin \bigcup_{j \in J} E_j\). Hence, \(b \in A\), and we have \(B \subset A\).
+\end{proof}
+
+\begin{proposition}{Unions and intersections of closed sets}{closed_sets}
+    Let \((X, \tau)\) be a topological space. Then
+    \begin{enumerate}[label=(\alph*)]
+        \item a finite union of closed sets is closed; and
+        \item an arbitrary intersection of closed sets is closed.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Let \(\ffamily{V_i}{i=1}{N}\) be a finite family of closed sets and let \(V = \bigcup_{i=1}^N V_i\). By \cref{lem:complement_union}, we have \(X \setminus V = \bigcap_{i = 1}^N \left(X \setminus V_i\right).\) That is, \(X \setminus V\) is the finite intersection of the open sets \(X \setminus V_i\), therefore it is open. As such, \(V\) is closed.
+
+    Let \(\family{U_i}{i \in I}\) be a family of closed sets, for some index set \(I\), and let \(U = \bigcap_{i \in I} U_i\). By \cref{lem:complement_union}, we have \(X \setminus U = \bigcup_{i \in I} X \setminus U_i\). That is, \(X \setminus U\) is the arbitrary union of the open sets \(X \setminus U_i\), therefore it is open. We conclude \(U\) is closed.
+\end{proof}
+\begin{proposition}{Subspace topology is a topology}{subspace_topology}
+    Given a topological space \topology{X} and a subset \(S\) of \(X\), we define the \emph{subspace topology} \restrict{\tau_X}{S} as
+    \begin{equation*}
+        \restrict{\tau_X}{S} = \set{U \cap S : U \in \tau_X}.
+    \end{equation*}
+    Then \((S, \restrict{\tau_X}{S})\) is a topological space.
+\end{proposition}
+\begin{proof}
+    We must show the conditions (a), (b), and (c) of \cref{def:topology} are satisfied.
+    \begin{enumerate}[label=(\alph*)]
+        \item Since \(S = X \cap S\) and \(\emptyset = \emptyset \cap S\), we have \(S \in \restrict{\tau_X}{S}\) and \(\emptyset \in \restrict{\tau_X}{S}\).
+        \item Let \(U, V \in \restrict{\tau_X}{S}\). Then, there exists \(\tilde{U}, \tilde{V} \in \tau_X\) such that \(U = \tilde{U} \cap S\) and \(V = \tilde{V} \cap S\).Then, \(U \cap V = (\tilde{U}\cap S) \cap (\tilde{V} \cap S) = (\tilde{U}\cap\tilde{V})\cap S\). Since \(\tilde{U} \cap \tilde{V} \in \tau_X\), we have \(U \cap V \in \restrict{\tau_X}{S}\).
+        \item Let \family{U_\alpha}{\alpha \in J} be a family of open sets in \(\restrict{\tau_X}{S}\). For each \(\alpha \in J\), there exists a \(\tilde{U}_\alpha\in\tau_X\) such that \(U_\alpha = \tilde{U}_\alpha \cap S\). Then
+            \begin{align*}
+                \bigcup_{\alpha \in J} U_\alpha &= \bigcup_{\alpha \in J} \tilde{U}_\alpha \cap S\\
+                                                &= \setc{s \in S }{\exists \alpha \in J : s \in \tilde{U}_\alpha}\\
+                                                &= \setc{x \in X}{\exists \alpha \in J : x \in \tilde{U}_\alpha} \cap S\\
+                                                &= S\cap\bigcup_{\alpha\in J}\tilde{U}_\alpha.
+            \end{align*}
+        Since arbitrary unions of open sets is an open set, it follows that \(\bigcup_{\alpha\in J}U_\alpha \in \restrict{\tau_X}{S}\).
+    \end{enumerate}
+    We have thus shown \(\restrict{\tau_X}{S}\) is a topology on \(S\).
+\end{proof}
+\begin{remark}
+    It should be noted that if \(S\) is an open set in \(X\), then every open set in the subspace topology is an open set in \(X\). Indeed, let \(V \in \restrict{\tau_X}{S}\), then there exists \(\tilde{V} \in \tau_X\) such that \(V = \tilde{V} \cap S\), that is, \(V\) is an intersection of two open sets in \(X\), hence open.
+\end{remark}
+
+\begin{proposition}{Product topology}{product_topology}
+    Let \topology{X} and \topology{Y} be topological spaces. Define the \emph{product topology} \(\tau_{X\times Y}\) as the collection of subsets \(U \subset X \times Y\) such that for all \((x,y) \in U\), there exists neighborhoods \(S \subset X\) and \(T \subset Y\) of \(x \in X\) and \(y\in Y\) such that \(S \times T \subset U\). Then \topology{X\times Y} is a topological space.
+\end{proposition}
+\begin{proof}
+    Clearly, \(X\times Y\) and \(\emptyset\) are open sets in the product topology.
+
+    Next, we consider open sets \(U, V \in \tau_{X\times Y}\) and an element \(p \in U \cap V\). Let \(p = (x, y) \in X \times Y\), then there exists neighborhoods \(S_U, S_V\subset X\) of \(x\) and \(T_U, T_V \subset Y\) of \(y\) such that \(S_U \times T_U \subset U\) and \(S_V \times T_V \subset V\). Let \(S = S_U \cap S_V\) and \(T = T_U \cap T_V\), then \(S \in \tau_X\) and \(T \in \tau_Y\) are neighborhoods of \(x\) and \(y\), respectively. Moreover, \(S \times T \subset U \cap V\) is a neighborhood of \(p\), from which follows \(U \cap V \in \tau_{X\times Y}\).
+
+    Let \family{U_\alpha}{\alpha\in J} be a family of open sets in the product topology. Let \(p\in \bigcup_{\alpha\in J}U_\alpha\), then there exists \(\beta \in J\) such that \(p \in U_{\beta}\). By definition, there exists open sets \(S \in \tau_X\) and \(T \in \tau_Y\) such that \(S \times T \subset U_\beta \subset \bigcup_{\alpha\in J} U_\alpha\). Therefore, \(\bigcup_{\alpha\in J}U_\alpha\) is an open set.
+\end{proof}
+
+Along with the axioms of topological spaces described in \cref{def:topology} one might add further restrictions to specify the space considered.
+\begin{definition}{Hausdorff space}{hausdorff}
+    A topological space \topology{X} is called a \emph{Hausdorff space} if for any \(p,q\in X\) with \(p\neq q\), there exists a neighborhood \(U\) of \(p\), i.e. \(p \in U \in \tau_X\), and a neighborhood \(V\) of \(q\) such that \(U \cap V = \emptyset\).
+\end{definition}
+
+\subsection{Continuity and Homeomorphisms}
+With the notion of topological spaces, we may ask ourselves whether certain maps between topological spaces can preserve the topology. That is, a map that takes open sets in the domain topology into open sets in the target topology. To define such a map we define \emph{continuity}.
+
+\begin{definition}{Continuous map}{continuity}
+    Let \topology{X} and \topology{Y} be topological spaces. Then a map \(f : X \to Y\) is \emph{continuous} (with respect to \(\tau_X\) and \(\tau_Y\)) if, for all \(V \in \tau_Y\), the preimage \(\preim{f}{V}\) is an open set in \(\tau_X\).
+\end{definition}
+
+In short, a map is continuous if and only the preimages of (all) open sets are open sets. Similarly, the preimage of closed sets are closed, which we now show.
+\begin{proposition}{Continuity and closed sets}{continuity_closed}
+    Let \topology{X} and \topology{Y} be topological spaces. A map \(f : X \to Y\) is continuous if and only if for all closed sets \(V \subset Y\), the preimage \(\preim{f}{V}\) is a closed set in \(\tau_X\).
+\end{proposition}
+\begin{proof}
+    Notice \(\preim{f}{Y\setminus V} = X \setminus \preim{f}{V}\) for any subset \(V \subset Y\). Indeed, we have
+    \begin{align*}
+        \preim{f}{Y \setminus V} &= \setc{x \in X}{f(x) \in Y \setminus V}\\&= \setc{x \in X}{f(x) \notin V}\\&=\setc{x \in X}{x \notin \preim{f}{V}}\\&= X \setminus \preim{f}{V}.
+    \end{align*}
+    In particular, we also have \(\preim{f}{V} = X \setminus \preim{f}{Y\setminus V}\).
+
+    Suppose \(f\) is continuous. Let \(V \subset Y\) be a closed set in \(\tau_Y\), then \(Y\setminus V \in \tau_Y\). By continuity \(\preim{f}{Y \setminus V} = X \setminus\preim{f}{V} \in \tau_X\), then \(\preim{f}{V}\) is closed.
+
+    Suppose the preimage of any closed set in \topology{Y} is closed in \topology{X}. Let \(U \in \tau_Y\) be an open set, then \(Y\setminus U\) is closed and so is \(\preim{f}{Y\setminus U}\). Since \(\preim{f}{U} = X \setminus \preim{f}{Y\setminus U}\), the preimage of \(U\) is open, hence \(f\) is continuous.
+\end{proof}
+
+Now a map that preserves the topology is called a \emph{homeomorphism}, which is defined as a continuous bijection with continuous inverse. We now prove such a map satisfies the condition desired.
+
+\begin{proposition}{Homeomorphism maps open sets to open sets}{homeomorphism}
+    Let \topology{X} and \topology{Y} be topological spaces. Suppose a map \(f : X \to Y\) is a homeomorphism, then \(f\) maps open sets in \(\tau_X\) into open sets in \(\tau_Y\).
+\end{proposition}
+\begin{proof}
+    Given a subset \(U \in \tau_X\), we must show the image \(V = f(U)\) is open in \topology{Y}. Taking our attention to the inverse map \(g = f^{-1} : Y \to X\), we see the preimage \(\preim{g}{U} = V\) must be open in \topology{Y}, due to continuity.
+\end{proof}
+
+If there exists a homeomorphism between two topological spaces, they are said to be \emph{homeomorphic} to each other. In fact, this establishes an equivalence relation on topological spaces, thanks to the continuity o the composition of continuous maps.
+\begin{theorem}{Composition of continuous maps}{continuous_composition}
+Let \topology{X}, \topology{Y}, and \topology{Z} be topological spaces. If the maps \(f: X \to Y\) and \(g : Y \to Z\) are continuous (with respect to the appropriate topologies), then the map \(g \circ f : X \to Z\) is continuous with respect to \(\tau_X\) and \(\tau_Z\).
+\end{theorem}
+\begin{proof}
+    Let \(V\) be an open set of \topology{Z}. We must show the preimage \((g \circ f)^{-1}(V)\) is an open set of \topology{X}. We have
+    \begin{align*}
+        (g\circ f)^{-1}(V) &= \setc{x \in X }{g\circ f(x) \in V}\\
+                           &= \setc{x \in X }{f(x) \in \preim{g}{V}}\\
+                           &= \preim{f}{\preim{g}{V}}.
+    \end{align*}
+    Since the map \(g\) is continuous and \(V\) is an open set in \topology{Z}, it follows that \(\preim{g}{V}\) is open in \topology{Y}. By the same argument, \(\preim{f}{\preim{g}{V}}\) is an open set in \topology{X}.
+\end{proof}
+
+\begin{corollary}
+    If two topological spaces \topology{X} and \topology{Y} are homeomorphic, we write \(\topology{X} \cong \topology{Y}\). Then, \(\cong\) is an equivalence relation on topological spaces.
+\end{corollary}
+\begin{proof}
+    It is clear \(\topology{X} \cong \topology{X}\) for any topological space \topology{X}. In particular, the map \(\id{X}\) is a homeomorphism. Moreover, it is clear that \(\topology{X} \cong \topology{Y} \iff \topology{Y} \cong \topology{X}\), after all homeomorphisms are continuous bijections with continuous inverses.
+
+    Let \topology{X}, \topology{Y}, and \topology{Z} be topological spaces, where \(X \cong Y\) and \(Y \cong Z\). Let \(f : X \to Y\) and \(g : Y \to Z\) be homeomorphisms from \topology{X} to \topology{Y} and \topology{Y} to \topology{Z}, respectively. Consider the composition \(g\circ f : X \to Z\).
+    \begin{equation*}
+        \begin{tikzcd}[column sep = normal, row sep = large]
+            X \arrow{r}{f} \arrow[swap]{dr}{g\circ f} & Y \arrow{d}{g} \\
+                                                      & Z
+        \end{tikzcd}
+    \end{equation*}
+    By \cref{thm:continuous_composition}, the map \(g\circ f\) is a homeomorphism from \topology{X} to \topology{Z}.
+\end{proof}
+
+As was done for the subspace topology, we prove a similar result for continuous maps.
+\begin{proposition}{Restriction of a continuous map}{restriction_map}
+    Let \topology{X} and \topology{Y} be topological spaces and let \(f : X \to Y\) be a continuous map. Let \(S\) be a subset of \(X\) and let \topology{S} be the subspace topology, then \(\restrict{f}{S} : S \to Y\) is a continuous map with respect to \(\tau_S\) and \(\tau_Y\).
+\end{proposition}
+\begin{proof}
+    Let \(V \in \tau_Y\). Then, by the definition of preimage, we have
+    \begin{align*}
+        \preim{\restrict{f}{S}}{V} &= \setc{s \in S}{\restrict{f}{S}(s) \in V}\\
+                                &= \setc{s \in S}{f(s) \in V}\\
+                                &= \preim{f}{V} \cap S.
+    \end{align*}
+    By hypothesis, the preimage \(\preim{f}{V}\) is an open set in \topology{X}, so \(\preim{\restrict{f}{S}}{V}\) is an open set in the subspace topology.
+\end{proof}
+
+Finally, given a collection of maps, it is possible to define a topology on a set such that every map in that topology is continuous.
+\begin{proposition}{Initial topology}{initial_topology}
+    Let \(X\) be a non-empty set and let \(\family{\topology{Y_i}}{i\in I}\) be a collection of topological spaces, with some arbitrary indexing set \(I\), where we consider the collection of maps \(f_i : X \to Y_i\), for all \(i \in I\). \todo[Ver um enunciado]
+\end{proposition}
+\begin{proof}
+    \todo[Mostrar que é topologia.]
+\end{proof}
+
+\subsection{Closure and interior of a set}
+Every subset on a topological space defines a closed set that contains it and an open set that is contained in it. Let's begin with the closure of a set.
+\begin{definition}{Closure of a set}{closure}
+    Let \topology{X} be a topological space and let \(S \subset X\) be a subset. A \emph{point of closure of \(S\)} is a point \(x \in X\) such that every neighborhood \(U\in\tau_X\) of \(x\) has non-empty intersection with \(S\). The \emph{closure \(\cl_{(X, \tau_X)}{S}\) of \(S\)} is the set of all points of closure of \(S\).
+\end{definition}
+\begin{remark}
+    We may simply write \(\cl_X S\) or \(\cl S\) if the topological space is understood.
+\end{remark}
+\begin{remark}
+    It should be clear that every point of \(S\) is a point of closure, that is \(S \subset \cl{S}\). Indeed, let \(s \in S\), then every neighborhood of \(s\) contains \(s,\) a point in \(S\). That is, \(s\) is a point of closure of \(S\), and we may conclude \(S \subset \cl S\).
+\end{remark}
+
+We motivate the name \emph{closure} by showing that every closure is closed. Furthermore, we will show a closed set is already its closure and conclude the closure is the smallest (in the sense of inclusion) closed set that contains a set.
+\begin{lemma}{Closure of a set is closed}{closure_is_closed}
+    Let \((X, \tau)\) be a topological space and let \(S\subset X\) be a subset. Then \(\cl S\) is closed.
+\end{lemma}
+\begin{proof}
+    Let \(x \notin \cl S\). Then there is a neighborhood \(U_x\) of \(x\) that does not intersect with \(S\). Since \(U_x\) is a neighborhood for each of its points, we also have \(U_x \cap \cl S = \emptyset\), hence \(U_x \subset X \setminus \cl S\). Then \(X \setminus \cl{S} = \bigcup_{x \in X\setminus \cl S} U_x\), thus \(X \setminus \cl{S}\) is open.
+\end{proof}
+\begin{lemma}{A closed set is its closure}{closure_closed}
+    Let \((X, \tau)\) be a topological space. A subset \(S \subset X\) is closed if and only if \(S = \cl S\).
+\end{lemma}
+\begin{proof}
+    Suppose \(S = \cl S\). By \cref{lem:closure_is_closed}, the closure is closed, then \(S\) is closed.
+
+    Suppose \(S\) is closed, then \(X \setminus S\) is open. Then \(X \setminus S\) is a neighborhood of any of its points that does not contain any elements of \(S\), that is, \(x \in X\setminus S \implies x \notin \cl S\). Then we conclude \(S = \cl S\).
+\end{proof}
+\begin{theorem}{Closure as the smallest closed set}{closure_smallest}
+    Let \((X, \tau)\) be a topological space. If \(S\subset X\) is a subset, there exists no closed subset \(A \subset X\) such that \(S \subset A \subsetneq \cl S\).
+\end{theorem}
+\begin{proof}
+    Let \(A\) be a closed subset of \(X\) that contains \(S\). Let \(x \in \cl{S}\), then for every neighborhood of \(x\) has non-empty intersection with \(S\), and as a result, with \(A\) too. Hence, \(x \in \cl{A} = A\), thus showing \(\cl{S} \subset A\).
+\end{proof}
+\begin{corollary}
+    Let \((X, \tau)\) be a topological space. If \(S \subset X\) is a subset, its closure \(\cl{S}\) is the intersection of every closed set in \(X\) that contains \(S\).
+\end{corollary}
+\begin{proof}
+    Let \(F = \bigcap \setc{A \in \mathbb{P}(X)}{X \setminus A \in \tau \land S \subset A}\) be the intersection of all closed sets that contain \(S\). In the previous proof, we have shown the closure is contained in every closed set that contains \(S\), that is, \(\cl{S} \subset F\). Let \(x \in F\), then \(x\) is an element of every closed set that contains \(S\). In particular, \(x \in \cl{S}\), hence \(F \subset \cl{S}\).
+\end{proof}
+\begin{corollary}
+    Let \((X, \tau)\) be a topological space. If \(S \subset X\) is a closed subset of \(X\) and \(T \subset S\) is a subset of \(S\), then \(\cl{T} \subset S\).
+\end{corollary}
+\begin{proof}
+    Since \(T \subset S\) and \(T \subset \cl{T}\), we must have \(\cl{T} \subset S\).
+\end{proof}
+
+We now move on to the interior of a set.
+\begin{definition}{Interior of a set}{interior}
+    Let \topology{X} be a topological space and let \(S \subset X\) be a subset. An \emph{interior point of \(S\)} is a point \(x \in X\) such that there exists a neighborhood \(U \in \tau_X\) of \(x\) that is contained in \(S\). The \emph{interior \(\inte_{\topology{X}}S\) of \(S\)} is the set of all interior points of \(S\).
+\end{definition}
+\begin{remark}
+    We may simply write \(\inte_X S\) or \(\inte S\) if the topological space is understood.
+\end{remark}
+\begin{remark}
+    It should be clear that every interior point of \(S\) is a point of \(S\), that is \(\inte S \subset S\). Indeed, let \(x \in \inte S\), then there exists a neighborhood \(U_x\) of \(x\) that is contained in \(S\). That is, \(x\) belongs to \(S\), and we may conclude \(\inte S \subset S\). Moreover, since \(U_x\) is a neighborhood for its elements, we conclude \(U_x \subset \inte S\).
+\end{remark}
+Similarly to the closure, the interior of a set is an open set. Moreover, it is the largest open set contained in it.
+\begin{lemma}{Interior of a set is open}{interior_is_open}
+    Let \topology{X} be a topological space and let \(S \subset X\) be a subset. Then \(\inte S\) is open.
+\end{lemma}
+\begin{proof}
+    Let \(x \in \inte S\) be an interior point. Then consider the union of every neighborhood of \(x\) that is contained in \(S\), \(U_x = \bigcup \setc{U \in \tau_X}{x \in U \land U \subset S}\). This set is open, hence \(\inte S = \bigcup_{x \in \inte S} U_x\) is open.
+\end{proof}
+\begin{lemma}{An open set is its interior set}{interior_open}
+    Let \topology{X} be a topological space. A subset \(S \subset X\) is open if and only if \(S = \inte S\).
+\end{lemma}
+\begin{proof}
+    Suppose \(S = \inte S\). By \cref{lem:interior_is_open}, \(S\) is open.
+
+    Suppose \(S\) is open. Then every point of \(S\) is an interior point, as \(S \subset S\), hence \(S \subset \inte S\). Since \(\inte S \subset S\), we have \(S = \inte S\).
+\end{proof}
+\begin{theorem}{Interior as the largest open set}{interior_largest}
+    Let \topology{X} be a topological space. If \(S \subset X\) is a subset, there exists no open subset \(A \subset X\) such that \(\inte S \subsetneq A \subset S\).
+\end{theorem}
+\begin{proof}
+    Let \(A\) be an open subset of \(X\) that is contained in \(S\). Then every point of \(A\) is an interior point of \(S\), hence \(A \subset \inte S\).
+\end{proof}
+\begin{corollary}
+    Let \topology{X} be a topological space. If \(S \subset X\) is a subset, its interior \(\inte S\) is the union of every open set in \(X\) that is contained in \(S\).
+\end{corollary}
+\begin{proof}
+    Let \(U = \bigcup\setc{A \in \tau_X}{A \subset S}\) be the union of all open sets that are contained in \(S\). The previous result shows \(U \subset \inte S\). Since \(\inte S\) is an open set that is contained in \(S\), we have \(\inte S \subset U\), and the result follows.
+\end{proof}
+\begin{corollary}
+    Let \topology{X} be a topological space. If \(S \subset X\) is an open subset of \(X\) and \(T \supset S\) is a subset that contains \(S\), then \(S \subset \inte{T}\).
+\end{corollary}
+\begin{proof}
+    Since \(S \subset T\) and \(\inte T \subset T\), we must have \(S \subset \inte{T}\).
+\end{proof}
+
+Furthermore, we may relate the closure and interior of a set by means of the complement of the interior and closure of the complement.
+\begin{theorem}{Closure and interior}{closure_interior}
+    Let \topology{X} be a topological space. Then
+    \begin{equation*}
+        \inte S = X \setminus \cl(X \setminus S)\quad\text{and}\quad \cl{S} = X \setminus \inte(X \setminus S)
+    \end{equation*}
+    for any subset \(S \subset X\).
+\end{theorem}
+\begin{proof}
+    Let \(x \in X\setminus\cl(X\setminus S)\), then \(x\) is not a point of closure of \(X \setminus S\). As a result, there exists a neighborhood \(U\) of \(x\) that has empty intersection with \(X \setminus S\), hence \(U \subset S\). We conclude \(X\setminus\cl(X \setminus S) \subset \inte S\).
+
+    Let \(s \in \inte S\), then there exists a neighborhood \(V\) of \(s\) that is contained in \(S\). Since \(V \subset \inte S \subset S\), we have \(V \cap (X \setminus S) = \emptyset\), hence \(s\) is not a point of closure of \(X \setminus S\). We have thus shown \(\inte S = X \setminus \cl(X \setminus S)\).
+
+    Finally, we replace \(S \mapsto X \setminus S\), obtaining \(\inte(X\setminus S) = X \setminus \cl S\). The complement yields \(\cl{S} = X \setminus \inte(X\setminus S)\) as desired.
+\end{proof}
+\begin{remark}
+    This theorem makes it clear that descriptions that rely on closures can be restated as descriptions that rely on interiors and vice-versa.
+\end{remark}
+
+\subsection{Dense and nowhere dense sets}
+Closely related to the notions of closure and interior of a set is the concept of a dense set.
+\begin{definition}{Dense set}{dense_set}
+    Let \topology{X} be a topological space. A set \(S\) is \emph{dense in \(X\)} if \(\cl_X S = X\). Moreover, a set \(S\) is \emph{dense in a non-empty subset \(U \subset X\)} if \(S \cap U\) is dense in the subspace topology on \(U\).
+\end{definition}
+\begin{remark}
+    It should be noted that if \(S\) is dense in \(X\), then it is dense in any non-empty open subset \(U \in \tau_X\). Indeed, \(U \subset \cl_X S\), hence every neighborhood of \(x \in U\) has a non-empty intersection with \(S\). In particular, for every \(V \in \tau_U\) that contains \(x \in U\) satisfies \(V \cap S \neq \emptyset\), hence \(U \subset \cl_U(S \cap U)\). This shows \(U = \cl_U(S\cap U)\) since \(\cl_U(A) \subset U\) for any \(A \subset U\).
+\end{remark}
+
+An equivalent description is given in terms of the interior of a dense set.
+\begin{theorem}{Interior of the complement of a dense set is empty}{interior_dense}
+    Let \topology{X} be a topological space. A set \(S\subset X\) is dense in \(X\) if and only if \(\inte{(X \setminus S)} = \emptyset\).
+\end{theorem}
+\begin{proof}
+    Suppose \(S\) is dense in \(X\), then \(\cl S = X\). By \cref{thm:closure_interior}, it follows that \(X = X \setminus \inte(X\setminus S)\). Hence, \(\inte(X\setminus S) = \emptyset\).
+
+    Suppose \(\inte(X\setminus S) = \emptyset\). By \cref{thm:closure_interior}, we have \(\cl{S} = X\), hence \(S\) is dense in \(X\).
+\end{proof}
+
+With the notion of a set dense in some subset, we may categorize topological spaces.
+\begin{definition}{Nowhere dense sets}{nowhere_dense}
+    Let \topology{X} be a topological space. A set \(S\) is \emph{nowhere dense in \(X\)} if \(S\) is not dense in any non-empty open subset of \(X\).
+\end{definition}
+
+\begin{theorem}{Interior of the closure of a nowhere dense set}{interior_closure_nowhere_dense}
+    Let \topology{X} be a topological space. A subset \(S \subset X\) is nowhere dense in \(X\) if and only if \(\inte_X\left(\cl_X S\right) = \emptyset\).
+\end{theorem}
+\begin{proof}
+    Suppose \(U = \inte_X\left(\cl_X S\right)\) is not the empty set. Let \(x \in U\), there exists \(V \in \tau_X\) containing \(x\) with \(V \subset U\), since \(U\) is open in \(X\). Moreover, \(V \in \tau_U\) because \(U \in \tau_X\). As \(U\) is the interior of \(\cl_XS\), we have \(U \subset \cl_X S\), hence \(x \in \cl_X S\). Then, every neighborhood of \(x\) has a non-empty intersection with \(S\). This implies \(V \cap (S \cap U) \neq \emptyset\), which yields \(x \in \cl_U(S \cap U)\). That is, \(\cl_U(S\cap U) = U\), hence \(S \cap U\) is dense in \(U\). We have thus shown \(\inte_X\left(\cl_X S\right) \neq \emptyset\) implies that \(S\) is dense in some non-empty open subset of \(X\), hence the contrapositive gives us that if \(S\) is nowhere dense in \(X\), then \(\inte_X(\cl_XS) = \emptyset\).
+
+    Suppose \(S\) is dense in some non-empty open set \(U \in \tau_X\), that is, \(\cl_U(S \cap U) = U\). Let \(x \in U\), and let \(V \in \tau_U\) be some neighborhood of \(x\), then \(V \cap S \neq \emptyset\). Since \(U\) is open in \(X\), we have \(x \in \cl_X S\). Hence, \(U \subset \cl_X S\). We have shown if \(S\) is somewhere dense, then the interior of its closed is non-empty, thus showing that \(\inte_X (\cl_X S) = \emptyset\) implies \(S\) is nowhere dense by contrapositive.
+\end{proof}
+\begin{corollary}
+    If \(S\) is nowhere dense in \(X\), then \(\cl_X{S}\) is nowhere dense in \(X\).
+\end{corollary}
+\begin{proof}
+    Since \(\cl_XS\) is closed, we have \(\inte_X(\cl_X(\cl_X S)) = \inte_X(\cl_X S) = \emptyset\) by hypothesis.
+\end{proof}
+
+\begin{definition}{First and second Baire categories}{Baire_categories}
+    A topological space \topology{X} is said to be of \emph{the first category} if \(X\) is expressible as the countable union of a nowhere dense sets in \(X\). Otherwise, \topology{X} is of \emph{the second category.}
+\end{definition}
