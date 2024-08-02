@@ -1,0 +1,51 @@
+% vim: spl=en_us
+\section{Extensions of densely defined bounded operators}
+So far we have considered maps whose domain are the entirety of a normed linear space. The following results concern the \emph{extensions} of linear maps defined in a subspace of a linear space.
+\begin{definition}{Extension of a map}{extension}
+    Let \(V, W\) be linear spaces. An \emph{extension} of a linear map \(A : \domain{A} \subset V \to W\) defined on the linear subspace \(\domain{A}\) is a linear map \(\hat{A} : V \to W\) such that
+    \begin{equation*}
+        \hat{A}\alpha = A \alpha,
+    \end{equation*}
+    for all \(\alpha \in \domain{A}\).
+\end{definition}
+
+We say a linear map \(A : \domain{A} \subset V \to W\) is \emph{densely defined} if its domain \(\domain{A}\) is a dense subspace of the linear space \(V\). An important insight about the domain of a bounded linear map is the \emph{bounded linear transformation theorem}.
+\begin{theorem}{Bounded linear transformation theorem}{blt}
+    Let \(V\) be a normed linear space and \(W\) be a Banach space. For any densely defined bounded linear operator \(A : \domain{A} \to W\), there exists a unique extension \(\hat{A} : V \to W\) that is a bounded linear operator. Furthermore, \(\norm{\hat{A}}_{\bounded(V,W)} = \norm{A}_{\bounded(\domain{A}, W)}\).
+\end{theorem}
+\begin{proof}
+    Let \(f \in V\) and consider a sequence \(\family{f_n}{n\in \mathbb{N}}\subset \domain{A}\) that converges to \(f\), whose existence is guaranteed since \(\domain{A}\) is dense in \(V\). From the uniform continuity of \(A\) we know from \cref{prop:uniformly_continuous_cauchy} that \(\family{Af_n}{n\in \mathbb{N}} \subset W\) is a Cauchy sequence in the Banach space \(W\). From its completeness, we know its limit exists in \(W\), \(w\) say. We consider \(\family{\tilde{f}_n}{n\in \mathbb{N}}\subset \domain{A}\) another sequence that converges to \(f\). By the previous argument we know \(A\tilde{f}_n \to \tilde{w}\) for some \(\tilde{w} \in W\). We aim to show that \(\tilde{w} = w\), that is, we will show the map
+    \begin{align*}
+        \hat{A} : V &\to W\\
+                  f &\mapsto \lim_{n\to \infty} Af_n,
+    \end{align*}
+    is well-defined. By the triangle inequality we have
+    \begin{align*}
+        \norm*{\tilde{w} - w} &\leq \norm*{\tilde{w} - A\tilde{f}_n} + \norm*{A\tilde{f}_n - Af_n}  + \norm*{Af_n - w}\\
+                              &\leq \norm*{\tilde{w} - A\tilde{f}_n} + \norm{A}\cdot\norm*{\tilde{f}_n - f_n}  + \norm*{Af_n - w}\\
+                              &\leq \norm*{\tilde{w} - A\tilde{f}_n} + \norm{A}\left(\norm*{\tilde{f}_n - f} + \norm*{f - f_n}\right)  + \norm*{Af_n - w}.
+    \end{align*}
+    From convergence of each sequence, it is easy to see that \(\tilde{w} = w\), thus the map is well-defined.
+
+    This map is an extension of \(A\), which follows from the continuity of linear space operations and from linearity of \(A\). Indeed, we begin by showing it is a linear map: let \(f, g \in V\) and let \(z \in \mathbb{C}\), then
+    \begin{align*}
+        \hat{A}(f + zg) &= \lim_{n\to \infty} A(f_n + zg_n)\\&= \lim_{n\to\infty} Af_n + z \lim_{n\to\infty} Ag_n\\&= Af + z Ag,
+    \end{align*}
+    which shows linearity. To show it is an extension of \(A\), we let \(\alpha \in \domain{A}\), then one sequence in \(\domain{A}\) that converges to \(\alpha\) is the constant sequence, therefore \(\hat{A}\alpha = A\alpha\).
+
+    Let \(f \in V\setminus\set{0}\), then from the continuity of the norm we have
+    \begin{equation*}
+        \norm{\hat{A} f} = \norm*{\lim_{n\to\infty} Af_n} = \lim_{n\to \infty} \norm{A f_n} \leq \lim_{n\to \infty} \norm{A} \norm{f_n} = \norm{A} \norm{f}.
+    \end{equation*}
+    Thus, \(\norm{A}\) is an upper bound for the set \(\setc*{\frac{\norm{\hat{A}f}}{\norm{f}}}{f \in V\setminus\set{0}}\), hence \(\hat{A}\) is bounded and \(\norm{\hat{A}} \leq \norm{A}\). Furthermore, we have
+    \begin{equation*}
+        \norm{A} = \sup_{f\in\domain{A}}\frac{\norm{Af}}{\norm{f}}= \sup_{f\in\domain{A}}\frac{\norm{\hat{A}f}}{\norm{f}} \leq \sup_{f \in V} \frac{\norm{\hat{A}f}}{\norm{f}} = \norm{\hat{A}},
+    \end{equation*}
+    therefore it follows that \(\norm{\hat{A}} = \norm{A}\).
+
+    Suppose there exists \(\hat{B} \in \bounded(V, W)\) that is an extension of \(A\). From continuity, we have for all \(f \in V\) that
+    \begin{equation*}
+        (\hat{A} - \hat{B})f = \lim_{n\to\infty} (\hat{A} - \hat{B})f_n = \lim_{n\to \infty} (Af_n - Af_n) = 0,
+    \end{equation*}
+    hence \(\hat{A} = \hat{B}\). We have thus shown that \(\hat{A}\) is the unique bounded extension of \(A\).
+\end{proof}
