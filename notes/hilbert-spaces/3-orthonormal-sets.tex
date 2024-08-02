@@ -1,0 +1,192 @@
+% vim: spl=en_us
+\section{Orthonormal sets}
+In the previous example we constructed a countable orthogonal Hamel basis for a linear subspace dense in a Hilbert space. This means that basis is linearly independent and the closure of its linear span is the entire Hilbert space. We'll develop this idea by studying further properties of orthonormal sets in order to construct a different type of basis that uses the completeness of a Hilbert space.
+\begin{definition}{Orthonormal set}{orthonormal_set}
+    Let \((V, \inner{\noarg}{\noarg})\) be a pre-Hilbert space. A subset \(F\subset V\) is \emph{orthogonal} if for all \(u, v \in F\), we have \(\inner{u}{u} > 0\) and \(\inner{u}{v} = 0\) for \(v \neq u\). If for all \(u \in V\) we have \(\inner{u}{u} = 1\), then \(F\) is said to be \emph{orthonormal}.
+\end{definition}
+\begin{remark}
+    We have already shown that such a set is linearly independent in \cref{lem:linear_independent_orthogonal}.
+\end{remark}
+
+\begin{lemma}{Pythagorean theorem}{pythagoras_finite}
+    Let \((V, \inner{\noarg}{\noarg})\) be a pre-Hilbert space. Let \(\ffamily{v_i}{i = 1}{n} \subset V\) be a finite orthonormal set and let \(\ffamily{\lambda_i}{i=1}{n} \subset \mathbb{C}\) be a finite family of complex numbers, then
+    \begin{equation*}
+        \norm*{\sum_{i = 1}^n \lambda_i v_i}^2 = \sum_{i=1}^n \abs*{\lambda_i}^2
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    By sesquilinearity of the inner product we have
+    \begin{equation*}
+        \norm*{\sum_{i = 1}^n \lambda_i v_i}^2 = \inner*{\sum_{i = 1}^n \lambda_i v_i}{\sum_{j = 1}^n \lambda_j v_j} = \sum_{i = 1}^n \sum_{j = 1}^n \conj{\lambda_i} \lambda_j \inner{e_i}{e_j}.
+    \end{equation*}
+    Since \(\ffamily{v_i}{i=1}{n}\) is orthonormal, we have \(\inner{e_i}{e_j} = \delta_{ij}\), then
+    \begin{equation*}
+        \norm*{\sum_{i=1}^n\lambda_i v_i}^2 = \sum_{i = 1}^n \sum_{j=1}^n \conj{\lambda_i}\lambda_j \delta_{ij} = \sum_{i = 1}^n \abs{\lambda_i}^2,
+    \end{equation*}
+    as desired.
+\end{proof}
+
+We now give a necessary and sufficient condition for a \emph{convergent series} in a Hilbert space. For any sequence \family{s_n}{n\in \mathbb{N}}, a \emph{series} is defined as the sequence \family{\sum_{i=1}^n s_n}{n \in \mathbb{N}} and if it converges (with respect to the appropriate metric space) we denote its limit by \(\sum_{i=1}^\infty s_n\).
+\begin{proposition}{Convergent series and countable orthonormal sets}{convergent_series}
+    Let \(\hilbert\) be a Hilbert space and let \(\family{v_n}{n\in \mathbb{N}}\subset \hilbert\) be a countable orthonormal set. The sequence \(\family{\lambda_n}{n\in \mathbb{N}} \subset \mathbb{C}\) is square-summable if and only if the sequence \(\family{s_n}{n\in \mathbb{N}} \subset \hilbert\), where \(s_n = \sum_{i=1}^n \lambda_i v_i\), converges in \(\hilbert\).
+\end{proposition}
+\begin{proof}
+    Consider the sequence \(\family{\ell_n}{n\in \mathbb{N}} \subset \mathbb{R}\) where \(\ell_n = \sum_{i = 1}^n \abs{\lambda_i}^2\). For all \(n,m \in \mathbb{N}\) we have
+    \begin{equation*}
+        \norm{s_n - s_m}^2 = \norm*{\sum_{i = \min\set{m,n} + 1}^{\max\set{m,n}} \lambda_i v_i}^2 = \sum_{i=\min\set{m,n}}^{\max{\set{m,n}}} \abs{\lambda_i}^2 = \abs*{\sum_{i=1}^n \abs{\lambda_i}^2 - \sum_{i=1}^m \abs{\lambda_i}^2} = \abs{\ell_n - \ell_m}
+    \end{equation*}
+    by \cref{lem:pythagoras_finite}.
+
+    Suppose \(s_n \to s \in \hilbert\). Let \(\varepsilon > 0\), then there exists \(N \in \mathbb{N}\) such that \(\norm{s_n - s_m} < \sqrt{\varepsilon}\) for all \(n, m \geq N\), then
+    \begin{equation*}
+        n, m \geq N \implies \abs{\ell_n - \ell_m} = \norm{s_n - s_m}^2 < \varepsilon.
+    \end{equation*}
+    Since \family{\ell_n}{n\in \mathbb{N}} is a Cauchy sequence of real numbers, it converges in \((\mathbb{R}, \abs{\noarg}\), therefore \(\family{\lambda_n}{n \in \mathbb{N}}\) is square-summable.
+
+    Suppose \(\family{\lambda_n}{n \in \mathbb{N}}\) is square-summable. Then, there exists \(N \in \mathbb{N}\) such that \(\abs{\ell_n - \ell_m} < \varepsilon^2\) for all \(m,n \geq N\), then
+    \begin{align*}
+        n, m \geq N &\implies \abs{\ell_n - \ell_m} = \norm{s_n - s_m}^2 < \varepsilon^2\\
+                    &\implies \norm{s_n - s_m} < \varepsilon.
+    \end{align*}
+    Since \family{s_n}{n\in \mathbb{N}} is a Cauchy sequence of in a Hilbert space, it converges.
+\end{proof}
+
+We recall the Gram-Schmidt orthonormalization process, in order to show that every finite-dimensional linear subspace in a Hilbert space is closed.
+\begin{lemma}{Gram-Schmidt orthonormalization process}{gram_schmidt}
+    Let \((V, \inner{\noarg}{\noarg})\) be a pre-Hilbert space. If \(E \subset V\) is a non-trivial finite-dimensional linear subspace, then it admits an orthonormal Hamel basis.
+\end{lemma}
+\begin{proof}
+    By the existence of a Hamel basis, we let \(\ffamily{v_i}{i=1}{n}\) be a linearly independent generating set for \(E\), where \(n\) is the dimension of \(E\). We claim for all \(m \in \set{1, 2, \dots, n}\) the set \(F_m = \ffamily{u_i}{i=1}{m}\) is orthogonal, where \(u_1 = v_1\) and
+    \begin{equation*}
+        u_k = v_k - \sum_{i = 1}^{k-1} \frac{\inner{u_i}{v_k}}{\inner{u_i}{u_i}} u_i
+    \end{equation*}
+    for \(k \in \set{2, 3, \dots, m}\). Clearly, this holds for \(m = 1\). Suppose it it true for some \(\ell < n\), and we check if \(u_{\ell+1} \in F_\ell^\perp \setminus \set{0}\). Since \(F_\ell\) is orthogonal, we have \(\inner{u_k}{u_j} = \inner{u_j}{u_j} \delta_{jk}\) for all \(j,k \in \set{1,\dots, \ell}\), then
+    \begin{align*}
+        \inner{u_k}{u_{\ell+1}} &= \inner*{u_k}{v_{\ell+1} - \sum_{j = 1}^{\ell} \frac{\inner{u_j}{v_{\ell+1}}}{\inner{u_j}{u_j}} u_j}\\
+                                &= \inner{u_k}{v_{\ell+1}} - \sum_{j=1}^{\ell} \frac{\inner{u_j}{v_{\ell+1}}}{\inner{u_j}{u_j}} \inner{u_k}{u_j}\\
+                                &= \inner{u_k}{v_{\ell+1}} - \sum_{j=1}^{\ell} \inner{u_j}{v_{\ell+1}}\delta_{kj}\\
+                                &= \inner{u_k}{v_{\ell+1}} - \inner{u_k}{v_{\ell+1}} = 0
+    \end{align*}
+    for \(k \in \set{1,2, \dots, \ell}\), hence \(u_{\ell+1} \in F_\ell^\perp\). Notice \(u_{\ell+1} \neq 0\), since \(\ffamily{v_i}{i=1}{\ell+1}\) is linearly independent, and \(u_{\ell+1} \in \lspan\ffamily{v_i}{i=1}{\ell+1}\). We have thus shown \(F_{\ell+1}\) is orthogonal. By the principle of finite induction, \(F_m\) is orthogonal for all \(m \in \set{1,2,\dots, n}\).
+
+    Since \(F_n\) is linearly independent, by \cref{lem:linear_independent_orthogonal}, it remains to show \(\lspan{F} = E\). Since \(F \subset E\), we have \(\lspan{F} \subset E\). Let \(v \in E\), then there exist \(\ffamily{\lambda_i}{i=1}{n}\) such that \(v = \sum_{i=1}^n \lambda_i v_i\). By the definition of \(u_k\), we have
+    \begin{equation*}
+        v = \lambda_1 u_1 + \sum_{i=2}^n \lambda_i\left(u_i + \sum_{j = 1}^{i-1} \frac{\inner{u_j}{v_i}}{\inner{u_j}{u_j}}u_j\right),
+    \end{equation*}
+    that is, \(v\) is a linear combination of elements in \(F\), hence \(v \in \lspan{F}\). That is, \(\lspan{F} = E\), therefore \(F\) is an orthogonal Hamel basis for \(E\). In particular the set \(\ffamily{\frac1{\norm{u_i}}u_i}{i=1}{n}\) is an orthonormal Hamel basis for \(E\).
+\end{proof}
+\begin{remark}
+    If the Hamel basis were countable, the argument and result would follow analogously.
+\end{remark}
+
+\begin{proposition}{Finite dimensional subspaces of a pre-Hilbert space are closed}{finite_closed}
+    Let \((V, \inner{\noarg}{\noarg})\) be a pre-Hilbert space. If \(E \subset V\) is a finite-dimensional linear subspace, then it is closed.
+\end{proposition}
+\begin{proof}
+    By \cref{lem:gram_schmidt}, there exists an orthonormal Hamel basis \(\ffamily{e_i}{i=1}{d} \subset E\), where \(d\) is the dimension of \(E\). Let \(v : \mathbb{N} \to E\) be a sequence that converges to \(\tilde{v} \in \hilbert\), then for all \(n \in \mathbb{N}\), we have
+    \begin{equation*}
+        v(n) = \sum_{i = 1}^{d} \lambda_i(n) e_i,
+    \end{equation*}
+    where \(\lambda_i : \mathbb{N} \to \mathbb{C}\) is a sequence of complex numbers, for \(i \in\set{1,2,\dots, d}\). Notice
+    \begin{equation*}
+        \lambda_j(n) = \inner{e_j}{v(n)}
+    \end{equation*}
+    for all \(j \in \set{1,2,\dots,d}\) and all \(n \in \mathbb{N}\). Setting \(\tilde{\lambda}_j = \inner{e_j}{\tilde{v}}\) yields
+    \begin{equation*}
+        \abs{\tilde{\lambda}_j - \lambda_j(n)} = \abs{\inner{e_j}{\tilde{v} - v(n)}} \leq \norm{\tilde{v} - v(n)}
+    \end{equation*}
+    by the Cauchy-Schwarz inequality. Since \(v(n) \to \tilde{v}\), we have \(\lambda_j(n) \to \tilde{\lambda}_j\).
+
+    We claim \(\tilde{v} = \sum_{i=1}^d \tilde{\lambda}_i e_i \in E\), showing that \(E\) is closed by \cref{thm:convergent_closed}. Indeed, by subadditivity
+    \begin{align*}
+        \norm*{\tilde{v} - \sum_{i=1}^d \tilde{\lambda}_i e_i} &\leq \norm*{\tilde{v} - v(n)} + \norm*{v(n) - \sum_{i=1}^d \tilde{\lambda}_i e_i} = \norm*{\tilde{v} - v(n)} + \norm*{\sum_{i=1}^d \left[\tilde{\lambda}_i - \lambda_i(n)\right]e_i}
+    \end{align*}
+    for all \(n \in \mathbb{N}\). \cref{lem:pythagoras_finite} yields
+    \begin{equation*}
+        \norm*{\tilde{v} - \sum_{i=1}^d \tilde{\lambda}_i e_i} \leq \norm*{\tilde{v} - v(n)} + \sqrt{\sum_{i=1}^d \abs*{\tilde{\lambda}_i - \lambda_i(n)}^2}.
+    \end{equation*}
+    As \(v(n) \to \tilde{v}\) and \(\lambda_i(n) \to \tilde{\lambda}_i\), the right hand size can be made arbitrarily small, hence
+    \begin{equation*}
+        \norm*{\tilde{v} - \sum_{i=1}^d \tilde{\lambda}_ie_i} = 0.
+    \end{equation*}
+    That is, \(\tilde{v} \in E\).
+\end{proof}
+\begin{corollary}
+    The linear span of a finite orthonormal set is closed.
+\end{corollary}
+\begin{remark}
+    From what we've seen in \cref{exam:dense_l2}, we cannot extend this result for linear subspaces generated by countable orthonormal sets.
+\end{remark}
+
+Since finite-dimensional linear subspaces of a Hilbert space are closed, we may use the best approximation theorem and, as a direct consequence, the orthogonal decomposition theorem.
+\begin{proposition}{Best approximation on a finite-dimensional linear subspace}{best_approximation_finite}
+    Let \(\hilbert\) be a Hilbert space and let \(F = \ffamily{e_i}{i=1}{d} \subset \hilbert\) be a orthonormal set with \(d \in \mathbb{N}\). For all \(x \in \hilbert\) the best approximation of \(x\) in \(\lspan{F}\) is given by
+    \begin{equation*}
+        \tilde{x} = \sum_{i=1}^{d} \inner{e_i}{x}e_i.
+    \end{equation*}
+    Moreover,
+    \begin{equation*}
+        \norm{x - \tilde{x}} = \sqrt{\norm{x}^2 - \sum_{i = 1}^d \abs*{\inner{e_i}{x}}^2}
+    \end{equation*}
+    is the infimum of the distance between \(x\) and \(\lspan{F}\).
+\end{proposition}
+\begin{proof}
+    Let \(y \in \lspan F\), then there exist \(\ffamily{\lambda_i}{i=1}{d} \subset \mathbb{C}\) such that \(y = \sum_{i=1}^d \lambda_i e_i\). By \cref{lem:pythagoras_finite}, we have
+    \begin{equation*}
+        \norm{y}^2 = \sum_{i = 1}^d \abs{\lambda_i}^2,
+    \end{equation*}
+    then for all \(x \in \hilbert\),
+    \begin{align*}
+        \norm*{x - y}^2 &= \norm{x}^2 + \norm{y}^2 - \inner{x}{y} - \inner{y}{x}\\
+                        &= \norm{x}^2 + \sum_{i=1}^d \left(\abs{\lambda_i}^2 - \inner{x}{\lambda_i e_i} - \inner{\lambda_i e_i}{x}\right)\\
+                        &= \norm{x}^2 + \sum_{i=1}^d \left(\abs{\lambda_i}^2 - \lambda_i\conj{\inner{e_i}{x}} - \conj{\lambda_i}\inner{e_i}{x} + \abs*{\inner{e_i}{x}}^2\right) - \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2\\
+                        &= \norm{x}^2 + \sum_{i = 1}^d \left[\left(\lambda_i - \inner{e_i}{x}\right)\conj{\left(\lambda_i - \inner{e_i}{x}\right)}\right] - \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2\\
+                        &= \norm{x}^2 + \sum_{i=1}^d \abs*{\lambda_i - \inner{e_i}{x}}^2 - \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2.
+    \end{align*}
+    Since \(\norm{x}^2\) and \(\sum_{i=1}^d\abs*{\inner{e_i}{x}}^2\) are fixed for each \(x\) and the other term is a sum of non-negative real numbers, we have
+    \begin{equation*}
+        \norm{x - y} = \sqrt{\norm{x}^2 + \sum_{i=1}^d \abs*{\lambda_i - \inner{e_i}{x}}^2 - \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2} \geq \sqrt{\norm{x}^2 - \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2},
+    \end{equation*}
+    that is,
+    \begin{equation*}
+        \inf_{y \in \lspan{F}} \norm{x - y} = \sqrt{\norm{x}^2 - \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2}.
+    \end{equation*}
+    The vector in \(\lspan{F}\) that realizes the minimal distance between \(x\) and \(\lspan{F}\) is \(\tilde{x} = \sum_{i=1}^d \inner{e_i}{x} e_i\). By \cref{thm:best_approximation}, this is the only such element.
+\end{proof}
+\begin{remark}
+    By \cref{thm:orthogonal_decomposition}, we identify \(x_\parallel = \sum_{i=1}^d \inner{e_i}{x}e_i \in \lspan{F}\) and \(x_\perp = x - x_\parallel \in (\lspan{F})^\perp\) with \(\norm{x_\parallel} = \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2\) and \(\norm{x_\perp}^2 = \norm{x}^2 - \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2\).
+\end{remark}
+
+We may use the previous result to show Bessel's inequalities.
+\begin{lemma}{Bessel inequality}{Bessel_inequality}
+    Let \(\hilbert\) be a Hilbert space. For all \(d \in \mathbb{N}\), if \(\ffamily{e_i}{i=1}{d}\) is a finite orthonormal set, then
+    \begin{equation*}
+        \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2 \leq \norm{x}^2
+    \end{equation*}
+    for all \(x \in \hilbert\). If \(\family{e_i}{i\in \mathbb{N}}\) is a countable orthonormal set, then
+    \begin{equation*}
+        \sum_{i=1}^\infty \abs*{\inner{e_i}{x}}^2 \leq \norm{x}^2
+    \end{equation*}
+    for all \(x \in \hilbert\).
+\end{lemma}
+\begin{proof}
+    Let \(F_d = \ffamily{e_i}{i=1}{d}\subset \hilbert\) be a finite orthonormal set, then by \cref{prop:best_approximation_finite} the best approximation \(\tilde{x}\) for \(x \in \hilbert\) in \(\lspan{F_d}\) satisfies
+    \begin{equation*}
+        \norm{x - \tilde{x}}^2 = \norm{x}^2 - \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2.
+    \end{equation*}
+    Since \(\norm{x - \tilde{x}} \geq 0\), we have
+    \begin{equation*}
+        \sum_{i=1}^d \abs*{\inner{e_i}{x}}^2 \leq \norm{x}^2,
+    \end{equation*}
+    as claimed.
+
+    If \(F_d\) is a finite subset of a countable orthonormal set \(\family{e_n}{n\in \mathbb{N}}\), then we have shown the sequence \(\family{s_n}{n\in \mathbb{N}} \subset \mathbb{R}\), where \(s_n = \sum_{i=1}^n \abs*{\inner{e_i}{x}}^2\), is bounded above by \(\norm{x}^2\). As a sum of non-negative real numbers, it is an increasing sequence bounded above, therefore it converges to its supremum, satisfying \(\sup_{n \in \mathbb{N}} s_n \leq \norm{x}^2\).
+
+    Indeed, for all \(n \in \mathbb{N}\), \(s_n \leq \norm{x}^2\), therefore \(s = \sup_{n\in \mathbb{N}} \leq \norm{x}^2\). Let \(\varepsilon > 0\), then there exists \(N \in \mathbb{N}\) such that \(s - \varepsilon < s_N \leq s\), otherwise \(s\) would not be the least upper bound. Since the sequence does not decrease, we have \(s_n \geq s_N\) for all \(n \geq N\), that is
+    \begin{equation*}
+        n \geq N \implies \abs{s - s_n} < \varepsilon,
+    \end{equation*}
+    therefore the sequence is convergent.
+\end{proof}
+
+
