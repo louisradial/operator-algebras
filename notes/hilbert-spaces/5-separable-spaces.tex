@@ -1,0 +1,101 @@
+% vim: spl=en_us
+\section{Separable Hilbert spaces}
+In \cref{exam:dense_l2} we've constructed a countable complete orthonormal basis for the Hilbert space of square-summable sequences \(\ell_2\). Then, it was a countable topological basis, therefore \(\ell_2\) is a \emph{separable topological space}, that is, it has a dense subset that is countable. In fact, we'll see \(\ell_2\) is the only such infinite-dimensional \emph{separable Hilbert space} up to unitary equivalence, which will be later defined.
+\begin{definition}{Separable Hilbert space}{separable_Hilbert_space}
+    A Hilbert space \(\hilbert\) is \emph{separable} if it is a separable topological space, with respect to the metric topology, that is, if there exists a countable dense subset \(X \subset \hilbert\).
+\end{definition}
+
+Our aim is to relate the separability of a Hilbert space with the collection of its complete orthonormal basis. Before we are ready to show this, we construct a dense subset of a closure of a linear span. For any subset \(F\) of a Hilbert space \(\hilbert\), we denote \(\lspan_\mathbb{Q}F\) as the linear span of \(F\) by rationals, that is, the subset
+\begin{equation*}
+    \lspan_\mathbb{Q}F = \setc*{\sum_{i=1}^n r_i v_i}{n \in \mathbb{N}, \ffamily{r_i}{i=1}{n} \subset \mathbb{Q}\mathbb{C}, \ffamily{v_i}{i=1}{n}},
+\end{equation*}
+where \(\mathbb{Q}\mathbb{C} = \setc{x + iy}{x,y \in \mathbb{Q}} \subset \mathbb{C}\) is dense in \(\mathbb{C}\), since \(\mathbb{Q}\) is dense in \(\mathbb{R}\).
+\begin{lemma}{The closure of rational linear span is the closure of the linear span}{rational_span}
+    Let \(F\) be a subset of a Hilbert space \(\hilbert\). Then \(\cl(\lspan_\mathbb{Q} F) = \cl(\lspan F)\).
+\end{lemma}
+\begin{proof}
+    Notice \(\lspan_\mathbb{Q} F \subset \lspan F\), since every linear combination by rationals is a linear combination. Recall the closure of a subset is the smallest closed set containing the subset, therefore \(\cl(\lspan_\mathbb{Q} F) \subset \cl(\lspan F)\) and \(\lspan F \subset \cl(\lspan F)\).
+
+    Let \(v \in \lspan F\), then for some \(n \in \mathbb{N}\), there exist finite sets \(\ffamily{\lambda_i}{i=1}{n}\subset \mathbb{C}\) and \(\ffamily{v_i}{i=1}{n} \subset F\) such that \(v = \sum_{i=1}^n \lambda_i v_i\). Since \(\mathbb{Q}\mathbb{C}\) is dense in \(\mathbb{C}\), for each \(i \in \set{1, 2,\dots, n}\), there exists a sequence \(r_i : \mathbb{N} \to \mathbb{Q}\mathbb{C}\) that converges to \(\lambda_i\). Consider the sequence
+    \begin{align*}
+        \tilde{v} : \mathbb{N} &\to \lspan_\mathbb{Q} F\\
+                             m &\mapsto \sum_{i = 1}^n r_i(m) v_i,
+    \end{align*}
+    then for all \(m \in \mathbb{N}\), we have
+    \begin{equation*}
+        \norm{v - \tilde{v}_m} = \norm*{\sum_{i=1}^n \left[\lambda_i - r_i(m)\right]v_i} \leq \sum_{i=1}^n\abs*{\lambda_i - r_i(m)}\cdot\norm{v_i}.
+    \end{equation*}
+    The right hand side can be made arbitrarily small, then we conclude \(\tilde{v}_m \to v\), thus showing \(\lspan F \subset \cl(\lspan F) \subset \cl(\lspan_\mathbb{Q}F)\).
+\end{proof}
+
+We are now in a position to show that if a Hilbert space has a countable complete orthonormal basis is a necessary and sufficient condition for its separability.
+\begin{theorem}{A complete orthonormal basis of a separable Hilbert space is countable}{countable_separable}
+    A Hilbert space is separable if and only if it has a countable complete orthonormal basis.
+\end{theorem}
+\begin{proof}
+    Suppose a Hilbert space \(\hilbert\) has a countable complete orthonormal basis \(F\), then \(\cl(\lspan F) = \hilbert\). By \cref{lem:rational_span}, we also have \(\cl(\lspan_\mathbb{Q} F) = \hilbert\), then \(\lspan_\mathbb{Q} F\) is dense in \(\hilbert\). Notice
+    \begin{equation*}
+        \lspan_\mathbb{Q} F = \bigcup_{n\in \mathbb{N}} \left[\bigcup_{\ffamily{v_i}{i=1}{n} \subset F} \left(\bigcup_{\ffamily{r_i}{i=1}{n} \subset \mathbb{Q}\mathbb{C}} \set*{\sum_{i=1}^n r_i v_i}\right)\right],
+    \end{equation*}
+    then, since \(F\) is countable, \todo[\(\lspan_{\mathbb{Q}}F\) is a countable union of countable sets, therefore countable]. We have thus constructed a countable dense subset in \(\hilbert\), therefore \(\hilbert\) is a separable Hilbert space.
+
+    Suppose a Hilbert space \(\hilbert\) is separable, then there exists a countable dense subset \(D\) in \(\hilbert\). Let \(F\) be a complete orthonormal basis for \(\hilbert\) and let
+    \begin{equation*}
+        F_D = \bigcup_{x \in D} F^x = \bigcup_{x \in D} \setc{v \in F}{\inner{x}{v} \neq 0}.
+    \end{equation*}
+    By \cref{thm:complete_topological_basis}, \(F_D\) is countable, as a countable union of countable sets. From \cref{thm:closure_basis}, we know for all \(x \in D\) we have \(x \in \cl(\lspan B^x)\), hence \(D \subset \cl(\lspan F_D)\). Since \(D\) is dense in \(\hilbert\), we must have \(\cl(\lspan F_D) = \hilbert\), that is, \(\lspan F_D\) is dense in \(\hilbert\). Since \(F_D\) is a non-empty subset of the orthonormal set \(F\), it is an orthonormal set, therefore it is a linearly independent set. We have thus shown \(F_D\) is a countable orthonormal topological basis for \(\hilbert\), therefore it is a countable complete orthonormal basis.
+\end{proof}
+\begin{corollary}
+    A Hilbert space \(\hilbert\) is separable if and only if every complete orthonormal basis of \(\hilbert\) is countable.
+\end{corollary}
+\begin{proof}
+    Suppose every complete orthonormal basis of \(\hilbert\) is countable. In particular, it has a countable orthonormal basis, then it is separable.
+
+    Suppose \(\hilbert\) is separable. Let \(F\) and \(F_D\) as before, we aim to show \(F_D = F\). Suppose, by contradiction, \(F_D\) is a proper subset of \(F\), then there exists \(v \in F \setminus F_D\) and \(v \neq 0\). Since \(F\) is orthonormal, for all \(u \in F_D \subsetneq F\), we have \(\inner{u}{v} = 0\), as \(u \neq v\). That is, \(v\neq 0\) is a vector orthogonal to every vector of the complete orthonormal basis \(F_D\). This contradiction shows \(F_D = F\), hence \(F\) is a countable complete orthonormal basis. Since the choice of \(F\) was arbitrary, it follows that every complete orthonormal basis of \(\hilbert\) is countable.
+\end{proof}
+\begin{corollary}
+    A Hilbert space is not separable if it has an uncountable orthonormal set.
+\end{corollary}
+\begin{proof}
+    Let \(A\) be an uncountable orthonormal set in a non-trivial Hilbert space \(\hilbert\) and consider the collection \(\mathfrak{O}_A = \setc{S \in \mathfrak{O}}{A \subset S}\) partially ordered by inclusion, where \(\mathfrak{O}\) is the collection of orthonormal sets in \(\hilbert\). Notice \(\mathfrak{O}_A\) is not empty, since \(A \in \mathfrak{O}_A\).
+
+    Let \(\mathcal{E} \subset \mathfrak{O}_A\) be a non-empty linearly ordered subset of \(\mathfrak{O}_A\). As was shown in \cref{thm:complete_orthonormal_basis_exists}, \(\mathcal{E}\) has an upper bound in \(\mathfrak{O}\), defined by \(\bigcup \mathcal{E}\). Since it is the union of sets that contain \(A\), it follows that it contains \(A\), hence it is an upper bound for \(\mathcal{E}\) in \(\mathfrak{O}_A\).
+
+    By \nameref{thm:zorn}, \(\mathfrak{O}_A\) has at least one maximal element, \(F\) say. We claim \(F\) is a complete orthonormal basis that contains \(A\), therefore uncountable. Suppose, by contradiction, \(F\) is not a complete orthonormal basis, then there exists \(v \in \hilbert \setminus \set{0}\) such that \(v \in F^\perp\). In such a case, \(F \cup \set{\frac{1}{\norm{v}}v}\) is an orthonormal set that contains \(F\), and thereby \(A\), contradicting the fact that \(F\) is a maximal element of \(\mathfrak{O}_A\). This shows not every complete orthonormal basis of \(\hilbert\) is countable, therefore \(\hilbert\) is not separable.
+\end{proof}
+
+We may restate \cref{thm:closure_basis} for separable Hilbert spaces.
+\begin{theorem}{Complete orthonormal basis in a separable Hilbert space}{basis_separable}
+    Let \(F\) be a complete orthonormal basis on a separable Hilbert space \(\hilbert\). For any enumeration \(\family{e_n}{n\in \mathbb{N}} \subset F\) of this basis, we have for all \(x \in \hilbert\) that
+    \begin{equation*}
+        x = \sum_{n=1}^\infty \inner{e_n}{x}e_n\quad\text{and}\quad
+        \norm{x}^2 = \sum_{n=1}^\infty \abs*{\inner{e_n}{x}}^2.
+    \end{equation*}
+\end{theorem}
+
+We now illustrate the fact a countable orthonormal set in a separable Hilbert space is not necessarily a complete orthonormal basis.
+\begin{example}{Countable orthonormal set in a separable Hilbert space}{L2_characteristic}
+    For \(A \subset \mathbb{R}\), we define the characteristic function \(\chi_A\) of \(A\) by the map defined by \(\chi_A(x) = 1\) if \(x \in A\) and \(\chi_A(x) = 0\) if \(x \notin A\). Let
+    \begin{align*}
+        \psi : \mathbb{Z} &\to L^2(\mathbb{R}, \dl{x})\\
+                        m &\mapsto \chi_{[m, m+1)}
+    \end{align*}
+    be the sequence of characteristic functions on the intervals \([m, m+1)\). Then \(\family{\psi_n}{n\in \mathbb{Z}}\) is a countable orthonormal set in the separable Hilbert space \(L^2(\mathbb{R}, \dl{x})\), but it is not a complete orthonormal basis.
+\end{example}
+\begin{proof}
+    Notice \(\conj{\psi_n} \psi_m = \delta_{nm} \psi_n\) for all \(n,m \in \mathbb{Z}\). Then \(\family{\psi_n}{n\in \mathbb{Z}}\) is a countable orthonormal set in \(L^2(\mathbb{R}, \dl{x})\) since
+    \begin{equation*}
+        \inner{\psi_n}{\psi_m} = \int_{\mathbb{R}} \dli{x} \conj{\psi_n(x)}\psi_m(x) = \delta_{nm} \int_{\mathbb{R}} \dli{x}\chi_{[n, n+1)}(x) = \delta_{nm}
+    \end{equation*}
+    for all \(n,m \in \mathbb{Z}\).
+
+    Consider the function \(\phi : \mathbb{R} \to \mathbb{C}\) defined by \(x \mapsto \sin(2\pi x)\psi_1(x)\). Notice \(\phi \in L^2(\mathbb{R}, \dl{x})\) since
+    \begin{equation*}
+        \int_{\mathbb{R}} \dli{x} \abs*{\sin(2\pi x) \psi_0(x)}^2 = \int_{\mathbb{R}} \dli{x} \sin^2(2\pi x) \chi_{[0,1)} = \int_{[0,1)} \dli{x} \sin^2(2\pi x) = \frac1{2},
+    \end{equation*}
+    and we have \(\norm{\phi} = \frac1{\sqrt{2}}.\) Notice \(\phi \in \family{\psi_n}{n\in \mathbb{Z}}^\perp\). Indeed,
+    \begin{equation*}
+        \inner{\psi_n}{\phi} = \int_{\mathbb{R}} \dli{x} \chi_{[n,n+1)}(x) \chi_{[0,1)}(x) \sin(2\pi x) = \delta_{n0} \int_{[0,1)} \dli{x} \sin(2\pi x) = 0
+    \end{equation*}
+    for all \(n \in \mathbb{Z}\). Hence, \(\family{\psi_n}{n\in \mathbb{Z}}\) is not a complete orthonormal basis.
+\end{proof}
