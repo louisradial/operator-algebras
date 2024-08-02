@@ -1,0 +1,45 @@
+% vim: spl=en_us
+\documentclass[english]{notas}
+
+% \usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
+% \addbibresource{references.bib}
+
+\newcommand\hilbert{\mathscr{H}}
+\newcommand\riesz{\mathscr{R}}
+\newcommand\eval{\mathscr{D}}
+\newcommand\domain[1]{\mathcal{D}_{#1}}
+\newcommand\range[1]{\mathcal{R}_{#1}}
+\newcommand\bounded{\ensuremath{\mathscr{B}}}
+\DeclareMathOperator*{\slim}{s-lim}
+\DeclareMathOperator*{\wlim}{w-lim}
+\newcommand\conj[1]{\ensuremath{\overline{#1}}}
+\newcommand\wto{\rightharpoonup}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\inte}{int}
+\DeclareMathOperator{\lspan}{span}
+
+\title{Operator Algebras}
+\author{Louis Bergamo Radial}
+% \allowdisplaybreaks
+\begin{document}
+\maketitle
+\tableofcontents
+\input{metric-spaces/0-topology}
+\input{metric-spaces/1-metric-spaces}
+\input{normed-linear-spaces/0-normed-linear-spaces}
+\input{normed-linear-spaces/1-bounded-operators}
+\input{normed-linear-spaces/2-extension-bounded-operators}
+\input{normed-linear-spaces/3-hahn-banach-theorem}
+\input{normed-linear-spaces/4-topological-dual}
+\input{hilbert-spaces/0-inner-product-spaces}
+\input{hilbert-spaces/1-pre-hilbert-spaces}
+\input{hilbert-spaces/2-orthogonality}
+\input{hilbert-spaces/3-orthonormal-sets}
+\input{hilbert-spaces/4-complete-orthonormal-basis}
+\input{hilbert-spaces/5-separable-spaces}
+\input{hilbert-spaces/6-riesz-representation}
+\input{hilbert-spaces/7-unitary-maps}
+\input{hilbert-spaces/8-orthogonal-projectors}
+% \appendix
+% \include{appendix_01}
+\end{document}
