@@ -1,0 +1,145 @@
+% vim: spl=en_us
+\chapter{Hilbert spaces}
+An \emph{inner product space} \((V, \inner{\noarg}{\noarg})\) is a linear space \(V\) equipped with a distinguished \emph{sesquilinear form} \(\inner{\noarg}{\noarg} : V \times V \to \mathbb{C}\), called the \emph{inner product}, satisfying
+\begin{enumerate}[label=(\alph*)]
+    \item conjugate symmetry: \(\inner{x}{y} = \conj{\inner{y}{x}}\), for all \(x, y \in V\);
+    \item positive-definiteness: \(\inner{x}{x} \geq 0\) for all \(x \in X\) and \(\inner{x}{x} = 0 \iff x = 0\);
+    \item linearity in the second argument\footnote{In Mathematics literature, it is usually required linearity \emph{not} in the second argument, but the first one. We stick to the Physics literature convention.}: \(\inner{z}{\alpha x + \beta y} = \alpha \inner{z}{x} + \beta \inner{z}{y}\), for all \(x, y, z \in V\) and all \(\alpha, \beta \in \mathbb{C}\).
+\end{enumerate}
+From conjugate symmetry and linearity in the second argument, it follows that the inner product is conjugate linear in the second argument,
+\begin{equation*}
+    \inner{\alpha x + \beta y}{z} = \conj{\inner{z}{\alpha x + \beta z}} = \conj{\alpha\inner{z}{x}} + \conj{\beta\inner{z}{y}} = \conj{\alpha} \inner{x}{z} + \conj{\beta} \inner{y}{z},
+\end{equation*}
+for all \(x,y,z \in V\) and all \(\alpha, \beta \in \mathbb{C}\).
+
+\begin{proposition}{Positive-definiteness implies non-degeneracy}{non_degeneracy}
+    Let \((V, \inner{\noarg}{\noarg})\) be an inner product space. Then the inner product is non-degenerate, that is, \(\inner{x}{y} = 0\) for all \(y \in V\) if and only if \(x = 0\).
+\end{proposition}
+\begin{proof}
+    Suppose \(\inner{x}{y} = 0\) for all \(y \in V\). In particular, \(\inner{x}{x} = 0\), then \(x = 0\) by positive definiteness.
+
+    Suppose \(x = 0\), then for all \(y \in Y\), we have
+    \begin{equation*}
+        \inner{0}{y} = \inner{y-y}{y} = \inner{y}{y} - \inner{y}{y} = 0.
+    \end{equation*}
+    That is, \(\inner{x}{y} = 0\) for all \(y \in Y\).
+\end{proof}
+
+In Analysis, inequalities are often very important to estimate certain quantities, as we've used many times when studying properties of bounded operators in normed linear spaces. It turns out the inner product properties are enough to define of the most important inequalities in Mathematics.
+\begin{theorem}{Cauchy-Schwarz inequality}{cauchy_schwarz}
+    Let \((V, \inner{\noarg}{\noarg})\) be an inner product space. Then,
+    \begin{equation*}
+        \abs*{\inner{x}{y}}^2 \leq \inner{x}{x} \inner{y}{y},
+    \end{equation*}
+    for all \(x, y \in V\).
+\end{theorem}
+\begin{proof}
+    The inequality is trivially satisfied if at least one of the vectors is the zero vector. We may assume \(x, y \in V\setminus\set{0}\) and consider the inequality \(\inner*{\alpha x + y}{\alpha x + y} \geq 0\), which follows from the positive-definiteness of the sesquilinear form for all \(\alpha \in \mathbb{C}\). By expanding the inner product with sesquilinearity, we get
+    \begin{align*}
+        \inner{\alpha x + y}{\alpha x + y} &= \alpha\inner{\alpha x + y}{x} + \inner*{\alpha x + y}{y}\\
+                                           &= \alpha \left(\conj{\alpha} \inner{x}{x} + \inner{y}{x}\right) + \conj{\alpha}\inner{x}{y} + \inner{y}{y}\\
+                                           &= \alpha\conj{\alpha}\inner{x}{x} + \alpha \inner{y}{x} + \conj{\alpha}\inner{x}{y} + \inner{y}{y}\\
+                                           &= \abs{\alpha}^2 \inner{x}{x} + 2\Re\left(\conj{\alpha}\inner{x}{y}\right) + \inner{y}{y}.
+    \end{align*}
+    We set \(\alpha = - \frac{\inner{x}{y}}{\inner{x}{x}}\), then from conjugate symmetry we have
+    \begin{equation*}
+        \inner{\alpha x + y}{\alpha x + y} = \inner{y}{y} - \frac{\abs*{\inner{x}{y}}^2}{\inner{x}{x}} \geq 0,
+    \end{equation*}
+    that is, \(\abs*{\inner{x}{y}}^2 \leq \inner{x}{x} \inner{y}{y}\).
+\end{proof}
+
+There is a necessary and sufficient condition for the equality in the Cauchy-Schwarz inequality. To state it, we first recall the definition of linear independence.
+\begin{definition}{Linearly independent subset}{linear_independent}
+    Let \(V\) be a linear space. A non-empty subset \(F \subset V\) is \emph{linearly independent} if for every finite subset \(\ffamily{v_i}{i=1}{N} \subset F\) the only resulting linear combination that results in the zero vector is the trivial linear combination, that is,
+    \begin{equation*}
+        \sum_{i = 1}^N \alpha_i v_i = 0 \implies \alpha_i = 0, i \in \set{1,2,\dots,N}.
+    \end{equation*}
+    If a set is not linearly independent, we say it is \emph{linearly dependent}.
+\end{definition}
+\begin{remark}
+    In particular, any finite set of vectors \(\ffamily{v_i}{i=1}{N}\subset V\) is linearly dependent if there exist \(\ffamily{\alpha_i}{i=1}{N} \in \mathbb{C}\) with at least one non-zero such that \(\sum_{i=1}^N \alpha_iv_i = 0\).
+\end{remark}
+
+\begin{proposition}{Equality in the Cauchy-Schwarz inequality}{cauchy_schwarz_equality}
+    Let \((V, \inner{\noarg}{\noarg})\) be an inner product space. The equality \(\abs*{\inner{x}{y}}^2 = \inner{x}{x}\inner{y}{y}\) holds if and only if the set \(\set{x,y} \subset V\) is linearly dependent.
+\end{proposition}
+\begin{proof}
+    Suppose \(\set{x,y} \subset V\) is linearly dependent. If either vector is the zero vector, then the equality holds trivially. We may assume \(x, y \in V\setminus\set{0}\), then there exists \(\alpha \in \mathbb{C}\setminus\set{0}\) such that \(\alpha x = y\). We have
+    \begin{equation*}
+        \abs*{\inner{x}{y}}^2 = \inner{x}{y}\inner{y}{x} = \inner{x}{\alpha x}\inner*{y}{\frac1\alpha y} = \inner{x}{x} \inner{y}{y},
+    \end{equation*}
+    that is, the equality holds.
+
+    Suppose \(\abs*{\inner{x}{y}} = \inner{x}{x} \inner{y}{y}\). Again, if either vector is the zero vector, then \(\set{x,y}\) is trivially linearly dependent, then we may assume \(x, y \in V \setminus\set{0}\). We've seen that
+    \begin{equation*}
+        \inner*{y - \frac{\inner{x}{y}}{\inner{x}{x}}x}{y - \frac{\inner{x}{y}}{\inner{x}{x}}x} = \inner{y}{y} - \frac{\abs*{\inner{x}{y}}}{\inner{x}{x}}.
+    \end{equation*}
+    By hypothesis the right hand side vanishes, then by positive-definiteness we have \(y - \frac{\inner{x}{y}}{\inner{x}{x}}x = 0\), hence \(\set{x,y}\) is linearly dependent.
+\end{proof}
+
+We verify every inner product defines a norm on a linear space, thus every inner product space is a normed linear space. As it was the case with norms and metrics, the following construction is not the only way to induce a norm from an inner product, but we will refer to the map here defined as a \emph{norm induced by an inner product}.
+\begin{proposition}{Inner product induced norm}{inner_product_norm}
+    Let \((V, \inner{\noarg}{\noarg})\) be an inner product space. The map
+    \begin{align*}
+        \norm{\noarg} : V &\to \mathbb{R}\\
+                        x &\mapsto \sqrt{\inner{x}{x}}
+    \end{align*}
+    defines a norm on \(V\).
+\end{proposition}
+\begin{proof}
+    Non-negativity and positive-definiteness of the map follow from the positive-definiteness of the inner product and the fact that the square root is a monotonically increasing function, that is, it is \emph{order preserving}. Absolute homogeneity follows trivially from the sesquilinearity.
+
+    It remains to show subadditivity. Let \(x,y \in V\), then
+    \begin{equation*}
+        \norm{x + y}^2 = \norm{x}^2 + 2\Re(\inner{x}{y}) + \norm{y}^2.
+    \end{equation*}
+    From \(\Re(z) \leq \abs{z}\) for all \(z \in \mathbb{C}\), we may estimate
+    \begin{equation*}
+        \norm{x + y}^2 \leq \norm{x}^2 + 2\abs*{\inner{x}{y}} + \norm{y}^2.
+    \end{equation*}
+    Using the Cauchy-Schwarz inequality yields
+    \begin{equation*}
+        \norm{x+y}^2 \leq (\norm{x} + \norm{y})^2 \implies \norm{x+y} \leq \norm{x} + \norm{y},
+    \end{equation*}
+    thus showing subadditivity.
+\end{proof}
+\begin{remark}
+    The Cauchy-Schwarz inequality may be expressed in terms of the induced norm:
+    \begin{equation*}
+        \abs*{\inner{x}{y}} \leq \norm{x} \norm{y},
+    \end{equation*}
+    for all \(x, y \in V\), with equality holding if and only if \(\set{x,y}\) is linearly independent.
+\end{remark}
+
+Since there is a norm on every inner product space, they have an induced metric space structure. Thus, we may study the continuity of the inner product.
+\begin{proposition}{Inner product is continuous}{inner_product_continuous}
+    Let \((V, \inner{\noarg}{\noarg})\) be an inner product space. Let \(\family{x_n}{n\in \mathbb{N}}, \family{y_n}{n\in \mathbb{N}} \subset V\) be sequences that converge to \(x, y \in V\) with respect to \((V, \inner{\noarg}{\noarg})\), then
+    \begin{equation*}
+        \lim_{n\to\infty} \inner{x_n}{y_n} = \inner{x}{y}.
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    Notice that
+    \begin{equation*}
+        \inner{x_n - x}{y_n} + \inner{x}{y_n -y} = \inner{x_n}{y_n} - \inner{x}{y}
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). Recall that every convergent sequence in a normed linear space is bounded. Let \(M > 0\) such that \(\norm{y_n} \leq M\) for all \(n \in \mathbb{N}\). Then the triangle inequality and the Cauchy-Schwarz yields
+    \begin{align*}
+        \abs*{\inner{x_n}{y_n} - \inner{x}{y}} &\leq \abs*{\inner{x_n - x}{y_n} + \abs*{\inner{x}{y_n - y}}}\\
+                                               &\leq \norm{x_n - x}\cdot \norm{y_n} + \norm{x} \cdot\norm{y_n - y}\\
+                                               &\leq M\norm{x_n - x} + \norm{x} \cdot \norm{y_n - y},
+    \end{align*}
+    for all \(n \in \mathbb{N}\).
+
+    Let \(\varepsilon > 0\). From convergence of the sequences in \(V\), there exists \(N_1, N_2 \in \mathbb{N}\) such that \(n \geq N_1 \implies M \norm{x_n - x} < \frac13 \varepsilon\) and \(n \geq N_2 \implies \norm{x} \cdot \norm{y_n- y} < \frac13 \varepsilon\). We have thus
+    \begin{equation*}
+        n \geq \max\set{N_1, N_2} \implies \abs*{\inner{x_n}{y_n} - \inner{x}{y}} < \varepsilon,
+    \end{equation*}
+    hence \(\inner{x_n}{y_n}\to \inner{x}{y}\).
+\end{proof}
+
+Analogously for normed linear spaces, we borrow the metric space terminology for inner product spaces, keeping in mind the metric is the one induced by the inner product.
+\begin{definition}{Hilbert space}{hilbert_space}
+    A Hilbert space \((\hilbert, \inner{\noarg}{\noarg})\) is a complete inner product space.
+\end{definition}
+It should now be obvious that a Hilbert space is a Banach space with respect to the norm induced by its inner product. Then results for Banach spaces, such as the continuity of a linear map, completeness of the Banach space of bounded operators, and the BLT theorem, all follow for Hilbert spaces.
