@@ -1,0 +1,136 @@
+% vim: spl=en_us
+\section{Riesz's representation theorem}
+The orthogonal decomposition theorem has a very useful consequence in the form of Riesz's representation theorem, that states that a continuous linear functional on a Hilbert space can be uniquely represented by a vector.
+\begin{theorem}{Riesz's representation theorem}{riesz_representation}
+    Let \(\hilbert\) be a Hilbert space. If \(\ell \in \hilbert^\dag\), then there exists a unique \(\psi \in \hilbert\), called the \emph{Riesz representation of \(\ell\)}, such that
+    \begin{equation*}
+        \ell(x) = \inner{\psi}{x}
+    \end{equation*}
+    for all \(x \in \hilbert\).
+\end{theorem}
+\begin{proof}
+    We consider the kernel \(\ker \ell\) of the continuous linear functional \(\ell\). Notice \(\ker\ell\) is closed as it is the preimage of the closed set \(\set{0} \subset \mathbb{C}\) under a continuous map. That is, \(\ker \ell \subset \hilbert\) is a closed subspace of \(\hilbert\). If \(\ker \ell = \hilbert\), then \(\psi = 0\) satisfies the claim, since it is the unique vector that is orthogonal to every vector in \(\hilbert\) by non-degeneracy of the inner product. Henceforth we may assume \(\ker \ell \subsetneq \hilbert\), then the closed subspace \(\ker\ell^\perp\) is non-trivial. Indeed, by \cref{thm:orthogonal_decomposition}, for all \(x \in \hilbert\) we have the unique decomposition \(x = x_\parallel + x_\perp\) where \(x_\parallel \in \ker \ell\) and \(x_\perp \in \ker \ell^\perp\). If \(\ker\ell^\perp\) were trivial, then \(x_\perp = 0\) for all \(x,\) that is, \(\ker \ell = \hilbert\), which contradicts our hypothesis, proving our claim.
+
+    Let \(z \in \ker\ell^\perp\setminus\set{0}\), then \(\ell(z) \neq 0\). For all \(x \in \hilbert\) we have \(\ell(z)x - \ell(x)z \in \ker\ell\). Indeed,
+    \begin{equation*}
+        \ell\left(\ell(z)x - \ell(x)z\right) = \ell(z)\ell(x) - \ell(x)\ell(z) = 0.
+    \end{equation*}
+    It follows immediately that \(z\) and \(\ell(z)x - \ell(x)z\) are orthogonal, then
+    \begin{equation*}
+        \inner{z}{\ell(z)x - \ell(x)z} = \ell(z) \inner{z}{x} - \ell(x) \norm{z}^2 = 0 \implies \ell(x) = \inner*{\frac{\conj{\ell(z)}}{\norm{z}^2}z}{x},
+    \end{equation*}
+    for all \(x \in \hilbert\). That is, defining
+    \begin{equation*}
+        \psi = \frac{\conj{\ell(z)}}{\norm{z}^2}z
+    \end{equation*}
+    yields \(\ell(x) = \inner{\psi}{x}\) for all \(x \in \hilbert\) as desired.
+
+    Since \(z\) is arbitrary, we have to show well definition. Let \(\tilde{z} \in \ker\ell^\perp\setminus\set{0}\). First, notice \(\lspan\set{z}\) is a closed subset, then \(\tilde{z} = \tilde{z}_\parallel + \tilde{z}_\perp\), with \(\tilde{z}_\parallel \in \lspan\set{z}\) and \(\tilde{z}_\perp \in \lspan\set{z}^\perp\). We must have \(\tilde{z}_\perp \in \ker\ell^\perp\), otherwise \(\tilde{z} \notin \ker\ell^\perp\), since \(\ker\ell^\perp\) is a subspace. Notice \(\ell(\tilde{z}_\perp) = 0\),
+    \begin{equation*}
+        \ell(\tilde{z}_\perp) = \inner*{\frac{\conj{\ell(z)}}{\norm{z}^2}z}{\tilde{z}_\perp} = \frac{\ell(z)}{\norm{z}^2} \inner{z}{\tilde{z}_\perp} = 0.
+    \end{equation*}
+    This implies \(\tilde{z}_\perp = 0\), since \(\tilde{z}_\perp \in \ker\ell \cap \ker\ell^\perp\). We have thus shown \(\ker\ell^\perp = \lspan{z}\), that is, there exists \(\alpha \in \mathbb{C}\setminus \set{0}\) such that \(\tilde{\tilde{z}} = \alpha z\), then
+    \begin{equation*}
+        \tilde{\psi} = \frac{\conj{\ell(\tilde{z})}}{\norm{\tilde{z}^2}}\tilde{z} = \frac{\conj{\alpha \ell(z)}}{\abs{\alpha}^2\norm{z}^2}\alpha z = \frac{\conj{\ell(z)}}{\norm{z}^2}z = \psi,
+    \end{equation*}
+    which shows well definition of \(\psi\).
+
+    Finally, we show uniqueness. Suppose there exists \(\psi'\in \hilbert\) such that \(\ell(x) = \inner{\psi'}{x}\) for all \(x \in \hilbert\). Then, \(\inner{\psi}{x} = \inner{\psi'}{x}\), which yields \(\inner{\psi - \psi'}{x} = 0\) for all \(x \in \hilbert\). By non-degeneracy we have \(\psi - \psi' = 0\), thus concluding the proof.
+\end{proof}
+\begin{corollary}
+    Let \(\ell \in \hilbert^\dag\setminus\set{0}\) be a non zero continuous linear functional, then \(\ker \ell^\perp\) is the one-dimensional linear subspace spanned by \(\psi\).
+\end{corollary}
+
+Notice \nameref{thm:riesz_representation} defines a map
+\begin{align*}
+    \riesz : \hilbert^\dag &\to \hilbert\\
+                           \ell &\mapsto \psi_\ell,
+\end{align*}
+where \(\psi_\ell\) is the Riesz representation of \(\ell\). Moreover, the theorem shows the map is injective. In fact, it is bijective. Indeed, let \(\phi \in \hilbert,\) then
+\begin{align*}
+    \ell_\phi : \hilbert &\to \mathbb{C}\\
+                       x &\mapsto \inner{\phi}{x}
+\end{align*}
+defines a continuous linear functional with \(\riesz(\ell_\phi) = \phi\), thus the range of \(\riesz\) is \(\hilbert\). Moreover, the association \(\phi\mapsto\ell_\phi\) defines the inverse map \(\riesz^{-1} : \hilbert \to \hilbert^\dag\). Notice, however, \(\riesz\) and \(\riesz^{-1}\) are \emph{antilinear} maps. Indeed, let \(f, g \in \hilbert^\dag\) and let \(\alpha, \beta \in \mathbb{C}\), then for all \(x \in \hilbert\) we have
+\begin{equation*}
+    (\alpha f + \beta g)(x) = \alpha \inner{\riesz(f)}{x} + \beta \inner{\riesz(g)}{x} = \inner{\conj{\alpha}\riesz(f) + \conj{\beta}\riesz(g)}{x},
+\end{equation*}
+that is, \(\riesz(\alpha f + \beta g) = \conj{\alpha}\riesz(f) + \conj{\beta}\riesz(g)\).  Let \(u, v \in \hilbert\), then for all \(x \in \hilbert\)
+\begin{equation*}
+    \riesz^{-1}(\alpha u + \beta v)(x) = \inner{\alpha u + \beta v}{x} = \conj{\alpha} \inner{u}{x} + \conj{\beta}\inner{v}{x} = \left(\conj{\alpha}\riesz^{-1}(u)+ \conj{\beta}\riesz^{-1}(v)\right)(x),
+\end{equation*}
+then \(\riesz^{-1}(\alpha u + \beta v) = \conj{\alpha}\riesz^{-1}(u) + \conj{\beta}\riesz^{-1}(v)\).
+
+We may use the Riesz representation map to define an inner product on \(\hilbert^\dag\).
+\begin{proposition}{Inner product on topological dual}{inner_product_dual}
+    Let \((\hilbert, \inner{\noarg}{\noarg})\) be a Hilbert space. The map
+    \begin{align*}
+        \inner{\noarg}{\noarg}_{\hilbert^\dag} : \hilbert^\dag \times \hilbert^\dag &\to \mathbb{C}\\
+        (f,g) &\mapsto \inner{\riesz(g)}{\riesz(f)}
+    \end{align*}
+    is an inner product on the topological dual \(\hilbert^\dag\).
+\end{proposition}
+\begin{proof}
+    Let \(f, g, h \in \hilbert^\dag\) and let \(\alpha, \beta \in \mathbb{C}\), then by the antilinearity of the Riesz representation map, we have
+    \begin{equation*}
+        \inner{h}{\alpha f + \beta g}_{\hilbert^\dag} = \inner{\riesz(\alpha f + \beta g)}{\riesz(h)} = \inner{\conj{\alpha}\riesz(f) + \conj{\beta}\riesz(g)}{\riesz(h)}.
+    \end{equation*}
+    By linearity in the second argument of the inner product in \(\hilbert\), we conclude
+    \begin{equation*}
+        \inner{h}{\alpha f + \beta g}_{\hilbert^\dag} = \alpha \inner{\riesz(f)}{\riesz(h)} + \beta \inner{\riesz(g)}{\riesz(h)} = \alpha \inner{h}{f}_{\hilbert^\dag} + \beta \inner{h}{g}_{\hilbert^\dag},
+    \end{equation*}
+    hence \(\inner{\noarg}{\noarg}_{\hilbert^\dag}\) is linear in the second argument. The conjugate symmetry of the inner product in \(\hilbert\) yields
+    \begin{equation*}
+        \inner{g}{f}_{\hilbert^\dag} = \inner{\riesz(f)}{\riesz(g)} = \conj{\inner{\riesz(g)}{\riesz(f)}} = \conj{\inner{f}{g}_{\hilbert^\dag}},
+    \end{equation*}
+    hence, \(\inner{\noarg}{\noarg}_{\hilbert^\dag}\) is conjugate symmetric. Finally, positive-definiteness of the inner product in \(\hilbert\) induces positive-definiteness on \(\inner{\noarg}{\noarg}_{\hilbert^\dag}\). Indeed,
+    \begin{equation*}
+        \inner{f}{f}_{\hilbert^\dag} = \inner{\riesz(f)}{\riesz(f)} \geq 0
+    \end{equation*}
+    with equality being equivalent to \(\riesz(f) = 0\). Since \(\riesz\) is an antilinear isomorphism, we have shown this map is a inner product on \(\hilbert^\dag\).
+\end{proof}
+\begin{remark}
+    Notice \(\inner{f}{g}_{\hilbert^\dag} = g(\riesz(f))\) for all \(f, g \in \hilbert^\dag\).
+\end{remark}
+
+We have shown that \((\hilbert^\dag, \inner{\noarg}{\noarg}_{\hilbert^\dag})\) is a pre-Hilbert space and we already know \((\hilbert^\dag, \norm{\noarg})\) is a Banach space with respect to the operator norm \(\norm{\noarg}\). In fact, \((\hilbert^\dag, \inner{\noarg}{\noarg}_{\hilbert^\dag})\) is a Hilbert space, since the operator norm is actually induced by this inner product.
+\begin{theorem}{Topological dual is a Hilbert space}{dual_hilbert}
+    The norm \(\norm{\noarg}_{\hilbert^\dag}\) induced by the inner product \(\inner{\noarg}{\noarg}_{\hilbert^\dag}\) is equal to the operator norm on the topological dual \(\hilbert^\dag\) of a Hilbert space \(\hilbert\).
+\end{theorem}
+\begin{proof}
+    Trivially, \(\norm{0}_{\hilbert^\dag} = \norm{0}\). Let \(\ell \in \hilbert^\dag\setminus\set{0}\), then
+    \begin{equation*}
+        \norm{\ell} = \sup_{x \in \hilbert} \frac{\abs{\ell(x)}}{\norm{x}} = \sup_{x \in \hilbert} \frac{\abs{\inner{\riesz(\ell)}{x}}}{\norm{x}}.
+    \end{equation*}
+    By the Cauchy-Schwarz inequality, we have
+    \begin{equation*}
+        \norm{\ell} \leq \sup_{x\in \hilbert} \norm{\riesz(\ell)} = \norm{\ell}_{\hilbert^\dag}.
+    \end{equation*}
+    At the same time, the supremum yields
+    \begin{equation*}
+        \norm{\ell} \geq \frac{\abs{\inner{\riesz(\ell)}{\riesz(\ell)}}}{\norm{\riesz(\ell)}} = \norm{\ell}_{\hilbert^\dag}.
+    \end{equation*}
+    Hence, the norms are equal.
+\end{proof}
+
+As an immediate consequence, we show every Hilbert space is reflexive.
+\begin{theorem}{Hilbert spaces are reflexive}{hilbert_reflexive}
+    If \((\hilbert, \inner{\noarg}{\noarg})\) is a Hilbert space, then \(\eval(\hilbert) = (\hilbert^\dag)^\dag\), that is, \(\hilbert\) is reflexive.
+\end{theorem}
+\begin{proof}
+    Since \((\hilbert, \inner{\noarg}{\noarg})\) and \((\hilbert, \inner{\noarg}{\noarg}_{\hilbert^\dag})\) are Hilbert spaces, \nameref{thm:riesz_representation} yields the antilinear bijective representation maps \(\riesz : \hilbert^\dag \to \hilbert\) and \(\mathscr{S} : (\hilbert^\dag)^\dag \to \hilbert^\dag\), with antilinear inverse maps.
+
+    We consider the composition \(\mathscr{S}^{-1} \circ \riesz^{-1} : \hilbert \to (\hilbert^\dag)^\dag\). Let \(u, v \in \hilbert\) and \(\alpha, \beta \in \mathbb{C}\), then
+    \begin{equation*}
+        \mathscr{S}^{-1} \circ \riesz^{-1} (\alpha u + \beta v) = \mathscr{S}^{-1}\left(\conj{\alpha} \riesz^{-1}(u) + \conj{\beta}\riesz^{-1}(v)\right) = \alpha \mathscr{S}^{-1} \circ \riesz^{-1}(u) + \beta \mathscr{S}^{-1} \circ \riesz^{-1}(v),
+    \end{equation*}
+    that is, the composition is linear. As a composition of bijections, it is a bijection, hence \(\mathscr{S}^{-1} \circ \riesz^{-1}\) is a linear isomorphism.
+
+    This composition is, in fact, the evaluation map \(\eval : \hilbert \to (\hilbert^\dag)^\dag\). Indeed, let \(u \in \hilbert\), then for all \(\ell \in \hilbert^\dag\)
+    \begin{align*}
+        \left(\mathscr{S}^{-1}\circ \riesz^{-1}(u)\right)(\ell) &= \inner{\riesz^{-1}(u)}{\ell}_{\hilbert^\dag}\\
+                                                                &= \inner{\riesz(\ell)}{u}\\
+                                                                &= \ell(u),
+    \end{align*}
+    that is \(\mathscr{S}^{-1} \circ \riesz^{-1}(u) = \eval(u)\), as claimed. Thus, the evaluation map is a linear isomorphism.
+\end{proof}
