@@ -1,0 +1,182 @@
+% vim: spl=en_us
+\section{Bounded linear operators}
+As it usually is the case in Mathematics, one studies a given structure by studying maps between instances of that structure. Thus, we consider linear maps, or linear operators, \(A : V \to W\), where \((V, \norm{\noarg}_V),(W, \norm{\noarg}_W)\) are normed linear spaces and \(W\) is a Banach space. We note that, when dealing with different linear spaces, norms will be simply denoted by \(\norm{\noarg}\), if the argument of the norm does not leave any ambiguity towards which norm is being used.
+
+\begin{definition}{Bounded map}{bounded}
+    Let \(V\) and \(W\) be normed linear spaces. A linear map \(A : V \to W\) is \emph{bounded} if
+    \begin{equation*}
+        \sup_{f\in V\setminus\set{0}} \frac{\norm{A f}}{\norm{f}} < \infty.
+    \end{equation*}
+    If an operator is not bounded, we say it is \emph{unbounded}.
+\end{definition}
+\begin{remark}
+    An equivalent formulation is the condition
+    \begin{equation*}
+        \sup{\setc*{\norm{Af}}{f \in V : \norm{f} = 1}} < \infty
+    \end{equation*}
+    which follows from the homogeneity property of the norm and the linearity of the operator. Indeed, for all \(g \in V\setminus\set{0}\),
+    \begin{equation*}
+        \frac{\norm{Ag}}{\norm{g}} = \norm*{\frac{1}{\norm{g}}Ag} = \norm*{A\frac{g}{\norm{g}}} = \norm{A\tilde{g}},
+    \end{equation*}
+    where \(\tilde{g} \in \setc{f \in V}{\norm{f} = 1}\).
+\end{remark}
+\begin{remark}
+    It is cumbersome to always write \(f \in V \setminus\set{0}\), so we will simply write
+    \begin{equation*}
+        \sup_{f \in V} \frac{\norm{Af}}{\norm{f}}
+    \end{equation*}
+    as shorthand.
+\end{remark}
+
+\begin{example}{The derivative operator of complex-valued functions is unbounded}{derivative_unbounded}
+    Let \(W = \mathcal{C}([0,1]; \mathbb{C})\) be the Banach space of continuous complex-valued functions equipped with the sup norm and let the set \(V = \mathcal{C}^1([0,1];\mathbb{C})\subset W\) of continuously differentiable complex-valued functions in the interval \([0,1]\). The derivative operator
+    \begin{align*}
+        P : V &\to W\\
+            f &\mapsto f'
+    \end{align*}
+    is unbounded.
+\end{example}
+\begin{proof}
+    We consider the family of continuously differentiable functions \(\family{f_n}{n\in \mathbb{N}}\subset V\) defined by
+    \begin{align*}
+        f_n : [0,1] &\to \mathbb{C}\\
+                  t &\mapsto \sin(2\pi n t),
+    \end{align*}
+    then it is clear that for all \(n \in \mathbb{N}\), \(\norm{f_n}_\infty = 1,\) that is \(\family{f_n}{n\in \mathbb{N}} \subset \setc{f \in V}{\norm{f} = 1}\). Also, we have
+    \begin{equation*}
+        \norm{P f_n}_\infty = \sup_{t \in [0,1]} \abs{2\pi n \cos(2\pi nt)} = 2\pi n,
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). Finally, we show the operator \(P\) is unbounded with this sequence
+    \begin{equation*}
+        \sup_{f \in V} \frac{\norm{P f}_\infty}{\norm{f}_\infty} \geq \sup_{n \in \mathbb{N}\setminus\set{0}} \norm{P f_n} = \sup_{n \in \mathbb{N}} 2\pi n = \infty,
+    \end{equation*}
+    as claimed.
+\end{proof}
+\begin{remark}
+    Details aside, this example bears some resemblance to the fact that the momentum operator in Quantum Mechanics is unbounded.
+\end{remark}
+
+\begin{theorem}{Bounded operators are continuous}{bounded_continuous}
+    Let \(A : V \to W\) be a linear operator where \(V\) and \(W\) are normed linear spaces. The following are equivalent
+    \begin{enumerate}[label=(\alph*)]
+        \item \(A\) is bounded;
+        \item \(A\) is uniformly continuous;
+        \item \(A\) is continuous; and
+        \item \(A\) is continuous at \(0\).
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \(\text{(a)}\implies\text{(b)}\): Suppose \(A\) is bounded and let \(\varepsilon > 0\). Then the set \(\setc*{\frac{\norm{Af}}{\norm{f}}}{f \in V \setminus\set{0}}\) has a finite upper bound, \(M > 0\) say. Then, for all \(x,y \in V\), we have \(\norm{A(x - y)} \leq M \norm{x-y}\). We set \(\delta = \frac{\varepsilon}{M + 1}\), then for all \(x, y \in V\) it follows that
+    \begin{equation*}
+        \norm{x - y} < \delta \implies \norm{Ax - Ay} \leq \frac{M}{M+1} \varepsilon < \varepsilon,
+    \end{equation*}
+    that is, \(A\) is uniformly continuous.
+
+    \(\text{(b)}\implies\text{(c)}\): Suppose \(A\) is uniformly continuous and let \(\varepsilon > 0\). There exists \(\delta > 0\) such that for all \(x,y \in V\), we have \(\norm{x - y} < \delta \implies \norm{Ax - Ay} < \varepsilon\). In particular, for all \(y \in V\), we have \(\norm{x - y} < \delta \implies \norm{Ax - Ay} < \varepsilon\), that is, \(A\) is continuous.
+
+    \(\text{(c)}\implies\text{(d)}\): Suppose \(A\) is continuous. Quite trivially, \(A\) is continuous at \(0\).
+
+    \(\text{(d)}\implies\text{(a)}\): Suppose \(A\) is continuous at \(0\). We fix some \(\varepsilon > 0\), then there exists \(\delta > 0\) such that \(\norm{x} < \delta \implies \norm{Ax} < \varepsilon\), where \(\delta\) depends solely on the choice of \(\varepsilon\). It follows from continuity and linearity that
+    \begin{align*}
+        x \in V \setminus\set{0}&\implies\norm*{\frac{\delta}{2\norm{x}}x} < \delta\\
+                                     &\implies\norm*{A\left(\frac{\delta}{2\norm{x}}x\right)} < \varepsilon\\
+                                     &\implies \frac{\norm{Ax}}{\norm{x}} < \frac{2 \epsilon}{\delta}.
+    \end{align*}
+    We have thus shown that \(\frac{2 \varepsilon}{\delta}\) is a finite upper bound for the set \(\setc*{\frac{\norm{Af}}{\norm{f}}}{f \in V \setminus\set{0}}\), hence \(A\) is bounded.
+\end{proof}
+
+Let \(V\) be a normed linear space and let \(W\) be a Banach space, we denote \(\bounded(V,W)\) as the set of all bounded operators from \(V\) to \(W\). Defining operator addition and multiplication by a complex number pointwise,
+\begin{equation*}
+    (A + B)f = Af + Bf\quad\text{and}\quad (zA)f = zAf,
+\end{equation*}
+it is clear that \(A+B\) and \(zA\) are linear operators, and we only have to show that these operators are bounded. Indeed,
+\begin{equation*}
+    \sup_{f \in V} \frac{\norm{(A+B)f}}{\norm{f}} = \sup_{f\in V} \frac{\norm{Af + Bf}}{\norm{f}} \leq \sup_{f \in V} \frac{\norm{Af} + \norm{Bf}}{\norm{f}} \leq \sup_{f\in V} \frac{\norm{Af}}{\norm{f}} + \sup_{f\in V} \frac{\norm{Bf}}{\norm{f}} < \infty
+\end{equation*}
+and
+\begin{align*}
+    \sup_{f \in V} \frac{\norm{(zA)f}}{\norm{f}} = \sup_{f \in V} \frac{\norm{z(Af)}}{\norm{f}} = \sup_{f \in V} \frac{\abs{z}\norm{Af}}{\norm{f}} = \abs{z} \sup_{f \in V} \frac{\norm{Af}}{\norm{f}} < \infty
+\end{align*}
+therefore these operations are closed in \(\bounded(V, W)\). It follows from the linear space structure of \(W\) that \(\bounded(V, W)\) is a linear space.
+\begin{definition}{Operator norm of a bounded operator}{bounded_operator_norm}
+    The \emph{operator norm} is the map defined as
+    \begin{align*}
+        \norm{\noarg} : \bounded(V, W) &\to \mathbb{R}\\
+        A &\mapsto \sup{\setc*{\norm{Af}}{f \in V : \norm{f} = 1}}.
+    \end{align*}
+\end{definition}
+\begin{remark}
+    Unsurprisingly, the operator norm of the identity operator \(\id{W}\) is unity. Indeed, let \(f \in \setc{g \in W}{\norm{g} = 1}\), then \(\norm{\id{W}f} = \norm{f} = 1\).
+\end{remark}
+
+
+Let us check that \((\bounded(V, W), \norm{\noarg})\) is a normed linear space. We have already shown homogeneity and subadditivity when checking that \(\bounded(V, W)\) defines a linear space. Nonnegativity follows from the nonnegativity of norms in \(W\) and \(V\). Finally, positive-definiteness follows from the positive-definiteness of the norm in \(W\),
+\begin{align*}
+    \norm{A} = 0 &\iff \sup_{f \in V} \frac{\norm{Af}}{\norm{f}} = 0\\
+                 &\iff \forall f \in V : \norm{Af} = 0\\
+                 &\iff \forall f \in V : Af = 0\\
+                 &\iff A = 0.
+\end{align*}
+We conclude \((\bounded(V, W), \norm{\noarg})\) is a normed linear space. \cref{thm:bounded_operators_Banach} shows this linear space is in fact a Banach space. The outline of the proof is very similar to \cref{exam:sup_norm_complete}: considering an arbitrary Cauchy sequence, we first construct a candidate for the limit of this sequence, then we show that it is a bounded linear map and we conclude the proof by showing that the Cauchy sequence indeed converges to this operator. In fact, this can be generalized for any set of bounded maps with image in some complete metric space.
+
+\begin{theorem}{\(\bounded(V, W)\) is a Banach space}{bounded_operators_Banach}
+    The normed linear space \((\bounded(V, W), \norm{\noarg})\) is a Banach space if \(W\) is a Banach space.
+\end{theorem}
+\begin{proof}
+    Let \(\family{A_n}{n \in \mathbb{N}} \subset \bounded(V, W)\) be a Cauchy sequence of linear bounded operators. For any given \(f \in V\), we have
+    \begin{equation*}
+        \norm*{A_nf - A_mf} \leq \norm{A_n - A_m}\cdot\norm{f},
+    \end{equation*}
+    then \(\family{A_nf}{n\in \mathbb{N}} \subset W\) is a Cauchy sequence in the Banach space \(W\). We have thus constructed a map
+    \begin{align*}
+        A : V &\to W\\
+        f &\mapsto \lim_{n\to \infty} A_n f,
+    \end{align*}
+    which is a candidate for the convergence of the family of bounded operators. We have to show \(A\) is linear and bounded before showing that \(A_n \to A\).
+
+    Consider \(f, g \in V\) and \(z \in \mathbb{C}\), then it follows from the linearity of each element in the sequence of the operators that
+    \begin{equation*}
+        A(f + zg) = \lim_{n\to\infty} A_n(f + zg) = \lim_{n\to \infty} \left[A_nf + z A_n g\right].
+    \end{equation*}
+    Recall from \cref{prop:norm_continuous,prop:continuous_composition} that vector addition and scalar multiplication are continuous and that the composition of continuous maps is continuous, then
+    \begin{equation*}
+        A(f + zg) = \lim_{n \to \infty} Af + z \lim_{n\to \infty}A_ng = Af + z Ag,
+    \end{equation*}
+    hence, \(A\) is a linear map.
+
+    Let us show that \(\family{\norm{A_n}}{n\in \mathbb{N}} \subset \mathbb{R}\) is a convergent sequence in the Banach space \((\mathbb{R}, \abs{\noarg})\). From the triangle inequality, we have
+    \begin{equation*}
+        \abs*{\norm{A_n} - \norm{A_m}} \leq \norm{A_n - A_m}.
+    \end{equation*}
+    From the Cauchy property, for all \(\varepsilon > 0\) there exists \(N \in \mathbb{N}\) such that
+    \begin{equation*}
+        n, m \geq N \implies \norm{A_n - A_m} < \frac12\varepsilon,
+    \end{equation*}
+    then
+    \begin{equation*}
+        n, m \geq N \implies \abs*{\norm{A_n} - \norm{A_m}} < \varepsilon.
+    \end{equation*}
+    Since \((\mathbb{R}, \abs{\noarg})\) is complete, it follows that the sequence converges to some real number \(M \geq 0\) say. Let \(f \in V \setminus\set{0}\). Then, by continuity of the norm in \(W\) and by its completeness,
+    \begin{equation*}
+        \norm{Af} = \norm*{\lim_{n\to \infty} A_n f} = \lim_{n\to \infty} \norm{A_nf} \leq \norm{f} \lim_{n\to \infty} \norm{A_n} = M \norm{f}.
+    \end{equation*}
+    We have thus a finite upper bound for \(\setc*{\frac{\norm{Af}}{\norm{f}}}{f \in V\setminus\set{0}}\), therefore \(A\) is bounded.
+
+    Finally, we show \(A_n \to A\). For all \(n \in \mathbb{N}\) and \(f \in V\setminus\set{0}\), we have
+    \begin{equation*}
+        \norm{A_n f - Af} \leq \lim_{m \to \infty} \norm{A_n f - A_m f} \leq \norm{f} \lim_{m \to \infty} \norm{A_n - A_m},
+    \end{equation*}
+    therefore
+    \begin{equation*}
+        \norm{A - A_n} = \sup_{f \in V} \frac{\norm{(A - A_n)f}}{\norm{f}} \leq \lim_{m\to \infty} \norm{A_n - A_m}
+    \end{equation*}
+    Let \(\varepsilon > 0\). Since \family{A_n}{n\in \mathbb{N}} is Cauchy, there exists \(K \in \mathbb{N}\) such that
+    \begin{equation*}
+        i, j \geq K \implies \norm{A_i - A_j} < \varepsilon,
+    \end{equation*}
+    that is, if \(n \geq K\), then \(\displaystyle\lim_{m\to \infty}\norm{A_n - A_m} < \varepsilon\). We have shown
+    \begin{equation*}
+        n \geq K \implies \norm{A - A_n} < \varepsilon,
+    \end{equation*}
+    hence, \(A_n \to A\) with respect to \((\bounded(V, W), \norm{\noarg})\).
+\end{proof}
