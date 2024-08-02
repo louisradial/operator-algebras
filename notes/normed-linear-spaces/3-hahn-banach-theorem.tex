@@ -1,0 +1,194 @@
+% vim: spl=en_us
+\section{Hahn-Banach theorem}
+In a linear space \(V\), a \(\mathbb{K}\)-functional is a map \(f : V \to \mathbb{K}\), where \(\mathbb{K}\) is either \(\mathbb{R}\) or \(\mathbb{C}\). As an example, a norm is a \(\mathbb{R}\)-functional (real functional) that is absolute-homogeneous and subadditive. The following definition exhibits a (non-exhaustive) list of other such possible properties of real functionals.
+\begin{definition}{Real functional}{real_functionals}
+    Let \(V\) be a linear space \(V\). A real functional \(f : V \to \mathbb{R}\) is
+    \begin{enumerate}[label=(\alph*)]
+        \item positive-homogeneous if \(f(\lambda x) = \lambda f(x)\) for all \(x \in V\) and \(\lambda \geq 0\);
+        \item additive if \(f(x + y) = f(x) + f(y)\) for all \(x,y \in V\);
+        \item subadditive if \(f(x + y) \leq f(x) + f(y)\) for all \(x,y \in V\);
+        \item convex if \(f(\alpha x + (1 - \alpha)y) \leq \alpha f(x) + (1-\alpha)f(y)\) for all \(x,y \in V\) and \(\alpha \in [0,1]\).
+        \item sublinear if \(f\) is positive-homogeneous and subadditive;
+        \item \(\mathbb{R}\)-linear if \(f(\alpha x + \beta y) = \alpha f(x) + \beta f(y)\) for all \(x,y \in V\) and \(\alpha, \beta \in \mathbb{R}\).
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    It is worthwhile to note sublinearity implies convexity. Indeed let \(f : V \to \mathbb{R}\) be a sublinear real functional. Then for all \(x,y \in V\) and \(\alpha \in [0,1]\) we have
+    \begin{equation*}
+        f(\alpha x + (1-\alpha)y) \leq f(\alpha x) + f((1 - \alpha)y)
+    \end{equation*}
+    by subadditivity. Then positive-homogeneity yields
+    \begin{equation*}
+        f(\alpha x + (1-\alpha)y) \leq \alpha f(x) + (1-\alpha)y,
+    \end{equation*}
+    hence \(f\) is convex.
+\end{remark}
+
+Let \(A\) be some set and let \(f, g : A \to \mathbb{R}\). We say \(f\) is an upper bound for \(g\) in \(A\) if \(x \in A \implies f(x) \geq g(x)\). The existence of a convex functional that is an upper bound to a linear functional on some proper subspace is a sufficient condition to extend this linear functional while respecting the upper bound on the new subspace of definition.
+\begin{lemma}{Existence of an extension with a convex upper bound}{extension_linear_functional}
+    Let \(V\) be a linear space over \(\mathbb{R}\) and let \(f : W \to \mathbb{R}\) be a linear functional defined in the proper subspace \(W \subset V\). If there exists a convex functional \(p : V \to \mathbb{R}\) that is an upper bound for \(f\) in \(W\), then, for every \(u \notin W\), there exists a linear functional \(f_u : U \to \mathbb{R}\) defined in the subspace spanned by \(\set{u} \cup W\), such that \(f_u\) is an extension of \(f\) and \(p\) is an upper bound for \(f_u\) in \(U\).
+\end{lemma}
+\begin{proof}
+    Let \(u \in V \setminus W\) and let \(U = \setc{\alpha u + w}{\alpha \in \mathbb{R}, w \in W}\) be the subspace spanned by \(\set{u} \cup W\). Notice we have the implication \(v \in U \implies \exists! \alpha \in \mathbb{R}, \exists! w \in W : v = \alpha u + w\). Indeed, if \(v \in U\) can be written as both \(\alpha u + w\) and \(\tilde{\alpha}u + \tilde{w}\), with \(\alpha, \tilde{\alpha}\in \mathbb{R}\) and \(w, \tilde{w} \in W\), then
+    \begin{equation*}
+        (\alpha - \tilde{\alpha})u = \tilde{w} - w,
+    \end{equation*}
+    hence \(\alpha = \tilde{\alpha}\) and \(\tilde{w} - w\) since the right hand side belongs to \(W\) and the left hand side's only intersection with \(W\) is the zero vector. This shows there is a bijective map \(\phi : U \to \mathbb{R} \times W\) that maps \(v \mapsto (\alpha_v, w_v)\), and we may compose this map with coordinate projections, obtaining the linear maps \(\phi_1 = \pi_1 \circ \phi : U \to \mathbb{R}\) and \(\phi_2 = \pi_2 \circ \phi : U \to W\) such that \(v \mapsto \alpha_v\) and \(v \mapsto w_v\), respectively. Indeed, if \(v_1, v_2 \in U\), then there exists unique \(\alpha_1, \alpha_2 \in \mathbb{R}\) and unique \(w_1, w_2 \in W\) such that \(v_1 = \alpha_1 u + w_1\) and \(v_2 = \alpha_2 u + w_2\), which yields \(\lambda_1 v_1 + \lambda_2 v_2 = \left(\lambda_1 \alpha_1 + \lambda_2 \alpha_2\right) u + \lambda_1 w_1 + \lambda_2 w_2\), hence
+    \begin{equation*}
+        \phi_1(\lambda_1 v_1 + \lambda_2 v_2) = \lambda_1 \phi_1(v_1) + \lambda_2 \phi_1(v_2)
+        \quad\text{and}\quad
+        \phi_2(\lambda_1 v_1 + \lambda_2 v_2) = \lambda_1 \phi_2(v_1) + \lambda_2 \phi_2(v_2),
+    \end{equation*}
+    as claimed.
+
+    We consider the linear functional \(f_u = F\phi_1 + f\circ\phi_2\) on \(U\), where \(F\in \mathbb{R}\) is a constant to be determined. It is clear that \(\restrict{f_u}{W} = f\), since \(\phi_1(W) = \set{0}\) and \(\restrict{\phi_2}{W} = \id{W}\). Moreover, \(f_u(u) = F\). We'll choose \(F\) by requiring \(f_u(v) \leq p(v)\) for all \(v \in U\). Therefore, we want to find \(F\) such that \(\alpha F + f(w) \leq p(\alpha u + w)\) for all \(\alpha \in \mathbb{R}\) and \(w \in W\). By hypothesis, this is satisfied for \(\alpha = 0\), then for \(\alpha > 0\) this requirement implies
+    \begin{equation*}
+        F \leq \frac1\alpha \left[p(\alpha u + w) - f(w)\right]
+    \end{equation*}
+    and for \(\alpha < 0\) it implies
+    \begin{equation*}
+        F \geq \frac1\alpha \left[p(\alpha u + w) - f(w)\right].
+    \end{equation*}
+    That is, \(F\) exists and satisfies
+    \begin{equation*}
+        \sup_{\alpha > 0, w \in W} \frac{1}{\alpha}\left[f(w) - p(w - \alpha u)\right] \leq F \leq \inf_{\alpha > 0, w \in W} \frac{1}{\alpha}\left[p(w + \alpha u) - f(w)\right],
+    \end{equation*}
+    provided that supremum is less or equal to that infimum.
+
+    Let \(\lambda, \mu > 0\) and let \(v, w \in W\), then by linearity of \(f\),
+    \begin{equation*}
+        \frac{1}{\lambda} f(v) + \frac{1}{\mu}f(w) = f\left(\frac{1}{\lambda}v + \frac{1}{\mu}{w}\right) = \frac{\lambda + \mu}{\lambda \mu} f\left(\frac{\mu}{\lambda + \mu}v + \frac{\lambda}{\lambda + \mu}w\right).
+    \end{equation*}
+    We add and subtract \(u\) in the argument of \(f\) on the right hand side, we may write
+    \begin{equation*}
+        \frac{1}{\lambda} f(v) + \frac{1}{\mu}f(w) = \frac{\lambda + \mu}{\lambda \mu} f\left(\frac{\mu}{\lambda + \mu}(v - \lambda u) + \frac{\lambda}{\lambda + \mu}(w + \mu u)\right),
+    \end{equation*}
+    noting that we are not computing \(f\) on a vector that is outside of its domain of definition. By hypothesis, \(p\) is an upper bound for \(f\) in \(W\), then
+    \begin{equation*}
+        \frac{1}{\lambda}f(v) + \frac{1}{\mu}f(w) \leq \frac{\lambda + \mu}{\lambda \mu} p\left(\frac{\mu}{\lambda + \mu}(v - \lambda u) + \frac{\lambda}{\lambda + \mu}(w + \mu u)\right).
+    \end{equation*}
+    Since \(\frac{\lambda}{\lambda + \mu} = 1 - \frac{\mu}{\lambda + \mu}\), convexity yields
+    \begin{equation*}
+        \frac1{\lambda}f(v) + \frac1{\mu}f(w) \leq \frac{\lambda + \mu}{\lambda \mu} \left(\frac{\mu}{\lambda + \mu} p(v - \lambda u) + \frac{\lambda}{\lambda + \mu} p(w + \mu u)\right) = \frac{1}{\lambda}p(v - \lambda u) + \frac{1}{\mu}p(w + \mu u).
+    \end{equation*}
+    Rearranging, we have shown that
+    \begin{equation*}
+        \frac{1}{\lambda} \left[f(v) - p(v - \lambda u)\right] \leq \frac{1}{\mu} \left[p(w + \mu u) - f(w)\right]
+    \end{equation*}
+    for all \(\lambda, \mu > 0\) and \(v,w \in W\), hence the supremum of the left hand side is less or equal to the infimum of the right hand side. That is, there exists \(F\) such that \(p\) is an upper bound for \(f_u\).
+\end{proof}
+
+This result can be further improved to show the existence of a linear functional that extends the original to the entire linear space, while respecting the upper bound condition of a convex functional. This improved result is known as the Hahn-Banach theorem for real linear spaces. Before stating and proving the theorem, we recall definitions of partially ordered sets and \nameref{thm:zorn}.
+\begin{definition}{Partially ordered set and linearly ordered set}{poset_chain}
+    A \emph{partially ordered set} \(X\) is a set \(X\) equipped with an \emph{ordering} \(\preceq\) that is
+    \begin{enumerate}[label=(\alph*)]
+        \item reflexive: \(\forall x \in X, x \preceq x\);
+        \item transitive: \(\forall x,y,z \in X, x \preceq y \land y \preceq z \implies x \preceq z\); and
+        \item anti-symmetric: \(\forall x, y\in X, x \preceq y \land y \preceq x \implies x = y\).
+    \end{enumerate}
+    If for any pair \(x, y \in X\) either \(x \preceq y\) or \(y \preceq x,\) then \(X\) is a \emph{linearly ordered set}.
+
+    An \emph{upper bound of a subset \(Y \subset X\)} in a partially ordered set \(X\) is an element \(x \in X\) such that \(y \preceq x\) for all \(y \in Y.\) The \emph{greatest element of a partially ordered set \(X\)} is an element \(n \in X\) such that \(x \preceq n\) for all \(x \in X\). A \emph{maximal element of a partially ordered set \(X\)} is an element \(m \in X\) such that \(x \in X : m \preceq x \implies x = m\).
+\end{definition}
+\begin{remark}%{Power set is partially ordered under inclusion}{power_poset}
+    An example of a partially ordered set is the power set \(\mathbb{P}(S)\) of some set \(S\) with the ordering given by the inclusion \(\subset\).
+\end{remark}
+
+\begin{theorem}{Zorn's lemma}{zorn}
+    Let \(X\) be a non-empty partially ordered set, any non-empty linearly ordered subset of which has an upper bound in \(X\). Then some linearly ordered subset has an upper bound that is simultaneously a maximal element in \(X\).
+\end{theorem}
+\begin{remark}
+    Within ZF-set theory, this lemma is equivalent to the axiom of choice, that is, this theorem follows from ZFC-set theory.
+\end{remark}
+
+\begin{theorem}{Hahn-Banach theorem for real linear spaces}{Hahn_Banach_real}
+    Let \(V\) be a linear space over \(\mathbb{R}\) and let \(f : U \to \mathbb{R}\) be a real linear functional defined on a linear subspace \(U\subset V\). If there exists a convex functional \(p : V \to \mathbb{R}\) that is an upper bound for \(f\) in \(U\), then there exists a linear functional \(\tilde{f} : V \to \mathbb{R}\) such that \(\tilde{f}\) extends \(f\) and such that \(p\) is an upper bound for \(\tilde{f}\) in \(V\).
+\end{theorem}
+\begin{proof}
+    Clearly, if \(U = V\), \(\tilde{f} = f\) satisfies the theorem. We assume \(U\) is a proper subspace of \(V\).
+
+    Let \(\mathfrak{F}\) be the set of linear functionals defined in subspaces of \(V\) that extend \(f\) and have \(p\) as an upper bound in their domains of definition. \cref{lem:extension_linear_functional} guarantees that \(\mathfrak{F}\) contains more than just \(f\), since \(U\) is a proper subspace of \(V\). In particular, \(\mathfrak{F}\) is non-empty.
+
+    We consider the binary relation \(\preceq\) on \(\mathfrak{F}\) defined by \(\ell_1 \preceq \ell_2\) if \(\ell_1\) is extended by \(\ell_2\). Let \(\ell_1, \ell_2, \ell_3 \in \mathfrak{F}\), where \(\ell_1 : V_1 \to \mathbb{R}\), \(\ell_2 : V_2 \to \mathbb{R}\) and \(\ell_3 : V_3 \to \mathbb{R}\). Since \(\restrict{\ell_1}{V_1} = \ell_1\), we have \(\ell_1 \preceq \ell_1\), hence this relation is reflexive. If \(\ell_1 \preceq \ell_2\) and \(\ell_2 \preceq \ell_3\), then \(\restrict{\ell_3}{V_2} = \ell_2\) and \(\restrict{\ell_2}{V_1} = \ell_1\), hence \(\restrict{\ell_3}{V_1} = \ell_1\), that is \(\ell_1 \preceq \ell_3\) and \(\preceq\) is transitive. If \(\ell_1 \preceq \ell_2\) and \(\ell_2 \preceq \ell_1\), we must have \(V_1 = V_2\), hence \(\ell_1 = \ell_2\), thus showing the relation is anti-symmetric. Then \((\mathfrak{F}, \preceq)\) is a non-empty partially ordered set.
+
+    Let \(\family{\ell_{\lambda}}{\lambda \in \Lambda} \subset \mathfrak{F}\) be a non-empty linearly ordered subset of \(\mathfrak{F}\), where \(\Lambda\) is some non-empty indexing set and \(\ell_{\lambda} : V_{\lambda} \to \mathbb{R}\). We consider the union \(W = \bigcup_{\lambda \in \Lambda} V_{\lambda}\). Since each \(V_\lambda\) is a subspace, we have \(0 \in W\). Let \(v, w \in W\) and \(\alpha, \beta \in \mathbb{R}\), then there exists \(\lambda_v, \lambda_w \in \Lambda\) such that \(\alpha v \in V_{\lambda_v}\) and \(\beta w \in V_{\lambda_w}\). By linear order, we have either \(V_{\lambda_v} \subset V_{\lambda_w}\) or \(V_{\lambda_w} \subset V_{\lambda_v}\), then \(\alpha v + \beta w \in V_{\lambda_v}\) or \(\alpha v + \beta w \in V_{\lambda_w}\), hence \(\alpha v + \beta w \in W\). That is, \(W\) is a linear subspace of \(V\) and it contains every \(V_{\lambda}\). We claim the map \(\tilde{\ell} : W \to \mathbb{R}\) defined by \(\ell(v) = \ell_{\lambda}(v)\) if \(v \in V_{\lambda}\) is a linear functional on \(W\) that extends \(\ell_{\lambda}\) for \(\lambda \in \Lambda\). First, by the previous argument, \(\tilde{\ell}(\alpha v + \beta w) = \ell_{\lambda_v}(\alpha v + \beta w)\) or \(\tilde{\ell}(\alpha v + \beta w) = \ell_{\lambda_w}(\alpha v + \beta w)\), hence \(\tilde{\ell}(\alpha v + \beta w) = \alpha \ell(v) + \beta \ell(w)\), that is, \(\tilde{\ell}\) is linear. Notice the map is well defined since if \(v \in V_{\lambda}\) and \(v \in V_{\mu}\) with \(\lambda, \mu \in \Lambda\), then either \(\ell_{\mu} \preceq \ell_\lambda\) or \(\ell_{\lambda} \preceq \ell_{\lambda}\), hence \(\ell_{\mu}(v) = \ell_{\lambda}\). By construction, \(\ell_{\lambda} \preceq \tilde{\ell}\) for all \(\lambda \in \Lambda\). We have thus constructed an upper bound for \family{\ell_{\lambda}}{\lambda \in \Lambda} that lies in \(\mathfrak{F}\), since \(p\) is an upper bound for \(\tilde{\ell}\) in \(W\).
+
+    Since every non-empty linearly ordered subset of \((\mathfrak{F}, \preceq)\) has an upper bound in \(\mathfrak{F}\), \nameref{thm:zorn} guarantees the existence of a maximal element \(\tilde{f} \in \mathfrak{F}\), that is, \(\tilde{f} : \tilde{V} \to \mathbb{R}\) is a linear functional defined on a linear subspace \(\tilde{V}\) that extends \(f\) and has \(p\) as an upper bound in \(\tilde{V}\). Suppose, by contradiction, \(\tilde{V}\) is a proper subspace of \(V\). Then, there exists \(u \in V \setminus \tilde{V}\), hence \cref{lem:extension_linear_functional} guarantees the existence of a linear functional defined on the subspace spanned by \(u\) and \(\tilde{V}\) that extends \(\tilde{f}\) and has \(p\) as an upper bound. This contradicts the maximal property of \(\tilde{f}\), hence \(\tilde{V} = V\).
+\end{proof}
+
+We may now generalize the Hahn-Banach theorem for complex linear spaces. A map \(f : A \to \mathbb{K}\) is \emph{dominated} by a map \(g : A \to \mathbb{R}\) on \(A\) if \(x \in A \implies \abs{f(x)} \leq g(x)\), where \(\mathbb{K}\) is either \(\mathbb{R}\) or \(\mathbb{C}\).
+\begin{theorem}{Hahn-Banach theorem for complex linear spaces}{Hahn_Banach_complex}
+    Let \(V\) be a linear space over \(\mathbb{C}\) and let \(f : U \to \mathbb{C}\) a complex linear functional defined in a linear subspace \(U \subset V\). Suppose there exists a real functional \(p : V \to \mathbb{R}\) satisfying \(p(\alpha u + \beta v) \leq \abs{\alpha} p(u) + \abs{\beta} p(v)\) for all \(u,v \in V\) and all \(\alpha,\beta \in \mathbb{C}\) with \(\abs{\alpha} + \abs{\beta} = 1\) such that \(f\) is dominated by \(p\) in \(U\). Then, there exists a complex linear functional \(\tilde{f} : V \to \mathbb{C}\) that extends \(f\) and is dominated by \(p\) on \(V\).
+\end{theorem}
+\begin{proof}
+    We may again assume \(U\) is a proper subset of \(V\). Let \(g : U \to \mathbb{R}\) be the real functional defined by \(g = \Re \circ f\). Then, \(g\) is a real functional dominated by \(p\) on \(U\) and, in particular, \(p\) is an upper bound for \(g\) on \(U\). We consider \(\alpha, \beta \in \mathbb{R}\) and \(u,v \in V\), then the linearity of \(f\) yields
+    \begin{equation*}
+        g(\alpha u + \beta v) = \Re\circ f(\alpha u + \beta v) = \Re(\alpha f(u) + \beta f(v)) = \alpha g(u) + \beta g(v),
+    \end{equation*}
+    that is, \(g\) is \(\mathbb{R}\)-linear.
+
+    Recall a complex linear space can be made into a real linear space by restricting the scalar multiplication to the real numbers. Observing that \(p\) is a convex function that is an upper bound for the real linear functional \(g\) defined on the subspace \(U\) of the real linear space \(V\), we have by the \nameref{thm:Hahn_Banach_real} that there exists a real linear functional \(\tilde{g} : V \to \mathbb{R}\) that extends \(g\) and has \(p\) as an upper bound. \todo[Details on decomplexification and complexification]
+
+    We consider the map
+    \begin{align*}
+        \tilde{f} : V &\to \mathbb{C}\\
+                    v &\mapsto \tilde{g}(v) - i \tilde{g}(iv)
+    \end{align*}
+    and show it is an extension of \(f\), a complex linear functional, and dominated by \(p\) on \(V\). For \(u \in U\), we have \(iu \in U\), then \(\tilde{g}(u) = g(u)\) and \(\tilde{g}(iu) = g(iu)\), hence
+    \begin{align*}
+        \tilde{f}(u) = g(u) - i g(iu) &= \Re\circ f(u) - i \Re\circ f(iu)\\
+                                      &= \Re\circ f(u) - i \Re\circ(i f(u))\\
+                                      &= \Re\circ f(u) + i \Im \circ f(u) = f(u),
+    \end{align*}
+    that is, \(\tilde{f}\) extends \(f\).
+
+    To show linearity, we first show \(\tilde{f}\) is \(\mathbb{R}\)-linear. Let \(u, v \in V\), \(\alpha, \beta \in \mathbb{R}\), then the \(\mathbb{R}\)-linearity of \(\tilde{g}\) yields
+    \begin{align*}
+        \tilde{f}(\alpha u + \beta v) &= \tilde{g}(\alpha u + \beta v) - i \tilde{g}(i \alpha u + i \beta v)\\
+                                      &= \alpha \tilde{g}(u) + \beta \tilde{g}(v) - i \alpha \tilde{g}(iu) - i \beta \tilde{g}(v)\\
+                                      &= \alpha \left[\tilde{g}(u) - i \tilde{g}(iu)\right] + \beta \left[\tilde{g}(v) - i \tilde{g}(iv)\right]\\
+                                      &= \alpha \tilde{f}(u) + \beta \tilde{f}(v),
+    \end{align*}
+    hence \(\tilde{f}\) is \(\mathbb{R}\)-linear and, in particular, additive. Next, notice
+    \begin{equation*}
+        \tilde{f}(iv) = \tilde{g}(iv) -i \tilde{g}(-v) = i \left[\tilde{g}(v) - i\tilde{g}(iv)\right] = i \tilde{f}(iv),
+    \end{equation*}
+    for all \(v \in V\). We consider \(\xi \in \mathbb{C}\), then \(\xi = \alpha + i \beta\) for real numbers \(\alpha, \beta\). By \(\mathbb{R}\)-linearity and additivity, we have
+    \begin{align*}
+        \tilde{f}(\xi v) = \tilde{f}(\alpha v + i \beta v) &= \alpha \tilde{f}(v) + \beta \tilde{f}(iv)\\ &= \alpha \tilde{f} (v) + i \beta \tilde{f}(v)\\&= (\alpha + i \beta) \tilde{f}(v) = \xi \tilde{f}(v)
+    \end{align*}
+    for all \(v \in V\). Together with additivity, this shows \(\tilde{f}\) is a complex linear functional.
+
+    Let \(\alpha \in \mathbb{C}\) with \(\abs{\alpha} = 1\), then for every \(v \in V\), we have \(p(\alpha v) \leq p(v)\) and, in fact, we always have the equality. Indeed, we consider \(u = \alpha v\), then \(p(\alpha^{-1} u) \leq p(u)\), which shows \(p(\alpha v) \geq p(v)\) for all \(v \in V\). For all \(v \in V\), there exists \(\theta \in [0,2\pi)\) such that \(\abs{\tilde{f}(v)} = \tilde{f}(v) e^{i\theta}\), then
+    \begin{equation*}
+        \abs{\tilde{f}(v)} = \tilde{f}(v) e^{i\theta} = \tilde{f}(e^{i\theta}v)
+    \end{equation*}
+    since \(\tilde{f}\) is \(\mathbb{C}\)-linear. Taking the real part yields
+    \begin{equation*}
+        \abs{\tilde{f}(v)} = \tilde{g}(e^{i\theta}v) \leq p(e^{i\theta}v) = p(v),
+    \end{equation*}
+    because \(p\) dominates \(\tilde{g}\) on \(V\).
+\end{proof}
+
+Finally, we specialize the result for normed linear spaces over \(\mathbb{C}\).
+\begin{theorem}{Hahn-Banach theorem for normed linear spaces}{Hahn_Banach_normed}
+    Let \((V, \norm{\noarg})\) be a linear space over \(\mathbb{C}\) and let \(f : U \to \mathbb{C}\) be a complex linear functional defined on the linear subspace \(U\subset V\). If there exists \(M \in \mathbb{R}\) such that
+    \begin{equation*}
+        M = \sup \setc*{\frac{\abs{f(v)}}{\norm{v}}}{v \in U\setminus \set{0}},
+    \end{equation*}
+    then there exists a complex linear functional \(\tilde{f} : V \to \mathbb{C}\) that extends \(f\) and is bounded on \(V\), with \(\norm{\tilde{f}} = M\).
+\end{theorem}
+\begin{proof}
+    Let \(p : V \to \mathbb{C}\) be the real functional defined by \(v \mapsto M \norm{v}\). Then \(p\) inherits absolute-homogeneity and subadditivity from the norm. In particular, for all \(u, v \in V\) and all \(\alpha, \beta \in \mathbb{C}\), we have
+    \begin{equation*}
+        p(\alpha u + \beta v) \leq p(\alpha u) + p(\beta v) = \abs{\alpha} p(u) + \abs{\beta}p(v).
+    \end{equation*}
+    By the definition of \(M\), we have \(\abs{f(v)} \leq p(v)\) for all \(v \in U\). \nameref{thm:Hahn_Banach_complex} ensures the existence of a complex linear functional \(\tilde{f} : V \to \mathbb{C}\) that extends \(f\) and is dominated by \(p\).
+
+    Since \(p\) dominates \(\tilde{f}\), then \(\norm{\tilde{f}} \leq M\). However, \(\tilde{f}\) extends \(f\), then
+    \begin{equation*}
+        \norm{\tilde{f}} = \sup_{v \in V}{\frac{\abs{\tilde{f}(v)}}{\norm{v}}} \geq \sup_{v \in U} \frac{\abs{\tilde{f}(v)}}{\norm{v}} = \sup_{v \in U} \frac{\abs{f(v)}}{\norm{v}} = M.
+    \end{equation*}
+    That is, \(\norm{\tilde{f}} = M\).
+\end{proof}
+
