@@ -1,0 +1,474 @@
+% vim: spl=en_us
+\section{Metric spaces}
+We now move on to metric spaces, which can be seen as a specialization of topological spaces, in the sense that every metric space is a topological space, but there are notions particular to the metric that can't be expressed topologically.
+\begin{definition}{Metric space}{metric_space}
+    A \emph{metric space} \((X, d)\) is a non-empty set \(X\) equipped with a map \(d : X \times X \to \mathbb{R}\), called \emph{metric} or \emph{distance function}, satisfying
+    \begin{enumerate}[label=(\alph*)]
+        \item \(d(x, y) \geq 0\), for all \(x, y \in X\), with \(d(x, y) = 0 \iff x = y\);
+        \item \(d(x, y) = d(y, x)\), for all \(x, y \in X\); and
+        \item \(d(x, y) = d(x, z) + d(z, y)\), for all \(x,y,z \in X\).
+    \end{enumerate}
+\end{definition}
+\begin{example}{Supremum metric for continuous complex-valued functions}{continuous_complex_ab}
+    Let \(\mathcal{C}([a,b];\mathbb{C})\) denote the set of continuous functions from the interval \([a,b]\subset \mathbb{R}\) to the complex plane \(\mathbb{C}\) and let the \emph{supremum metric}, or \emph{sup metric}, be the map
+    \begin{align*}
+        d_\infty : \mathcal{C}([a,b];\mathbb{C}) \times \mathcal{C}([a,b];\mathbb{C}) &\to \mathbb{R}\\
+        (f, g) &\mapsto \sup_{x\in[a,b]}\abs*{f(x) - g(x)}.
+    \end{align*}
+    Then, \((\mathcal{C}([a,b];\mathbb{C}), d_\infty)\) is a metric space.
+\end{example}
+\begin{proof}
+    We first note that the range of the map \(d_\infty\) is contained in the ray \([0, \infty)\), that is,
+    \begin{equation*}
+        d_\infty(f,g) \geq 0
+    \end{equation*}
+    for all \(f,g \in \mathcal{C}([a,b];\mathbb{C})\).
+
+    For all \(f, g \in \mathcal{C}([a,b]; \mathbb{C})\) we have \(f = g\) if and only if \(f(x) = g(x)\) for all \(x \in [a,b]\). Therefore,
+    \begin{align*}
+        f = g &\iff \forall x \in [0,1] : \abs{f(x) - g(x)} = 0\\
+              &\iff \sup_{x \in [0,1]}  \abs{f(x) - g(x)} = 0\\
+              &\iff d_\infty(f,g) = 0.
+    \end{align*}
+
+    It is clear the map \(d_\infty\) is symmetric with respect to its arguments, that is,
+    \begin{align*}
+        d_\infty(g,f) = \sup_{x\in[0,1]}\abs*{g(x) - f(x)}= \sup_{x\in[0,1]} \abs*{f(x) - g(x)} = d_\infty(f,g).
+    \end{align*}
+
+    Finally, we consider \(f,g,h \in \mathcal{C}([a,b];\mathbb{C})\), then
+    \begin{align*}
+        d_\infty(f,g) &= \sup_{x\in[0,1]}\abs*{f(x) - h(x) + h(x) - h(x)}\\\
+                      &\leq \sup_{x\in[0,1]} \abs{f(x) - h(x)} + \abs{h(x) - g(x)}\\
+                      &\leq d_\infty(f,h) + d_\infty(h,g).
+    \end{align*}
+    Thus, we have shown the sup norm \(d_\infty\) is a metric in \(\mathcal{C}([a,b];\mathbb{C})\).
+\end{proof}
+
+
+Now we show how a metric space may be understood as a topological space. The following construction will be referred to as the \emph{metric topology}.
+\begin{theorem}{Metric space induces a topology}{metric_space_topology}
+    Let \((X, d)\) be a metric space and define the \emph{open ball \(B_r(x)\) of radius \(r > 0\) centered at a point \(x \in X\)} as the subset
+    \begin{equation*}
+        B_r(x) = \setc*{y \in X}{d(x,y) < r}.
+    \end{equation*}
+    Let \(\tau\) be a subset of the power set of \(X\) with the property that \(U \in \tau\) if and only if for every point \(x \in U\) there exists \(r > 0\) such that \(B_r(x) \subset U\). Then \((X, \tau)\) is a topological space.
+\end{theorem}
+\begin{proof}
+    Vacuously, \(\emptyset \in \tau\). Trivially, \(B_r(x) \subset X\) for all \(x \in X\) and all \(r > 0\).
+
+    We consider a finite family \(\ffamily{V_i}{i=1}{N}\subset \tau\) for some integer \(N \geq 2\), and its intersection \(V = \bigcap_{i=1}^{N} V_i\). Let \(x \in V\), then \(x \in V_i\), for all \(i \in \set{1,2,\dots, N}\). Since \(V_i \in \tau\), there exists \(r_i > 0\) such that \(B_{r_i}(x) \subset V_i\). Let \(r = \min\setc{r_i}{1 \leq i \leq N}\), then \(B_r(x) \subset B_{r_i}(x) \subset V_i\) for all \(i\), that is, \(B_r(x) \subset V\). Hence, \(V \in \tau\).
+
+    We consider a family \(\family{U_\alpha}{\alpha \in A} \subset \tau\), for some indexing set \(A\), and its union \(U = \bigcup_{\alpha \in A} U_{\alpha}\). Let \(x \in U\), then there exists \(\beta \in A\) such that \(x \in U_\beta\). Since \(U_\beta \in \tau\), there exists \(r_\beta > 0\) such that \(B_{r_\beta}(x) \subset U_\beta\). Since \(U_\beta \subset U\), we have shown \(U \in \tau\).
+\end{proof}
+
+
+\begin{lemma}{Open balls are open sets in the metric topology}{open_balls}
+    Let \((X,d)\) be a metric space. For all \(x \in X\) and all \(r > 0\), the open ball \(B_r(x)\) is open in the metric topology.
+\end{lemma}
+\begin{proof}
+    We claim for all \(y \in B_r(x)\) the open ball \(B_{r - d(x,y)}(y)\) is contained in \(B_r(x)\). Indeed, if \(y \in B_r(x)\), \(d(x,y) < r\), then for all \(z \in B_{r - d(x,y)}(y)\) we have \(d(x,z) \leq d(x,y) + d(y, z) < r,\) hence \(z \in B_r(x)\) as claimed.
+\end{proof}
+
+\begin{proposition}{Closed ball contained in an open set}{closed_ball}
+    Let \((X, d)\) be a metric space and let \(\tau\) be the metric topology. Define the closed ball \(\bar{B}_r(x)\) of radius \(r > 0\) centered at a point \(x \in X\) as the subset
+    \begin{equation*}
+        \bar{B}_r(x) = \setc{y \in X}{d(x,y) \leq r},
+    \end{equation*}
+    then \(\bar{B}_r(x)\) is closed. If \(U \in \tau\), then for every point \(x \in U\) there exists \(r > 0\) such that \(\bar{B}_r(x) \subset U\).
+\end{proposition}
+\begin{proof}
+    Let \(r > 0\) and \(x \in X\) be fixed. Suppose \(y \in X \setminus \bar{B}_r(x)\), then \(d(x,y) = r + 2R\) for some \(R > 0\). For every \(z \in B_R(y)\) we have by the triangle inequality
+    \begin{equation*}
+        d(x,y) \leq d(x,z) + d(z,y) \implies d(x,y) \geq r + R,
+    \end{equation*}
+    that is, \(z \in X\setminus \bar{B}_r(x)\). Therefore, \(X \setminus \bar{B}_r(x)\) is open, hence \(\bar{B}_r(x)\) is closed.
+
+    Let \(U \in \tau\), then for every \(x \in U\) there exists \(\varepsilon > 0\) such that \(B_{2\varepsilon}(x) \subset U\). Then \(\bar{B}_{\varepsilon}(x) \subset B_{2 \varepsilon}(x) \subset U\), as claimed.
+\end{proof}
+
+\begin{proposition}{Metric spaces are Hausdorff}{metric_hausdorff}
+    If \((X, d)\) be a metric space, then \topology{X} is a Hausdorff space, where \(\tau_X\) is the metric topology.
+\end{proposition}
+\begin{proof}
+    Let \(p, q \in X\), with \(p \neq q\). Let \(r = \frac12d(p, q)\) and consider the neighborhoods of \(p\) and \(q\) defined by the open balls \(U = B_r(p)\) and \(V = B_r(q)\). Suppose, by contradiction, there exists \(x \in U \cap V\), then
+    \begin{equation*}
+        d(p,q) \leq d(p, x) + d(x, q) < d(p, q)
+    \end{equation*}
+    by the triangle inequality. This shows \(p = q\), contradicting the hypothesis \(p \neq q\), hence the neighborhoods must satisfy \(U \cap V = \emptyset\).
+\end{proof}
+
+\subsection{Convergence of sequences}
+As a convention, we denote the set of positive integers by \(\mathbb{N}\) and the set of non-negative integers by \(\mathbb{N}_0\). A sequence is a map \(x : \mathbb{N} \to X\), where we may denote \(x_n = x(n)\) for \(n \in \mathbb{N}\). Sometimes we may denote \(\family{x_n}{n\in \mathbb{N}}\) as the range of the map, often calling it a \emph{family}, or with abuse of notation as the map itself.
+\begin{definition}{Convergent sequence}{converge}
+    A sequence \family{x_n}{n\in \mathbb{N}} is said to \emph{converge to \(x \in X\) with respect to the metric space \((X, d)\)} if for all \(\varepsilon > 0\), there exists \(N \in \mathbb{N}\) such that
+    \begin{equation*}
+        n \geq N \implies d(x_n,x) < \varepsilon.
+    \end{equation*}
+    In this case, we write \(x_n \to x\) or \(\displaystyle\lim_{n\to \infty}x_n = x\), and may refer to \family{x_n}{n\in \mathbb{N}} as a \emph{convergent sequence in \((X, d)\)} and say that \(x \in X\) is the \emph{limit} of the sequence in \((X, d)\).
+\end{definition}
+\begin{remark}
+    It follows from the triangle inequality that a sequence on a metric space converges to at most one element. Indeed, let the sequence \family{x_n}{n\in \mathbb{N}} converge to \(x\) and \(\tilde{x}\) with respect to the metric space \((X, d)\), then
+    \begin{equation*}
+        d(x, \tilde{x}) \leq d(x, x_n) + d(x_n, \tilde{x}),
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). For all \(\varepsilon > 0\), there exist \(N, \tilde{N} \in \mathbb{N}\) such that
+    \begin{equation*}
+        n \geq \max(N, \tilde{N}) \implies d(x, x_n) < \frac12\varepsilon\quad\text{and}\quad d(\tilde{x}, x_n) < \frac12\varepsilon,
+    \end{equation*}
+    therefore \(d(x, \tilde{x}) < \varepsilon\). This justifies calling \(x \in X\) \emph{the} limit of a sequence.
+\end{remark}
+
+A subsequence is a composition \(x \circ n : \mathbb{N} \to X\), where \(n : \mathbb{N} \to \mathbb{N}\) is an increasing sequence of natural numbers, and we may denote it as \family{x_{n_k}}{k \in \mathbb{N}}.
+\begin{proposition}{Every subsequence of a convergent sequence is convergent}{convergence_subsequence}
+    Let \(\family{x_n}{n\in \mathbb{N}} \subset X\) be a sequence that converges to \(x\in X\) with respect to the metric space \((X, d)\). Then every subsequence \(\family{x_{n_k}}{k\in \mathbb{N}}\subset X\) converges to the same \(x\in X\) with respect to the metric space \((X, d)\).
+\end{proposition}
+\begin{proof}
+    Let \(\varepsilon > 0\). Then, there exists \(N \in \mathbb{N}\) such that
+    \begin{equation*}
+        n \geq N \implies d(x_n, x) < \varepsilon.
+    \end{equation*}
+    Since \family{n_k}{k \in \mathbb{N}} is an increasing sequence of natural numbers, there exists \(K \in \mathbb{N}\) such that \(k \geq K \implies n_k \geq N\). Then,
+    \begin{equation*}
+        k \geq K \implies d(x_{n_k}, x) < \varepsilon,
+    \end{equation*}
+    that is, \(x_{n_k} \to x\) as desired.
+\end{proof}
+
+We may express convergence of a sequence in terms of the metric topology.
+\begin{proposition}{Convergent sequence in the topological sense}{convergent_topology}
+    Let \((X, d)\) be a metric space and let \(\tau\) be the metric topology. A sequence \(\family{x_n}{n\in \mathbb{N}}\subset X\) converges to some \(x \in X\) if and only if for every neighborhood \(U \in \tau\) of \(x\) there exists \(N\in \mathbb{N}\) such that \(n \geq N \implies x_n \in U\).
+\end{proposition}
+\begin{proof}
+    Suppose the sequence converges to \(x\) in the metric space sense. Let \(U \in \tau\) be a neighborhood of \(x\). Then there exists \(\varepsilon > 0\) such that \(B_{\varepsilon}(x) \subset U\). From convergence, there exists \(N \in \mathbb{N}\) such that \(n \geq N \implies d(x_n, x) < \varepsilon\), that is, \(n \geq N \implies x_n \in B_{\varepsilon}(x) \subset U\).
+
+    Suppose for every neighborhood \(U \in \tau\) of \(x\) there exists \(N_U \in \mathbb{N}\) such that \(x_n \in U\) for all \(n \geq N_U\). By \cref{lem:open_balls}, for all \(\varepsilon > 0\), the open ball \(B_{\varepsilon}(x)\) is a neighborhood of \(x\). By hypothesis, for all \(\varepsilon > 0\), there exists \(N_\varepsilon \in \mathbb{N}\) such that \(x_n \in B_{\varepsilon}(x)\) for all \(n \geq N_\varepsilon\). Hence, \(n \geq N_\varepsilon \implies d(x_n, x) < \varepsilon\).
+\end{proof}
+
+The convergence of sequences is related to dense sets in the metric topology. We first show how density is expressible in terms of the metric.
+\begin{theorem}{Dense set in a metric space}{dense_metric}
+    Let \((X, d)\) be a metric space and let \(\tau\) be the metric topology. A subset \(S \subset X\) is dense in \(X\) if and only if for all \(x \in X\) and all \(\varepsilon > 0\), there exists \(y \in S\) such that \(d(x,y) < \varepsilon\).
+\end{theorem}
+\begin{proof}
+    Suppose \(S\) is dense in \(X\), in the metric space sense. Let \(x\in X\) and let \(U \in \tau\) be a neighborhood of \(x\). Since \(U\) is open, there exists \(\varepsilon > 0\) such that \(B_\varepsilon(x) \subset U\). By hypothesis, there exists \(y \in S\) such that \(y \in B_\varepsilon(x)\), hence \(y \in U \cap S\). That is, \(x\) is a point of closure of \(S\).
+
+    Suppose \(\cl S = X\), then every point of \(X\) is a point of closure of \(S\). Let \(x \in \cl S\), then every neighborhood of \(x\) contains a point in \(S\). In particular, in the light of \cref{lem:open_balls}, for every \(\varepsilon > 0\), the open ball \(B_\varepsilon(x)\) contains a point in \(S\). That is, for all \(x \in X\) and for all \(\varepsilon > 0\) there exists \(y \in S\) such that \(d(x,y) < \varepsilon\).
+\end{proof}
+\begin{remark}
+    If the metric space is understood from context, we will simply say \(S \subset X\) is dense in \(X\) if it is dense with respect to metric topology.
+\end{remark}
+
+\begin{proposition}{Sequences in a dense subset}{sequence_dense}
+    Let \((X, d)\) be a metric space. A non-empty subset \(Y \subset X\) is a dense subset of \(X\) if and only if for each \(x \in X\) there exists a sequence \(\family{y_n}{n\in \mathbb{N}} \subset Y\) that converges to \(x\).
+\end{proposition}
+\begin{proof}
+    Suppose \(Y\) is dense in \((X, d)\) and let \(x \in X\). For each \(n \in \mathbb{N}\), there exists \(y_n \in Y\) such that \(d(y_n, x) < \frac{1}{n}\). Thus, there is a sequence \(\family{y_n}{n\in \mathbb{N}} \subset Y\) that converges to \(x \in X\). Indeed, let \(\varepsilon > 0\) and set \(N = 1+ \ceil{\varepsilon^{-1}}\), then \(n \geq N \implies d(y_n, x) < \varepsilon\).
+
+    Suppose there exists a sequence \(\family{y_n}{n\in \mathbb{N}}\subset Y\) that converges to \(x \in X\). For all \(\varepsilon > 0\), there exists \(N \in \mathbb{N}\) such that \(n \geq N \implies d(y_n, x) < \varepsilon\). In particular, \(y_N \in Y\) and \(d(y_N, x) < \varepsilon\), that is, there exists and element in \(Y\) that is arbitrarily close to each element in \(X\).
+\end{proof}
+
+The following results concern convergent sequences and their relation to closed sets.
+\begin{lemma}{Convergent sequences and closure of a subset}{convergent_closure}
+    Let \((X, d)\) be a metric space and let \(\tau\) be the metric topology. A point \(x \in X\) is a point of closure of \(S \subset X\) if and only if there exists a convergent sequence \(\family{s_n}{n\in \mathbb{N}}\subset S\) that converges to \(x\).
+\end{lemma}
+\begin{proof}
+    Suppose \(x \in \cl S\), then every neighborhood of \(x\) has a non-empty intersection with \(S\). In particular, the family of open balls of radius \(\frac1{n}\) centered at \(x\) has an intersection at \(s_n \in S\) for all \(n \in \mathbb{N}\). That is, \family{s_n}{n\in \mathbb{N}} is a convergent sequence of elements of \(S\) that converges to \(x \in \cl S\).
+
+    Suppose there exists a convergent sequence \family{s_n}{n\in \mathbb{N}} in \(S\) that converges to \(x \in X\). Let \(U\) be a neighborhood of \(x\), then there exists \(\varepsilon > 0\) such that \(B_\varepsilon(x) \subset U\). By convergence, there exists \(N \in \mathbb{N}\) such that \(s_n \in B_{\varepsilon}(x)\), that is \(s_n \in B_{\varepsilon}(x) \cap S \subset U \cap X\). Hence, \(x \in \cl S\).
+\end{proof}
+
+\begin{theorem}{Convergent sequences in a closed set}{convergent_closed}
+    Let \((X, d)\) be a metric space and let \(\tau\) be the metric topology. A subset \(S \subset X\) is closed if and only if every convergent sequence of elements in \(S\) converges to some element in \(S\).
+\end{theorem}
+\begin{proof}
+    Suppose there exists a convergent sequence of elements in \(S\) that converges to some \(x \in X \setminus S\). By \cref{lem:convergent_closure}, \(x \in \cl S\). That is, \(S \neq \cl S\), then by \cref{lem:closure_closed}, \(S\) is not closed.
+
+    Suppose every convergent sequence of elements in \(S\) converges to some element in \(S\). In particular, there is no convergent sequence of elements in \(S\) that converges to some element in \(X \setminus S\). By \cref{lem:convergent_closure}, there is no point of closure of \(S\) in \(X \setminus S\), therefore \(\cl S = S\). By \cref{lem:closure_is_closed}, \(S\) is closed.
+\end{proof}
+
+\subsection{Continuity in metric spaces}
+We may specialize the topological definition of continuity and state whether a map is continuous at a given point, rather than on the entire space. Moreover, we show that continuity at any point of the space implies continuity in the topological sense.
+\begin{definition}{Continuity at a point}{continuity_metric}
+    Let \((X,d_X)\) and \((Y, d_Y)\) be metric spaces. A map \(f : X \to Y\) is \emph{continuous at \(x_0 \in X\)} if for all \(\varepsilon > 0\), there exists \(\delta > 0\) such that
+    \begin{equation*}
+        d_X(x, x_0) < \delta \implies d_Y(f(x), f(x_0)) < \varepsilon.
+    \end{equation*}
+\end{definition}
+% \begin{remark}
+%     Even though it should be clear from the fact that the definition makes explicit use of the metrics in each metric space, we stress that the notion of continuity depends on the choice of metric on a set.
+% \end{remark}
+% \begin{remark}
+%     It is easy to see isometries are continuous. Indeed, let \(f : X \to Y\) be a distance-preserving map, then for all \(\varepsilon > 0\), we have \(d_X(x, x_0) < \varepsilon \implies d_Y(f(x), f(x_0)) < \varepsilon\).
+% \end{remark}
+
+\begin{proposition}{Composition of continuous maps is continuous}{continuous_composition}
+    Let \((X, d_X)\), \((Y, d_Y)\) and \((Z, d_Z)\) be metric spaces. If \(f : X \to Y\) is continuous at \(x_0 \in X\) and \(g : Y \to Z\) is continuous at \(f(x_0) \in Y\), then the composition \(g\circ f : X \to Z\) is continuous.
+\end{proposition}
+\begin{proof}
+    We consider the continuity of \(g\circ f\) at \(x_0 \in X\). Let \(\varepsilon > 0\). From continuity of \(g\), there exists \(\eta > 0\) such that
+    \begin{equation*}
+        d_Y(y, f(x_0)) < \eta \implies d_Z(g(y), g\circ f(x_0)) < \varepsilon.
+    \end{equation*}
+    From continuity of \(f\), there exists \(\delta > 0\) such that
+    \begin{equation*}
+        d_X(x, x_0) < \delta \implies d_Y(f(x), f(x_0)) < \eta.
+    \end{equation*}
+    Then,
+    \begin{equation*}
+        d_X(x, x_0) < \delta \implies d_Z(g\circ f(x), g\circ f(x_0)) < \varepsilon,
+    \end{equation*}
+    that is, \(g\circ f\) is continuous at \(x_0\).
+\end{proof}
+
+\begin{theorem}{Continuity in metric spaces}{continuity_topology}
+    Let \((X, d_X), (Y, d_Y)\) be metric spaces and let \(\tau_X,\tau_Y\) be the respective metric topologies. A map \(f : X \to Y\) is continuous if and only if \(f\) is continuous at every \(x_0 \in X\).
+\end{theorem}
+\begin{proof}
+    Let \(f\) be continuous in the topological space sense. Let \(\varepsilon > 0\), \(x_0 \in X\), \(V = B_{\varepsilon}(f(x_0)) \in \tau_Y\) and \(U = \preim{f}{V} \neq \emptyset\). By hypothesis, \(U \in \tau_X\), and since \(x_0 \in U\), there exists \(\delta > 0\), such that \(B_\delta(x_0) \subset U\). We have thus shown that for all \(\varepsilon > 0\), there exists \(\delta > 0\) such that \(d_X(x,x_0) < \delta \implies d_Y(f(x), f(x_0)) < \varepsilon\).
+
+    Let \(f\) be continuous in the metric space sense at every point of \(X\). If an open set in \(\tau_Y\) has empty intersection with the range of \(f\), then its preimage is the empty set, which is open. Let \(V \in \tau_Y\) be an open set containing at least one element of the range of \(f\). Let \(x_0 \in \preim{f}{V}\), then there exists \(\varepsilon > 0\) such that \(B_{\varepsilon}(f(x_0)) \subset V\). By continuity, there exists \(\delta > 0\) such that \(x \in B_\delta(x_0) \implies f(x) \in B_\varepsilon(f(x_0))\), therefore \(x \in B_\delta(x_0) \implies x \in \preim{f}{V}\), that is, \(\preim{f}{V}\) is open, since \(x_0\) is an interior point.
+\end{proof}
+
+The structure preserving maps of metric spaces, \emph{isometries} or \emph{distance-preserving functions}, are homeomorphisms.
+\begin{definition}{Isometric metric spaces}{isometry}
+    Let \((X, d_X), (Y, d_Y)\) be metric spaces. An \emph{isometry} is a bijective map \(f : X \to Y\) that is \emph{distance-preserving}, that is, \(d_X(x_1, x_2) = d_Y(f(x_1), f(x_2))\) for all \(x_1,x_2 \in X\). If there exists such a map, we say \((X, d_X)\) and \((Y, d_Y)\) are \emph{isometric metric spaces}.
+\end{definition}
+\begin{proposition}{Isometries are homeomorphisms}{isometry_continuous}
+    If \(f: X \to Y\) is an isometry between metric spaces \((X, d_X)\) and \((Y, d_Y)\), then \(f\) is a homeomorphism with respect to the metric topologies.
+\end{proposition}
+\begin{proof}
+    Let \(x_0 \in X\) and \(\varepsilon > 0\). As \(f\) is distance-preserving, we have
+    \begin{equation*}
+        d_X(x, x_0) < \varepsilon \implies d_Y(f(x), f(x_0)) < \varepsilon,
+    \end{equation*}
+    hence \(f\) is continuous at \(x_0\). Since \(x_0\) is arbitrary, \(f\) is continuous.
+
+    We show \(f^{-1} : Y \to X\) is distance-preserving. For all \(y, \tilde{y} \in Y\) we have
+    \begin{equation*}
+        d_X(f^{-1}(y), f^{-1}(\tilde{y})) = d_Y\left(f \circ f^{-1} (y), f \circ f^{-1} (\tilde{y})\right) = d_Y(y, y_0),
+    \end{equation*}
+    since \(f\) is a bijection and \(f\) is distance preserving. Repeating the previous argument yields that \(f^{-1}\) is continuous.
+\end{proof}
+
+We may define a stronger notion of continuity with the additional structure of the metric space.
+\begin{definition}{Uniform continuity}{uniform_continuity}
+    Let \((X, d_X), (Y, d_Y)\) be metric spaces. A map \(f : X \to Y\) is \emph{uniformly continuous in a non-empty subset \(A\)}, if for all \(\varepsilon > 0\) there exists \(\delta > 0\) such that for every \(x,y \in A\)
+    \begin{equation*}
+        d_X(x, y) < \delta \implies d_Y(f(x), f(y)) < \varepsilon.
+    \end{equation*}
+    Moreover, if \(A = X\), we say \(f\) is uniformly continuous.
+\end{definition}
+
+\begin{proposition}{Uniform continuity implies continuity}{uniform_continuity}
+    If \(f : X \to Y\) is a uniformly continuous map between the metric spaces \((X, d_X)\) and \((Y, d_Y)\), then \(f\) is continuous.
+\end{proposition}
+\begin{proof}
+    Let \(x_0 \in X\) and let \(\varepsilon > 0\). Since \(f\) is uniformly continuous, there exists \(\delta > 0\) such that for all \(x,\tilde{x} \in X\), we have \(d_X(x, \tilde{x}) < \delta \implies d_Y(f(x), f(\tilde{x})) < \varepsilon\). In particular, fixing \(\tilde{x} = x_0\), we have for all \(x \in B_\delta(x_0)\) that \(f(x) \in B_\varepsilon(f(x_0))\), hence \(f\) is continuous at \(x_0\).
+\end{proof}
+
+Finally, we relate continuity with convergence of sequences. We note that the theorem could be weakened to continuity on a subset or a single point as in definition \cref{def:continuity_metric}.
+\begin{theorem}{Convergent sequence definition of continuity}{convergence_continuity}
+    Let \((X, d_X)\) and \((Y, d_Y)\) be metric spaces. A map \(f : X \to Y\) is continuous if and only if for every \(x \in X\) and for every sequence \(\family{x_n}{n \in \mathbb{N}} \subset X\) that converges to \(x\) with respect to \((X, d_X)\) we have
+    \begin{equation*}
+        \lim_{n \to \infty} f(x_n) = f(x)
+    \end{equation*}
+    with respect to \((Y, d_Y)\).
+\end{theorem}
+\begin{proof}
+    Suppose \(f\) is continuous and let \(\varepsilon > 0\). Let \(\tilde{x} \in X\) and let \(\family{\tilde{x}_n}{n\in \mathbb{N}} \subset X\) be a sequence that converges to \(\tilde{x}\) with respect to \((X, d_X)\). From continuity there exists \(\delta > 0\) such that
+    \begin{equation*}
+        d_X(x, \tilde{x}) < \delta \implies d_Y(f(x), f(\tilde{x})) < \varepsilon.
+    \end{equation*}
+    Since the sequence is convergent, there exists \(N \in \mathbb{N}\) such that
+    \begin{equation*}
+        n \geq N \implies d_X(\tilde{x}_n, \tilde{x}) < \delta,
+    \end{equation*}
+    thus
+    \begin{equation*}
+        n \geq N \implies d_Y(f(\tilde{x}_n), f(\tilde{x})) < \varepsilon.
+    \end{equation*}
+    Since \(\tilde{x}\) and \family{\tilde{x}_n}{n\in \mathbb{N}} were arbitrary, we have shown that \(f(x_n) \to f(x)\) for all \(x \in X\).
+
+    To show the converse, we prove its contrapositive: we will show that if \(f\) is not continuous, then there exists a convergent sequence \(x_n\to \tilde{x} \in X\) such that \(f(x_n)\) does not converge to \(f(\tilde{x})\), for some \(\tilde{x} \in X\). If \(f\) is not continuous, then there exists \(\eta > 0\) such that for a given \(\delta > 0\), there exists \(x \in X\) such that \(d_X(x, \tilde{x}) < \delta\) but \(d_Y(f(x), f(\tilde{x})) \geq \eta\). We consider a family \(\family{\delta_n}{n\in \mathbb{N}}\) with \(\delta_n = 2^{-n}\), for all \(n \in \mathbb{N}\). Let \(\family{x_n}{n\in \mathbb{N}}\subset X\) be a sequence of elements that make \(f\) fail to be continuous, that is,
+    \begin{equation*}
+        d_X(x_n ,\tilde{x}) < \delta_n \implies d_Y(f(x_n), f(\tilde{x})) \geq \eta
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). We have thus constructed a convergent sequence \(x_n \to \tilde{x}\) such that \(f(x_n)\) does not converge to \(f(\tilde{x})\).
+\end{proof}
+\begin{remark}
+    This formulation of continuity makes it evident that the image of a convergent sequence under a continuous map is itself a convergent sequence.
+\end{remark}
+
+\subsection{Completeness and the Cauchy property}
+It is important to note that the convergence of a sequence cannot be understood alone from properties of the sequence itself: one must provide an element of the metric space.
+\begin{definition}{Cauchy sequence}{cauchy}
+    A sequence \family{x_n}{n \in \mathbb{N}} is said to be a \emph{Cauchy sequence}, or simply to be \emph{Cauchy}, with respect to the metric space \((X, d)\), if it has the \emph{Cauchy property}: for all \(\varepsilon > 0\), there exists an \(N \in \mathbb{N}\) such that
+    \begin{equation*}
+        n,m \geq N \implies d(x_n, x_m) < \varepsilon.
+    \end{equation*}
+\end{definition}
+
+The convergent sequences we have considered so far are Cauchy sequences.
+\begin{proposition}{Every convergent sequence has the Cauchy property}{convergent_cauchy}
+    Let \((X, d)\) be a metric space. If \family{x_n}{n\in \mathbb{N}} is a convergent sequence with respect to \((X, d)\), then it is a Cauchy sequence with respect to \((X, d)\).
+\end{proposition}
+\begin{proof}
+    Let \(x \in X\) be the unique element in \(X\) such that \(x_n \to x\), with respect to the metric \(d\). Then, for all \(\varepsilon > 0\), there exists \(N \in \mathbb{N}\) such that \(n \geq N \implies d(x_n, x) < \frac12\varepsilon.\) In particular, let \(\ell, m \geq N\), then \(d(x_\ell, x) < \frac12 \varepsilon\) and \(d(x_m, x) < \frac12 \varepsilon\), hence
+    \begin{equation*}
+        d(x_\ell, x_m) \leq d(x_\ell, x) + d(x, x_m) < \varepsilon,
+    \end{equation*}
+    which shows the sequence is Cauchy.
+\end{proof}
+
+As isometries are distance preserving, the image of a Cauchy sequence under an isometry is Cauchy. In fact, uniform continuity preserves the Cauchy property.
+\begin{proposition}{Uniform continuity preserves the Cauchy property}{uniformly_continuous_cauchy}
+    Let \(f : X \to Y\) be a uniformly continuous map with respect to the metric spaces \((X, d_X)\) and \((Y, d_Y)\). If \(\family{x_n}{n\in \mathbb{N}} \subset X\) is a Cauchy sequence with respect to \((X, d_X)\), then \(\family{f(x_n)}{n\in \mathbb{N}} \subset Y\) is a Cauchy sequence with respect to \((Y, d_Y)\).
+\end{proposition}
+\begin{proof}
+    Let \(\varepsilon > 0\). From uniform continuity, there exists \(\delta > 0\) such that for all \(x, \tilde{x} \in X\) we have \(d_X(x, \tilde{x}) < \delta \implies d_Y(f(x), \tilde{x}) < \varepsilon.\) Since the sequence is Cauchy, there exists \(N \in \mathbb{N}\) such that for all \(n, m \geq N\) we have \(d_X(x_n, x_m) < \delta\). That is,
+    \begin{equation*}
+        n,m\geq N \implies d_Y(f(x_n), f(x_m)) < \varepsilon,
+    \end{equation*}
+    hence \(\family{f(x_n)}{n\in \mathbb{N}}\) is Cauchy.
+\end{proof}
+
+\begin{proposition}{Cauchy sequences are bounded}{Cauchy_bounded}
+    Let \((X, d)\) be a metric space. If \(\family{x_n}{n\in \mathbb{N}}\subset X\) is a Cauchy sequence with respect to \((X,d)\), then it is bounded, that is, there exists \(M > 0\) such that  \(\sup\setc{d(x_n, x_m)}{n,m \in \mathbb{N}} \leq M\).
+\end{proposition}
+\begin{proof}
+    Let \(\varepsilon > 0\), then by the Cauchy property there exists \(N \in \mathbb{N}\) such that
+    \begin{equation*}
+        m,n \geq N \implies d(x_n, x_m) < \varepsilon.
+    \end{equation*}
+    Let \(\mathbb{N}_{< N} = \setc*{j \in \mathbb{N}}{j < N}\) be the set of the first \(N\) natural numbers and let
+    \begin{equation*}
+        M_0 = \max\setc*{d(x_n, x_m)}{n,m \in \mathbb{N}_{< N}},
+    \end{equation*}
+    which is well-defined since \(\mathbb{N}_{< N}\) is clearly finite. Next, we let \(\ell \geq N\) and define
+    \begin{equation*}
+        M_1 = \max\setc*{d(x_n, x_\ell)}{n \in \mathbb{N}_{< N}},
+    \end{equation*}
+    then for all \(n \in \mathbb{N}_{<N}\) and all \(m \geq N\), we have
+    \begin{align*}
+        d(x_n, x_m) &\leq d(x_n, x_\ell) + d(x_\ell, x_m)\\
+                    &\leq M_1 + \varepsilon.
+    \end{align*}
+    Finally, we take \(M = \max\set{\varepsilon, M_0, M_1 + \varepsilon}\), and we have
+    \begin{equation*}
+        d(x_n, x_m) \leq M,
+    \end{equation*}
+    for all \(n, m \in \mathbb{N}\). That is, \(M\) is an upper bound for the distance between elements of \family{x_n}{n\in \mathbb{N}}.
+\end{proof}
+
+As opposed to convergence, whether a sequence is Cauchy and properties that follow from it can be studied solely from the sequence itself. It would be desirable, then, if one could decide if a sequence converges based on whether it is Cauchy. However, it is not always the case: take for example the metric space \((\mathbb{Q}, \abs{\noarg})\) and the Cauchy sequence \(n \mapsto \frac{1}{n!}\), which converges in \((\mathbb{R}, \abs{\noarg})\) to \(e\), but it does not converge in \((\mathbb{Q}, \abs{\noarg})\).
+
+\begin{definition}{Complete metric space}{completeness}
+    A metric space \((X, d)\) is \emph{complete} if every Cauchy sequence \(\family{x_n}{n \in \mathbb{N}} \subset X\) converges to some \(x \in X\) with respect to \((X, d)\).
+\end{definition}
+
+\begin{example}{\((\mathcal{C}([a,b];\mathbb{C}), d_\infty)\) is a complete metric space}{sup_norm_complete}
+    The metric space \((\mathcal{C}([a,b];\mathbb{C}), d_\infty)\) is a complete metric space.
+\end{example}
+\begin{proof}
+    Let \(\family{f_n}{n \in \mathbb{N}} \subset \mathcal{C}([a,b];\mathbb{C})\) be a Cauchy sequence of continuous functions in \([a,b]\). Then, for some \(y \in [a,b]\), we have, by the definition of the supremum,
+    \begin{equation*}
+        \abs*{f_n(y) - f_m(y)} \leq \sup_{x \in [a,b]} \abs*{f_n(x) - f_m(x)} = d_\infty(f_n, f_m).
+    \end{equation*}
+    For all \(\varepsilon > 0\), there exists \(N \in \mathbb{N}\) such that
+    \begin{align*}
+        n,m \geq N &\implies d_\infty(f_n, f_m) < \varepsilon\\
+                   &\implies \abs*{f_n(y) - f_m(y)} < \varepsilon
+    \end{align*}
+    then as a result the sequence \(\family{f_n(y)}{n \in \mathbb{N}} \subset \mathbb{C}\) is Cauchy with respect to the metric space \((\mathbb{C}, d)\), where
+    \begin{align*}
+        d : \mathbb{C} \times \mathbb{C} &\to \mathbb{R}\\
+        (z,w) &\mapsto \abs{z-w}
+    \end{align*}
+    is the usual metric in the complex plane. From completeness of the complex plane with respect to the usual metric, this sequence converges to some \(\xi_y \in \mathbb{C}\). Since \(y\) is arbitrary and from the uniqueness of convergence, we may define the map
+    \begin{align*}
+        f : [a,b] &\to \mathbb{C}\\
+                y &\mapsto \xi_y.
+    \end{align*}
+    We will show \(f\) is continuous in \([a,b]\) and that \(f_n \to f\).
+
+    Let \(\varepsilon > 0\) and let \(x_0 \in [a,b]\). From repeatedly using the triangle inequality in \((\mathbb{C}, d)\), we have
+    \begin{align*}
+        d(f(x), f(x_0)) \leq d(f(x), f_n(x)) + d(f_n(x), f_n(x_0)) + d(f_n(x_0), f(x_0)),
+    \end{align*}
+    for all \(n \in \mathbb{N}\) and \(x \in [a,b]\). From the convergence of \(\family{f_n(x)}{n\in \mathbb{N}}, \family{f_n(x_0)}{n\in \mathbb{N}} \subset \mathbb{C}\) with respect to \((\mathbb{C}, d)\), there exists \(M \in \mathbb{N}\) such that
+    \begin{equation*}
+        n \geq M \implies d(f(x), f_n(x)) < \frac13 \varepsilon \quad\text{and}\quad d(f(x_0), f_n(x_0)) < \frac13 \varepsilon.
+    \end{equation*}
+    From the continuity of \(f_n\), there exists \(\delta > 0\) such that
+    \begin{equation*}
+        \abs{x - x_0} < \delta \implies \abs*{f_n(x) - f_n(x_0)} = d(f_n(x), f_n(x_0)) < \frac13\varepsilon.
+    \end{equation*}
+    Hence, we have shown there exists \(\delta > 0\) such that
+    \begin{equation*}
+        \abs{x - x_0} < \delta \implies d(f(x), f(x_0)) < \varepsilon,
+    \end{equation*}
+    that is, \(f\) is continuous at \(x_0\). Since \(x_0\) was arbitrary, \(f \in \mathcal{C}([a,b]; \mathbb{C})\).
+
+    Let \(\eta > 0\). We consider an increasing sequence of natural numbers \family{N_k}{k\in \mathbb{N}} such that \(N_{k + 1} > N_k\) for all \(k \in \mathbb{N}\) and
+    \begin{equation*}
+        n, m > N_k \implies d_\infty(f_m, f_n) < \frac{\eta}{2^{k+1}},
+    \end{equation*}
+    which are guaranteed to exist since the sequence of functions is Cauchy. From this sequence we choose another increasing sequence sequence of natural numbers \family{n_k}{k \in \mathbb{N}} such that \(n_{k+1} > n_k\) and \(n_k > N_k\). We turn our attention to the subsequence \family{f_{n_k}}{k\in \mathbb{N}} of continuous functions. For a given \(\ell \in \mathbb{N}\) we have
+    \begin{equation*}
+        d_\infty(f_{n_{\ell + 1}}, f_{n_{\ell}}) < \frac{\eta}{2^{\ell + 1}},
+    \end{equation*}
+    since \(n_{\ell+1} > n_{\ell} > N_\ell\). For all \(x \in [a,b]\)  and \(k \in \mathbb{N}\), we can use the telescoping sum
+    \begin{equation*}
+        f_{n_k}(x) - f_{n_1}(x) = \sum_{\ell = 1}^{k - 1} [f_{n_{\ell + 1}}(x) - f_{n_{\ell}}(x)]
+    \end{equation*}
+    to estimate
+    \begin{align*}
+        \abs*{f_{n_k}(x) - f_{n_1}(x)} &\leq \sum_{\ell = 1}^{k - 1} \abs*{f_{n_{\ell + 1}}(x) - f_{n_\ell}(x)}\\
+                                       &\leq \sum_{\ell = 1}^{k - 1} \sup_{x \in [a,b]}\abs*{f_{n_{\ell + 1}}(x) - f_{n_\ell}(x)}\\
+                                       &\leq \sum_{\ell = 1}^{k - 1} d_\infty(f_{n_{\ell+1}}, f_{n_\ell})\\
+                                         &< \frac12 \eta \sum_{\ell = 1}^{k-1}\frac{1}{2^\ell} = \frac12 \eta \left(1 - \frac{1}{2^{k - 1}}\right).
+    \end{align*}
+    Then, for each \(x \in [a,b]\), we have
+    \begin{align*}
+        \abs*{f(x) - f_{n_1}(x)} &\leq \abs*{f(x) - f_{n_k}(x)} + \abs*{f_{n_k}(x) - f_{n_1}(x)}\\
+                                 &< \abs*{f(x) - f_{n_k}(x)} + \frac12 \eta\left(1 - \frac1{2^{k-1}}\right),
+    \end{align*}
+    then since the left hand side does not depend on \(k\), we have, after taking the limit \(k \to \infty\) and recalling \(f_{n_k}(x) \to f(x)\), that
+    \begin{equation*}
+        \abs*{f(x) - f_{n_1}(x)} \leq \frac12 \eta.
+    \end{equation*}
+    We have shown that for all \(n > N_1\) and for all \(x \in [a,b]\),
+    \begin{equation*}
+        \abs*{f(x) - f_n(x)} \leq \abs*{f(x) - f_{n_1}(x)} + \abs*{f_{n_1}(x) - f_n(x)} \leq \frac34 \eta.
+    \end{equation*}
+    Hence, \(\frac34\eta\) is an upper bound for \(\setc{\abs{f(x)-f_n(x)}}{x \in [a,b]}\), therefore \(d_\infty(f, f_n) < \eta\), proving the convergence of the Cauchy sequence.
+\end{proof}
+
+Completeness of a subset of a complete metric space is equivalent with the subset being closed in the metric topology.
+\begin{theorem}{Completeness and closed sets}{complete_closed}
+    Let \((X, d)\) be a complete metric space and let \(\tau\) be the metric topology. A subset \(S \subset X\) is closed with respect to \(\tau\) if and only if \(S\) is complete, in the sense that the metric space \((S, \restrict{d}{S})\) is complete.
+\end{theorem}
+\begin{proof}
+    Suppose \(S\) is closed. By \cref{thm:convergent_closed}, every convergent sequence of elements in \(S\) converges to some element in \(S\). In particular, since \(X\) is complete, every Cauchy sequence of elements in \(S\) is convergent, therefore they must converge to some element in \(S\). Hence, \(S\) is complete.
+
+    Suppose \(S\) is complete. Then every Cauchy sequence of elements in \(S\) converges to some element in \(S\). Recalling that every convergent sequence is Cauchy, we have by \cref{thm:convergent_closed} that \(S\) is closed.
+\end{proof}
+
+Finally, we give Baire's category argument.
+\begin{theorem}{Complete metric spaces are of the second category}{baire-hausdorff}
+    A complete metric space is of the second category with respect to the metric topology.
+\end{theorem}
+\begin{proof}
+    Let \((X, d)\) be a complete metric space and let \(\tau\) be the metric topology. Suppose, by contradiction, \(X\) is of the first category. Then there exists a countable collection of nowhere dense sets \(\family{M_n}{n \in \mathbb{N}} \subset \mathbb{P}(X)\) such that \(X = \bigcup_{n \in \mathbb{N}} M_n\). Without loss of generality, we may assume \(M_n\) closed, since \(\cl_X(M_n)\) is nowhere dense in \(X\). That is, \(X \setminus M_n \in \tau\) and, by \cref{thm:closure_interior,thm:interior_closure_nowhere_dense}, \(\cl_X(X \setminus M_n) = X\), hence \(X \setminus M_n\) is dense in \(X\).
+
+    Let \(x_0 \in X\), then every neighborhood of \(x_0\) has non-empty intersection with every \(X\setminus M_n\). Let \(U\) be a neighborhood of \(x_0\), then \(U \cap (X\setminus M_n)\) is dense and open in \(X\). Then, there exists a closed ball \(S_1 = \bar{B}_{r_1}(x_1)\) contained in \(U \cap (X \setminus M_1)\), where we assume \(0 < r_1 < 1\) and \(x_1\) is an arbitrary point of \(U \cap (X \setminus M_1)\). Recursively for \(n > 1\), there exists a closed ball \(S_n = \bar{B}_{r_n}(x_n)\) contained in \(S_{n-1} \cap (X \setminus M_n)\) such that \(0 < r_n < \frac1n\). Then, for all \(n,m \in \mathbb{N}\) we have \(n < m \implies x_m \in S_n\) and \(S_n \cap M_m = \emptyset\).
+
+    This yields a sequence \(x : \mathbb{N} \to X\) which has the Cauchy property. Indeed, for all \(n,m \in \mathbb{N}\) with \(n < m\) we have \(d(x_n, x_m) \leq r_n < \frac1n\). Hence, for all \(\varepsilon > 0\), for all \(n,m \geq \ceil{\frac{1}{\varepsilon}}\) we have \(d(x_n,x_m) < \varepsilon\).
+
+
+    As \(X\) is complete, there exists \(\tilde{x} \in X\) such that \(x_n \to \tilde{x}\). By the triangle inequality, we have have
+    \begin{equation*}
+        d(\tilde{x}, x_n) \leq d(x_n, x_m) + d(x_m, \tilde{x}) \leq r_n + d(x_m, \tilde{x})
+    \end{equation*}
+    for all \(n,m \in \mathbb{N}\) with \(n < m\). By convergence, we have \(d(\tilde{x}, x_n) \leq r_n\), hence \(\tilde{x} \in \cl_X(B_{r_n}(x_n))\) for all \(n\in \mathbb{N}\). By construction, \(\tilde{x} \in \bigcap_{n\in \mathbb{N}} (X\setminus M_n)\), then by \cref{lem:complement_union}, we have \(\tilde{x} \in X \setminus \bigcup_{n\in \mathbb{N}} M_n\). This contradicts the hypothesis the collection \(\family{M_n}{n\in \mathbb{N}}\) covers \(X\), thus showing there is no such collection.
+\end{proof}
