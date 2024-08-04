@@ -4,6 +4,8 @@
 % \usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
 % \addbibresource{references.bib}
 
+\newcommand{\unity}{\mathds{1}}
+
 \newcommand\hilbert{\mathscr{H}}
 \newcommand\riesz{\mathscr{R}}
 \newcommand\eval{\mathscr{D}}
@@ -24,13 +26,20 @@
 \begin{document}
 \maketitle
 \tableofcontents
+% preliminaries
 \input{metric-spaces/0-topology}
 \input{metric-spaces/1-metric-spaces}
+% normed linear spaces
 \input{normed-linear-spaces/0-normed-linear-spaces}
-\input{normed-linear-spaces/1-bounded-operators}
-\input{normed-linear-spaces/2-extension-bounded-operators}
-\input{normed-linear-spaces/3-hahn-banach-theorem}
-\input{normed-linear-spaces/4-topological-dual}
+\input{normed-linear-spaces/1-linear-operators}
+\input{normed-linear-spaces/2-bounded-operators}
+\input{normed-linear-spaces/3-extension-bounded-operators}
+\input{normed-linear-spaces/4-hahn-banach-theorem}
+\input{normed-linear-spaces/5-topological-dual}
+\input{normed-linear-spaces/6-uniform-boundedness}
+\input{normed-linear-spaces/7-open-mapping-theorem}
+\input{normed-linear-spaces/8-closed-graph-theorem}
+% hilbert spaces
 \input{hilbert-spaces/0-inner-product-spaces}
 \input{hilbert-spaces/1-pre-hilbert-spaces}
 \input{hilbert-spaces/2-orthogonality}

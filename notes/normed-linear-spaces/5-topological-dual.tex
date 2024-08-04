@@ -52,7 +52,7 @@ In a finite dimensional linear space \(V\), we know there is a linear isomorphis
         \eval_v : V^\dag &\to \mathbb{C}\\
                           \ell &\mapsto \ell v,
     \end{align*}
-    is a natural injective linear map. Moreover, for every \(v \in V\), we have \(\norm{\eval_v} = \norm{v}\).
+    is a natural injective linear map. Moreover, \(\eval\) is a linear isometry.
 \end{proposition}
 \begin{proof}
     Let \(v, u \in V\) and \(z \in \mathbb{C}\), then for all \(\ell \in V^\dag\),
@@ -69,9 +69,7 @@ In a finite dimensional linear space \(V\), we know there is a linear isomorphis
     \begin{equation*}
         \norm{\eval_v} = \sup_{\ell \in V^\dag} \frac{\abs*{\eval_v\ell}}{\norm{\ell}} \geq \frac{\abs*{\ell_vv}}{\norm{\ell_v}} = \norm{v},
     \end{equation*}
-    hence \(\norm{\eval_v} = \norm{v}\).
-
-    Suppose \(u \in \ker{\eval} \subset V\). Then, for all \(\ell \in V^\dag\), we have \(\ell u = 0\). That is, the kernel of \(\eval\) is a subset of the intersection of all kernels of bounded linear functionals in \(V\), hence \(u = 0\).
+    hence \(\norm{\eval_v} = \norm{v}\). That is, \(\eval\) is a isometry, so it is injective.
 \end{proof}
 
 

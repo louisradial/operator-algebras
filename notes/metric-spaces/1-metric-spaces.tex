@@ -229,26 +229,31 @@ We may specialize the topological definition of continuity and state whether a m
     Let \(f\) be continuous in the metric space sense at every point of \(X\). If an open set in \(\tau_Y\) has empty intersection with the range of \(f\), then its preimage is the empty set, which is open. Let \(V \in \tau_Y\) be an open set containing at least one element of the range of \(f\). Let \(x_0 \in \preim{f}{V}\), then there exists \(\varepsilon > 0\) such that \(B_{\varepsilon}(f(x_0)) \subset V\). By continuity, there exists \(\delta > 0\) such that \(x \in B_\delta(x_0) \implies f(x) \in B_\varepsilon(f(x_0))\), therefore \(x \in B_\delta(x_0) \implies x \in \preim{f}{V}\), that is, \(\preim{f}{V}\) is open, since \(x_0\) is an interior point.
 \end{proof}
 
-The structure preserving maps of metric spaces, \emph{isometries} or \emph{distance-preserving functions}, are homeomorphisms.
+The structure preserving maps of metric spaces, the bijective \emph{isometries} or \emph{distance-preserving functions}, are homeomorphisms.
 \begin{definition}{Isometric metric spaces}{isometry}
-    Let \((X, d_X), (Y, d_Y)\) be metric spaces. An \emph{isometry} is a bijective map \(f : X \to Y\) that is \emph{distance-preserving}, that is, \(d_X(x_1, x_2) = d_Y(f(x_1), f(x_2))\) for all \(x_1,x_2 \in X\). If there exists such a map, we say \((X, d_X)\) and \((Y, d_Y)\) are \emph{isometric metric spaces}.
+    Let \((X, d_X), (Y, d_Y)\) be metric spaces. An \emph{isometry} is a map \(f : X \to Y\) that is \emph{distance-preserving}, that is, \(d_X(x_1, x_2) = d_Y(f(x_1), f(x_2))\) for all \(x_1,x_2 \in X\). If there exists a bijective isometry, we say \((X, d_X)\) and \((Y, d_Y)\) are \emph{isometric metric spaces}.
 \end{definition}
-\begin{proposition}{Isometries are homeomorphisms}{isometry_continuous}
-    If \(f: X \to Y\) is an isometry between metric spaces \((X, d_X)\) and \((Y, d_Y)\), then \(f\) is a homeomorphism with respect to the metric topologies.
+\begin{proposition}{Surjective isometries are homeomorphisms}{isometry_continuous}
+    If \(f: X \to Y\) is a surjective isometry between metric spaces \((X, d_X)\) and \((Y, d_Y)\), then \(f\) is a homeomorphism with respect to the metric topologies.
 \end{proposition}
 \begin{proof}
     Let \(x_0 \in X\) and \(\varepsilon > 0\). As \(f\) is distance-preserving, we have
     \begin{equation*}
         d_X(x, x_0) < \varepsilon \implies d_Y(f(x), f(x_0)) < \varepsilon,
     \end{equation*}
-    hence \(f\) is continuous at \(x_0\). Since \(x_0\) is arbitrary, \(f\) is continuous.
+    hence \(f\) is continuous at \(x_0\). Since \(x_0\) is arbitrary, \(f\) is continuous. We've shown distance-preserving maps are continuous.
 
-    We show \(f^{-1} : Y \to X\) is distance-preserving. For all \(y, \tilde{y} \in Y\) we have
+    Let \(x_1, x_2 \in X\) be such that \(f(x_1) = f(x_2)\). Then \(d_Y(f(x_1), f(x_2)) = 0\) implies \(d_X(x_1, x_2) = 0\) by hypothesis. Hence \(x_1 = x_2\), and \(f\) is injective. That is, \(f\) is a bijection and admits an inverse map \(f^{-1} : Y \to X\).
+
+    To show the inverse map is continuous, we prove \(f^{-1} : Y \to X\) is distance-preserving. For all \(y, \tilde{y} \in Y\) we have
     \begin{equation*}
         d_X(f^{-1}(y), f^{-1}(\tilde{y})) = d_Y\left(f \circ f^{-1} (y), f \circ f^{-1} (\tilde{y})\right) = d_Y(y, y_0),
     \end{equation*}
-    since \(f\) is a bijection and \(f\) is distance preserving. Repeating the previous argument yields that \(f^{-1}\) is continuous.
+    since \(f\) is a bijection and \(f\) is distance-preserving.
 \end{proof}
+\begin{remark}
+    We've shown every isometry is necessarily injective and continuous with respect to the metric topology.
+\end{remark}
 
 We may define a stronger notion of continuity with the additional structure of the metric space.
 \begin{definition}{Uniform continuity}{uniform_continuity}
@@ -455,7 +460,7 @@ Completeness of a subset of a complete metric space is equivalent with the subse
 \end{proof}
 
 Finally, we give Baire's category argument.
-\begin{theorem}{Complete metric spaces are of the second category}{baire-hausdorff}
+\begin{theorem}{Complete metric spaces are of the second category}{Baire_Hausdorff}
     A complete metric space is of the second category with respect to the metric topology.
 \end{theorem}
 \begin{proof}

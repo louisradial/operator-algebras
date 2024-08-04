@@ -1,0 +1,120 @@
+% vim: spl=en_us
+\section{Uniform boundedness theorem}
+A consequence of the completeness of a Banach space due to Baire's category argument is the Banach-Steinhaus theorem, also known as the uniform boundedness theorem or principle. % A collection of linear maps \(\mathfrak{T}\) defined on a linear space \(V\) is \emph{dominated} by a real functional \(p : V \to \mathbb{R}\) if \(\norm{Tv} \leq p(v)\) for all \(v \in V\) and all \(T \in \mathfrak{T}\). We'll denote by \(\mathbb{R}^+\) the set of positive real numbers and by \(\mathbb{R}^+_0\) the set of non-negative real numbers.
+\begin{theorem}{Banach-Steinhaus theorem}{Banach_Steinhaus}
+    Let \(\mathfrak{T} \subset \bounded{(V,W)}\) be a non-empty collection of bounded linear operators defined on the Banach space \(V\) into a normed linear space \(W\). If for all \(v \in V\) the set \(\setc{\norm{Tv}}{T \in \mathfrak{T}}\) is bounded, then the set \(\setc{\norm{T}}{T \in \mathfrak{T}}\) is bounded.
+\end{theorem}
+\begin{proof}
+    For each \(v \in V\), the set \(\setc{\norm{Tv}}{T \in \mathfrak{T}}\) is bounded above by some natural number \(n_v \in \mathbb{N}\) and in particular by any natural number greater than \(n_v\). Consider
+    \begin{equation*}
+        V_n = \setc{v \in V}{\forall T \in \mathfrak{T} : \norm{Tv} \leq n}
+    \end{equation*}
+    for all \(n \in \mathbb{N}\), then \(V = \bigcup_{n \in \mathbb{N}} V_n\). We may rewrite
+    \begin{equation*}
+        V_n = \bigcap_{T \in \mathfrak{T}} \setc{v \in V}{\norm{Tv}\leq n}.
+    \end{equation*}
+    Moreover, for each \(T \in \mathfrak{T}\) we consider the real functional \(p_T = \norm{\noarg} \circ T\), which is continuous as a composition of continuous maps. Then,
+    \begin{equation*}
+        V_n = \bigcap_{T \in \mathfrak{T}} \preim{p_T}{[0,n]}
+    \end{equation*}
+    is manifestly closed in \(V\).
+
+    \nameref{thm:Baire_Hausdorff}, then there exists \(m \in \mathbb{N}\) such that \(\inte_V(V_m)\) is non-empty, otherwise \(V\) would be the countable union of nowhere dense sets. Let \(u\) be an interior point of \(V_m\), then there exists \(r > 0\) such that \(B_r(u) \subset V_m\). If \(w \in B_r(0)\), then
+    \begin{equation*}
+        \norm{(w + u) - u} = \norm{w} < r,
+    \end{equation*}
+    that is \(w + u \in B_r(u)\). Since \(u, u + w \in V_m\), we have
+    \begin{equation*}
+        \norm{Tu} \leq m
+        \quad\text{and}{\quad}
+        \norm{T(u + w)} \leq m
+    \end{equation*}
+    for all \(T \in \mathfrak{T}\), provided \(w \in B_r(0)\). For all \(T \in \mathfrak{T}\), this yields
+    \begin{equation*}
+        \norm{Tw} = \norm{T(w + u) - Tu} \leq \norm{T(w + u)} + \norm{Tu} \leq 2m
+    \end{equation*}
+    for all \(w \in B_r(0)\).
+
+    Let \(v \in V\setminus{0}\), then \(\frac{r}{2\norm{v}}v \in B_r(0)\). As a result
+    \begin{equation*}
+        \norm{Tv} = \frac{2\norm{v}}{r}\norm*{T\left(\frac{r}{2\norm{v}}v\right)} \leq \frac{4m}{r}\norm{v}
+    \end{equation*}
+    for every \(T \in \mathfrak{T}\). The previous inequality holds for \(v = 0\), hence
+    \begin{equation*}
+        \sup_{T \in \mathfrak{T}} \norm{T} \leq \frac{4m}{r},
+    \end{equation*}
+    since \(r\) depends only on \(m\) and the arbitrary interior point \(u\).
+\end{proof}
+
+An immediate result concerns the convergence of a sequence of bounded operators.
+\begin{theorem}{Strong limit of a sequence of bounded operators}{strong_limit_operators}
+    Let \(\family{T_n}{n\in \mathbb{N}} \subset \bounded(V,W)\) be a sequence of bounded operators defined on a Banach space \(V\) into a normed linear space \(W\). If for each \(v \in V\) the sequence \(\family{T_nv}{n \in \mathbb{N}}\subset W\) converges in \(W\), then the \emph{strong limit} of the sequence, defined by
+    \begin{align*}
+        T : V &\to W\\
+            v &\mapsto \lim_{n\to \infty} T_n v,
+    \end{align*}
+    is a bounded linear operator and \todo[\(\norm{T} \leq \liminf_{n\to\infty}\norm{T_n}\). liminf?]
+\end{theorem}
+\begin{proof}
+    As a sequence of bounded linear operators, each \(T_n\) is continuous, then it follows that \(T\) is linear. Recall convergent sequences are bounded, then by the \nameref{thm:Banach_Steinhaus} the set \(\setc{\norm{T_n}}{n \in \mathbb{N}}\) is bounded above by some \(M \geq 0\). For each \(n \in \mathbb{N}\), we have
+    \begin{equation*}
+        \norm{T_n v} \leq \norm{T_n} \cdot \norm{v} \leq M \norm{v}.
+    \end{equation*}
+    for all \(v \in V\). The continuity of the norm yields
+    \begin{equation*}
+        \norm{Tv} = \lim_{n\to\infty} \norm{T_n v} \leq M \norm{v},
+    \end{equation*}
+    hence
+    \begin{equation*}
+        \sup_{v \in V} \frac{\norm{Tv}}{\norm{v}} \leq M,
+    \end{equation*}
+    that is, \(T \in \bounded(V,W)\).
+\end{proof}
+\begin{remark}
+    It is worth noting the strong limit is not the uniform limit. That is, it does not follow that \(\norm{T - T_n} \to 0\). To denote this limit, we'll write \(\displaystyle{\slim_{n\to\infty} T_n = T}\).
+\end{remark}
+
+Let \(\bounded(V) = \bounded(V,V)\) be the set of bounded linear operators that are endomorphisms on a normed linear space. We may use the previous result to express the inverse of an operator in \(\bounded(V)\). If \(A\) is an endomorphism, we write \(A^n = A^{n-1}\circ A\) with \(A^0 = \unity\) for all \(n \in \mathbb{N}\), where \(\unity\) is the identity map.
+\begin{theorem}{C. Neumann series}{neumann-series}
+    Let \(T \in \bounded(V)\) defined on a Banach space \(V\) such that \(\norm{\unity - T} < 1\). Then the strong limit
+    \begin{equation*}
+        S = \slim_{n\to \infty} \sum_{k = 0}^{n} (\unity - T)^k
+    \end{equation*}
+    exists. Moreover, \(S\) is the unique bounded linear inverse map for \(T\).
+\end{theorem}
+\begin{proof}
+    We show by induction on \(n\) that \(\norm*{(\unity - T)^n} \leq \norm{\unity - T}^n\) for all \(n \in \mathbb{N}\). It trivially holds for the base case \(n = 1\), then it remains to show the inductive step. Suppose it holds for some \(k \in \mathbb{N}\), then
+    \begin{align*}
+        \norm{(\unity - T)^{k+1}} &= \sup_{v \in V}\frac{\norm{(\unity - T)^{k+1}v}}{\norm{v}}\\
+                                  &= \sup_{v \in V} \frac{\norm{(\unity - T)^k \circ (\unity - T)v}}{\norm{v}}\\
+                                  &\leq \sup_{v \in V} \frac{\norm{(\unity - T)^k}\cdot \norm{(\unity - T)v}}{\norm{v}}\\
+                                  &\leq \norm{(\unity - T)}^k \norm{\unity - T},
+    \end{align*}
+    hence it holds for \(k + 1\). By the principle of finite induction, \(\norm*{(\unity - T)^n} \leq \norm{\unity - T}^n\) for all \(n \in \mathbb{N}\). Notice it also holds for \(n = 0\).
+
+    Let \(S_n = \sum_{k=0}^n (\unity - T)^k\) for all \(n \in \mathbb{N}_0\). Let \(v \in V\), then for \(n, m \in \mathbb{N}_0\) with \(n < m\) we have
+    \begin{align*}
+        \norm{S_nv - S_mv} = \norm*{\sum_{k=n+1}^m (\unity - T)^kv} &\leq \sum_{k=n+1}^m \norm*{(\unity - T)^kv}\\
+        &\leq \sum_{k = n+1}^m \norm{(\unity - T)^k}\cdot\norm{v}                        \\
+        &\leq \left(\sum_{k=0}^{m-n-1} \norm{\unity - T}^k\right) \norm{\unity - T}^{n+1}\norm{v}                   \\
+        &\leq \left(\sum_{k=0}^\infty \norm{\unity - T}^k\right) \norm{\unity - T}^{n+1} \norm{v}\\
+        &\leq \frac{\norm{\unity - T}^{n+1}}{1 - \norm{\unity - T}} \norm{v}.
+    \end{align*}
+    We may take \(n\) arbitrarily large as to make \(\norm{S_nv - S_mv}\) arbitrarily small, hence \(\family{S_nv}{n\in \mathbb{N}}\) is a Cauchy sequence in \(V\). By completeness, we've shown \(\family{S_nv}{n\in \mathbb{N}}\) converges in \(V\) for all \(v \in V\). \cref{thm:strong_limit_operators} shows \(S = \displaystyle{\slim_{n\to\infty}S_n}\) is a bounded linear operator.
+
+    Let \(v \in V\), then
+    \begin{align*}
+        S \circ T(v) &= S \circ \left[\unity - (\unity - T)\right](v)&
+        T \circ S(v) &= \left[\unity - (\unity - T)\right]\circ S(v)\\
+                     &= S(v) - S\circ(\unity - T)(v)&
+                     &= S(v) - (\unity - T)\circ S(v)\\
+                     &= S(v) - \slim_{n \to \infty} \sum_{k=0}^n (\unity - T)^{k+1}(v)&
+                     &= S(v) - \slim_{n \to \infty} \sum_{k=0}^n (\unity - T)^{k+1}(v)\\
+                     &= S(v) - \slim_{n\to\infty} \sum_{k=1}^n (\unity - T)^{k}(v)&
+                     &= S(v) - \slim_{n\to\infty} \sum_{k=1}^n (\unity - T)^{k}(v)\\
+                     &= \unity(v) = v&
+                     &= \unity(v) = v.
+    \end{align*}
+    That is, \(S = T^{-1}\).
+\end{proof}
+

@@ -1,0 +1,80 @@
+% vim: spl=en_us
+\section{Linear operators in normed linear spaces}
+Henceforth we consider linear spaces over the complex numbers unless otherwise stated. As linear maps, or linear operators, are the structure preserving maps of linear spaces, we will study how these maps are related to the additional structure given by the norms.
+\begin{definition}{Linear operators}{linear_operators}
+    Let \(V, W\) be linear spaces. A \emph{linear operator} \(T : \domain{T} \subset V \to W\) is a linear map,
+    \begin{equation*}
+        \forall u, v \in \domain{T}, \forall \alpha, \beta \in \mathbb{C}: %\quad
+        T(\alpha u + \beta v) = \alpha T(u) + \beta T(v)
+    \end{equation*}
+    for all \(u,v \in \domain{T}\) and all \(\alpha, \beta \in \mathbb{C}\), where the domain of definition \(\domain{T}\) is a linear subspace of \(V\). The image, or range, of \(T\) is denoted by \(\range{T} = T(\domain{T}) \subset W\). The set
+    \begin{equation*}
+        \ker{T} = \setc{v \in \domain{T}}{T(v) = 0}
+    \end{equation*}
+    is the \emph{kernel of \(T\)}.
+\end{definition}
+\begin{remark}
+    Recall that the range and the kernel of a linear operator are linear subspaces. Indeed, the linearity of \(T\) yields \(0 \in \range{T}\) and \(0 \in \ker{T}\), since \(\domain{T}\) is a linear space. Let \(w_1, w_2 \in \range{T}\), then there exist \(v_1, v_2 \in \domain{T}\) such that \(Tv_1 = w_1\) and \(Tv_2 = w_2\), hence \(\alpha w_1 + \beta w_2 = T(\alpha v_1 + \beta v_2) \in \range{T}\) for all \(\alpha, \beta \in \mathbb{C}\). Let \(u_1, u_2 \in \ker{T}\), then \(Tu_1 = Tu_2 = 0\), hence \(T(\alpha u_1 + \beta u_2) = 0\) for all \(\alpha, \beta \in \mathbb{C}\).
+\end{remark}
+\begin{remark}
+    It is common to drop the parenthesis and write \(Tx = T(x)\). We will also use \enquote{linear operator} and \enquote{linear map} interchangeably.
+\end{remark}
+
+\begin{proposition}{Injective linear operator}{injective_linear}
+    A linear operator is injective if and only if its kernel is the trivial subspace.
+\end{proposition}
+\begin{proof}
+    Let \(T : \domain{T} \to W\) be a linear operator. Suppose \(T\) is injective, let \(v \in \ker{T}\), then \(T(v) = T(0)\), hence \(v = 0\). Suppose the kernel is the trivial subspace, then \(T(u) = T(v)\) implies \(T(u - v) = 0\), hence \(u = v\).
+\end{proof}
+
+\begin{proposition}{Kernel of a continuous linear operator}{kernel closed}
+    Let \((V, \norm{\noarg}_V), (W, \norm{\noarg}_W)\) be normed linear spaces. If \(T : V \to W\) is a continuous linear operator, then \(\ker{T}\) is a closed linear subspace of \(V\).
+\end{proposition}
+\begin{proof}
+    Recall \cref{prop:continuity_closed}: a map is continuous if and only if the preimage of closed sets are closed sets. Since \(\set{0} \subset W\) is a closed subset of \(W\), we must have \(\preim{T}{\set{0}} = \ker{T}\) closed.
+\end{proof}
+
+If a metric is induced by a norm, then linear maps that preserve the norm are also isometries.
+\begin{proposition}{Linear isometries}{linear_isometry}
+    Let \((V, \norm{\noarg}_V)\) and \((W, \norm{\noarg}_W)\) be normed linear spaces. A linear map \(T : V \to W\) is an isometry with respect to the metrics induced by the norms if and only if \(\norm{Tx}_W = \norm{x}_V\) for all \(x \in V\).
+\end{proposition}
+\begin{proof}
+    Let \(d_V\) and \(d_W\) be the metrics induced by the norms on \(V\) and \(W\), respectively, then
+    \begin{align*}
+        \forall u, v \in V: d_V(u,v) = d_W(Tu, Tv) &\iff \forall u,v \in V: \norm{u-v}_V = \norm{Tu - Tv}_W\\
+                                                   &\iff \forall u,v \in V: \norm{u-v}_V = \norm{T(u-v)}_W\\
+                                                   &\iff \forall x \in V: \norm{x}_V = \norm{Tx}_W.
+    \end{align*}
+    Hence, a linear map preserves the norm if and only if it is distance-preserving.
+\end{proof}
+\begin{remark}
+    A linear map \(T\) that preserves the norm is called a \emph{linear isometry} and we say \(T\) is \emph{isometric}.
+\end{remark}
+
+We now show a linear isometry maps a Banach space to a Banach space.
+\begin{proposition}{Linear Isometry on a Banach space}{isometry_Banach}
+    Let \(T : V \to W\) be a linear isometry, where \((V, \norm{\noarg}_V)\) is a Banach space and \((W, \norm{\noarg}_W)\) is a normed linear space. Then, the image \(\range{T}\) is a closed linear subspace in \(W\) and it is complete with respect to the norm \(\norm{\noarg}_W\).
+\end{proposition}
+\begin{proof}
+    Notice the corestricted map \(T : V \to \range{T}\) is a bijection, then the normed linear spaces \((V, \norm{\noarg}_V)\) and \((\range{T}, \restrict{\norm{\noarg}_W}{\range{T}})\) are isometric, in the metric space sense. Let \(S : \range{T} \to V\) be the inverse map to the corestricted linear isometry, that is, \(S \circ T = \id{V}\) and \(T \circ S = \id{\range{T}}\). We have shown in \cref{prop:isometry_continuous} that \(S\) is distance-preserving, then by \cref{prop:linear_isometry} it is a linear isometry.
+
+    Let \(\family{w_n}{n\in \mathbb{N}} \subset \range{T}\) be a sequence that converges to \(\tilde{w} \in W\). For all \(n, m \in \mathbb{N}\), we have
+    \begin{equation*}
+        \norm{w_n - w_m}_W = \norm{S(w_n - w_m)}_V = \norm{S(w_n)-S(w_m)}_V,
+    \end{equation*}
+    then \(\family{S(w_n)}{n\in \mathbb{N}} \subset V\) is a Cauchy sequence in \(V\). Since \(V\) is complete, there exists \(\tilde{v} \in V\) such that \(S(w_n) \to \tilde{v}\). This vector satisfies
+    \begin{equation*}
+        \norm{\tilde{w} - T(\tilde{v})}_W \leq \norm{\tilde{w} - w_n}_W + \norm{w_n - T(\tilde{v})}_W = \norm{\tilde{w} - w_n}_W + \norm{S(w_n) - \tilde{v}}_V
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). By convergence of the sequences, we must have \(\tilde{w} = T(\tilde{v})\), hence \(\tilde{w} \in \range{T}\) and \(\range{T}\) is closed.
+
+    Let \(\family{u_n}{n\in \mathbb{N}} \subset \range{T}\) be a Cauchy sequence. By the previous argument, we know \(\family{S(u_n)}{n\in \mathbb{N}} \subset V\) is a Cauchy sequence, hence it converges to some \(\tilde{s} \in V\). The subadditivity of the norm yields
+    \begin{equation*}
+        \norm{u_n - T(\tilde{s})}_W \leq \norm{u_n - u_m}_W + \norm{u_m - T(\tilde{s})}_W = \norm{u_n - u_m}_W + \norm{S(u_m) - \tilde{s}}_V
+    \end{equation*}
+    for all \(n, m \in \mathbb{N}\). Let \(\varepsilon > 0\), then by the Cauchy property and by convergence there exists \(N, M \in \mathbb{N}\) such that \(\norm{S(u_m) - \tilde{s}}_V < \frac12 \varepsilon\) for \(m \geq M\) and such that \(\norm{u_n - u_m}_W < \frac12 \varepsilon\) for \(n,m \geq N\). That is,
+    \begin{equation*}
+        n \geq \max\set{N,M} \implies \norm{u_n - T(\tilde{s})}_W < \varepsilon,
+    \end{equation*}
+    hence \(u_n \to T(\tilde{s})\). We conclude \((\range{T}, \restrict{\norm{\noarg}_W}{\range{T}})\) is a Banach space.
+\end{proof}
