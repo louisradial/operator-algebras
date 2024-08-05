@@ -112,10 +112,12 @@ In short, a map is continuous if and only the preimages of (all) open sets are o
 Now a map that preserves the topology is called a \emph{homeomorphism}, which is defined as a continuous bijection with continuous inverse. We now prove such a map satisfies the condition desired.
 
 \begin{proposition}{Homeomorphism maps open sets to open sets}{homeomorphism}
-    Let \topology{X} and \topology{Y} be topological spaces. Suppose a map \(f : X \to Y\) is a homeomorphism, then \(f\) maps open sets in \(\tau_X\) into open sets in \(\tau_Y\).
+    Let \topology{X} and \topology{Y} be topological spaces. Suppose a map \(f : X \to Y\) is a homeomorphism, then \(f\) maps open sets in \(\tau_X\) into open sets in \(\tau_Y\) and \(f\) maps closed sets in \(\tau_X\) into closed sets in \(\tau_Y\).
 \end{proposition}
 \begin{proof}
     Given a subset \(U \in \tau_X\), we must show the image \(V = f(U)\) is open in \topology{Y}. Taking our attention to the inverse map \(g = f^{-1} : Y \to X\), we see the preimage \(\preim{g}{U} = V\) must be open in \topology{Y}, due to continuity.
+
+    Let \(F\subset X\) be a closed set in \(\tau_X\), then \(f(X \setminus F) \in \tau_Y\) by the previous conclusion. Notice \(f(X \setminus F) \cup f(F) = Y\) since \(f\) is surjective. As \(f\) is injective, we must have \(f(F) = Y \setminus f(X\setminus F)\), hence \(f(F)\) is closed in \(\tau_Y\).
 \end{proof}
 
 If there exists a homeomorphism between two topological spaces, they are said to be \emph{homeomorphic} to each other. In fact, this establishes an equivalence relation on topological spaces, thanks to the continuity o the composition of continuous maps.
