@@ -281,6 +281,39 @@ Furthermore, we may relate the closure and interior of a set by means of the com
     This theorem makes it clear that descriptions that rely on closures can be restated as descriptions that rely on interiors and vice-versa.
 \end{remark}
 
+Finally, we show how closures and interiors are related with homeomorphisms. Before, we recall a couple of results from set theory.
+\begin{lemma}{Image of a set difference}{difference_injection}
+    Let \(f : X \to Y\) be a mapping. For every pair of subsets \(A, B \subset X\), \(f(A) \setminus f(B) \subset f(A\setminus B)\). Moreover, \(f(A \setminus B) = f(A) \setminus f(B)\) for all \(A, B \subset X\) if and only if \(f\) is injective.
+\end{lemma}
+\begin{proof}
+    If \(A \cap B = \emptyset\), the result follows trivially. If \(A \subset B\), then \(f(A) \subset f(B)\), hence \(f(A) \setminus f(B) = \emptyset\) and \(f(A \setminus B) = \emptyset\), so the inclusion holds. If \(B \subset A\), then \(f(A \setminus B)\) and \(f(A) \setminus f(B)\) are non-empty. Let \(y \in f(A) \setminus f(B)\), then there exists \(a \in A\) such that \(y = f(a)\) and there exists no \(b \in B\) such that \(y = f(b)\). Then \(a \in A \setminus B\), hence \(y \in f(A \setminus B)\).
+
+    Suppose \(f\) is injective. Let \(A, B \subset X\), then if \(A \setminus B = \emptyset\) or if \(A \setminus B = A\), the equality holds trivially, so we may assume \(A \setminus B \neq \emptyset\) and \(B \subset A\). Let \(y \in f(A \setminus B)\), then there exists \(x \in A \setminus B\) such that \(f(x) = y\). Since \(f\) is one-to-one, there exists no \(b \in B\) such that \(f(b) = f(x)\), hence \(y \notin f(B)\). Since \(f(A\setminus B) \subset f(A)\), we have \(y \in f(A) \setminus f(B)\).
+
+    Suppose \(f(A\setminus B) = f(A) \setminus f(B)\) for all \(A, B \subset X\). If \(X\) is a singleton, then \(f\) is injective, so we may assume \(X\) has at least two elements. Suppose by contradiction \(f\) is not injective, then there exist \(x_1, x_2 \in X\) with \(x_1 \neq x_2\) such that \(f(x_1) = f(x_2)\). By hypothesis, we have \(f(\set{x_1}) = f(\set{x_1,x_2}) \setminus f(\set{x_2})\). Notice the right hand side is the empty set, since \(f(\set{x_1, x_2}) = \set{f(x_2)}\), hence \(f(\set{x_1}) = \emptyset\). This contradiction shows \(f\) is injective.
+\end{proof}
+\begin{lemma}{Image of an intersection}{intersection_injection}
+    Let \(f : X \to Y\) be a mapping. For every pair of subsets \(A, B \subset X\), \(f(A \cap B) \subset f(A) \cap f(B)\). Moreover, \(f(A \cap B) = f(A) \cap f(B)\) for all \(A, B \subset X\) if and only if \(f\) is injective.
+\end{lemma}
+\begin{proof}
+    Notice \(A \cap B \subset A\) and \(A \cap B \subset B\), then \(f(A \cap B) \subset f(A)\) and \(f(A \cap B) \subset f(B)\) since relations preserve inclusions. That is, \(f(A\cap B) \subset f(A) \cap f(B)\).
+
+    Suppose \(f\) is injective. Let \(A, B \subset X\). If at least one is the empty set, the equality trivially holds, so we may assume neither subset is the empty set. Moreover, if \(f(A) \cap f(B) = \emptyset\) we have by the previous result \(f(A \cap B) = \emptyset\), so the equality holds, therefore we may assume \(f(A) \cap f(B) \neq \emptyset.\) Let \(y \in f(A) \cap f(B)\), then there exists \(a \in A\) and \(b \in B\) such that \(y = f(a)\) and \(y = f(b)\). As \(f\) is one-to-one, we must have \(a = b\), hence \(a \in A \cap B\). Then we conclude \(y \in f(A \cap B)\).
+
+    Suppose \(f(A \cap B) = f(A) \cap f(B)\) for all \(A, B \subset X\). If \(X\) is a singleton, then \(f\) is vacuously injective, so we may assume \(X\) has at least two elements. Suppose, by contradiction, \(f\) is not injective, then there exist \(x_1, x_2 \in X\) with \(x_1 \neq x_2\) such that \(y = f(x_1) = f(x_2)\). That is, \(y \in f(\set{x_1}) \cap f(\set{x_2})\), hence \(y \in f(\set{x_1} \cap \set{x_2})\) by hypothesis. Since \(\set{x_1} \cap \set{x_2}\), we have \(y \in \emptyset\). This contradiction shows \(f\) is injective.
+\end{proof}
+
+\begin{theorem}{Image of closure and interior under homeomorphism}{closure_interior_homeomorphism}
+    Let \topology{X} and \topology{Y} be topological spaces. If \(f : X \to Y\) is a homeomorphism and \(A \subset X\) is a non-empty subset, then \(\cl_Y(f(A)) = f(\cl_XA)\) and \(\inte_Y(f(A)) = f(\inte_XA)\).
+\end{theorem}
+\begin{proof}
+    Let \(y \in f(\cl_XA)\), then \(f^{-1}(y) \in \cl_X A\). Let \(V \in \tau_Y\) be a neighborhood of \(y\), then \(f^{-1}(V) \in \tau_X\) is a neighborhood for \(f^{-1}(y)\) such that \(f^{-1}(V) \cap A \neq \emptyset\). Since \(f\) is injective, we have \(V \cap f(A) \neq \emptyset\), that is, \(y \in \cl_Y(f(A))\).
+
+    Let \(y \in \cl_Y(f(A))\), then every neighborhood of \(y\) has a non-empty intersection with \(f(A)\). Since \(f^{-1}\) is injective, \(f^{-1}(y)\) is a point of closure of \(A,\) hence \(f^{-1}\left(\cl_Y(f(A))\right) \subset \cl_XA\). We conclude \(\cl_Y(f(A)) \subset f(\cl_XA)\), thus showing \(\cl_Y(f(A)) = f(\cl_XA)\).
+
+    \cref{thm:closure_interior} yields \(f(\inte_XA) = f(X \setminus \cl_X(X\setminus A))\). Using \cref{lem:difference_injection} and surjectivity, we have \(f(\inte_XA) = Y \setminus f(\cl_X(X\setminus A)).\) By the previous result, we have \(f(\inte_XA) = Y \setminus \cl_Y(Y \setminus f(A))\). Using \cref{thm:closure_interior} again shows \(f(\inte_XA) = \inte_Y(f(A))\).
+\end{proof}
+
 \subsection{Dense and nowhere dense sets}
 Closely related to the notions of closure and interior of a set is the concept of a dense set.
 \begin{definition}{Dense set}{dense_set}
@@ -320,6 +353,13 @@ With the notion of a set dense in some subset, we may categorize topological spa
     Since \(\cl_XS\) is closed, we have \(\inte_X(\cl_X(\cl_X S)) = \inte_X(\cl_X S) = \emptyset\) by hypothesis.
 \end{proof}
 
+\begin{proposition}{Nowhere density preserved under homeomorphism}{nowhere_dense_homeomorphism}
+    Let \topology{X} and \topology{Y} be topological spaces and let \(f : X \to Y\) be a homeomorphism. The subset \(S\subset X\) is nowhere dense in \(X\) if and only if \(f(S)\) is nowhere dense in \(Y\).
+\end{proposition}
+\begin{proof}
+    \cref{thm:closure_interior_homeomorphism} yields \(\inte_Y(\cl_Y f(S)) = f(\inte_X(\cl_X(S)))\). \cref{thm:interior_closure_nowhere_dense} shows \(f(S)\) is nowhere dense in \(Y\) if and only if \(S\) is nowhere dense in \(X\).
+\end{proof}
+
 \begin{definition}{First and second Baire categories}{Baire_categories}
-    A topological space \topology{X} is said to be of \emph{the first category} if \(X\) is expressible as the countable union of a nowhere dense sets in \(X\). Otherwise, \topology{X} is of \emph{the second category.}
+    A topological space \topology{X} is said to be of \emph{the first category} if \(X\) is expressible as the countable union of nowhere dense sets in \(X\). Otherwise, \topology{X} is of \emph{the second category.}
 \end{definition}
