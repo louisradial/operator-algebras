@@ -1,2 +1,17 @@
 % vim: spl=en_us
 \section{Closed graph theorem}
+We recall the definition of a map and its graph.
+\begin{definition}{Map and graph}{graph}
+    Let \(S\) be a set and let \(T\) be a non-empty set. A \emph{map} \(f\) is a triple \((S, T, G_f)\), where the \emph{graph of \(f\)} \(G_f \subset S \times T\) satisfies
+    \begin{enumerate}[label=(\alph*)]
+        \item for all \(s \in S\) and for all \(t_1, t_2 \in T\), if \((s, t_1) \in G_f\) and \((s, t_2) \in G_f\), then \(t_1 = t_2\); and
+        \item for all \(s \in S\), there exists \(t \in T\) such that \((s, t) \in G_f\).
+    \end{enumerate}
+    By abuse of notation we write \((s, t) \in f\) and, in view of (a), denote this by \(f(s) = t\). For this reason, by abuse of notation we denote the map by \(f : S \to T\). Because of these abuses of notation, we will denote the graph of \(f\) by \(\Gamma(f) = G_f\).
+\end{definition}
+
+An important consequence of the open mapping theorem is the closed graph theorem, which relates the continuity of a map \(T : X \to Y\) with its graph \(\Gamma(T)\subset X \times Y\) and a topology on \(X \times Y\).
+
+\begin{definition}{Topological direct sum}{}
+
+\end{definition}
