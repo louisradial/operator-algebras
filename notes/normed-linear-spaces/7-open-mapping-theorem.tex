@@ -1,15 +1,54 @@
 % vim: spl=en_us
 \section{Open mapping theorem}
 Baire's category argument can also be used to show the open mapping theorem, which states surjective bounded maps defined on Banach spaces map open sets into open sets. To prove the theorem we need the following lemma.
-\begin{lemma}{Image of a neighborhood of the zero vector}{}
-    Let \(X,Y\) be linear normed spaces and let \(T \in \bounded(X,Y)\). If the range \(\range{T}\) is a set of the second category in \(Y\), then to each neighborhood \(U \in \tau_X\) of \(0\) there corresponds some neighborhood \(V \in \tau_Y\) of \(0\) such that \(V \subset \cl_Y(T(U))\).
+\begin{lemma}{Image of a neighborhood of the zero vector}{neighborhood_0}
+    Let \(X,Y\) be linear normed spaces and let \(T : X \to Y\) be a linear map. If the range \(\range{T}\) is a set of the second category in \(Y\), then to each neighborhood \(U \in \tau_X\) of \(0\) there corresponds some neighborhood \(V \in \tau_Y\) of \(0\) such that \(V \subset \cl_Y(T(U))\).
 \end{lemma}
 \begin{proof}
-    Let \(U \in \tau_X\) be a neighborhood of \(0\). Then, there exists an open ball \(W = B_r(0) \in \tau_X\) with radius \(r > 0\) centered at the zero vector and is contained in \(U\) such that for all \(u, v \in W\) we have \(u + v \in U\). For every \(x \in X\), there exists \(n_x \in \mathbb{N}\) such that \(x \in n_x W\). That is, we may write \(X = \bigcup_{n\in \mathbb{N}} nW\), hence \(\range{T} = \bigcup_{n\in \mathbb{N}} T(nW)\). \nameref{thm:Baire_Hausdorff}, therefore there exists \(m \in \mathbb{N}\) such that \(\cl_Y(T(mW))\) has non-empty interior.
+    Let \(U \in \tau_X\) be a neighborhood of \(0\). Then, there exists an open ball \(W = B_r(0) \in \tau_X\) with radius \(r > 0\) centered at the zero vector and is contained in \(U\) such that for all \(u, v \in W\) we have \(u + v \in U\). For every \(x \in X\), there exists \(n_x \in \mathbb{N}\) such that \(x \in n_x W\). That is, we may write \(X = \bigcup_{n\in \mathbb{N}} nW\), hence \(\range{T} = \bigcup_{n\in \mathbb{N}} T(nW)\). \(\range{T}\) is of the second category, therefore there exists \(m \in \mathbb{N}\) such that \(\cl_Y(T(mW))\) has non-empty interior.
 
-    \cref{prop:scaling_subset} shows \(\cl_Y(T(mW)) = m \cl_Y(T(W))\). Since the map \(v \mapsto \frac1m v\) is a homeomorphism in any topological linear space, then \(S = \inte_Y\cl_Y(T(W))\) has non-empty interior by \cref{prop:nowhere_dense_homeomorphism}. Notice an element of \(S\) is also a point of closure of \(T(W)\), so \(S \cap T(W) \neq \emptyset\), as \(S\) is an open neighborhood for its points.
+    \cref{prop:closure_linear} shows \(\cl_Y(T(mW)) = m \cl_Y(T(W))\) as a linear map is in particular homogeneous. Since the map \(v \mapsto \frac1m v\) is a homeomorphism in any topological linear space, then \(S = \inte_Y\cl_Y(T(W))\) is non-empty by \cref{prop:nowhere_dense_homeomorphism}. Notice an element of \(S\) is also a point of closure of \(T(W)\), so \(S \cap T(W) \neq \emptyset\), as \(S\) is an open neighborhood for its points.
 
-    Let \(\tilde{y} \in S \cap T(W)\), then there exists \(\tilde{x} \in W\) such that \(\tilde{y} = Tx\). The map \(v \mapsto v - \tilde{y}\) is a homeomorphism, hence the image
-   % of a neighborhood of \(\tilde{y}\) contained in
-    \(S\) under this map is a neighborhood \(V\) of \(0\) that is contained in the image of \(\cl_Y(T(W))\) under this map, denoted by \(\cl_Y(T(W)) - \tilde{y}\). Let \(y \in T(W) - \tilde{y}\), then there exists \(w \in W\) such that \(y = T(w - \tilde{x})\). Notice \(-\tilde{x} \in W\), then \(w - \tilde{x} \in U\). That is, \(T(W) - \tilde{y} \subset T(U)\), hence \(\cl_Y(T(W)) - \tilde{y} \subset \cl_Y(T(U))\) by \cref{thm:closure_interior_homeomorphism}. We have shown \(V\) is a neighborhood of \(0\) in \(Y\) such that \(V \subset \cl_Y(T(U))\).
+    Let \(\tilde{y} \in S \cap T(W)\), then there exists \(\tilde{x} \in W\) such that \(\tilde{y} = Tx\). Then the translation \(S - \tilde{y}\) is a neighborhood of \(0\) contained in the translation \(\cl_Y(T(W)) - \tilde{y}\). Let \(y \in T(W) - \tilde{y}\), then there exists \(w \in W\) such that \(y = T(w - \tilde{x})\). Notice \(-\tilde{x} \in W\), then \(w - \tilde{x} \in U\). That is, \(T(W) - \tilde{y} \subset T(U)\), hence \(\cl_Y(T(W)) - \tilde{y} \subset \cl_Y(T(U))\) by \cref{thm:closure_interior_homeomorphism}. We have shown \(V\) is a neighborhood of \(0\) in \(Y\) such that \(V \subset \cl_Y(T(U))\).
+\end{proof}
+
+We now show the main theorem.
+\begin{theorem}{Open mapping theorem}{open_mapping}
+    Let \(X, Y\) be Banach spaces. If \(T \in \bounded(X, Y)\) is surjective, then \(T\) maps open sets in \(X\) to open sets in \(Y\).
+\end{theorem}
+\begin{proof}
+    In this proof we denote an open ball centered at 0 of radius \(r > 0\) by \(X_r \subset X\) and \(Y_r \subset Y\). By surjectivity of \(T\) and completeness of \(Y\) it follows from \cref{lem:neighborhood_0} that for all \(r > 0\) there exists \(\rho > 0\) such that \(Y_\rho \subset \cl_Y(T(X_r))\).
+
+    Let \(\varepsilon > 0\) and consider a sequence of radii \(\family{r_n}{n\in \mathbb{N}}\) defined by \(r_n = 2^{1-n}\varepsilon\), then there exists a sequence of radii \(\family{\rho_n}{n\in \mathbb{N}}\) such that \(Y_{\rho_n} \subset \cl_Y(T(X_{r_n}))\) for all \(n \in \mathbb{N}\) and \(\rho_n \to 0\). Let \(y \in Y_{\rho_1}\), then there exists \(x_1 \in X_{r_1}\) such that \(Tx_1 \in T(X_{r_1}) \cap (Y_{\rho_2} + y)\), since \(Y_{\rho_2} + y\) is manifestly a neighborhood of \(y\). As a result, \(y_1 = y - Tx_1 \in Y_{\rho_2}\) and we may repeat this procedure for \(y_1\). More precisely, we define recursively for \(n > 1\) as follows: since \(y_{n-1} \in Y_{\rho_n} \subset \cl_Y(T(X_{r_n}))\), there exists \(x_n \in X_{r_n}\) such that \(Tx_n \in Y_{\rho_{n+1}} + y_{n-1}\), hence we set \(y_n = y_{n-1} - Tx_n \in Y_{\rho_{n+1}}\).
+
+    By construction, this yields a sequence \(\family{x_n}{n \in \mathbb{N}}\) such that \(x_n \in X_{r_n}\) and
+    \begin{equation*}
+        y - \sum_{k=1}^{n} Tx_k = y - T\left(\sum_{k=1}^{n} x_k\right)\in Y_{\rho_{n+1}}
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). The sequence \(\family{\sum_{k = 1}^n x_k}{n\in \mathbb{N}}\) is Cauchy since for all \(\eta > 0\) we have for all \(n,m \in \mathbb{N}\) with \(\log_2\left(\frac{2 \varepsilon}{\eta}\right) < n < m\) that
+    \begin{align*}
+        \norm*{\sum_{k=1}^m x_k - \sum_{k=1}^n x_k} = \norm*{\sum_{k=n+1}^{m} x_k} &\leq \sum_{k=n+1}^m \norm{x_k}\\
+                                                                                   &\leq \sum_{k=n+1}^{m} 2^{1-k}\varepsilon = 2^{-n} \varepsilon\sum_{k=0}^{m-n-1} 2^{-k}\\
+                                                                                   &< 2^{-n} \varepsilon \sum_{k=0}^\infty 2^{-k} = 2^{1-n} \varepsilon\\
+                                                                                   &< \eta.
+    \end{align*}
+    Since \(X\) is complete, there exists \(\tilde{x} \in X\) against which this Cauchy sequence converges and we have \(\tilde{x} \in X_{2 \varepsilon}\) since
+    \begin{equation*}
+        \norm{\tilde{x}} = \lim_{n\to\infty} \norm*{\sum_{k=1}^n x_k} \leq \lim_{n\to\infty} \sum_{k=1}^n \norm{x_k} < \varepsilon \lim_{n\to\infty} \sum_{k=0}^{n-1} 2^{-k} = 2 \varepsilon.
+    \end{equation*}
+    As \(\rho_n \to 0\), we have \(y = T\tilde{x}\) by continuity. We have thus shown \(T\) maps \(X_{2 \varepsilon}\) surjectively to a set containing \(Y_{\rho_1}\).
+
+    Let \(U \in \tau_X\) be an open set. If \(U = \emptyset\), it is clear \(T(U) = \emptyset \in \tau_Y\), so we may assume \(U \neq \emptyset\). Let \(x \in U\) and let \(W \in \tau_X\) be an open ball centered at \(0\) such that \(x + W \subset U\). By the previous result, \(W\) is mapped surjectively to a subset of \(Y\) containing an open ball centered at \(0\), therefore there exists an open set \(V \in \tau_Y\) such that \(V \subset T(W)\). We consider the translation \(V + Tx\), then
+    \begin{equation*}
+        V + Tx \subset T(W) + Tx = T(W + x) \subset T(U).
+    \end{equation*}
+    That is, there exists a neighborhood of \(Tx\) contained in \(T(U)\), hence \(Tx\) is an interior point of \(T(U)\), thus showing \(T(U) \in \tau_Y\).
+\end{proof}
+
+The immediate corollary to the open mapping theorem is that every bijective bounded operator defined in a Banach space is a homeomorphism.
+\begin{theorem}{Bounded inverse theorem}{bounded_inverse_theorem}
+    Let \(X, Y\) be Banach spaces. If \(T \in \bounded(X, Y)\) is bijective, then \(T^{-1} \in \bounded(Y, X)\).
+\end{theorem}
+\begin{proof}
+    For all \(V \in \tau_X\), we have \(\preim{T^{-1}}{V} = T(V) \in \tau_Y\) by the open mapping theorem.
 \end{proof}

@@ -140,22 +140,35 @@ Finally, we show that the usual operations of a complex normed linear space are 
     \end{equation*}
     for all \(n \in \mathbb{N}\). By the convergence \(x_n \to x\), it follows that \(\norm{x_n} \to \norm{x}\), hence the norm is continuous with respect to \((V, \norm{\noarg})\) and \((\mathbb{R}, \abs{\noarg})\).
 \end{proof}
-\begin{remark}
-    This characterizes normed linear spaces as \emph{topological linear spaces}: a linear space endowed with a topology such that the singleton sets are closed and that the linear space operations are continuous.
-\end{remark}
 
-If \(S\) is a non-empty subset of a linear space, the \emph{scaling by \(\alpha\in \mathbb{K}\) of \(S\)} is the set \(\alpha S = \setc{\alpha s}{s \in S}\).
-\begin{proposition}{Closure of a scaled subset}{scaling_subset}
-    Let \(V\) be a topological linear space. If \(S\) is a non-empty subset of \(V\), then \(\cl_V(\alpha S) = \alpha \cl_VS\) for all \(\alpha \in \mathbb{K}\).
+This characterizes normed linear spaces as \emph{topological linear spaces}: a linear space endowed with a topology such that the singleton sets are closed and that the linear space operations are continuous.
+\begin{definition}{Scaling and translation of a subset}{scaling_translation}
+    Let \(V\) be a topological linear space over \(\mathbb{K}\). If \(S \subset V\) is a non-empty subset of \(V\), the \emph{scaling} of \(S\) by \(\alpha \in \mathbb{K}\) is the set
+    \begin{equation*}
+        \alpha S = \setc{v \in V}{\exists s \in S : v = \alpha s},
+    \end{equation*}
+    and the \emph{translation of \(S\) by \(u \in V\)} is the set
+    \begin{equation*}
+        S + u = \setc{v \in V}{\exists s \in S : v = s + u}.
+    \end{equation*}
+\end{definition}
+It should be clear the scaling by \(\alpha \in \mathbb{K}\) and translations by \(u \in V\) of a subset \(S\) are the image of \(S\) under the maps \(v \mapsto \alpha v\) and \(v \mapsto v + u\). Since the translation is a homeomorphism for all \(u \in V\), it follows from \cref{thm:closure_interior_homeomorphism} that \(\cl_V(S + u) = \cl_V(S) + u\). Moreover, it follows similarly that \(\cl_V(\alpha S) = \alpha\cl_V(S)\), with the difference that for \(\alpha = 0\), the scaling is not bijective, but \(\cl_V(0S) = 0\cl_V(S) = \set{0}\), so the equality holds.
+% If \(S\) is a non-empty subset of a linear space, the \emph{scaling by \(\alpha\in \mathbb{K}\) of \(S\)} is the set \(\alpha S = \setc{\alpha s}{s \in S}\).
+% \begin{proposition}{Closure of a scaled subset}{scaling_subset}
+%     Let \(V\) be a topological linear space. If \(S\) is a non-empty subset of \(V\), then \(\cl_V(\alpha S) = \alpha \cl_VS\) for all \(\alpha \in \mathbb{K}\).
+% \end{proposition}
+% \begin{proof}
+%     The identities hold trivially for \(\alpha = 0\), so we may suppose \(\alpha \neq 0\).
+%
+%     Let \(u \in \cl_VS\), then there exists a sequence \(\family{u_n}{n\in \mathbb{N}}\subset S\) that converges to \(u\). By , the sequence \(\family{\alpha u_n}{n\in \mathbb{N}} \subset \alpha S\) converges to \(\alpha u \in \alpha \cl_VS\), hence \(\alpha u\) is a point of closure of \(\alpha S\). Let \(v \in \cl_V(\alpha S)\), then there exists a sequence \(\family{v_n}{n\in \mathbb{N}} \subset \alpha S\) that converges to \(v\). In particular, \(\family{\frac{1}{\alpha}v_n}{n\in \mathbb{N}} \subset S\) converges to \(\frac{1}{\alpha}v,\) then \(\frac{1}{\alpha}v \in \cl_V S\). Hence, \(v \in \alpha \cl_V S\). We have thus shown \(\cl_V(\alpha S) = \alpha \cl_V(S)\).
+% \end{proof}
+\begin{proposition}{Image of closure under homogeneous map}{closure_linear}
+    Let \(V,W\) be topological linear spaces over \(\mathbb{K}\) and let \(T : V \to W\) be a homogeneous map: for all \(\lambda \in \mathbb{K}\) and all \(v \in V\), \(T(\lambda v) = \lambda T(v)\). If \(S\) is a non-empty subset of \(V\), then
+    \begin{equation*}
+        \cl_W(T(\alpha S)) = \alpha \cl_W(T(S)),
+    \end{equation*}
+    for all \(\alpha \in \mathbb{K}\).
 \end{proposition}
-\begin{proof}
-    The identities hold trivially for \(\alpha = 0\), so we may suppose \(\alpha \neq 0\).
-
-    Let \(u \in \cl_VS\), then there exists a sequence \(\family{u_n}{n\in \mathbb{N}}\subset S\) that converges to \(u\). By , the sequence \(\family{\alpha u_n}{n\in \mathbb{N}} \subset \alpha S\) converges to \(\alpha u \in \alpha \cl_VS\), hence \(\alpha u\) is a point of closure of \(\alpha S\). Let \(v \in \cl_V(\alpha S)\), then there exists a sequence \(\family{v_n}{n\in \mathbb{N}} \subset \alpha S\) that converges to \(v\). In particular, \(\family{\frac{1}{\alpha}v_n}{n\in \mathbb{N}} \subset S\) converges to \(\frac{1}{\alpha}v,\) then \(\frac{1}{\alpha}v \in \cl_V S\). Hence, \(v \in \alpha \cl_V S\). We have thus shown \(\cl_V(\alpha S) = \alpha \cl_V(S)\).
-\end{proof}
-\begin{corollary}
-    Let \(V,W\) be topological linear spaces and let \(T : V \to W\) be a homogeneous map: for all \(\lambda \in \mathbb{K}\) and all \(v \in V\), \(T(\lambda v) = \lambda T(v)\). If \(S\) is a non-empty subset of \(V\), then \(\cl_W(T(\alpha S)) = \alpha \cl_W(T(S))\).
-\end{corollary}
 \begin{proof}
     Homogeneity yields \(T(\alpha S) = \alpha T(S)\). Indeed,
     \begin{align*}
@@ -163,5 +176,5 @@ If \(S\) is a non-empty subset of a linear space, the \emph{scaling by \(\alpha\
                           &\iff \exists v \in S : w = \alpha T(v)\\
                           &\iff w \in \alpha T(S).
     \end{align*}
-    Then \(\cl_W(T(\alpha S)) = \cl_W(\alpha T(S))\), hence \(\cl_W(T(\alpha S)) = \alpha \cl_W(T(S))\) by \cref{prop:scaling_subset}.
+    Then \(\cl_W(T(\alpha S)) = \cl_W(\alpha T(S))\). For \(\alpha = 0\), we have \(\alpha T(S) = \set{0}\) and \(\alpha \cl_W(T(S)) = \set{0}\). For \(\alpha \neq 0\), the map \(v \mapsto \alpha v\) is a homeomorphism, hence \(\cl_W(T(\alpha S)) = \alpha \cl_W(T(S))\).
 \end{proof}

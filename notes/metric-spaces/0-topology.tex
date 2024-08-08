@@ -218,6 +218,20 @@ We motivate the name \emph{closure} by showing that every closure is closed. Fur
     Since \(T \subset S\) and \(T \subset \cl{T}\), we must have \(\cl{T} \subset S\).
 \end{proof}
 
+We may use closures to provide an additional characterization of continuity.
+\begin{theorem}{Closure and continuity}{closure_continuity}
+    Let \topology{X} and \topology{Y} be topological spaces. The map \(f : X \to Y\) is continuous if and only if \(f(\cl_XS) \subset \cl_Y(f(S))\) for all \(S \subset X\).
+\end{theorem}
+\begin{proof}
+    Suppose \(f\) is continuous and let \(S \subset X\). Notice \(S \subset \preim{f}{f(S)}\) and \(f(S) \subset \cl_Y(f(S))\), then
+    \begin{equation*}
+        S \subset \preim{f}{f(S)} \subset \preim{f}{\cl_Y{f(S)}}.
+    \end{equation*}
+    By continuity, \(\preim{f}{\cl_Y(f(S))}\) is closed in \(X\), hence \(\cl_XS \subset \preim{f}{\cl_Y{f(S)}}\). This shows \(f(\cl_X(S)) \subset \cl_Y(f(S))\).
+
+    Suppose for all \(S \in \mathbb{P}(X)\) we have \(f(\cl_XS) \subset \cl_Y(f(S))\) and let \(V\) be a closed set in \(Y\). Let \(U = \preim{f}{V} \in \mathbb{P}(X)\), then \(V = f(U) \subset f(\cl_X U)\). By hypothesis, \(f(\cl_XU) \subset \cl_Y(f(U)) = V\), since \(V\) is closed. We have thus shown \(f(\cl_X(U)) = V\), hence \(\cl_X(U) \subset \preim{f}{V} = U\) implies \(U\) is closed.
+\end{proof}
+
 We now move on to the interior of a set.
 \begin{definition}{Interior of a set}{interior}
     Let \topology{X} be a topological space and let \(S \subset X\) be a subset. An \emph{interior point of \(S\)} is a point \(x \in X\) such that there exists a neighborhood \(U \in \tau_X\) of \(x\) that is contained in \(S\). The \emph{interior \(\inte_{\topology{X}}S\) of \(S\)} is the set of all interior points of \(S\).
@@ -304,7 +318,7 @@ Finally, we show how closures and interiors are related with homeomorphisms. Bef
 \end{proof}
 
 \begin{theorem}{Image of closure and interior under homeomorphism}{closure_interior_homeomorphism}
-    Let \topology{X} and \topology{Y} be topological spaces. If \(f : X \to Y\) is a homeomorphism and \(A \subset X\) is a non-empty subset, then \(\cl_Y(f(A)) = f(\cl_XA)\) and \(\inte_Y(f(A)) = f(\inte_XA)\).
+    Let \topology{X} and \topology{Y} be topological spaces. If \(f : X \to Y\) is a homeomorphism and \(A \subset X\) is a subset, then \(\cl_Y(f(A)) = f(\cl_XA)\) and \(\inte_Y(f(A)) = f(\inte_XA)\).
 \end{theorem}
 \begin{proof}
     Let \(y \in f(\cl_XA)\), then \(f^{-1}(y) \in \cl_X A\). Let \(V \in \tau_Y\) be a neighborhood of \(y\), then \(f^{-1}(V) \in \tau_X\) is a neighborhood for \(f^{-1}(y)\) such that \(f^{-1}(V) \cap A \neq \emptyset\). Since \(f\) is injective, we have \(V \cap f(A) \neq \emptyset\), that is, \(y \in \cl_Y(f(A))\).
@@ -313,6 +327,9 @@ Finally, we show how closures and interiors are related with homeomorphisms. Bef
 
     \cref{thm:closure_interior} yields \(f(\inte_XA) = f(X \setminus \cl_X(X\setminus A))\). Using \cref{lem:difference_injection} and surjectivity, we have \(f(\inte_XA) = Y \setminus f(\cl_X(X\setminus A)).\) By the previous result, we have \(f(\inte_XA) = Y \setminus \cl_Y(Y \setminus f(A))\). Using \cref{thm:closure_interior} again shows \(f(\inte_XA) = \inte_Y(f(A))\).
 \end{proof}
+\begin{remark}
+    We could have used \cref{thm:closure_continuity} to show this result. Indeed, the hypothesis shows \(f(\cl_XA) \subset \cl_Y(f(A))\) and \(f^{-1}(\cl_Y(f(A))) \subset \cl_X(f^{-1}\circ f(A)) = \cl_XA\), hence \(\cl_Y(f(A)) \subset f(\cl_XA)\).
+\end{remark}
 
 \subsection{Dense and nowhere dense sets}
 Closely related to the notions of closure and interior of a set is the concept of a dense set.
