@@ -2,16 +2,83 @@
 \section{Closed graph theorem}
 We recall the definition of a map and its graph.
 \begin{definition}{Map and graph}{graph}
-    Let \(S\) be a set and let \(T\) be a non-empty set. A \emph{map} \(f\) is a triple \((S, T, G_f)\), where the \emph{graph of \(f\)} \(G_f \subset S \times T\) satisfies
+    Let \(S\) be a set and let \(T\) be a non-empty set. A \emph{map} \(f\) is a triple \((S, T, \graph{f})\), where the \emph{graph of \(f\)} \(\graph{f} \subset S \times T\) satisfies
     \begin{enumerate}[label=(\alph*)]
-        \item for all \(s \in S\) and for all \(t_1, t_2 \in T\), if \((s, t_1) \in G_f\) and \((s, t_2) \in G_f\), then \(t_1 = t_2\); and
-        \item for all \(s \in S\), there exists \(t \in T\) such that \((s, t) \in G_f\).
+        \item for all \(s \in S\) and for all \(t_1, t_2 \in T\), if \((s, t_1) \in \graph{f}\) and \((s, t_2) \in \graph{f}\), then \(t_1 = t_2\); and
+        \item for all \(s \in S\), there exists \(t \in T\) such that \((s, t) \in \graph{f}\).
     \end{enumerate}
-    By abuse of notation we write \((s, t) \in f\) and, in view of (a), denote this by \(f(s) = t\). For this reason, by abuse of notation we denote the map by \(f : S \to T\). Because of these abuses of notation, we will denote the graph of \(f\) by \(\Gamma(f) = G_f\).
+    By abuse of notation we write \((s, t) \in f\) and, in view of (a), denote this by \(f(s) = t\). For this reason, by abuse of notation we denote the map by \(f : S \to T\).
 \end{definition}
 
-An important consequence of the open mapping theorem is the closed graph theorem, which relates the continuity of a map \(T : X \to Y\) with its graph \(\Gamma(T)\subset X \times Y\) and a topology on \(X \times Y\).
+An important consequence of the open mapping theorem is the closed graph theorem, which relates the continuity of a map \(T : X \to Y\) with its graph \(\graph{T}\subset X \times Y\) and a topology on \(X \times Y\).
 
-\begin{definition}{Topological direct sum}{}
+\begin{proposition}{Topological direct sum}{direct_sum}
+    Let \((X, \norm{\noarg}_X), (Y, \norm{\noarg}_Y)\) be normed linear spaces. The topological direct sum \(X \oplus Y\) is the normed linear space \((X \times Y, \norm{\noarg}_{X \times Y})\), where addition, scalar multiplication, and norm are defined by
+    \begin{align*}
+        +_{X \times Y} : (X \times Y) \times (X \times Y) &\to X \times Y\\
+        \left((x_1,y_1),(x_2,y_2)\right)&\mapsto (x_1 +_X x_2, y_1 +_Y y_2),
+    \end{align*}
+    \begin{align*}
+        \cdot_{X \times Y} : \mathbb{C} \times (X \times Y) &\to X \times Y\\
+        \left(\alpha,(x,y)\right)&\mapsto (\alpha \cdot_X x, \alpha \cdot_Y y),
+    \end{align*}
+    and
+    \begin{align*}
+        \norm{\noarg}_{X \times Y} : (X \times Y) &\to \mathbb{R}\\
+        (x,y)&\mapsto \norm{x}_X + \norm{y}_Y.
+    \end{align*}
+    Moreover, if \((X, \norm{\noarg}_X)\) and \((Y, \norm{\noarg}_Y)\) are Banach spaces, then so is \(X \oplus Y\).
+\end{proposition}
+\begin{proof}
+    We first show \(X \oplus Y\) is a normed linear space. It is trivial to verify the linear space axioms are satisfied since \(X\) and \(Y\) are linear spaces, with the main insight being \((0,0) \in X\times Y\) is unsurprisingly the identity of addition. Let us verify \(\norm{\noarg}_{X\ \times Y}\) is indeed a norm. Since the norms on \(X\) and \(Y\) are non-negative, it is clear that \(\norm{\noarg}_{X\times Y}\) is non-negative. It is also positive-definite since
+    \begin{align*}
+        \norm{(x, y)}_{X \times Y} = 0 &\iff \norm{x}_X + \norm{y}_{Y} = 0\\
+                                       &\iff \norm{x}_X = 0 \land \norm{y}_Y = 0\\
+                                       &\iff x = 0 \land y = 0\\
+                                       &\iff (x,y) = (0,0).
+    \end{align*}
+    Absolute homogeneity follows from the absolute homogeneity of the norms on \(X\) and \(Y\) as
+    \begin{align*}
+        \norm{\lambda (x, y)}_{X \times Y} = \norm{\lambda x}_X + \norm{\lambda y}_Y = \abs{\lambda} \left(\norm{x}_X + \norm{y}_Y\right) = \abs{\lambda} \norm{(x,y)}_{X \times Y}
+    \end{align*}
+    holds for all \(\lambda \in \mathbb{C}\) and all \((x,y) \in X \times Y\). Finally, let \((x_1, y_1), (x_2, y_2) \in X\times Y\), then
+    \begin{align*}
+        \norm{(x_1, y_1) + (x_2, y_2)}_{X \times Y} &= \norm{x_1 + x_2}_X + \norm{y_1 + y_2}_Y\\ &\leq \left(\norm{x_1}_X + \norm{y_1}_Y\right) + \left(\norm{x_2}_X + \norm{y_2}_Y\right) \\&= \norm{(x_1, y_1)}_{X \times Y} + \norm{(x_2, y_2)}_{X\times Y},
+    \end{align*}
+    hence \(\norm{\noarg}_{X\times Y}\) is subadditive, and we conclude \(X \oplus Y\) is indeed a normed linear space.
 
+    Suppose \(X\) and \(Y\) are Banach spaces and let \(\family{v_n}{n \in \mathbb{N}} \subset X \oplus Y\) be a Cauchy sequence in \(X \oplus Y\). For each \(n \in \mathbb{N}\), there exists \(x_n \in X\) and \(y_n \in Y\) such that \(v_n = (x_n, y_n)\). Let \(\varepsilon > 0\), then there exists \(N \in \mathbb{N}\) such that for all \(n, m \geq N\) we have \(\norm{v_n - v_m}_{X \times Y} < \varepsilon\), hence \(\norm{x_n - x_m}_X + \norm{y_n - y_m}_Y < \varepsilon\). Since the norms are non-negative, we have \(\norm{x_n - x_m}_X < \varepsilon\) and \(\norm{y_n - y_m} < \varepsilon\), thus showing \(\family{x_n}{n \in \mathbb{N}} \subset X\) and \(\family{y_n}{n \in \mathbb{N}}\) are Cauchy sequences. By completeness, there exists \(\tilde{x} \in X\) and \(\tilde{y} \in Y\) such that \(x_n \to \tilde{x}\) and \(y_n \to \tilde{y}\).
+
+    We consider \(\tilde{v} = (\tilde{x}, \tilde{y}) \in X \oplus Y\) and let \(\eta > 0\). By convergence, there exists \(M_X, M_Y \in \mathbb{N}\) such that \(\norm{\tilde{x} - x_n}_X < \frac12 \eta\) for all \(n > M_X\) and such that \(\norm{\tilde{y} - y_n}_Y < \frac12 \eta\) for all \(n > M_Y\). Then, we set \(M = \max\set{M_X, M_Y}\) such that for all \(n > M\) we have
+    \begin{equation*}
+        \norm{\tilde{v} - v_n}_{X\times Y} = \norm{\tilde{x} - x_n}_X + \norm{\tilde{y} - y_n}_Y < \eta,
+    \end{equation*}
+    that is, \(v_n \to \tilde{v}\), hence \(X \oplus Y\) is complete.
+\end{proof}
+
+We may describe a linear operator \(T : \domain{T} \subset X \to Y\) in terms of the standing of its graph \(\graph{T}\) in the metric topology on \(X \oplus Y\).
+\begin{definition}{Closed linear operator}{closed_linear_operator}
+    Let \(X, Y\) be normed linear spaces. A linear operator \(T : \domain{T} \subset X \to Y\) is \emph{closed} if its graph \(\graph{T} \subset \domain{T} \times Y\)  is a closed linear subspace of \(X \oplus Y\).
 \end{definition}
+\begin{remark}
+    It should be clear that since \(\domain{T}\) is a linear subspace of \(X\), then its graph is always a linear subspace of \(X \oplus Y\). Indeed, let \(v_1, v_2 \in \graph{T}\), then there exists \(x_1, x_2 \in \domain{T}\) such that \(v_1 = (x_1, Tx_1)\) and \(v_2 = (x_2, Tx_2)\), hence for all \(\alpha \in \mathbb{C}\) we have \(v_1 + \alpha v_2 = (x_1 + \alpha x_2, T(x_1 + \alpha x_2)) \in \graph{T}\).
+\end{remark}
+
+Recall \cref{exam:derivative_unbounded}, where we presented the derivative operator as an unbounded linear operator on the Banach space of continuous complex-valued functions. We now show this operator is also closed.
+\begin{example}{The derivative operator of complex-valued functions is closed}{derivative_closed}
+    Let \(Y = \mathcal{C}([0,1]; \mathbb{C})\) be the Banach space of continuous complex-valued functions equipped with the sup norm and let the set \(X = \mathcal{C}^1([0,1];\mathbb{C})\subset Y\) of continuously differentiable complex-valued functions in the interval \([0,1]\). The derivative operator
+    \begin{align*}
+        P : X \subset Y &\to Y\\
+            f &\mapsto f'
+    \end{align*}
+    is closed.
+\end{example}
+\begin{proof}
+    Let \(\family{v_n}{n \in \mathbb{N}} \subset \graph{T}\) be a convergent sequence with \(v_n \to (\tilde{x}, \tilde{y}) \in Y \oplus Y\). Then, there exists convergent sequences \(\family{x_n}{n \in \mathbb{N}} \subset X\) and \(\family{Tx_n}{n \in \mathbb{N}} \subset Y\) such that we have \(v_n = (x_n, Tx_n)\) for all \(n \in \mathbb{N}\) and such that \(x_n \to \tilde{x}\) and \(Tx_n = x'_n \to \tilde{y}\). Notice \(x'_n\) converges uniformly to \(\tilde{y}\), then \(\tilde{x}\) must be differentiable with \(\tilde{x}' = \tilde{y}\). That is, \((\tilde{x}, \tilde{y}) \in \graph{T}\), thus showing \(\graph{T}\) is closed in \(Y \oplus Y\).
+\end{proof}
+
+\begin{theorem}{Closed graph theorem}{closed_graph_theorem}
+    Let \(X, Y\) be Banach spaces. A linear map \(T : X \to Y\) is continuous if and only if it is closed.
+\end{theorem}
+\begin{proof}
+\end{proof}
