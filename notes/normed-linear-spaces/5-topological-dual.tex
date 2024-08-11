@@ -82,18 +82,50 @@ As opposed to the case of the algebraic dual of infinite linear spaces, it may b
     We will see later that every Hilbert space is reflexive.
 \end{remark}
 
-With the topological dual we may define another notion of convergence.
-\begin{definition}{Weak convergence}{weak_convergence}
-    A sequence \(\family{f_n}{n\in \mathbb{N}} \subset V\) is said to \emph{weakly converge} to \(f \in V\) if for all \(\ell \in V^\dagger\) we have a sequence \(\family{\ell f_n}{n\in \mathbb{N}} \subset \mathbb{C}\) that converges to \(\ell(f)\), and we denote \(\displaystyle\wlim_{n\to\infty} f_n = f\) or \(f_n \wto f\). Moreover, when there is a need to distinguish them, the usual notion of convergence will be called \emph{strong convergence}, and we may denote it by \(\displaystyle\slim_{n\to\infty}f_n = f\) whenever the sequence \emph{strongly converges} to \(f\).
-\end{definition}
-
-\begin{proposition}{Weak convergence of a strongly convergent sequence}{weak_strong}
-    Let \((V, \norm{\noarg})\) be a normed linear space. If \(\family{f_n}{n \in \mathbb{N}}\subset V\) strongly converges to \(f\), then \(f_n \wto f\).
+For any bounded operator \(T \in \bounded(X, Y)\) defined on a Banach space into a Banach space, there is a natural bounded operator \(T' \in \bounded(Y^\dag, X^\dag)\) called the \emph{adjoint operator to \(T\)}.
+\begin{proposition}{Adjoint operator in Banach spaces}{adjoint_Banach}
+    Let \(X, Y\) be Banach spaces. If \(T \in \bounded(X, Y)\) is a bounded operator, then the map
+    \begin{align*}
+        T' : Y^\dag &\to X^\dag\\
+               \ell &\mapsto \ell \circ T
+    \end{align*}
+    is a bounded linear operator with \(\norm{T'} = \norm{T}\).
 \end{proposition}
 \begin{proof}
-    If we have \(f_n \to f\), then for all \(\ell \in \bounded(V, \mathbb{C})\), we have
+    It is clear that for any given continuous linear functional \(\ell \in Y^\dag\), the map \(\ell \circ T\) is a continuous linear function in \(X^\dag\) and
     \begin{equation*}
-        \lim_{n\to \infty} \ell f_n = \ell\left(\lim_{n\to \infty} f_n\right) = \ell f,
+        \norm{T'(\ell)} = \sup_{x \in X}\frac{\abs*{\ell(Tx)}}{\norm{x}} \leq \norm{\ell} \sup_{x \in X} \frac{\norm{Tx}}{\norm{x}} = \norm{\ell} \cdot \norm{T}.
     \end{equation*}
-    by continuity. Hence \(f_n \wto f\).
+    Moreover, \(T'\) is a linear map. Indeed, let \(f,g \in Y^\dag\) and \(\alpha, \beta \in \mathbb{C}\), then for all \(x \in X\), we have
+    \begin{equation*}
+        T'(\alpha f + \beta g)(x) = (\alpha f + \beta g)(Tx) = \alpha f(Tx) + \beta g(Tx) = \alpha T'(f)(x) + \beta T'(g)(x) = (\alpha T'(f) + \beta T'(g))(x),
+    \end{equation*}
+    hence \(T'(\alpha f + \beta g) = \alpha T'(f) + \beta T'(g)\), and \(T'\) is linear. We have thus shown \(T' \in \bounded(Y^\dag, X^\dag)\), since \(\norm{T'} \leq \norm{T}.\) We also have
+    \begin{equation*}
+        \norm{T'} = \sup_{\ell \in Y^\dag} \frac{\norm{T'(\ell)}}{\norm{\ell}} \geq \sup_{x \in X} \frac{\norm{T'(\ell_{Tx})}}{\norm{\ell_{Tx}}} = \sup_{x \in X} \norm{T'(\ell_{Tx})},
+    \end{equation*}
+    where \(\ell_{Tx} \in Y^\dag\) is the linear functional whose existence is guaranteed by \cref{lem:topological_dual_nontrivial}. It follows that
+    \begin{equation*}
+        \norm{T'(\ell_{Tx})} = \sup_{\tilde{x} \in X} \frac{\abs*{\ell_{Tx}(T\tilde{x}})}{\norm{\tilde{x}}} \geq \frac{\abs*{\ell_{Tx}(Tx)}}{\norm{x}} = \frac{\norm{Tx}}{\norm{x}},
+    \end{equation*}
+    hence
+    \begin{equation*}
+        \norm{T'} \geq \sup_{x \in X} \frac{\norm{Tx}}{\norm{x}} = \norm{T}.
+    \end{equation*}
+    That is, \(\norm{T'} = \norm{T}\) as claimed.
 \end{proof}
+% \todo[With the topological dual we may define another notion of convergence.
+% \begin{definition}{Weak convergence}{weak_convergence}
+%     A sequence \(\family{f_n}{n\in \mathbb{N}} \subset V\) is said to \emph{weakly converge} to \(f \in V\) if for all \(\ell \in V^\dagger\) we have a sequence \(\family{\ell f_n}{n\in \mathbb{N}} \subset \mathbb{C}\) that converges to \(\ell(f)\), and we denote \(\displaystyle\wlim_{n\to\infty} f_n = f\) or \(f_n \wto f\). Moreover, when there is a need to distinguish them, the usual notion of convergence will be called \emph{strong convergence}, and we may denote it by \(\displaystyle\slim_{n\to\infty}f_n = f\) whenever the sequence \emph{strongly converges} to \(f\).
+% \end{definition}
+%
+% \begin{proposition}{Weak convergence of a strongly convergent sequence}{weak_strong}
+%     Let \((V, \norm{\noarg})\) be a normed linear space. If \(\family{f_n}{n \in \mathbb{N}}\subset V\) strongly converges to \(f\), then \(f_n \wto f\).
+% \end{proposition}
+% \begin{proof}
+%     If we have \(f_n \to f\), then for all \(\ell \in \bounded(V, \mathbb{C})\), we have
+%     \begin{equation*}
+%         \lim_{n\to \infty} \ell f_n = \ell\left(\lim_{n\to \infty} f_n\right) = \ell f,
+%     \end{equation*}
+%     by continuity. Hence \(f_n \wto f\).
+% \end{proof}]
