@@ -87,13 +87,17 @@ Along with the axioms of topological spaces described in \cref{def:topology} one
 \end{definition}
 
 \subsection{Continuity and Homeomorphisms}
-With the notion of topological spaces, we may ask ourselves whether certain maps between topological spaces can preserve the topology. That is, a map that takes open sets in the domain topology into open sets in the target topology. To define such a map we define \emph{continuity}.
+With the notion of topological spaces, we may ask ourselves whether certain maps between topological spaces can preserve the topology. One requirement is certainly that such a map has to associate open sets in its domain to open sets in its codomain, with respect to the topologies considered.
+\begin{definition}{Open mapping}{open_mapping}
+    Let \topology{X} and \topology{Y} be topological spaces. An \emph{open mapping} \(f : X \to Y\) is a map such that \(f(U) \in \tau_Y\) if \(U \in \tau_X\), that is, it maps open sets to open sets.
+\end{definition}
 
+Closely related and important to preserving the topological structure is that of a \emph{continuous map}, familiar from standard analysis on the real line.
 \begin{definition}{Continuous map}{continuity}
     Let \topology{X} and \topology{Y} be topological spaces. Then a map \(f : X \to Y\) is \emph{continuous} (with respect to \(\tau_X\) and \(\tau_Y\)) if, for all \(V \in \tau_Y\), the preimage \(\preim{f}{V}\) is an open set in \(\tau_X\).
 \end{definition}
 
-In short, a map is continuous if and only the preimages of (all) open sets are open sets. Similarly, the preimage of closed sets are closed, which we now show.
+In short, a map is continuous if and only the preimages of (all) open sets are open sets. Another useful characterization of continuity can be made with closed sets.
 \begin{proposition}{Continuity and closed sets}{continuity_closed}
     Let \topology{X} and \topology{Y} be topological spaces. A map \(f : X \to Y\) is continuous if and only if for all closed sets \(V \subset Y\), the preimage \(\preim{f}{V}\) is a closed set in \(\tau_X\).
 \end{proposition}
@@ -109,15 +113,36 @@ In short, a map is continuous if and only the preimages of (all) open sets are o
     Suppose the preimage of any closed set in \topology{Y} is closed in \topology{X}. Let \(U \in \tau_Y\) be an open set, then \(Y\setminus U\) is closed and so is \(\preim{f}{Y\setminus U}\). Since \(\preim{f}{U} = X \setminus \preim{f}{Y\setminus U}\), the preimage of \(U\) is open, hence \(f\) is continuous.
 \end{proof}
 
-Now a map that preserves the topology is called a \emph{homeomorphism}, which is defined as a continuous bijection with continuous inverse. We now prove such a map satisfies the condition desired.
+We may now define the structure preserving map of a topological space.
+\begin{definition}{Homeomorphism}{homeomorphism}
+    Let \topology{X} and \topology{Y} be topological spaces. A \emph{homeomorphism} is a continuous bijection \(f : X \to Y\) that is an open mapping.
+\end{definition}
 
-\begin{proposition}{Homeomorphism maps open sets to open sets}{homeomorphism}
-    Let \topology{X} and \topology{Y} be topological spaces. Suppose a map \(f : X \to Y\) is a homeomorphism, then \(f\) maps open sets in \(\tau_X\) into open sets in \(\tau_Y\) and \(f\) maps closed sets in \(\tau_X\) into closed sets in \(\tau_Y\).
+An equivalent definition is that a homeomorphism is a continuous map with a continuous inverse map.
+\begin{theorem}{Homeomorphism and continuity of inverse}{homeomorphism_inverse}
+    Let \topology{X} and \topology{Y} be topological spaces. A bijection \(f : X \to Y\) is a homeomorphism if and only if \(f : X \to Y\) and \(f^{-1} : Y \to X\) are continuous maps.
+\end{theorem}
+\begin{proof}
+    Suppose \(f\) is a continuous and open bijection. Let \(U \in \tau_X\) be an open set, then \(f(U) \in \tau_Y\) is open. Since \(f\) is a bijection, \(\preim{f^{-1}}{U} = f(U)\), hence \(f^{-1}\) is continuous.
+
+    Suppose \(f\) and \(f^{-1}\) are continuous maps. Let \(U \in \tau_X\) be an open set. By continuity, the preimage \(\preim{f^{-1}}{U} \in \tau_Y\) is an open set. Since \(f\) is bijective, it follows that \(f(U) = \preim{f^{-1}}{U} \in \tau_Y\), hence \(f\) is an open mapping.
+\end{proof}
+
+Before showing homeomorphisms map closed sets to closed sets we recall a result from set theory.
+\begin{lemma}{Image of a union}{union}
+    Let \(f : X \to Y\) be a mapping. If \(A, B \in \mathbb{P}(X)\), then \(f(A) \cup f(B) = f(A \cup B)\).
+\end{lemma}
+\begin{proof}
+    Clearly \(A \subset A\cup B\) and \(B \subset A\cup B\), hence by \(f(A) \subset f(A \cup B)\) and \(f(B) \subset f(A \cup B)\) we conclude \(f(A) \cup f(B) \subset f(A \cup B)\).
+
+    If either \(A = \emptyset\) or \(B = \emptyset\), then the equality is trivially satisfied, so we may assume \(A \cup B \neq \emptyset\). Let \(y \in f(A \cup B)\), then there exists \(x \in A \cup B\) such that \(y = f(x)\). That is, \(x \cup A \lor x \cup B\), hence \(y \in f(A) \lor y \in f(B)\). This shows \(y \in f(A) \cup f(B)\), hence \(f(A \cup B) \subset f(A) \cup f(B)\).
+\end{proof}
+
+\begin{proposition}{Homeomorphism maps closed sets to closed sets}{homeomorphism_closed}
+    Let \topology{X} and \topology{Y} be topological spaces. If \(f : X \to Y\) is a homeomorphism, then \(f\) maps closed sets in \(\tau_X\) into closed sets in \(\tau_Y\).
 \end{proposition}
 \begin{proof}
-    Given a subset \(U \in \tau_X\), we must show the image \(V = f(U)\) is open in \topology{Y}. Taking our attention to the inverse map \(g = f^{-1} : Y \to X\), we see the preimage \(\preim{g}{U} = V\) must be open in \topology{Y}, due to continuity.
-
-    Let \(F\subset X\) be a closed set in \(\tau_X\), then \(f(X \setminus F) \in \tau_Y\) by the previous conclusion. Notice \(f(X \setminus F) \cup f(F) = Y\) since \(f\) is surjective. As \(f\) is injective, we must have \(f(F) = Y \setminus f(X\setminus F)\), hence \(f(F)\) is closed in \(\tau_Y\).
+    Let \(F\subset X\) be a closed set in \(\tau_X\), then \(f(X \setminus F) \in \tau_Y\) since \(f\) is an open mapping. Notice \(f(X \setminus F) \cup f(F) = Y\) since \(f\) is surjective. As \(f\) is injective, we must have \(f(F) = Y \setminus f(X\setminus F)\), hence \(f(F)\) is closed in \(\tau_Y\).
 \end{proof}
 
 If there exists a homeomorphism between two topological spaces, they are said to be \emph{homeomorphic} to each other. In fact, this establishes an equivalence relation on topological spaces, thanks to the continuity o the composition of continuous maps.
@@ -164,12 +189,77 @@ As was done for the subspace topology, we prove a similar result for continuous 
     By hypothesis, the preimage \(\preim{f}{V}\) is an open set in \topology{X}, so \(\preim{\restrict{f}{S}}{V}\) is an open set in the subspace topology.
 \end{proof}
 
-Finally, given a collection of maps, it is possible to define a topology on a set such that every map in that topology is continuous.
-\begin{proposition}{Initial topology}{initial_topology}
-    Let \(X\) be a non-empty set and let \(\family{\topology{Y_i}}{i\in I}\) be a collection of topological spaces, with some arbitrary indexing set \(I\), where we consider the collection of maps \(f_i : X \to Y_i\), for all \(i \in I\). \todo[Ver um enunciado]
+\subsection{Initial and final topologies}
+Given a collection of maps, it is possible to define a topology on a set such that every map in that collection is continuous. Before stating how such a topology can be defined, we prove two results from set theory related to intersection and union of preimages.
+\begin{lemma}{Union and intersection of preimages}{union_intersection_preimage}
+    Let \(X\) and \(Y\) be non-empty sets. If \(\mathfrak{V} \subset \power{Y}\) is a non-empty collection of subsets of \(Y\), then
+    \begin{equation*}
+        \preim{f}{\bigcup \mathfrak{V}} = \bigcup_{V \in \mathfrak{V}} \preim{f}{V}
+        \quad\text{and}\quad
+        \preim{f}{\bigcap \mathfrak{V}} = \bigcap_{V \in \mathfrak{V}} \preim{f}{V}
+    \end{equation*}
+    for any mapping \(f : X \to Y\).
+\end{lemma}
+\begin{proof}
+    We have
+    \begin{align*}
+        \preim{f}{\bigcup \mathfrak{V}} &= \setc*{x \in X}{f(x) \in \bigcup_{V \in \mathfrak{V}} V}&
+        \preim{f}{\bigcap \mathfrak{V}} &= \setc*{x \in X}{f(x) \in \bigcap_{V \in \mathfrak{V}} V}\\
+                                        &= \setc*{x \in X}{\exists V \in \mathfrak{V} : f(x) \in V}&
+                                        &= \setc*{x \in X}{\forall V \in \mathfrak{V} : f(x) \in V}\\
+                                        &= \bigcup_{V \in \mathfrak{V}} \setc{x \in X}{f(x) \in V}&
+                                        &= \bigcap_{V \in \mathfrak{V}} \setc{x \in X}{f(x) \in V}\\
+                                        &= \bigcup_{V \in \mathfrak{V}} \preim{f}{V}&
+                                        &= \bigcap_{V \in \mathfrak{V}} \preim{f}{V},
+    \end{align*}
+    as claimed.
+\end{proof}
+
+With this result we may show a map can induce a topology on its domain (codomain), provided the codomain (domain) already has a topology.
+\begin{proposition}{Initial topology with respect to a map}{initial_topology_map}
+    Let \(f : X \to Y\) be a mapping, where \(X\) is a non-empty set and \topology{Y} is a topological space. The set
+    \begin{equation*}
+        \tau_X = \setc{U \in \power{X}}{\exists V \in \tau_{Y} : U = \preim{f}{V}}
+    \end{equation*}
+    defines a topology on \(X\) with respect to which \(f\) is continuous. This topology is called the \emph{initial topology on \(X\) with respect to \(f\) and \topology{Y}}.
 \end{proposition}
 \begin{proof}
-    \todo[Mostrar que é topologia.]
+    Clearly, we have \(X = \preim{f}{Y}\) and \(\emptyset = \preim{f}{\emptyset}\), hence \(X, \emptyset \in \tau_X\). Let \(\mathfrak{U} \subset \tau_X\) be a non-empty collection of sets in \(\tau_X\). For each \(U \in \mathfrak{U}\), there exists \(V_U \in \tau_{Y}\) such that \(U = \preim{f}{V_U}\), hence
+    \begin{align*}
+        \bigcup \mathfrak{U} &= \bigcup_{U \in \mathfrak{U}} \preim{f}{V_U}&
+        \bigcap \mathfrak{U} &= \bigcap_{U \in \mathfrak{U}} \preim{f}{V_U}\\
+                             &= \preim{f}{\bigcup_{U \in \mathfrak{U}} V_U}&
+                             &= \preim{f}{\bigcap_{U \in \mathfrak{U}} V_U}
+    \end{align*}
+    by \cref{lem:union_intersection_preimage}. Since \(\tau_Y\) is a topology, we immediately have \(\bigcup_{U \in \mathfrak{U}} V_U \in \tau_Y\), therefore \(\bigcup \mathfrak{U} \in \tau_X\). If, in addition, \(\mathfrak{U}\) is finite, we have \(\bigcap \mathfrak{U} \in \tau_X\) by the same argument.
+
+    By construction, the map \(f\) is continuous. Indeed, let \(V \in \tau_Y\), then \(\preim{f}{V} \in \tau_X\) is open.
+\end{proof}
+
+\begin{proposition}{Final topology with respect to a map}{final_topology_map}
+    Let \(f : X \to Y\) be a mapping, where \topology{X} is topological space and \(Y\) is a non-empty set. The set
+    \begin{equation*}
+        \tau_Y = \setc{V \in \power{Y}}{\preim{f}{V} \in \tau_X}
+    \end{equation*}
+    defines a topology on \(Y\) with respect to which \(f\) is continuous. This topology is called the \emph{final topology on \(Y\) with respect to \(f\) and \topology{X}}.
+\end{proposition}
+\begin{proof}
+    Since \(X = \preim{f}{Y}\) and \(\emptyset = \preim{f}{\emptyset}\), we have \(Y,\emptyset \in \tau_Y\). Let \(\mathfrak{V} \subset \tau{Y}\) be a non-empty collection of sets in \(\tau_Y\), then by \cref{lem:union_intersection_preimage} we have \(\preim{f}{\bigcup \mathfrak{V}}= \bigcup_{V \in \mathfrak{V}}\preim{f}{V}\) and \(\preim{f}{\bigcap \mathfrak{V}} = \bigcap_{V \in \mathfrak{V}} \preim{f}{V}\). For each \(V \in \mathfrak{V}\), we have \(\preim{f}{V} \in \tau_X\), therefore \(\preim{f}{\bigcup \mathfrak{V}} \in \tau_X\) and we conclude \(\bigcup \mathfrak{V} \in \tau_Y\). If \(\mathfrak{V}\) is finite, we also have \(\preim{f}{\bigcap \mathfrak{V}} \in \tau_X\), hence \(\bigcap \mathfrak{V} \in \tau_Y\).
+\end{proof}
+
+\begin{proposition}{Initial topology}{initial_topology}
+    Let \(X\) be a non-empty set and let \(\mathfrak{Y} = \family{\topology{Y_i}}{i\in I}\) be a collection of topological spaces, with some arbitrary indexing set \(I\), where we consider the collection \(\mathfrak{F}\) of maps \(f_i : X \to Y_i\), for all \(i \in I\). For each \(i \in I\), the set
+    \begin{equation*}
+        \tau_{i} = \setc{U \in \power{X}}{\exists V \in \tau_{Y_i} : U = \preim{f_i}{V}}
+    \end{equation*}
+    is a topology on \(X\). The \emph{initial topology \(\tau_X\) on \(X\) with respect to the collections \(\mathfrak{Y}\) and \(\mathfrak{F}\)} is the topology on \(X\) defined by
+    \begin{equation*}
+        \tau_X = \bigcap_{i \in I} \tau_i,
+    \end{equation*}
+    and has the property that every map \(f \in \mathfrak{F}\) is continuous.
+\end{proposition}
+\begin{proof}
+    \todo[Not sure if this is it.]
 \end{proof}
 
 \subsection{Closure and interior of a set}

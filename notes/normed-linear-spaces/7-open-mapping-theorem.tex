@@ -14,7 +14,7 @@ Baire's category argument can also be used to show the open mapping theorem, whi
 
 We now show the main theorem.
 \begin{theorem}{Open mapping theorem}{open_mapping}
-    Let \(X, Y\) be Banach spaces. If \(T \in \bounded(X, Y)\) is surjective, then \(T\) maps open sets in \(X\) to open sets in \(Y\).
+    Let \(X, Y\) be Banach spaces. If \(T \in \bounded(X, Y)\) is surjective, then \(T\) is an open mapping.
 \end{theorem}
 \begin{proof}
     In this proof we denote an open ball centered at 0 of radius \(r > 0\) by \(X_r \subset X\) and \(Y_r \subset Y\). By surjectivity of \(T\) and completeness of \(Y\) it follows from \cref{lem:neighborhood_0} that for all \(r > 0\) there exists \(\rho > 0\) such that \(Y_\rho \subset \cl_Y(T(X_r))\).
@@ -50,5 +50,9 @@ The immediate corollary to the open mapping theorem is that every bijective boun
     Let \(X, Y\) be Banach spaces. If \(T \in \bounded(X, Y)\) is bijective, then \(T^{-1} \in \bounded(Y, X)\).
 \end{theorem}
 \begin{proof}
-    For all \(V \in \tau_X\), we have \(\preim{T^{-1}}{V} = T(V) \in \tau_Y\) by the open mapping theorem.
+    Since \(T\) is bijective and continuous, \(T\) is an open mapping by \cref{thm:open_mapping}, hence \(T\) is a homeomorphism. By \cref{thm:homeomorphism_inverse}, we have \(T^{-1}\) continuous. It is clear \(T^{-1}\) is linear, hence \(T^{-1} \in \bounded(Y, X)\). Indeed, let \(y_1,y_2 \in Y\), then there exist \(x_1 = T^{-1}(y_1)\) and \(x_2 = T^{-1}(y_2)\). We thus have
+    \begin{equation*}
+        T^{-1}(y_1 + \alpha y_2) = T^{-1}(T(x_1) + \alpha T(x_2)) = T^{-1}\circ T \left(x_1 + \alpha x_2\right) = x_1 + \alpha x_2 = T^{-1}(y_1) + \alpha T^{-1}(y_2)
+    \end{equation*}
+    for all \(\alpha \in \mathbb{C}\).
 \end{proof}
