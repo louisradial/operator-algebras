@@ -56,17 +56,17 @@ An immediate result concerns the convergence of a sequence of bounded operators.
     is a bounded linear operator and \todo[\(\norm{T} \leq \liminf_{n\to\infty}\norm{T_n}\). liminf?]
 \end{theorem}
 \begin{proof}
-    As a sequence of bounded linear operators, each \(T_n\) is continuous, then it follows that \(T\) is linear. Recall convergent sequences are bounded, then by the \nameref{thm:Banach_Steinhaus} the set \(\setc{\norm{T_n}}{n \in \mathbb{N}}\) is bounded above by some \(M \geq 0\). For each \(n \in \mathbb{N}\), we have
+    As a sequence of bounded linear operators, each \(T_n\) is continuous, then it follows that \(T\) is linear. Recall convergent sequences are bounded, then by the \nameref{thm:Banach_Steinhaus} the set \(\setc{\norm{T_n}}{n \in \mathbb{N}}\) is bounded above. For each \(n \in \mathbb{N}\), we have
     \begin{equation*}
-        \norm{T_n v} \leq \norm{T_n} \cdot \norm{v} \leq M \norm{v}.
+        \norm{T_n v} \leq \norm{T_n} \cdot \norm{v} \leq \left(\sup_{m \geq n}{\norm{T_m}}\right) \norm{v}.
     \end{equation*}
     for all \(v \in V\). The continuity of the norm yields
     \begin{equation*}
-        \norm{Tv} = \lim_{n\to\infty} \norm{T_n v} \leq M \norm{v},
+        \norm{Tv} = \lim_{n\to\infty}{\norm{T_n v}}\leq \left(\lim_{n\to\infty}{\sup_{m \geq n}{\norm{T_m}}}\right) \norm{v} = \limsup_{n\to\infty}{\norm{T_n}} \norm{v},
     \end{equation*}
     hence
     \begin{equation*}
-        \sup_{v \in V} \frac{\norm{Tv}}{\norm{v}} \leq M,
+        \sup_{v \in V}{\frac{\norm{Tv}}{\norm{v}}}\leq \limsup_{n\to\infty}{\norm{T_n}},
     \end{equation*}
     that is, \(T \in \bounded(V,W)\).
 \end{proof}
