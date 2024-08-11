@@ -2,13 +2,21 @@
 \section{Closed graph theorem}
 We recall the definition of a map and its graph.
 \begin{definition}{Map and graph}{graph}
-    Let \(S\) be a set and let \(T\) be a non-empty set. A \emph{map} \(f\) is a triple \((S, T, \graph{f})\), where the \emph{graph of \(f\)} \(\graph{f} \subset S \times T\) satisfies
+    Let \(S\) be a set and let \(T\) be a non-empty set. A \emph{map} \(f\) is a triple \((S, T, \graph{f})\), where the \emph{graph \(\graph{f} \subset S \times T\) of \(f\)} satisfies
     \begin{enumerate}[label=(\alph*)]
         \item for all \(s \in S\) and for all \(t_1, t_2 \in T\), if \((s, t_1) \in \graph{f}\) and \((s, t_2) \in \graph{f}\), then \(t_1 = t_2\); and
         \item for all \(s \in S\), there exists \(t \in T\) such that \((s, t) \in \graph{f}\).
     \end{enumerate}
     By abuse of notation we write \((s, t) \in f\) and, in view of (a), denote this by \(f(s) = t\). For this reason, by abuse of notation we denote the map by \(f : S \to T\).
 \end{definition}
+Note that given non-empty sets \(S, T\) and a non-empty collection \(G \subset S \times T\) satisfying the properties of a graph, then there exists a map \(f\) with graph \(G\) such that the diagram
+\begin{equation*}
+    \begin{tikzcd}[column sep = large, row sep = large]
+        G \arrow{rd}{\pi_2} \arrow[swap]{d}{\pi_1} &\\
+        S \arrow[swap]{r}{f} & T
+    \end{tikzcd}
+\end{equation*}
+commutes, where \(\pi_1 : S \times T \to S\) and \(\pi_2 : S\times T \to T\) are the coordinate projections, that is, \(f \circ \pi_1 = \pi_2\).
 
 An important consequence of the open mapping theorem is the closed graph theorem, which relates the continuity of a map \(T : X \to Y\) with its graph \(\graph{T}\subset X \times Y\) and a topology on \(X \times Y\).
 
@@ -30,7 +38,7 @@ An important consequence of the open mapping theorem is the closed graph theorem
     Moreover, if \((X, \norm{\noarg}_X)\) and \((Y, \norm{\noarg}_Y)\) are Banach spaces, then so is \(X \oplus Y\).
 \end{proposition}
 \begin{proof}
-    We first show \(X \oplus Y\) is a normed linear space. It is trivial to verify the linear space axioms are satisfied since \(X\) and \(Y\) are linear spaces, with the main insight being \((0,0) \in X\times Y\) is unsurprisingly the identity of addition. Let us verify \(\norm{\noarg}_{X\ \times Y}\) is indeed a norm. Since the norms on \(X\) and \(Y\) are non-negative, it is clear that \(\norm{\noarg}_{X\times Y}\) is non-negative. It is also positive-definite since
+    We first show \(X \oplus Y\) is a normed linear space. It is trivial to verify the linear space axioms are satisfied since \(X\) and \(Y\) are linear spaces, with the main insight being \((0,0) \in X\times Y\) is unsurprisingly the neutral element of addition. Let us verify \(\norm{\noarg}_{X\ \times Y}\) is indeed a norm. Since the norms on \(X\) and \(Y\) are non-negative, it is clear that \(\norm{\noarg}_{X\times Y}\) is non-negative. It is also positive-definite since
     \begin{align*}
         \norm{(x, y)}_{X \times Y} = 0 &\iff \norm{x}_X + \norm{y}_{Y} = 0\\
                                        &\iff \norm{x}_X = 0 \land \norm{y}_Y = 0\\
@@ -56,13 +64,42 @@ An important consequence of the open mapping theorem is the closed graph theorem
     that is, \(v_n \to \tilde{v}\), hence \(X \oplus Y\) is complete.
 \end{proof}
 
+\begin{proposition}{Graph of a linear operator is a linear subspace}{graph_linear_subspace}
+    Let \(X, Y\) be normed linear spaces. If \(T : \domain{T} \subset X \to Y\) is a linear operator, then \(\graph{T}\) is a linear subspace of \(X \oplus Y\).
+\end{proposition}
+\begin{proof}
+    Since \(\domain{T}\) is a linear subspace of \(X\), then the graph \(\graph{T}\) is a linear subspace of \(X \oplus Y\). Indeed, let \(v_1, v_2 \in \graph{T}\), then there exists \(x_1, x_2 \in \domain{T}\) such that \(v_1 = (x_1, Tx_1)\) and \(v_2 = (x_2, Tx_2)\), hence for all \(\alpha \in \mathbb{C}\) we have \(v_1 + \alpha v_2 = (x_1 + \alpha x_2, T(x_1 + \alpha x_2)) \in \graph{T}\).
+\end{proof}
+\begin{proposition}{Coordinate projections are bounded operators}{coordinate_projection_bounded}
+    Let \(X_1, X_2\) be normed linear spaces. The coordinate projections \(\pi_i : X_1 \oplus X_2 \to X_i\) are bounded linear operators, with \(i \in \set{1,2}.\)
+\end{proposition}
+\begin{proof}
+    Notice that for all \(w \in X_1 \oplus X_2\), we have \(w = (\pi_1(w), \pi_2(w))\) by the definitions of the topological direct sum and the coordinate projections. Let \(u, v \in X_1 \oplus X_2\) and \(\alpha, \beta \in \mathbb{C}\), then
+    \begin{equation*}
+        \pi_i(\alpha u + \beta v) = \pi_i\left(\alpha \pi_1(u) + \beta \pi_1(v), \alpha \pi_2(u) + \beta \pi_2(v)\right) = \alpha \pi_i(u) + \beta \pi_i(v),
+    \end{equation*}
+    hence \(\pi_i\) is linear, with \(i \in \set{1,2}\). Moreover, for all \(w \in X_1 \oplus X_2\) we have
+    \begin{equation*}
+        \norm{\pi_iw}_{X_i} \leq \norm{\pi_1 w}_{X_1} + \norm{\pi_2 w}_{X_2} = \norm{w}_{X_1\oplus X_2},
+    \end{equation*}
+    hence \(\pi_i \in \bounded(X_1 \oplus X_2, X_i)\).
+\end{proof}
+\begin{proposition}{Coordinate projections restricted to a graph}{coordinate_projection_graph}
+    Let \(X_1, X_2\) be normed linear spaces and let \(T : X_1 \to X_2\) be a linear operator. Then the restricted coordinate projection \(\restrict{\pi_i}{\graph{T}} : X_1 \oplus X_2 \to X_i\) is a bounded linear operator for \(i \in \set{1,2}\). In addition, \(\restrict{\pi_1}{\graph{T}}\) is bijective.
+\end{proposition}
+\begin{proof}
+    By the previous result, we conclude \(\restrict{\pi_i}{\graph{T}}\) is linear. Moreover, \(\pi_i\) clearly extends \(\restrict{\pi_i}{\graph{T}}\), then we have
+    \begin{equation*}
+        \sup_{w \in \graph{T}} \frac{\norm{\restrict{\pi_i}{\graph{T}}w}_{X_i}}{\norm{w}_{\graph{T}}} \leq \sup_{w \in X_1 \oplus X_2} \frac{\norm{\pi_i w}_{X_i}}{\norm{x}_{X_1 \oplus X_2}} < \infty,
+    \end{equation*}
+    hence \(\restrict{\pi_i}{\graph{T}} \in \bounded(\graph{T}, X_i)\). By properties (a) and (b) of \cref{def:graph}, it follows that \(\restrict{\pi_1}{\graph{T}}\) is bijective. Indeed, (b) states that \(\restrict{\pi_1}{\graph{T}}(\domain{T}) = \domain{T}\) and (a) states that \(\restrict{\pi_1}{\graph{T}}(w) = \restrict{\pi_1}{\graph{T}}(v)\) implies \(w = v\).
+\end{proof}
+
 We may describe a linear operator \(T : \domain{T} \subset X \to Y\) in terms of the standing of its graph \(\graph{T}\) in the metric topology on \(X \oplus Y\).
 \begin{definition}{Closed linear operator}{closed_linear_operator}
     Let \(X, Y\) be normed linear spaces. A linear operator \(T : \domain{T} \subset X \to Y\) is \emph{closed} if its graph \(\graph{T} \subset \domain{T} \times Y\)  is a closed linear subspace of \(X \oplus Y\).
 \end{definition}
-\begin{remark}
-    It should be clear that since \(\domain{T}\) is a linear subspace of \(X\), then its graph is always a linear subspace of \(X \oplus Y\). Indeed, let \(v_1, v_2 \in \graph{T}\), then there exists \(x_1, x_2 \in \domain{T}\) such that \(v_1 = (x_1, Tx_1)\) and \(v_2 = (x_2, Tx_2)\), hence for all \(\alpha \in \mathbb{C}\) we have \(v_1 + \alpha v_2 = (x_1 + \alpha x_2, T(x_1 + \alpha x_2)) \in \graph{T}\).
-\end{remark}
+
 
 Recall \cref{exam:derivative_unbounded}, where we presented the derivative operator as an unbounded linear operator on the Banach space of continuous complex-valued functions. We now show this operator is also closed.
 \begin{example}{The derivative operator of complex-valued functions is closed}{derivative_closed}
@@ -81,4 +118,11 @@ Recall \cref{exam:derivative_unbounded}, where we presented the derivative opera
     Let \(X, Y\) be Banach spaces. A linear map \(T : X \to Y\) is continuous if and only if it is closed.
 \end{theorem}
 \begin{proof}
+    Suppose \(T\) is continuous and let \(\family{v_n}{n \in \mathbb{N}}\subset \graph{T}\) be a sequence that converges to \(\tilde{v} \in X \oplus Y\). Then there exist convergent sequences \(\family{x_n}{n \in \mathbb{N}} \subset X\) and \(\family{Tx_n}{n \in \mathbb{N}} \subset Y\), such that \(v_n = (x_n, Tx_n)\) for all \(n \in \mathbb{N}\) and such that \(x_n \to \tilde{x}\) and \(Tx_n \to \tilde{y}\), where \(\tilde{v} = (\tilde{x}, \tilde{y})\). Since \(T\) is continuous, we have
+    \begin{equation*}
+        \tilde{y} = \lim_{n\to\infty} Tx_n = T\left(\lim_{n\to\infty} x_n\right)= T\tilde{x},
+    \end{equation*}
+    hence \(\tilde{v} \in \graph{T}\). That is, \(\graph{T}\) is closed in \(X \oplus Y\).
+
+    Suppose \(T\) is closed. Then \(\graph{T}\) is a closed subset of the Banach space \(X \oplus Y\), hence \(\graph{T}\) is a Banach space. Let \(S_1 = \restrict{\pi_1}{\graph{T}}\) and \(S_2 = \restrict{\pi_2}{\graph{T}}\) be the restricted coordinate projections considered in \cref{prop:coordinate_projection_graph}, then \(S_1 \in \bounded(\graph{T}, X)\) is a homeomorphism, and \(S_2 \in \bounded(\graph{T}, Y)\) is a continuous map. Then, \(T = S_2 \circ S_1^{-1}\) is a composition of continuous linear operators, hence \(T \in \bounded(X, Y).\)
 \end{proof}
