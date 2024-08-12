@@ -192,25 +192,25 @@ As was done for the subspace topology, we prove a similar result for continuous 
 \subsection{Initial and final topologies}
 Given a collection of maps, it is possible to define a topology on a set such that every map in that collection is continuous. Before stating how such a topology can be defined, we prove two results from set theory related to intersection and union of preimages.
 \begin{lemma}{Union and intersection of preimages}{union_intersection_preimage}
-    Let \(X\) and \(Y\) be non-empty sets. If \(\mathfrak{V} \subset \power{Y}\) is a non-empty collection of subsets of \(Y\), then
+    Let \(X\) and \(Y\) be non-empty sets. If \(\mathcal{V} \subset \power{Y}\) is a non-empty collection of subsets of \(Y\), then
     \begin{equation*}
-        \preim{f}{\bigcup \mathfrak{V}} = \bigcup_{V \in \mathfrak{V}} \preim{f}{V}
+        \preim{f}{\bigcup \mathcal{V}} = \bigcup_{V \in \mathcal{V}} \preim{f}{V}
         \quad\text{and}\quad
-        \preim{f}{\bigcap \mathfrak{V}} = \bigcap_{V \in \mathfrak{V}} \preim{f}{V}
+        \preim{f}{\bigcap \mathcal{V}} = \bigcap_{V \in \mathcal{V}} \preim{f}{V}
     \end{equation*}
     for any mapping \(f : X \to Y\).
 \end{lemma}
 \begin{proof}
     We have
     \begin{align*}
-        \preim{f}{\bigcup \mathfrak{V}} &= \setc*{x \in X}{f(x) \in \bigcup_{V \in \mathfrak{V}} V}&
-        \preim{f}{\bigcap \mathfrak{V}} &= \setc*{x \in X}{f(x) \in \bigcap_{V \in \mathfrak{V}} V}\\
-                                        &= \setc*{x \in X}{\exists V \in \mathfrak{V} : f(x) \in V}&
-                                        &= \setc*{x \in X}{\forall V \in \mathfrak{V} : f(x) \in V}\\
-                                        &= \bigcup_{V \in \mathfrak{V}} \setc{x \in X}{f(x) \in V}&
-                                        &= \bigcap_{V \in \mathfrak{V}} \setc{x \in X}{f(x) \in V}\\
-                                        &= \bigcup_{V \in \mathfrak{V}} \preim{f}{V}&
-                                        &= \bigcap_{V \in \mathfrak{V}} \preim{f}{V},
+        \preim{f}{\bigcup \mathcal{V}} &= \setc*{x \in X}{f(x) \in \bigcup_{V \in \mathcal{V}} V}&
+        \preim{f}{\bigcap \mathcal{V}} &= \setc*{x \in X}{f(x) \in \bigcap_{V \in \mathcal{V}} V}\\
+                                        &= \setc*{x \in X}{\exists V \in \mathcal{V} : f(x) \in V}&
+                                        &= \setc*{x \in X}{\forall V \in \mathcal{V} : f(x) \in V}\\
+                                        &= \bigcup_{V \in \mathcal{V}} \setc{x \in X}{f(x) \in V}&
+                                        &= \bigcap_{V \in \mathcal{V}} \setc{x \in X}{f(x) \in V}\\
+                                        &= \bigcup_{V \in \mathcal{V}} \preim{f}{V}&
+                                        &= \bigcap_{V \in \mathcal{V}} \preim{f}{V},
     \end{align*}
     as claimed.
 \end{proof}
@@ -224,14 +224,14 @@ With this result we may show a map can induce a topology on its domain (codomain
     defines a topology on \(X\) with respect to which \(f\) is continuous. This topology is called the \emph{initial topology on \(X\) with respect to \(f\) and \topology{Y}}.
 \end{proposition}
 \begin{proof}
-    Clearly, we have \(X = \preim{f}{Y}\) and \(\emptyset = \preim{f}{\emptyset}\), hence \(X, \emptyset \in \tau_X\). Let \(\mathfrak{U} \subset \tau_X\) be a non-empty collection of sets in \(\tau_X\). For each \(U \in \mathfrak{U}\), there exists \(V_U \in \tau_{Y}\) such that \(U = \preim{f}{V_U}\), hence
+    Clearly, we have \(X = \preim{f}{Y}\) and \(\emptyset = \preim{f}{\emptyset}\), hence \(X, \emptyset \in \tau_X\). Let \(\mathcal{U} \subset \tau_X\) be a non-empty collection of sets in \(\tau_X\). For each \(U \in \mathcal{U}\), there exists \(V_U \in \tau_{Y}\) such that \(U = \preim{f}{V_U}\), hence
     \begin{align*}
-        \bigcup \mathfrak{U} &= \bigcup_{U \in \mathfrak{U}} \preim{f}{V_U}&
-        \bigcap \mathfrak{U} &= \bigcap_{U \in \mathfrak{U}} \preim{f}{V_U}\\
-                             &= \preim{f}{\bigcup_{U \in \mathfrak{U}} V_U}&
-                             &= \preim{f}{\bigcap_{U \in \mathfrak{U}} V_U}
+        \bigcup \mathcal{U} &= \bigcup_{U \in \mathcal{U}} \preim{f}{V_U}&
+        \bigcap \mathcal{U} &= \bigcap_{U \in \mathcal{U}} \preim{f}{V_U}\\
+                             &= \preim{f}{\bigcup_{U \in \mathcal{U}} V_U}&
+                             &= \preim{f}{\bigcap_{U \in \mathcal{U}} V_U}
     \end{align*}
-    by \cref{lem:union_intersection_preimage}. Since \(\tau_Y\) is a topology, we immediately have \(\bigcup_{U \in \mathfrak{U}} V_U \in \tau_Y\), therefore \(\bigcup \mathfrak{U} \in \tau_X\). If, in addition, \(\mathfrak{U}\) is finite, we have \(\bigcap \mathfrak{U} \in \tau_X\) by the same argument.
+    by \cref{lem:union_intersection_preimage}. Since \(\tau_Y\) is a topology, we immediately have \(\bigcup_{U \in \mathcal{U}} V_U \in \tau_Y\), therefore \(\bigcup \mathcal{U} \in \tau_X\). If, in addition, \(\mathcal{U}\) is finite, we have \(\bigcap \mathcal{U} \in \tau_X\) by the same argument.
 
     By construction, the map \(f\) is continuous. Indeed, let \(V \in \tau_Y\), then \(\preim{f}{V} \in \tau_X\) is open.
 \end{proof}
@@ -244,19 +244,19 @@ With this result we may show a map can induce a topology on its domain (codomain
     defines a topology on \(Y\) with respect to which \(f\) is continuous. This topology is called the \emph{final topology on \(Y\) with respect to \(f\) and \topology{X}}.
 \end{proposition}
 \begin{proof}
-    Since \(X = \preim{f}{Y}\) and \(\emptyset = \preim{f}{\emptyset}\), we have \(Y,\emptyset \in \tau_Y\). Let \(\mathfrak{V} \subset \tau{Y}\) be a non-empty collection of sets in \(\tau_Y\), then by \cref{lem:union_intersection_preimage} we have \(\preim{f}{\bigcup \mathfrak{V}}= \bigcup_{V \in \mathfrak{V}}\preim{f}{V}\) and \(\preim{f}{\bigcap \mathfrak{V}} = \bigcap_{V \in \mathfrak{V}} \preim{f}{V}\). For each \(V \in \mathfrak{V}\), we have \(\preim{f}{V} \in \tau_X\), therefore \(\preim{f}{\bigcup \mathfrak{V}} \in \tau_X\) and we conclude \(\bigcup \mathfrak{V} \in \tau_Y\). If \(\mathfrak{V}\) is finite, we also have \(\preim{f}{\bigcap \mathfrak{V}} \in \tau_X\), hence \(\bigcap \mathfrak{V} \in \tau_Y\).
+    Since \(X = \preim{f}{Y}\) and \(\emptyset = \preim{f}{\emptyset}\), we have \(Y,\emptyset \in \tau_Y\). Let \(\mathcal{V} \subset \tau{Y}\) be a non-empty collection of sets in \(\tau_Y\), then by \cref{lem:union_intersection_preimage} we have \(\preim{f}{\bigcup \mathcal{V}}= \bigcup_{V \in \mathcal{V}}\preim{f}{V}\) and \(\preim{f}{\bigcap \mathcal{V}} = \bigcap_{V \in \mathcal{V}} \preim{f}{V}\). For each \(V \in \mathcal{V}\), we have \(\preim{f}{V} \in \tau_X\), therefore \(\preim{f}{\bigcup \mathcal{V}} \in \tau_X\) and we conclude \(\bigcup \mathcal{V} \in \tau_Y\). If \(\mathcal{V}\) is finite, we also have \(\preim{f}{\bigcap \mathcal{V}} \in \tau_X\), hence \(\bigcap \mathcal{V} \in \tau_Y\).
 \end{proof}
 
 \begin{proposition}{Initial topology}{initial_topology}
-    Let \(X\) be a non-empty set and let \(\mathfrak{Y} = \family{\topology{Y_i}}{i\in I}\) be a collection of topological spaces, with some arbitrary indexing set \(I\), where we consider the collection \(\mathfrak{F}\) of maps \(f_i : X \to Y_i\), for all \(i \in I\). For each \(i \in I\), the set
+    Let \(X\) be a non-empty set and let \(\mathcal{Y} = \family{\topology{Y_i}}{i\in I}\) be a collection of topological spaces, with some arbitrary indexing set \(I\), where we consider the collection \(\mathcal{F}\) of maps \(f_i : X \to Y_i\), for all \(i \in I\). For each \(i \in I\), the set
     \begin{equation*}
         \tau_{i} = \setc{U \in \power{X}}{\exists V \in \tau_{Y_i} : U = \preim{f_i}{V}}
     \end{equation*}
-    is a topology on \(X\). The \emph{initial topology \(\tau_X\) on \(X\) with respect to the collections \(\mathfrak{Y}\) and \(\mathfrak{F}\)} is the topology on \(X\) defined by
+    is a topology on \(X\). The \emph{initial topology \(\tau_X\) on \(X\) with respect to the collections \(\mathcal{Y}\) and \(\mathcal{F}\)} is the topology on \(X\) defined by
     \begin{equation*}
         \tau_X = \bigcap_{i \in I} \tau_i,
     \end{equation*}
-    and has the property that every map \(f \in \mathfrak{F}\) is continuous.
+    and has the property that every map \(f \in \mathcal{F}\) is continuous.
 \end{proposition}
 \begin{proof}
     \todo[Not sure if this is it.]

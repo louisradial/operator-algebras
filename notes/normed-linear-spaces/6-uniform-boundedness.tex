@@ -1,21 +1,21 @@
 % vim: spl=en_us
 \section{Uniform boundedness theorem}
-A consequence of the completeness of a Banach space due to Baire's category argument is the Banach-Steinhaus theorem, also known as the uniform boundedness theorem or principle. % A collection of linear maps \(\mathfrak{T}\) defined on a linear space \(V\) is \emph{dominated} by a real functional \(p : V \to \mathbb{R}\) if \(\norm{Tv} \leq p(v)\) for all \(v \in V\) and all \(T \in \mathfrak{T}\). We'll denote by \(\mathbb{R}^+\) the set of positive real numbers and by \(\mathbb{R}^+_0\) the set of non-negative real numbers.
+A consequence of the completeness of a Banach space due to Baire's category argument is the Banach-Steinhaus theorem, also known as the uniform boundedness theorem or principle. % A collection of linear maps \(\mathcal{T}\) defined on a linear space \(V\) is \emph{dominated} by a real functional \(p : V \to \mathbb{R}\) if \(\norm{Tv} \leq p(v)\) for all \(v \in V\) and all \(T \in \mathcal{T}\). We'll denote by \(\mathbb{R}^+\) the set of positive real numbers and by \(\mathbb{R}^+_0\) the set of non-negative real numbers.
 \begin{theorem}{Banach-Steinhaus theorem}{Banach_Steinhaus}
-    Let \(\mathfrak{T} \subset \bounded{(V,W)}\) be a non-empty collection of bounded linear operators defined on the Banach space \(V\) into a normed linear space \(W\). If for all \(v \in V\) the set \(\setc{\norm{Tv}}{T \in \mathfrak{T}}\) is bounded, then the set \(\setc{\norm{T}}{T \in \mathfrak{T}}\) is bounded.
+    Let \(\mathcal{T} \subset \bounded{(V,W)}\) be a non-empty collection of bounded linear operators defined on the Banach space \(V\) into a normed linear space \(W\). If for all \(v \in V\) the set \(\setc{\norm{Tv}}{T \in \mathcal{T}}\) is bounded, then the set \(\setc{\norm{T}}{T \in \mathcal{T}}\) is bounded.
 \end{theorem}
 \begin{proof}
-    For each \(v \in V\), the set \(\setc{\norm{Tv}}{T \in \mathfrak{T}}\) is bounded above by some natural number \(n_v \in \mathbb{N}\) and in particular by any natural number greater than \(n_v\). Consider
+    For each \(v \in V\), the set \(\setc{\norm{Tv}}{T \in \mathcal{T}}\) is bounded above by some natural number \(n_v \in \mathbb{N}\) and in particular by any natural number greater than \(n_v\). Consider
     \begin{equation*}
-        V_n = \setc{v \in V}{\forall T \in \mathfrak{T} : \norm{Tv} \leq n}
+        V_n = \setc{v \in V}{\forall T \in \mathcal{T} : \norm{Tv} \leq n}
     \end{equation*}
     for all \(n \in \mathbb{N}\), then \(V = \bigcup_{n \in \mathbb{N}} V_n\). We may rewrite
     \begin{equation*}
-        V_n = \bigcap_{T \in \mathfrak{T}} \setc{v \in V}{\norm{Tv}\leq n}.
+        V_n = \bigcap_{T \in \mathcal{T}} \setc{v \in V}{\norm{Tv}\leq n}.
     \end{equation*}
-    Moreover, for each \(T \in \mathfrak{T}\) we consider the real functional \(p_T = \norm{\noarg} \circ T\), which is continuous as a composition of continuous maps. Then,
+    Moreover, for each \(T \in \mathcal{T}\) we consider the real functional \(p_T = \norm{\noarg} \circ T\), which is continuous as a composition of continuous maps. Then,
     \begin{equation*}
-        V_n = \bigcap_{T \in \mathfrak{T}} \preim{p_T}{[0,n]}
+        V_n = \bigcap_{T \in \mathcal{T}} \preim{p_T}{[0,n]}
     \end{equation*}
     is manifestly closed in \(V\).
 
@@ -29,7 +29,7 @@ A consequence of the completeness of a Banach space due to Baire's category argu
         \quad\text{and}{\quad}
         \norm{T(u + w)} \leq m
     \end{equation*}
-    for all \(T \in \mathfrak{T}\), provided \(w \in B_r(0)\). For all \(T \in \mathfrak{T}\), this yields
+    for all \(T \in \mathcal{T}\), provided \(w \in B_r(0)\). For all \(T \in \mathcal{T}\), this yields
     \begin{equation*}
         \norm{Tw} = \norm{T(w + u) - Tu} \leq \norm{T(w + u)} + \norm{Tu} \leq 2m
     \end{equation*}
@@ -39,9 +39,9 @@ A consequence of the completeness of a Banach space due to Baire's category argu
     \begin{equation*}
         \norm{Tv} = \frac{2\norm{v}}{r}\norm*{T\left(\frac{r}{2\norm{v}}v\right)} \leq \frac{4m}{r}\norm{v}
     \end{equation*}
-    for every \(T \in \mathfrak{T}\). The previous inequality holds for \(v = 0\), hence
+    for every \(T \in \mathcal{T}\). The previous inequality holds for \(v = 0\), hence
     \begin{equation*}
-        \sup_{T \in \mathfrak{T}} \norm{T} \leq \frac{4m}{r},
+        \sup_{T \in \mathcal{T}} \norm{T} \leq \frac{4m}{r},
     \end{equation*}
     since \(r\) depends only on \(m\) and the arbitrary interior point \(u\).
 \end{proof}
