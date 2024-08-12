@@ -1,1 +1,75 @@
 % vim: spl=en_us
+\section{Bounded operators in Hilbert spaces}
+We recall \crefname{thm:orthogonal_decomposition}, that for every vector \(v \in \hilbert\), there exist unique \(v_\parallel \in V\) and \(v_\perp \in V^\perp\) such that \(v = v_\parallel + v_\perp\), and \(v_\parallel\) is the unique best approximation of \(v\) on \(V\). This motivates the definition of a map that realizes the best approximation.
+\begin{definition}{Orthogonal projector}{orthogonal_projector}
+    Let \(\hilbert\) be a Hilbert space. If \(V \subset \hilbert\) is a closed linear subspace of \(\hilbert\), the \emph{orthogonal projector onto \(V\)} is the map
+    \begin{align*}
+        P_V : \hilbert &\to \hilbert\\
+                     v &\mapsto v_\parallel
+    \end{align*}
+    where \(v_\parallel \in V\) is the unique best approximation of \(v\) on \(V\). If \(x \in \hilbert\), we may write \(P_x\) as shorthand for the orthogonal projector \(P_{\lspan{\set{x}}} : \hilbert \to \hilbert\).
+\end{definition}
+
+\begin{proposition}{Orthogonal projector is a bounded operator}{orthogonal_projector_bounded}
+    Let \(\hilbert\) be a Hilbert space. If \(V\) is a closed linear subspace of \(\hilbert\), then \(P_V \in \bounded(\hilbert)\) with \(\norm{P_V} \leq 1\).
+\end{proposition}
+\begin{proof}
+    Let \(x, y \in \hilbert\) and \(\alpha \in \mathbb{C}\), then \cref{thm:orthogonal_decomposition} guarantees the existence and uniqueness of \(x_\parallel, y_\parallel \in V\) and \(x_\perp, y_\perp \in V^\perp\) such that \(x = x_\parallel + x_\perp\) and \(y = y_\parallel + y_\perp\), then
+    \begin{equation*}
+        x + \alpha y = (x_\parallel + \alpha y_\parallel) + (x_\perp + \alpha y_\perp).
+    \end{equation*}
+    That is, \(x_\parallel + \alpha y_\parallel\) is the best approximation of \(x + \alpha y\) in \(V\), hence \(P_V(x + \alpha y) = P_V(x) + \alpha P_V(y)\). It is clear \(P_V\) is bounded since
+    \begin{equation*}
+        \sup_{v \in \hilbert} \frac{\norm{P_Vv}}{\norm{v}} = \sup_{v \in \hilbert} \frac{\norm{v_\parallel}}{\sqrt{\norm{v_\parallel}^2 + \norm{v_\perp}^2}} \leq 1,
+    \end{equation*}
+    that is, \(\norm{P_V} \leq 1\).
+\end{proof}
+
+An important consequence of the orthogonal decomposition theorem is that every bounded linear operator defined on a subset of a Hilbert space can be extended to the entire linear space.
+\begin{theorem}{Isometric extension of a bounded operator defined on a Hilbert space}{isometric_extension_bounded_hilbert}
+    Let \(T : \domain{T} \subset \hilbert \to X\) be a bounded linear operator, where \(\hilbert\) is a Hilbert space and \(X\) is a Banach space. Then \(T\) can be uniquely extended to \(\hat{T} : \hilbert \to X\), where the extension satisfies \(\hat{T}((\cl_\hilbert\domain{T})^\perp) = \set{0}\) and \(\norm{\hat{T}} = \norm{T}\).
+\end{theorem}
+\begin{proof}
+    Notice \(\domain{T}\) is dense in the Banach space \(V = \cl_\hilbert{\domain{T}}.\) Using \cref{thm:blt} if necessary, there exists a unique bounded linear extension \(\tilde{T} : V \to X\) to \(T\) such that \(\norm{\tilde{T}} = \norm{T}\).
+
+    We define the map
+    \begin{align*}
+        \hat{T} : \hilbert &\to X\\
+                         v &\mapsto \tilde{T} \circ P_V (v),
+    \end{align*}
+    which is manifestly a bounded linear operator, as a composition of bounded linear operators. Notice \(P_Vu = u\) for all \(u \in \domain{T}\subset V\), since \(u\) is its best approximation in \(V\). Then, since \(\tilde{T}\) extends \(T\), \(\hat{T}\) extends \(T\). As \(\ker{P_V} = V^\perp\), it follows that \(\hat{T}(V^\perp) = \set{0}\). Moreover, we have
+    \begin{equation*}
+        \norm{\hat{T}} = \sup_{v \in \hilbert}{\frac{\norm{\hat{T}v}}{\norm{v}}}= \sup_{v \in \hilbert}{\frac{\norm{\tilde{T}v_\parallel}}{\sqrt{\norm{v_\parallel}^2 + \norm{v_\perp}^2}}} \leq \sup_{v\in V}{\frac{\norm{\tilde{T}v}}{\norm{v}}} = \norm{\tilde{T}} = \norm{T}
+    \end{equation*}
+    and
+    \begin{equation*}
+        \norm{\hat{T}} = \sup_{v \in \hilbert}{\frac{\norm{\hat{T}v}}{\norm{v}}} \geq \sup_{v\in\domain{T}}{\frac{\norm{Tv}}{\norm{v}}} = \norm{T},
+    \end{equation*}
+    and we conclude \(\norm{\hat{T}} = \norm{T}\).
+
+    Suppose there exists \(S \in \bounded(\hilbert, X)\) that extends \(T\) such that \(\norm{S} = \norm{T}\) and \(S(V^\perp) = \set{0}\). Then, \(\restrict{S}{V}\) is a bounded extension to \(T\) with \(\norm{\restrict{S}{V}} = \norm{T}\), hence the uniqueness of \(\tilde{T}\) yields \(\restrict{S}{V} = \tilde{T}\). For every \(v \in V\) we have
+    \begin{equation*}
+        S(v) = S\circ P_V(v) + S(v - P_V(v)) = \restrict{S}{V} \circ P_V(v) = \tilde{T}\circ P_V (v) = \hat{T}(v),
+    \end{equation*}
+    then \(S = \hat{T}\), showing uniqueness.
+\end{proof}
+
+\begin{proposition}{Isometric extension of a bounded operator defined on a Hilbert space}{extension_bounded_hilbert}
+    Let \(T : \domain{T} \subset \hilbert \to X\) be a bounded linear operator, where \(\hilbert\) is a Hilbert space and \(X\) is a Banach space. Then there exists an extension \(\hat{T} : \hilbert \to X\) to \(T\) defined by \(\hat{T}(v) = \lim_{n \to \infty} T(\tilde{v}_n)\) where \(\family{\tilde{v}_n}{n \in \mathbb{N}} \subset \domain{T}\) is a sequence that converges to \(v_\parallel = P_{\cl_{\hilbert}{\domain{T}}}v\). Moreover, \(\hat{T}\) is bounded and \(\norm{\hat{T}} = \norm{T}\).
+\end{proposition}
+\begin{proof}
+    If \(\domain{T}\) is dense in \(\hilbert,\) we may use \cref{thm:blt} and end up with the above described map, which is the unique bounded extension and satisfies \(\norm{\hat{T}} = \norm{T}\).
+
+    Suppose \(\domain{T}\) is not dense in \(\hilbert\). Then \(\family{T\tilde{v}_n}{n \in \mathbb{N}} \subset X\) is a Cauchy sequence in the Banach space \(X\) since \(T\) is uniformly continuous. By completeness, \(\family{T\tilde{v}_n}{n \in \mathbb{N}}\) is convergent. Let \(\family{\tilde{w}_n} \subset \domain{T}\) be another sequence that converges to \(v_\parallel\), then by the same argument \(\family{T\tilde{w}_n}{n \in \mathbb{N}}\) is convergent. Both sequences converge to the same value in \(X\), that is, \(\hat{T}\) is well-defined. Indeed, since \(T\) is bounded, we have
+    \begin{align*}
+        \norm{T\tilde{w}_n - T\tilde{v}_n} &\leq \norm{T}\cdot \norm{\tilde{w}_n - \tilde{v}_n}\\
+                                           &\leq \norm{T} \cdot \left(\norm{\tilde{w}_n - v_\parallel} + \norm{v_\parallel - \tilde{v}_n}\right),
+    \end{align*}
+    hence we may take \(n\) arbitrarily large as to make the right hand side arbitrarily small, and we conclude \(T\tilde{w}_n = T\tilde{v}_n = \hat{T}(v)\).
+
+    Since the orthogonal projector and \(T\) are linear, \(\hat{T}\) must be linear. Indeed, let \(x, y \in \hilbert\) and \(\alpha \in \mathbb{C}\), then there exist sequences \(\family{\tilde{x}}{n \in \mathbb{N}} \subset \domain{T}\) and \(\family{\tilde{y}}{n\in \mathbb{N}} \subset \domain{T}\) such that \(\tilde{x}_n \to x_\parallel\), \(\tilde{y}_n \to y_\parallel\), and \(\tilde{x}_n + \alpha \tilde{y}_n \to x_\parallel + \alpha y_\parallel\). Linearity and continuity yield
+    \begin{equation*}
+        \hat{T}(x + \alpha y) = \lim_{n \to \infty}{T(\tilde{x}_n + \alpha \tilde{y}_n)}= \lim_{n \to \infty}{T(\tilde{x}_n)}+ \alpha \lim_{n\to\infty}{T(\tilde{y}_n)} = \hat{T}(x) + \alpha \hat{T}(y),
+    \end{equation*}
+    that is, \(\hat{T}\) is a linear operator. Moreover, it is clear that \(\hat{T}\) extends \(T\), since \(\domain{T} \subset \cl_\hilbert{\domain{T}}\), then for every \(u \in \domain{T}\), the best approximation of \(u\) in \(\cl_\hilbert{\domain{T}}\) is \(u\), hence we may consider the constant sequence that converges to \(u\) to evaluate \(\hat{T}(u) = T(u)\).
+\end{proof}
