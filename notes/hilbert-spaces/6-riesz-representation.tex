@@ -59,7 +59,15 @@ that is, \(\riesz(\alpha f + \beta g) = \conj{\alpha}\riesz(f) + \conj{\beta}\ri
 \begin{equation*}
     \riesz^{-1}(\alpha u + \beta v)(x) = \inner{\alpha u + \beta v}{x} = \conj{\alpha} \inner{u}{x} + \conj{\beta}\inner{v}{x} = \left(\conj{\alpha}\riesz^{-1}(u)+ \conj{\beta}\riesz^{-1}(v)\right)(x),
 \end{equation*}
-then \(\riesz^{-1}(\alpha u + \beta v) = \conj{\alpha}\riesz^{-1}(u) + \conj{\beta}\riesz^{-1}(v)\).
+then \(\riesz^{-1}(\alpha u + \beta v) = \conj{\alpha}\riesz^{-1}(u) + \conj{\beta}\riesz^{-1}(v)\). Finally, the map is an isometry from \(\hilbert^\dag\) to \(\hilbert\). Indeed, let \(\ell \in \hilbert^\dag\), then
+\begin{equation*}
+    \norm{\ell}_{\hilbert^\dag} = \sup_{x \in \hilbert}{\frac{\abs{\ell(x)}}{\norm{x}_\hilbert}}= \sup_{x \in \hilbert}{\frac{\abs{\inner{\riesz(\ell)}{x}}}{\norm{x}_\hilbert}}= \norm{\riesz(\ell)}_{\hilbert},
+\end{equation*}
+where we used \cref{thm:cauchy_schwarz} and \cref{prop:cauchy_schwarz_equality} to conclude the last equality since
+\begin{equation*}
+    \norm{\riesz(\ell)}_\hilbert = \sup_{\alpha \in \mathbb{C}\setminus\set{0}}{\frac{\abs*{\inner{\riesz(\ell)}{\alpha \riesz(\ell)}}}{\norm{\alpha \riesz(\ell)}_\hilbert}}\leq \sup_{x \in \hilbert}{\frac{\abs*{\inner{\riesz(\ell)}{x}}}{\norm{x}_\hilbert}}\leq\sup_{x \in \hilbert}{\frac{\norm{\riesz(\ell)}_\hilbert \norm{x}_\hilbert}{\norm{x}_\hilbert}} = \norm{\riesz(\ell)}_\hilbert.
+\end{equation*}
+As a corollary, \cref{prop:isometry_continuous} shows the inverse map \(\riesz^{-1}\) is an isometry from \(\hilbert\) to \(\hilbert^\dag\), hence \(\hilbert\) and \(\hilbert^\dag\) are isometric metric spaces.
 
 We may use the Riesz representation map to define an inner product on \(\hilbert^\dag\).
 \begin{proposition}{Inner product on topological dual}{inner_product_dual}
