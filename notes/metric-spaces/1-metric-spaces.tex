@@ -254,6 +254,16 @@ The structure preserving maps of metric spaces, the bijective \emph{isometries} 
 \begin{remark}
     We've shown every isometry is necessarily injective and continuous with respect to the metric topology.
 \end{remark}
+\begin{proposition}{Composition of isometries is an isometry}{composition_isometry}
+    Let \((X, d_X),(Y, d_Y),(Z, d_Z)\) be metric spaces. If \(f : X \to Y\) and \(g : Y \to Z\) are isometries, then \(g \circ f : X \to Z\) is an isometry.
+\end{proposition}
+\begin{proof}
+    Let \(x_1, x_2 \in X\), then
+    \begin{equation*}
+        d_Z(g \circ f(x_1), g \circ f(x_2)) = d_Y(f(x_1), f(x_2)) = d_X(x_1, x_2),
+    \end{equation*}
+    hence \(g \circ f\) is an isometry.
+\end{proof}
 
 We may define a stronger notion of continuity with the additional structure of the metric space.
 \begin{definition}{Uniform continuity}{uniform_continuity}
