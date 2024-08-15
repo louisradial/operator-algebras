@@ -73,3 +73,121 @@ An important consequence of the orthogonal decomposition theorem is that every b
     \end{equation*}
     that is, \(\hat{T}\) is a linear operator. Moreover, it is clear that \(\hat{T}\) extends \(T\), since \(\domain{T} \subset \cl_\hilbert{\domain{T}}\), then for every \(u \in \domain{T}\), the best approximation of \(u\) in \(\cl_\hilbert{\domain{T}}\) is \(u\), hence we may consider the constant sequence that converges to \(u\) to evaluate \(\hat{T}(u) = T(u)\).
 \end{proof}
+Due to \cref{thm:isometric_extension_bounded_hilbert}, we can always assume a \emph{bounded} linear operator is defined on an entire Hilbert space, rather than just a linear subspace.
+
+\subsection{Adjoint of a bounded operator}
+We consider bounded operators \(A : \hilbert_1 \to \hilbert_2\), where \(\hilbert_1\) and \(\hilbert_2\) are Hilbert spaces. As a consequence of \nameref{thm:riesz_representation}, we'll show any bounded operator \(A \in \bounded(\hilbert_1, \hilbert_2)\) defines a unique operator \(B \in \bounded(\hilbert_2, \hilbert_1)\) such that \(\inner{y}{Ax}_{\hilbert_2} = \inner{By}{x}_{\hilbert_1}\), for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\).
+\begin{lemma}{Bicontinuous sesquilinear form defines a unique operator}{sesquilinear_adjoint}
+    Let \(\mathscr{A} : \hilbert_2 \times \hilbert_1 \to \mathbb{C}\) be a sesquilinear form defined on Hilbert spaces \(\hilbert_1\) and \(\hilbert_2\). Suppose \(\mathscr{A}\) is \emph{bicontinuous}, that is, there exists \(M > 0\) such that \(\abs{\mathscr{A}(u,v)} \leq M\norm{u}_{\hilbert_2} \norm{v}_{\hilbert_1}\) for all \(u \in \hilbert_2\) and all \(v \in \hilbert_1\). Then, there exists a unique linear operator \(B \in \bounded(\hilbert_2, \hilbert_1)\) such that
+    \begin{equation*}
+        \mathscr{A}(u,v) = \inner{Bu}{v}_{\hilbert_1},
+    \end{equation*}
+    for all \(u \in \hilbert_2\) and all \(v \in \hilbert_1\).
+\end{lemma}
+\begin{proof}
+    As \(\mathscr{A}\) is bicontinuous, it follows that for each \(u \in \hilbert_2\), the map
+    \begin{align*}
+        \ell_u : \hilbert_1 &\to \mathbb{C}\\
+                          v &\mapsto \mathscr{A}(u,v)
+    \end{align*}
+    is a bounded linear functional on \(\hilbert_1\). That is, there exists a map \(\ell : \hilbert_2 \to \hilbert_1^\dag\) defined by \(\ell(u) = \ell_u\). Let \(u_1, u_2 \in \hilbert_2\) and \(\alpha \in \mathbb{C}\), then
+    \begin{align*}
+        \ell(u_1 + \alpha u_2)(v) = \ell_{u_1 + \alpha u_2}(v) &= \mathscr{A}(u_1 + \alpha u_2, v)\\
+                                                               &= \mathscr{A}(u_1, v) + \conj{\alpha} \mathscr{A}(u_2, v)\\
+                                                               &= \ell_{u_1}(v) + \conj{\alpha} \ell_{u_2}(v)\\
+                                                               &= \left[\ell(u_1) + \conj{\alpha} \ell(u_2)\right](v)
+    \end{align*}
+    for all \(v \in \hilbert_1\). We infer \(\ell(u_1 + \alpha u_2) = \ell(u_1) + \conj{\alpha}\ell(u_2)\), thus showing \(\ell\) is an antilinear map.
+
+    We claim the map \(B = \riesz \circ \ell\) is a bounded linear operator such that \(\mathscr{A}(u,v) = \inner{B(u)}{v}_{\hilbert_1}\), where \(\riesz : \hilbert_1^\dag \to \hilbert_1\) is the Riesz representation map. \nameref{thm:riesz_representation} ensures that \(B(u)\) is the unique vector in \(\hilbert_1\) such that \(\ell_u(v) = \inner{B(u)}{v}_{\hilbert_1}\) for all \(v \in \hilbert_1\). As a result, for all \(u \in \hilbert_2\) and \(v \in \hilbert_1\), we have \(\inner{B(u)}{v}_{\hilbert_1} = \mathscr{A}(u,v)\). It is clear \(B\) is a linear map since it is the composition of two antilinear maps. Moreover, since \(\mathscr{A}\) is bicontinuous, we have
+    \begin{equation*}
+        \norm{Bu}_{\hilbert_1}^2 = \abs*{\inner{Bu}{Bu}_{\hilbert_1}} = \abs*{\mathscr{A}(u, Bu)} \leq M \norm{u}_{\hilbert_2} \norm{Bu}_{\hilbert_1},
+    \end{equation*}
+    that is, \(M\) is an upper bound for the set \(\setc*{\frac{\norm{Bu}_{\hilbert_1}}{\norm{u}_{\hilbert_2}}}{u \in \hilbert_2 \setminus \set{0}}\), hence \(B \in \bounded(\hilbert_2, \hilbert_1)\), proving our claim.
+
+    Let \(\tilde{B} \in \bounded(\hilbert_2, \hilbert_1)\) such that \(\mathscr{A}(u,v) = \inner{\tilde{B}u}{v}_{\hilbert_1}\) for all \(u \in \hilbert_2\) and \(v \in \hilbert_1\). Then, \(\inner{Bu}{v}_{\hilbert_1} = \inner{\tilde{B}u}{v}_{\hilbert_1}\), which implies \(\inner{(B - \tilde{B})u}{v}_{\hilbert_1} = 0\) for all \(u \in \hilbert_2\) and all \(v \in \hilbert_1\). Since the inner product is non-degenerate this yields \((B - \tilde{B})u = 0\) for all \(u \in \hilbert_2\), hence \(B = \tilde{B}\), which shows uniqueness.
+\end{proof}
+
+\begin{theorem}{Existence of the adjoint of a bounded operator}{adjoint_bounded_hilbert}
+    Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. If \(A \in \bounded(\hilbert_1, \hilbert_2)\) is a bounded linear operator, then there exists a unique bounded linear operator \(B \in \bounded(\hilbert_2, \bounded_1)\) such that
+    \begin{equation*}
+        \inner{y}{Ax}_{\hilbert_2} = \inner{By}{x}_{\hilbert_1}
+    \end{equation*}
+    for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\).
+\end{theorem}
+\begin{proof}
+    We claim the map
+    \begin{align*}
+        \mathscr{A} : \hilbert_2 \times \hilbert_1 &\to \mathbb{C}\\
+                                             (y,x) &\mapsto \inner{y}{Ax}_{\hilbert_2}
+    \end{align*}
+    is a bicontinuous sesquilinear form. Sesquilinearity of \(\mathscr{A}\) follows from linearity of the operator \(A\) and from sesquilinearity of the inner product defined on \(\hilbert_2\). \nameref{thm:cauchy_schwarz} yields
+    \begin{equation*}
+        \abs{\mathscr{A}(y,x)} = \abs*{\inner{y}{Ax}_{\hilbert_2}} \leq \norm{y}_{\hilbert_2} \norm{Ax}_{\hilbert_2} \leq \norm{A}_{\bounded(\hilbert_1, \hilbert_2)} \norm{x}_{\hilbert_1} \norm{y}_{\hilbert_2},
+    \end{equation*}
+    for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\), hence \(\mathscr{A}\) is bicontinuous. By \cref{lem:sesquilinear_adjoint}, there exists a unique bounded linear operator \(B \in \bounded(\hilbert_2, \hilbert_1)\) such that \(\mathscr{A}(y,x) = \inner{By}{x}_{\hilbert_1}\), that is,
+    \begin{equation*}
+        \inner{y}{Ax}_{\hilbert_2} = \inner{By}{x}_{\hilbert_1},
+    \end{equation*}
+    for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\).
+\end{proof}
+
+Notice \cref{thm:adjoint_bounded_hilbert} establishes a map from \(\bounded(\hilbert_1, \hilbert_2)\) to \(\bounded(\hilbert_2, \hilbert_1)\).
+\begin{definition}{Adjoint of a bounded operator}{adjoint_bounded_hilbert}
+    Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. The map
+    \begin{align*}
+        ^* : \bounded(\hilbert_1, \hilbert_2) &\to \bounded(\hilbert_2, \hilbert_1)\\
+                                           A &\mapsto A^*,
+    \end{align*}
+    where \(A^*\) is the unique bounded operator such that
+    \begin{equation*}
+        \inner{y}{Ax}_{\hilbert_2} = \inner{A^*y}{x}_{\hilbert_1}
+    \end{equation*}
+    for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\), is called an \emph{adjoint operation}, later \emph{involution}, on \(\bounded(\hilbert_1, \hilbert_2)\). The operator \(A^*\) is called the \emph{adjoint of \(A\)}.
+\end{definition}
+\begin{remark}
+    The Banach space adjoint and the Hilbert space adjoint are unfortunately not the same operation, however the Riesz representation let's us relate them. Let \(T \in \bounded(\hilbert_1, \hilbert_2)\), with \(T' \in \bounded(\hilbert_2^\dag, \hilbert_1^\dag)\) being the Banach space adjoint and \(T^* \in \bounded(\hilbert_2, \hilbert_1)\) the Hilbert space adjoint, then for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\) we have
+    \begin{align*}
+        \inner{\riesz_{\hilbert_1} \circ T' \circ \riesz_{\hilbert_2}^{-1}(y)}{x}_{\hilbert_1}
+        &= \inner{\riesz_{\hilbert_1}(\riesz_{\hilbert_2}^{-1}(y) \circ T)}{x}_{\hilbert_1}\\
+        &= \riesz_{\hilbert_2}^{-1}(y) \circ T(x)\\
+        &= \inner{y}{Tx}_{\hilbert_2},
+    \end{align*}
+    hence \(T^* = \riesz_{\hilbert_1} \circ T' \circ \riesz^{-1}_{\hilbert_2}\) by uniqueness of the Hilbert space adjoint.
+\end{remark}
+
+\begin{theorem}{Adjoint operation properties}{involution_properties}
+    We'll denote Hilbert spaces by \(\hilbert_n\) and the adjoint operations on \(\bounded(\hilbert_n, \hilbert_m)\) simply as \(^*\). Then,
+    \begin{enumerate}[label=(\alph*)]
+        \item The adjoint operation is an involution: \((A^*)^* = A\), for all \(A \in \bounded(\hilbert_1, \hilbert_2)\);
+        \item The adjoint operation is an isometry: \(\norm{A^*} = \norm{A},\) for all \(A \in \bounded(\hilbert_1, \hilbert_2)\);
+        \item The adjoint operation satisfies the \(C^*\) property: \(\norm{A^* \circ A} = \norm{A}^2\), for all \(A \in \bounded(\hilbert_1, \hilbert_2)\);
+        \item The adjoint operation is antilinear: \((\alpha A + \beta B)^* = \conj{A} A^* + \conj{\beta} B^*\) for all \(\alpha, \beta \in \mathbb{C}\) and \(A, B \in \bounded(\hilbert_1, \hilbert_2)\);
+        \item The adjoint operation is antidistributive: \((B \circ A)^* = A^*\circ B^*\) for all \(A \in \bounded(\hilbert_1, \hilbert_2)\) and \(B \in \bounded(\hilbert_2, \hilbert_3)\);
+        \item The adjoint operation preserves the identity: if \(\unity \in \bounded(\hilbert_1)\) is the identity operator, then \(\unity^* = \unity\);
+        \item The adjoint operation maps the inverse to the inverse of the adjoint: if \(A \in \bounded(\hilbert_1, \hilbert_2)\) admits an inverse map \(A^{-1} \in \bounded(\hilbert_2, \hilbert_1)\), then \((A^{-1})^* = (A^*)^{-1}\).
+    \end{enumerate}
+\end{theorem}
+\begin{proof}[Proof of (a)]
+    Let \(A \in \bounded(\hilbert_1, \hilbert_2)\), then
+    \begin{equation*}
+        \inner{(A^*)^*x}{y}_{\hilbert_2} = \inner{x}{A^*y}_{\hilbert_1} = \conj{\inner{A^*y}{x}_{\hilbert_1}} = \conj{\inner{y}{Ax}_{\hilbert_2}} = \inner{Ax}{y}_{\hilbert_2}
+    \end{equation*}
+    for all \(x \in \hilbert_1\) and \(y \in \hilbert_2.\) By non-degeneracy of the inner product, we have \(A = (A^*)^*\), showing involutivity.
+\end{proof}
+\begin{proof}[Proof of (b)]
+    We consider the Banach space adjoint operation
+    \begin{align*}
+        ' : \bounded(\hilbert_1, \hilbert_2) &\to \bounded(\hilbert_2^\dag, \hilbert_1^\dag)\\
+                                           A &\mapsto A'
+    \end{align*}
+    which we have shown in \cref{prop:adjoint_Banach} to be an isometry. Since the maps \(\riesz_{\hilbert_1}\) and \(\riesz_{\hilbert_2}^{-1}\) are bijective isometries, it follows that
+    \begin{align*}
+        \norm{A^*}_{\bounded(\hilbert_2, \hilbert_1)} = \sup_{x \in \hilbert_2}{\frac{\norm{A^*x}_{\hilbert_1}}{\norm{x}_{\hilbert_2}}}
+        &= \sup_{x \in \hilbert_2}{\frac{\norm{\riesz_{\hilbert_1}\circ A' \circ \riesz^{-1}_{\hilbert_2}(x)}_{\hilbert_1}}{\norm{x}_{\hilbert_2}}}\\
+        &= \sup_{x \in \hilbert_2}{\frac{\norm{A' \circ \riesz^{-1}_{\hilbert_2}(x)}_{\hilbert_1^\dag}}{\norm{\riesz_{\hilbert_2}^{-1}(x)}_{\hilbert_2^\dag}}}\\
+        &= \sup_{\ell \in \hilbert_2^\dag}{\frac{\norm{A'(\ell)}_{\hilbert_1^\dag}}{\norm{\ell}_{\hilbert_2^\dag}}}\\
+        &= \norm{A'}_{\bounded(\hilbert_2^\dag, \hilbert_1^\dag)} = \norm{A}_{\bounded(\hilbert_1,\hilbert_2)}
+    \end{align*}
+    for all \(A \in \bounded(\hilbert_1, \hilbert_2)\).
+\end{proof}
