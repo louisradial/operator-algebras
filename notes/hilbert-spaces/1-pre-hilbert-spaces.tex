@@ -1,5 +1,5 @@
 % vim: spl=en_us
-\section{Pre-Hilbert spaces and the parallelogram identity}
+\section{Pre-Hilbert spaces and the polarization identity}
 It is not the case that every normed linear space is an inner product space. It was in this sense that we meant that Banach spaces are a generalization of Hilbert spaces. We will now show the equivalent of inner product spaces and a subset of normed linear spaces.
 \begin{definition}{Pre-Hilbert space}{pre_hilbert}
     A \emph{pre-Hilbert space} is a normed linear space \((V, \norm{\noarg})\) where the norm satisfies the \emph{parallelogram identity}, that is,
@@ -52,8 +52,10 @@ In fact, we may generalize the previous result, which is also known as \emph{the
 \begin{proof}
     Let \(u, v \in \domain{T}\), then
     \begin{align*}
-        \sum_{n=0}^3 i^{n} \inner{u+i^{-n}v}{T(u + i^{n}v)} &= \sum_{n=0}^3 i^n \left(\inner{u}{Tu} + i^n\inner{v}{Tu} + i^{-n}\inner{u}{Tv} + \inner{v}{Tv}\right)\\
-                                                            &= \sum_{n=0}^3 i^n\inner{u}{Tu} + i^{2n}\inner{v}{Tu} + \inner{u}{Tv} + i^{n}\inner{v}{Tv}\\
+        \sum_{n=0}^3 i^{n} \inner{u+i^{-n}v}{T(u + i^{-n}v)} &= \sum_{n=0}^3 i^n \left(\inner{u}{Tu + i^{-n}Tv} + i^n \inner{v}{Tu+i^{-n}Tv}\right)\\
+                                                             &= \sum_{n=0}^3 i^n \left(\inner{u}{Tu} + i^{-n}\inner{u}{Tv} + i^{n}\inner{v}{Tu} + \inner{v}{Tv}\right)\\
+                                                            &= \sum_{n=0}^3 \left(i^n\inner{u}{Tu} + \inner{u}{Tv} + i^{2n}\inner{v}{Tu} + i^{n}\inner{v}{Tv}\right)\\
+                                                            &= \inner{u}{Tu}\left(\sum_{n=0}^3 i^n\right) + 4\inner{u}{Tv}  + \inner{v}{Tu} \left(\sum_{n=0}^3 i^{2n}\right) + \inner{v}{Tv}\left(\sum_{n=0}^3 i^n\right)\\
                                                             &= 4\inner{u}{Tv},
     \end{align*}
     since \(\sum_{n=0}^3 i^n = \sum_{n=0}^3 i^{2n} = 0\).
