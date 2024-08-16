@@ -24,6 +24,12 @@ for all \(x,y,z \in V\) and all \(\alpha, \beta \in \mathbb{C}\).
     \end{equation*}
     That is, \(\inner{x}{y} = 0\) for all \(y \in Y\).
 \end{proof}
+\begin{corollary}
+    Let \((W\) be a linear space. If \(A : W \to V\) and \(B : W \to V\) are linear maps such that \(\inner{v}{Aw} = \inner{v}{Bw}\) for all \(v \in V\) and all \(w \in W\), then \(A = B\).
+\end{corollary}
+\begin{proof}
+    For each \(w \in W\), we have \(\inner{v}{(A - B)w} = 0\) for all \(v \in V\). Since the inner product is non-degenerate, it follows that \((A-B)w = 0\). This holds for all \(w \in W,\) hence \(A = B\).
+\end{proof}
 
 In Analysis, inequalities are often very important to estimate certain quantities, as we've used many times when studying properties of bounded operators in normed linear spaces. It turns out the inner product properties are enough to define of the most important inequalities in Mathematics.
 \begin{theorem}{Cauchy-Schwarz inequality}{cauchy_schwarz}
