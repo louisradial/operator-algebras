@@ -53,26 +53,6 @@ An important consequence of the orthogonal decomposition theorem is that every b
     \end{equation*}
     then \(S = \hat{T}\), showing uniqueness.
 \end{proof}
-
-\begin{proposition}{Isometric extension of a bounded operator defined on a Hilbert space}{extension_bounded_hilbert}
-    Let \(T : \domain{T} \subset \hilbert \to X\) be a bounded linear operator, where \(\hilbert\) is a Hilbert space and \(X\) is a Banach space. Then there exists an extension \(\hat{T} : \hilbert \to X\) to \(T\) defined by \(\hat{T}(v) = \lim_{n \to \infty} T(\tilde{v}_n)\) where \(\family{\tilde{v}_n}{n \in \mathbb{N}} \subset \domain{T}\) is a sequence that converges to \(v_\parallel = P_{\cl_{\hilbert}{\domain{T}}}v\). Moreover, \(\hat{T}\) is bounded and \(\norm{\hat{T}} = \norm{T}\).
-\end{proposition}
-\begin{proof}
-    If \(\domain{T}\) is dense in \(\hilbert,\) we may use \cref{thm:blt} and end up with the above described map, which is the unique bounded extension and satisfies \(\norm{\hat{T}} = \norm{T}\).
-
-    Suppose \(\domain{T}\) is not dense in \(\hilbert\). Then \(\family{T\tilde{v}_n}{n \in \mathbb{N}} \subset X\) is a Cauchy sequence in the Banach space \(X\) since \(T\) is uniformly continuous. By completeness, \(\family{T\tilde{v}_n}{n \in \mathbb{N}}\) is convergent. Let \(\family{\tilde{w}_n} \subset \domain{T}\) be another sequence that converges to \(v_\parallel\), then by the same argument \(\family{T\tilde{w}_n}{n \in \mathbb{N}}\) is convergent. Both sequences converge to the same value in \(X\), that is, \(\hat{T}\) is well-defined. Indeed, since \(T\) is bounded, we have
-    \begin{align*}
-        \norm{T\tilde{w}_n - T\tilde{v}_n} &\leq \norm{T}\cdot \norm{\tilde{w}_n - \tilde{v}_n}\\
-                                           &\leq \norm{T} \cdot \left(\norm{\tilde{w}_n - v_\parallel} + \norm{v_\parallel - \tilde{v}_n}\right),
-    \end{align*}
-    hence we may take \(n\) arbitrarily large as to make the right hand side arbitrarily small, and we conclude \(T\tilde{w}_n = T\tilde{v}_n = \hat{T}(v)\).
-
-    Since the orthogonal projector and \(T\) are linear, \(\hat{T}\) must be linear. Indeed, let \(x, y \in \hilbert\) and \(\alpha \in \mathbb{C}\), then there exist sequences \(\family{\tilde{x}}{n \in \mathbb{N}} \subset \domain{T}\) and \(\family{\tilde{y}}{n\in \mathbb{N}} \subset \domain{T}\) such that \(\tilde{x}_n \to x_\parallel\), \(\tilde{y}_n \to y_\parallel\), and \(\tilde{x}_n + \alpha \tilde{y}_n \to x_\parallel + \alpha y_\parallel\). Linearity and continuity yield
-    \begin{equation*}
-        \hat{T}(x + \alpha y) = \lim_{n \to \infty}{T(\tilde{x}_n + \alpha \tilde{y}_n)}= \lim_{n \to \infty}{T(\tilde{x}_n)}+ \alpha \lim_{n\to\infty}{T(\tilde{y}_n)} = \hat{T}(x) + \alpha \hat{T}(y),
-    \end{equation*}
-    that is, \(\hat{T}\) is a linear operator. Moreover, it is clear that \(\hat{T}\) extends \(T\), since \(\domain{T} \subset \cl_\hilbert{\domain{T}}\), then for every \(u \in \domain{T}\), the best approximation of \(u\) in \(\cl_\hilbert{\domain{T}}\) is \(u\), hence we may consider the constant sequence that converges to \(u\) to evaluate \(\hat{T}(u) = T(u)\).
-\end{proof}
 Due to \cref{thm:isometric_extension_bounded_hilbert}, we can always assume a \emph{bounded} linear operator is defined on an entire Hilbert space, rather than just a linear subspace.
 
 \subsection{Adjoint of a bounded operator}
@@ -145,8 +125,12 @@ Notice \cref{thm:adjoint_bounded_hilbert} establishes a map from \(\bounded(\hil
     \end{equation*}
     for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\), is called an \emph{adjoint operation}, later \emph{involution}, on \(\bounded(\hilbert_1, \hilbert_2)\). The operator \(A^*\) is called the \emph{adjoint of \(A\)}.
 \end{definition}
-\begin{remark}
-    The Banach space adjoint and the Hilbert space adjoint are unfortunately not the same operation, however the Riesz representation let's us relate them. Let \(T \in \bounded(\hilbert_1, \hilbert_2)\), with \(T' \in \bounded(\hilbert_2^\dag, \hilbert_1^\dag)\) being the Banach space adjoint and \(T^* \in \bounded(\hilbert_2, \hilbert_1)\) the Hilbert space adjoint, then for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\) we have
+The Banach space adjoint and the Hilbert space adjoint unfortunately share the same name, despite not being the same operation. They are, however, related by the Riesz representation map.
+
+\begin{proposition}{Banach space adjoint and Hilbert space adjoint}{adjoint_relation}
+    Let us denote the Banach space adjoint operation by \(' : \bounded(\hilbert_1, \hilbert_2) \to \bounded(\hilbert_2^\dag, \hilbert_1^\dag)\) and the Hilbert space adjoint operation by \(^* : \bounded(\hilbert_1, \hilbert_2) \to \bounded(\hilbert_2, \hilbert_1)\), where \(\hilbert_1, \hilbert_2\) are Hilbert spaces. If \(T \in \bounded(\hilbert_1, \hilbert_2)\) is a bounded operator, then \(T^* = \riesz_{\hilbert_1} \circ T' \circ \riesz^{-1}_{\hilbert_2}\).
+\end{proposition}
+Let \(T \in \bounded(\hilbert_1, \hilbert_2)\), with \(T' \in \bounded(\hilbert_2^\dag, \hilbert_1^\dag)\) being the Banach space adjoint and \(T^* \in \bounded(\hilbert_2, \hilbert_1)\) the Hilbert space adjoint, then for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\) we have
     \begin{align*}
         \inner{\riesz_{\hilbert_1} \circ T' \circ \riesz_{\hilbert_2}^{-1}(y)}{x}_{\hilbert_1}
         &= \inner{\riesz_{\hilbert_1}(\riesz_{\hilbert_2}^{-1}(y) \circ T)}{x}_{\hilbert_1}\\
@@ -154,18 +138,17 @@ Notice \cref{thm:adjoint_bounded_hilbert} establishes a map from \(\bounded(\hil
         &= \inner{y}{Tx}_{\hilbert_2},
     \end{align*}
     hence \(T^* = \riesz_{\hilbert_1} \circ T' \circ \riesz^{-1}_{\hilbert_2}\) by uniqueness of the Hilbert space adjoint.
-\end{remark}
 
 \begin{theorem}{Adjoint operation properties}{involution_properties}
-    We'll denote Hilbert spaces by \(\hilbert_n\) and the adjoint operations on \(\bounded(\hilbert_n, \hilbert_m)\) simply as \(^*\). Then,
+    We'll denote Hilbert spaces by \(\hilbert_n\) and the adjoint operations on \(\bounded(\hilbert_n, \hilbert_m)\) simply as \(^*\). Then, the adjoint operation
     \begin{enumerate}[label=(\alph*)]
-        \item The adjoint operation is an involution: \((A^*)^* = A\), for all \(A \in \bounded(\hilbert_1, \hilbert_2)\);
-        \item The adjoint operation is an isometry: \(\norm{A^*} = \norm{A},\) for all \(A \in \bounded(\hilbert_1, \hilbert_2)\);
-        \item The adjoint operation satisfies the \(C^*\) property: \(\norm{A^* \circ A} = \norm{A}^2\), for all \(A \in \bounded(\hilbert_1, \hilbert_2)\);
-        \item The adjoint operation is antilinear: \((\alpha A + \beta B)^* = \conj{A} A^* + \conj{\beta} B^*\) for all \(\alpha, \beta \in \mathbb{C}\) and \(A, B \in \bounded(\hilbert_1, \hilbert_2)\);
+        \item is an involution: \((A^*)^* = A\), for all \(A \in \bounded(\hilbert_1, \hilbert_2)\);
+        \item is an isometry: \(\norm{A^*} = \norm{A},\) for all \(A \in \bounded(\hilbert_1, \hilbert_2)\);
+        \item satisfies the \(C^*\) property: \(\norm{A^* \circ A} = \norm{A}^2\), for all \(A \in \bounded(\hilbert_1, \hilbert_2)\);
+        \item is antilinear: \((\alpha A + \beta B)^* = \conj{\alpha} A^* + \conj{\beta} B^*\) for all \(\alpha, \beta \in \mathbb{C}\) and \(A, B \in \bounded(\hilbert_1, \hilbert_2)\);
         \item The adjoint operation is antidistributive: \((B \circ A)^* = A^*\circ B^*\) for all \(A \in \bounded(\hilbert_1, \hilbert_2)\) and \(B \in \bounded(\hilbert_2, \hilbert_3)\);
-        \item The adjoint operation preserves the identity: if \(\unity \in \bounded(\hilbert_1)\) is the identity operator, then \(\unity^* = \unity\);
-        \item The adjoint operation maps the inverse to the inverse of the adjoint: if \(A \in \bounded(\hilbert_1, \hilbert_2)\) admits an inverse map \(A^{-1} \in \bounded(\hilbert_2, \hilbert_1)\), then \((A^{-1})^* = (A^*)^{-1}\).
+        \item preserves the identity: if \(\unity \in \bounded(\hilbert_1)\) is the identity operator, then \(\unity^* = \unity\);
+        \item maps the inverse to the inverse of the adjoint: if \(A \in \bounded(\hilbert_1, \hilbert_2)\) admits an inverse map \(A^{-1} \in \bounded(\hilbert_2, \hilbert_1)\), then \((A^{-1})^* = (A^*)^{-1}\).
     \end{enumerate}
 \end{theorem}
 \begin{proof}[Proof of (a)]
@@ -191,3 +174,113 @@ Notice \cref{thm:adjoint_bounded_hilbert} establishes a map from \(\bounded(\hil
     \end{align*}
     for all \(A \in \bounded(\hilbert_1, \hilbert_2)\).
 \end{proof}
+\begin{proof}[Proof of (c)]
+    Let \(A \in \bounded(\hilbert_1, \hilbert_2)\), then \(A^* \circ A \in \bounded(\hilbert_1)\) is a bounded operator as a composition of continuous maps. It should be clear that \(\norm{A^*\circ A}_{\bounded(\hilbert_1)} \leq \norm{A}_{\bounded(\hilbert_1, \hilbert_2)}^2\). Indeed,
+    \begin{equation*}
+        \norm{A^* \circ A}_{\bounded(\hilbert_1)} = \opnorm{A^*\circ A}{x}{\hilbert_1}{\hilbert_1} \leq \norm{A^*}_{\bounded(\hilbert_2, \hilbert_1)}\opnorm{A}{x}{\hilbert_1}{\hilbert_2} = \norm{A}_{\bounded(\hilbert_1, \hilbert_2)}^2.
+    \end{equation*}
+    For all \(x \in \hilbert_1\), \(\inner{A^*\circ Ax}{x}_{\hilbert_1}\) is a non-negative real number since
+    \begin{equation*}
+        \inner{A^*\circ Ax}{x}_{\hilbert_1} = \inner{Ax}{Ax}_{\hilbert_2} = \norm{Ax}_{\hilbert_2}^2 \geq 0.
+    \end{equation*}
+    The \nameref{thm:cauchy_schwarz} yields
+    \begin{equation*}
+        \norm{Ax}^2_{\hilbert_2} = \inner{A^*\circ A x}{x}_{\hilbert_1} \leq \norm{A^* \circ Ax}_{\hilbert_1} \norm{x}_{\hilbert_1} \leq \norm{A^* \circ A}_{\bounded(\hilbert_1)} \norm{x}_{\hilbert_1}^2
+    \end{equation*}
+    for all \(x \in \hilbert_1\). That is, \(\norm{A^* \circ A}_{\bounded(\hilbert_1)} \geq \norm{A}_{\bounded(\hilbert_1, \hilbert_2)}^2\).
+\end{proof}
+\begin{proof}[Proof of (d)]
+    Let \(\alpha, \beta \in \mathbb{C}\) and \(A, B \in \bounded(\hilbert_1, \hilbert_2)\), then for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\) we have
+    \begin{align*}
+        \inner{(\alpha A + \beta B)^*y}{x}_{\hilbert_1} &= \inner{y}{(\alpha A + \beta B)x}_{\hilbert_2}\\
+                                                        &= \alpha\inner{y}{Ax}_{\hilbert_2} + \beta\inner{y}{Bx}_{\hilbert_2}\\
+                                                        &= \alpha \inner{A^*y}{x}_{\hilbert_1} + \beta \inner{B^*y}{x}_{\hilbert_1}\\
+                                                        &= \inner{\conj{\alpha}A^*y + \conj{\beta}B^*y}{x}_{\hilbert_1}\\
+                                                        &= \inner{(\conj{\alpha}A^* + \conj{\beta}B^*)y}{x}_{\hilbert_1},
+    \end{align*}
+    which yields
+    \begin{equation*}
+        \inner*{\left[\left(\alpha A + \beta B\right)^* - \left(\conj{\alpha}A^* + \conj{\beta}B^*\right)\right]y}{x}_{\hilbert_1} = 0.
+    \end{equation*}
+    As the inner product is non-degenerate, we have \(\left[\left(\alpha A + \beta B\right)^* - \left(\conj{\alpha}A^* + \conj{\beta}B^*\right)\right]y = 0\) for all \(y \in \hilbert_2\), hence \(\left(\alpha A + \beta B\right)^* = \conj{\alpha}A^* + \conj{\beta}B^*\).
+\end{proof}
+\begin{proof}[Proof of (e)]
+    Let \(A \in \bounded(\hilbert_1, \hilbert_2)\) and let \(B \in \bounded(\hilbert_2, \hilbert_3)\), then for all \(x \in \hilbert_1\) and \(y \in \hilbert_3\), we have
+    \begin{align*}
+        \inner{(B\circ A)^*y}{x}_{\hilbert_1} &= \inner{y}{B \circ Ax}_{\hilbert_3}\\
+                                              &= \inner{B^*y}{Ax}_{\hilbert_2}\\
+                                              &= \inner{A^* \circ B^*y}{x}_{\hilbert_1}.
+    \end{align*}
+    The non-degeneracy of the inner product yields \((B \circ A)^* = A^* \circ B^*\).
+\end{proof}
+\begin{proof}[Proof of (f)]
+    Let \(\unity \in \bounded(\hilbert_1)\) be the identity map, then for all \(x, y \in \hilbert_1\),
+    \begin{equation*}
+        \inner{\unity^*y}{x}_{\hilbert_1} = \inner{y}{\unity x}_{\hilbert_1} = \inner{y}{x},
+    \end{equation*}
+    hence \(\unity^*y = y\), thus showing \(\unity^* = \unity\).
+\end{proof}
+\begin{proof}[Proof of (g)]
+    Let \(A \in \bounded(\hilbert_1, \hilbert_2)\) be a bijective bounded operator and \(A^{-1} \in \bounded(\hilbert_2, \hilbert_1)\) its inverse map. By (e) and (f), we have
+    \begin{equation*}
+        A^* \circ (A^{-1})^* = (A^{-1} \circ A)^* = \unity_{\hilbert_1}^* = \unity_{\hilbert_1}
+    \end{equation*}
+    and
+    \begin{equation*}
+        (A^{-1})^* \circ A^* = (A \circ A^{-1})^* = \unity_{\hilbert_2}^* = \unity_{\hilbert_2}
+    \end{equation*}
+    and we conclude \((A^{-1})^* = (A^*)^{-1}\).
+\end{proof}
+\todo
+
+\subsection{Self-adjoint bounded operators}
+\todo
+\begin{theorem}{Norm of a self-adjoint bounded operator}{norm_self_adjoint}
+    Let \(T \in \bounded(\hilbert)\) be a self-adjoint bounded operator defined on a Hilbert space \(\hilbert\). Then its norm satisfies
+    \begin{equation*}
+        \norm{T} = \sup_{x \in \hilbert}\frac{\abs*{\inner{x}{Tx}}}{\norm{x}^2}.
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    \todo
+\end{proof}
+
+\subsection{Normal operators}
+\begin{lemma}{Application of the polarization identity}{normal}
+    Let \(\hilbert\) be a Hilbert space. The bounded operators \(A, B \in \bounded(\hilbert)\) satisfy \(A^* \circ A = B^*\circ B\) if and only if \(\norm{Ax} = \norm{Bx}\) for all \(x \in \hilbert\).
+\end{lemma}
+\begin{proof}
+    Suppose \(A^* \circ A = B^* \circ B\), then for all \(x \in \hilbert\), we have
+    \begin{equation*}
+        \norm{Ax}^2 = \inner{Ax}{Ax} = \inner{A^*\circ Ax}{x} = \inner{B^*\circ Bx}{x} = \inner{Bx}{Bx} = \norm{Bx}^2,
+    \end{equation*}
+    hence \(\norm{Ax} = \norm{Bx}\).
+
+    Suppose that for all \(x \in \hilbert\) we have \(\norm{Ax} = \norm{Bx}\). Then,
+    \begin{equation*}
+        \inner{x}{A^* \circ Ax} = \inner{(A^*)^*x}{Ax} = \inner{Ax}{Ax} = \inner{Bx}{Bx} = \inner{(B^*)^*x}{Bx} = \inner{x}{B^* \circ Bx}
+    \end{equation*}
+    for all \(x \in \hilbert\). Let \(u, v \in \hilbert\), then
+    \begin{align*}
+        \inner{u}{A^* \circ A v} &= \frac14\sum_{n=0}^3 i^n\inner{u + i^{-n}v}{A^*\circ A(u + i^{-n}v)}\\
+                                 &= \frac14 \sum_{n=0}^3 i^n\inner{u + i^{-n}v}{B^* \circ B(u + i^{-n}v)}\\
+                                 &= \inner{u}{B^* \circ B v}
+    \end{align*}
+    follows from \cref{prop:polarization_identity}. That is, for all \(u, v \in \hilbert\), \(\inner{u}{(A^*\circ A - B^*\circ B)v} = 0\), hence the non-degeneracy of the inner product yields \(A^*\circ A = B^*\circ B\).
+\end{proof}
+
+\begin{proposition}{Necessary and sufficient condition for a normal operator}{normal}
+    A bounded operator \(A \in \bounded(\hilbert)\) in a Hilbert space \(\hilbert\) is normal if and only if \(\norm{Ax} = \norm{A^* x}\) for all \(x \in \hilbert\).
+\end{proposition}
+\begin{proof}
+    Setting \(B = A^*\) in \cref{lem:normal} yields
+    \begin{align*}
+        \forall x \in \hilbert, \norm{Ax} = \norm{A^*x} &\iff A^*\circ A = (A^*)^*\circ A^*\\
+                                                        &\iff A^* \circ A = A \circ A^*\\
+                                                        &\iff A\text{ is normal,}
+    \end{align*}
+    as desired.
+\end{proof}
+
+\subsection{Unitary operators}
+\todo
