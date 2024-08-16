@@ -232,9 +232,29 @@ Let \(T \in \bounded(\hilbert_1, \hilbert_2)\), with \(T' \in \bounded(\hilbert_
     and we conclude \((A^{-1})^* = (A^*)^{-1}\).
 \end{proof}
 \todo
+\begin{proposition}{Kernel and range of the adjoint map}{kernel_range_adjoint}
+    Let \(\hilbert\) be a Hilbert space. If \(A \in \bounded(\hilbert)\) is a bounded operator, then \(\ker A = \range{A^{\ast}}^\perp\).
+\end{proposition}
+\begin{proof}
+    Let \(x \in \ker A\). For all \(y \in \hilbert\) we have
+    \begin{equation*}
+        \inner{A ^{\ast}y}{x} = \inner{y}{Ax} = 0,
+    \end{equation*}
+    hence \(x \in \range{A ^{\ast}}^\perp\). That is, \(\ker A \subset \range{A ^{\ast}}^\perp\).
+
+    Let \(x \in \range{A ^{\ast}}^\perp\). Then, for all \(y \in \hilbert\), we have
+    \begin{equation*}
+        \inner{A ^{\ast}y}{x} = \inner{y}{Ax} = 0,
+    \end{equation*}
+    hence \(Ax = 0\) by non-degeneracy of the inner product. Thus showing that \(\range{A ^{\ast}}^\perp \subset \ker A\).
+\end{proof}
 
 \subsection{Self-adjoint bounded operators}
 \todo
+\begin{definition}{Self-adjoint bounded operator}{self_adjoint_bounded}
+    Let \(\hilbert\) be a Hilbert space. A bounded operator \(A \in \bounded(\hilbert)\) is \emph{self-adjoint} if \(A^{\ast} = A\).
+\end{definition}
+
 \begin{theorem}{Norm of a self-adjoint bounded operator}{norm_self_adjoint}
     Let \(T \in \bounded(\hilbert)\) be a self-adjoint bounded operator defined on a Hilbert space \(\hilbert\). Then its norm satisfies
     \begin{equation*}
