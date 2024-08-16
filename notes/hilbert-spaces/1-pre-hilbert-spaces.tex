@@ -41,6 +41,24 @@ Let us verify every inner product space is a pre-Hilbert space.
     as claimed.
 \end{proof}
 
+In fact, we may generalize the previous result, which is also known as \emph{the polarization identity}.
+\begin{proposition}{Polarization identity}{polarization_identity}
+    Let \((V, \inner{\noarg}{\noarg})\) be an inner product space and let \(T : \domain{T}\subset V \to V\) be a linear map. Then
+    \begin{equation*}
+        \inner{u}{Tv} = \frac14\sum_{n=0}^3 i^{n}\inner{u + i^{-n}v}{T(u + i^{-n}v)}
+    \end{equation*}
+    for all \(u, v \in \domain{T}\).
+\end{proposition}
+\begin{proof}
+    Let \(u, v \in \domain{T}\), then
+    \begin{align*}
+        \sum_{n=0}^3 i^{n} \inner{u+i^{-n}v}{T(u + i^{n}v)} &= \sum_{n=0}^3 i^n \left(\inner{u}{Tu} + i^n\inner{v}{Tu} + i^{-n}\inner{u}{Tv} + \inner{v}{Tv}\right)\\
+                                                            &= \sum_{n=0}^3 i^n\inner{u}{Tu} + i^{2n}\inner{v}{Tu} + \inner{u}{Tv} + i^{n}\inner{v}{Tv}\\
+                                                            &= 4\inner{u}{Tv},
+    \end{align*}
+    since \(\sum_{n=0}^3 i^n = \sum_{n=0}^3 i^{2n} = 0\).
+\end{proof}
+
 We now show that the polarization identity defines an inner product in a pre-Hilbert space, and that it is the inner product that induces the norm.
 \begin{theorem}{Fréchet-von Neumann-Jordan theorem}{parallelogram}
     Let \((V, \norm{\noarg})\) be a pre-Hilbert space. The map given by the \emph{polarization identity}
