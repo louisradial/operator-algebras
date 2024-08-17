@@ -231,7 +231,8 @@ Let \(T \in \bounded(\hilbert_1, \hilbert_2)\), with \(T' \in \bounded(\hilbert_
     \end{equation*}
     and we conclude \((A^{-1})^* = (A^*)^{-1}\).
 \end{proof}
-\todo
+
+Due to the definition of the adjoint operator \(A^*\) to a bounded operator \(A\), the kernel of \(A\) is equal to the orthogonal complement of the image of \(A^*\).
 \begin{proposition}{Kernel and range of the adjoint map}{kernel_range_adjoint}
     Let \(\hilbert\) be a Hilbert space. If \(A \in \bounded(\hilbert)\) is a bounded operator, then \(\ker A = \range{A^{\ast}}^\perp\).
 \end{proposition}
@@ -244,16 +245,48 @@ Let \(T \in \bounded(\hilbert_1, \hilbert_2)\), with \(T' \in \bounded(\hilbert_
 
     Let \(x \in \range{A ^{\ast}}^\perp\). Then, for all \(y \in \hilbert\), we have
     \begin{equation*}
-        \inner{A ^{\ast}y}{x} = \inner{y}{Ax} = 0,
+        \inner{y}{Ax} = \inner{A ^{\ast}y}{x} = 0,
     \end{equation*}
     hence \(Ax = 0\) by non-degeneracy of the inner product. Thus showing that \(\range{A ^{\ast}}^\perp \subset \ker A\).
 \end{proof}
 
 \subsection{Self-adjoint bounded operators}
-\todo
+In Quantum Mechanics, the concept of the adjoint operation is of the utmost importance as the \emph{self-adjoint} operators represent observables. As we will later see, the Spectral Theorem holds for self-adjoint operators, which is intimately related to the probabilistic interpretation of Quantum Mechanics.
 \begin{definition}{Self-adjoint bounded operator}{self_adjoint_bounded}
     Let \(\hilbert\) be a Hilbert space. A bounded operator \(A \in \bounded(\hilbert)\) is \emph{self-adjoint} if \(A^{\ast} = A\).
 \end{definition}
+
+Closely related to self-adjointness of a bounded operator is the notion of a symmetric operator.
+\begin{definition}{Symmetric operator}{symmetric_operator}
+    Let \(\hilbert\) be a Hilbert space. A densely defined operator \(T : \domain{T} \subset \hilbert \to \hilbert\) is \emph{symmetric} if for all \(x, y \in \domain{T}\) it satisfies \(\inner{x}{Ay} = \inner{Ax}{y}\).
+\end{definition}
+It is clear that if a bounded operator \(T \in \bounded(\hilbert)\) is self-adjoint, then it is a symmetric operator. The following theorem shows a globally defined symmetric operator is bounded and self-adjoint.
+\begin{theorem}{Hellinger-Toeplitz theorem}{Hellinger_Toeplitz}
+    Let \(\hilbert\) be a Hilbert space. Suppose the operator \(T : \domain{T} \subset \hilbert \to \hilbert\) is globally defined, that is, \(\domain{T} = \hilbert\). If \(T\) is symmetric, then it is bounded and self-adjoint.
+\end{theorem}
+\begin{proof}
+    We consider a sequence \(\family{v_n}{n \in \mathbb{N}} \subset \graph{T} \subset \hilbert \oplus \hilbert\) that converges to \(\tilde{v} = (\tilde{x}, \tilde{y}) \in \hilbert\oplus\hilbert\), that is, there exist sequences \(\family{x_n}{n \in \mathbb{N}} \subset \hilbert\) and \(\family{Tx_n}{n \in \mathbb{N}} \subset \hilbert\) such that \(x_n \to \tilde{x}\) and \(Tx_n \to \tilde{y}\). Let \(z \in \hilbert\), then
+    \begin{equation*}
+        \inner{z}{y} = \inner*{z}{\lim_{n \to \infty}{Tx_n}} = \lim_{n\to \infty}{\inner{z}{Tx_n}}
+    \end{equation*}
+    by the continuity of the inner product and the convergence of the sequence. Symmetry yields
+    \begin{align*}
+        \inner{z}{y} &= \lim_{n\to\infty}{\inner{Tz}{x_n}} \\&= \inner{Tz}{\lim_{n\to\infty}{x_n}} \\&= \inner{Tz}{\tilde{x}}\\
+                     &= \inner{z}{T\tilde{x}}
+    \end{align*}
+    for all \(z \in \hilbert\). Hence \(y = T\tilde{x}\) follows from the non-degeneracy of the inner product, and we conclude \(\tilde{y} \in \range{T}\). We have thus shown \(v_n \to \tilde{v} \in \graph{T}\), that is, \(T\) is bounded by \cref{thm:closed_graph}.
+
+    Since \(T\) is bounded, there exists a unique bounded operator \(T^* \in \bounded(\hilbert)\) such that
+    \begin{equation*}
+        \inner{x}{Ty} = \inner{T^*x}{y}
+    \end{equation*}
+    for all \(x, y \in \hilbert\). Symmetry then yields
+    \begin{equation*}
+        \inner{(T - T^*)x}{y} = 0
+    \end{equation*}
+    for all \(x, y \in \hilbert.\) By non-degeneracy, \((T - T^*)x = 0\) for all \(x \in \hilbert\), hence \(T = T^*\), that is, \(T\) is self-adjoint.
+\end{proof}
+An important insight from this result is that if an operator is unbounded, then it cannot be both globally defined and symmetric. As it may not be the case that an unbounded operator can be globally extended, the definition of the adjoint of an unbounded operator must take into account the domain of definition of such maps and provide a domain of definition for the adjoint.
 
 \begin{theorem}{Norm of a self-adjoint bounded operator}{norm_self_adjoint}
     Let \(T \in \bounded(\hilbert)\) be a self-adjoint bounded operator defined on a Hilbert space \(\hilbert\). Then its norm satisfies
@@ -262,10 +295,80 @@ Let \(T \in \bounded(\hilbert_1, \hilbert_2)\), with \(T' \in \bounded(\hilbert_
     \end{equation*}
 \end{theorem}
 \begin{proof}
-    \todo
+    Let
+    \begin{equation*}
+        M = \sup_{x \in \hilbert}{\frac{\abs*{\inner{x}{Tx}}}{\norm{x}^2}},
+    \end{equation*}
+    which is finite by the \nameref{thm:cauchy_schwarz}, which yields \(M \leq \norm{T}\). For all \(u, v \in \hilbert\), we have by symmetry that
+    \begin{equation*}
+        \inner{u}{Tv} = \inner{Tu}{v} = \conj{\inner{v}{Tu}}.
+    \end{equation*}
+    As a result, for all \(x, y \in \hilbert\) and \(\lambda \in \mathbb{C}\),
+    \begin{equation*}
+        \inner{x + \lambda y}{T(x + \lambda y)} = \inner{x}{Tx} + 2\Re{\left(\inner{x}{T(\lambda y)}\right)}+ \abs{\lambda}^2 \inner{y}{Ty}
+    \end{equation*}
+    and
+    \begin{equation*}
+        \inner{x - \lambda y}{T(x - \lambda y)} = \inner{x}{Tx} - 2\Re{\left(\inner{x}{T(\lambda y)}\right)} + \abs{\lambda}^2 \inner{y}{Ty},
+    \end{equation*}
+    which yields
+    \begin{equation*}
+        4 \Re{\left(\inner{x}{T(\lambda y)}\right)} = \inner{x + \lambda y}{T(x + \lambda y)} - \inner{x - \lambda y}{T(x - \lambda y)}.
+    \end{equation*}
+    Using the estimation provided by \(M\), we have
+    \begin{align*}
+        4\abs*{\Re{\left(\lambda \inner{x}{Ty}\right)}} &= \abs*{\inner{x + \lambda y}{T(x + \lambda y)} - \inner{x - \lambda y}{T(x - \lambda y)}}\\
+                                                        &\leq \abs*{\inner{x + \lambda y}{T(x + \lambda y)}} + \abs*{\inner{x - \lambda y}{T(x - \lambda y)}}\\
+                                                        &\leq M\left(\norm{x + \lambda y}^2 + \norm{x - \lambda y}^2\right)\\
+                                                        &\leq 2M\left(\norm{x}^2 + \abs{\lambda}^2 \norm{y}^2\right),
+    \end{align*}
+    where we have used the parallelogram identity. Set \(\lambda\) such that \(\lambda \inner{x}{Ty} = \abs*{\inner{x}{Ty}}\) and \(\abs*{\lambda} = 1\), then
+    \begin{equation*}
+        \abs*{\inner{x}{Ty}} \leq \frac12 M \left(\norm{x}^2 + \norm{y}^2\right),
+    \end{equation*}
+    for all \(x, y \in \hilbert\). If \(Tx = 0\), it is clear that \(\norm{Tx} \leq M \norm{x}\) holds trivially, so we may suppose \(Tx \neq 0\). Then, we set \(y = \frac{\norm{x}}{\norm{Tx}}Tx\), which yields
+    \begin{equation*}
+        M \norm{x}^2 \geq \abs*{\inner*{x}{\frac{\norm{x}}{\norm{Tx}}T(Tx)}} = \frac{\norm{x}}{\norm{Tx}} \abs*{\inner{Tx}{Tx}} = \norm{x}\cdot \norm{Tx}.
+    \end{equation*}
+    We have thus shown
+    \begin{equation*}
+        M \geq \frac{\norm{Tx}}{\norm{x}}
+    \end{equation*}
+    for all \(x \in \hilbert\), hence, \(M \geq \norm{T}\).
 \end{proof}
 
 \subsection{Normal operators}
+It is clear a bounded operator \(A \in \bounded(\hilbert)\) can be written as a sum of self-adjoint bounded operators by defining the real and imaginary parts of \(A\),
+\begin{equation*}
+    \Re{(A)} = \frac{1}{2}\left(A + A^*\right)
+    \quad\text{and}\quad
+    \Im{(A)} = \frac{1}{2i}\left(A - A^*\right),
+\end{equation*}
+then \(A = \Re{(A)} + i\Im{(A)}\).
+\begin{proposition}{Necessary and sufficient condition for a normal operator}{normal_real_imaginary}
+    Let \(\hilbert\) be a Hilbert space. A bounded operator commutes with its adjoint if and only if its real part commutes with its imaginary part.
+\end{proposition}
+\begin{proof}
+    Let \(A \in \bounded(\hilbert)\), then
+    \begin{equation*}
+        4i\Re(A)\circ \Im(A) = (A + A^*) \circ (A - A^*) = A\circ A - A\circ A^* + A^* \circ A - A^* \circ A^*
+    \end{equation*}
+    and
+    \begin{equation*}
+        4i\Im(A)\circ \Re(A) = (A - A^*) \circ (A + A^*) = A\circ A + A\circ A^* - A^* \circ A + A^* \circ A^*.
+    \end{equation*}
+    The commutator of the real and imaginary parts of \(A\) is
+    \begin{align*}
+        \left[\Re(A), \Im(A)\right] &= \Re(A)\circ \Im(A) - \Im(A)\circ \Re(A)\\
+                                    &= - \frac1{2i} A\circ A^* + \frac{1}{2i} A^* \circ A\\
+                                    &= \frac{i}{2} [A, A^*],
+    \end{align*}
+    which proves our claim.
+\end{proof}
+A bounded operator that commutes with its adjoint is called a normal bounded operator.
+\begin{definition}{Normal bounded operator}{normal}
+    Let \(\hilbert\) be a Hilbert space. A \todo[\emph{normal bounded operator}] \(T : \hilbert \to \hilbert\) is an operator satisfying \(T \circ T^* = T^* \circ T\).
+\end{definition}
 \begin{lemma}{Application of the polarization identity}{normal}
     Let \(\hilbert\) be a Hilbert space. The bounded operators \(A, B \in \bounded(\hilbert)\) satisfy \(A^* \circ A = B^*\circ B\) if and only if \(\norm{Ax} = \norm{Bx}\) for all \(x \in \hilbert\).
 \end{lemma}
