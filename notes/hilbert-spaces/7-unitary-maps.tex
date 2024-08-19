@@ -406,4 +406,97 @@ A bounded operator that commutes with its adjoint is called a normal bounded ope
 \end{proof}
 
 \subsection{Unitary operators}
-\todo
+Unitary operators are the structure preserving map of Hilbert spaces. In order to study them, we first consider maps that preserve the inner product.
+\begin{lemma}{Inner product preserving map is a linear isometry}{inner_product_linear_isometry}
+    Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. Suppose the map \(U : \hilbert_1 \to \hilbert_2\) preserves the inner product, that is,
+    \begin{equation*}
+        \inner{Ux}{Uy}_{\hilbert_2} = \inner{x}{y}_{\hilbert_1}
+    \end{equation*}
+    for all \(x, y \in \hilbert_1\). Then, \(U\) is a linear isometry.
+\end{lemma}
+\begin{proof}
+    Let \(x, y \in \hilbert\) and \(\lambda \in \mathbb{C}\). It is clear \(U\) is an isometry since
+    \begin{equation*}
+        \norm{U(x)}^2 = \inner{U(x)}{U(x)} = \inner{x}{x} = \norm{x}^2.
+    \end{equation*}
+    The map is also homogeneous since
+    \begin{align*}
+        \norm{\lambda U(x) - U(\lambda x)}^2
+        &= \inner{\lambda U(x) - U(\lambda x)}{\lambda U(x) - U(\lambda x)}\\
+        &= \norm{\lambda U(x)}^2 + \norm{U(\lambda x)}^2 - 2\Re\left(\inner{\lambda U(x)}{U(\lambda x)}\right)\\
+        &= \abs{\lambda}^2\norm{U(x)}^2 + \norm{\lambda x}^2 - 2\Re\left(\conj{\lambda} \inner{U(x)}{U(\lambda x)}\right)\\
+        &= 2\abs{\lambda}^2 \norm{x}^2 - 2\Re\left(\lambda \inner{\lambda x}{x}\right)\\
+        &= 0.
+    \end{align*}
+    Notice
+    \begin{align*}
+        \norm{U(x) + U(y)}^2 &= \norm{U(x)}^2 + \norm{U(y)}^2 + 2\Re(\inner{U(x)}{U(y)})\\
+                             &= \norm{x}^2 + \norm{y}^2 + 2\Re(\inner{x}{y})\\
+                             &= \norm{x + y}^2,
+    \end{align*}
+    then
+    \begin{align*}
+        \norm{U(x) + U(y) - U(x + y)}^2
+        &= \norm{U(x) + U(y)}^2 + \norm{U(x+y)}^2 - 2\Re\left(\inner{U(x) + U(y)}{U(x + y)}\right)\\
+        &=2\norm{x+y}^2 - 2\Re(\inner{x}{x+y} + \inner{y}{x+y})\\
+        &= 0,
+    \end{align*}
+    hence \(U\) is linear.
+\end{proof}
+We have shown in \cref{prop:isometry_bounded} that linear isometries are bounded with unitary operator norm, hence this result shows inner product preserving maps are bounded linear operators. In particular, these maps admit adjoint operators.
+\begin{lemma}{Adjoint of an inner product preserving map}{adjoint_inner_product_preserving}
+    Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. If the map \(U : \hilbert_1 \to \hilbert_2\) preserves the inner product, then \(U^* \circ U = \unity_{\hilbert_1}\).
+\end{lemma}
+\begin{proof}
+    Since \(U\) is bounded, we have
+    \begin{equation*}
+        \inner{x}{y} = \inner{U x}{U y} = \inner{x}{U^* \circ Uy} \implies \inner{x}{(\unity_{\hilbert_1} - U^* \circ U)y} = 0
+    \end{equation*}
+    for all \(x, y \in \hilbert_1\), hence \(U^* \circ U = \unity_{\hilbert_1}\) follows from the non-degeneracy of the inner product.
+\end{proof}
+
+\cref{prop:isometry_Banach} guarantees us that the image of a linear isometry is a Banach space. Hence, the image of an inner product preserving map is a Hilbert space.
+\begin{definition}{Unitary operator and isomorphic Hilbert spaces}{unitary_operator}
+    Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. A \emph{unitary operator} is a surjective map \(U : \hilbert_1 \to \hilbert_2\) that preserves the inner product. If there exists such a map, we say \(\hilbert_1\) and \(\hilbert_2\) are \emph{isomorphic}.
+\end{definition}
+% It is immediate that the adjoint of a unitary operator is unitary.
+% \begin{proposition}{Adjoint of a unitary operator}{adjoint_unitary}
+%     Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. If \(U : \hilbert_1 \to \hilbert_2\) is a unitary operator, then \(U^{-1} = U^*\) and \(U^*\) is a unitary operator.
+% \end{proposition}
+% \begin{proof}
+%     Since \(U\) is a surjective linear isometry, it is bijective, hence \(U^* = U^{-1}\) by \cref{prop:adjoint_inner_product_preserving}.  unitary. With
+% \end{proof}
+
+We now give necessary and sufficient conditions for a unitary operator.
+\begin{theorem}{Necessary and sufficient conditions for a unitary operator}{unitary_iff}
+    Let \(U : \hilbert_1 \to \hilbert_2\) be a map, where \(\hilbert_1, \hilbert_2\) are Hilbert spaces. The following statements are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \item \(U\) is a unitary operator;
+        \item \(U \in \bounded(\hilbert_1, \hilbert_2)\) and \(U^* = U^{-1}\);
+        \item \(U\) and \(U^*\) are linear isometries;
+        \item \(U\) is a surjective linear isometry.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Suppose \(U\) is unitary. Then \cref{lem:inner_product_linear_isometry} ensures it is bijective and bounded. \cref{lem:adjoint_inner_product_preserving} yields
+    \begin{equation*}
+        U^* \circ U \circ U^{-1} = \unity_{\hilbert_1} \circ U^{-1} \implies U^* = U^{-1},
+    \end{equation*}
+    thus showing (a)\(\implies\)(b).
+
+    Suppose \(U\) is bounded and \(U^* = U^{-1}\). For all \(u, v \in \hilbert_1\) and all \(x, y \in \hilbert_2\), we have
+    \begin{equation*}
+        \inner{Uu}{Uv} = \inner{u}{U^*\circ Uv} = \inner{u}{v}
+        \quad\text{and}\quad
+        \inner{U^*x}{U^*y} = \inner{x}{U\circ U^*y} = \inner{x}{y}
+    \end{equation*}
+    then \(U\) and \(U^*\) are linear isometries. We conclude (b)\(\implies\)(c).
+
+    Suppose \(U\) and \(U^*\) are linear isometries. In particular, \(U^*\) is injective, hence \(\range{U}^\perp = \ker{A^*} = \set{0}\) follows from \cref{prop:kernel_range_adjoint}.
+\end{proof}
+\begin{corollary}
+    Let \(\hilbert\) be a Hilbert space. If \(U : \hilbert \to \hilbert\) is unitary, then \(U\) is normal.
+\end{corollary}
+\begin{proof}
+    Since \(U \circ U^* = U^* \circ U = \unity\), it follows that \(U\) commutes with \(U^*\).
+\end{proof}
