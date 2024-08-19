@@ -407,15 +407,15 @@ A bounded operator that commutes with its adjoint is called a normal bounded ope
 
 \subsection{Unitary operators}
 Unitary operators are the structure preserving map of Hilbert spaces. In order to study them, we first consider maps that preserve the inner product.
-\begin{lemma}{Inner product preserving map is a linear isometry}{inner_product_linear_isometry}
-    Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. Suppose the map \(U : \hilbert_1 \to \hilbert_2\) preserves the inner product, that is,
+\begin{theorem}{Inner product preserving map equivalent to linear isometry}{inner_product_linear_isometry}
+    Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. The map \(U : \hilbert_1 \to \hilbert_2\) preserves the inner product, that is,
     \begin{equation*}
         \inner{Ux}{Uy}_{\hilbert_2} = \inner{x}{y}_{\hilbert_1}
     \end{equation*}
-    for all \(x, y \in \hilbert_1\). Then, \(U\) is a linear isometry.
-\end{lemma}
+    for all \(x, y \in \hilbert_1\) if and only if \(U\) is a linear isometry.
+\end{theorem}
 \begin{proof}
-    Let \(x, y \in \hilbert\) and \(\lambda \in \mathbb{C}\). It is clear \(U\) is an isometry since
+    Suppose \(U\) preserves the inner product. Let \(x, y \in \hilbert\) and \(\lambda \in \mathbb{C}\). It is clear \(U\) is an isometry since
     \begin{equation*}
         \norm{U(x)}^2 = \inner{U(x)}{U(x)} = \inner{x}{x} = \norm{x}^2.
     \end{equation*}
@@ -442,6 +442,15 @@ Unitary operators are the structure preserving map of Hilbert spaces. In order t
         &= 0,
     \end{align*}
     hence \(U\) is linear.
+
+    Suppose \(U\) is a linear isometry. Let \(x, y \in \hilbert_1\), then \cref{prop:polarization_identity} yields
+    \begin{align*}
+        \inner{Ux}{Uy} &= \frac14 \sum_{n=0}^3 i^{n} \norm{Ux + i^{-n}Uy}^2\\
+                                    &= \frac14 \sum_{n=0}^3 i^{n} \norm{U(x + i^{-n}y)}\\
+                                    &= \frac14 \sum_{n=0}^3 i^{n} \norm{x + i^{-n}y}\\
+                                    &= \inner{x}{y},
+    \end{align*}
+    hence \(U\) preserves the inner product.
 \end{proof}
 We have shown in \cref{prop:isometry_bounded} that linear isometries are bounded with unitary operator norm, hence this result shows inner product preserving maps are bounded linear operators. In particular, these maps admit adjoint operators.
 \begin{lemma}{Adjoint of an inner product preserving map}{adjoint_inner_product_preserving}
@@ -478,7 +487,7 @@ We now give necessary and sufficient conditions for a unitary operator.
     \end{enumerate}
 \end{theorem}
 \begin{proof}
-    Suppose \(U\) is unitary. Then \cref{lem:inner_product_linear_isometry} ensures it is bijective and bounded. \cref{lem:adjoint_inner_product_preserving} yields
+    Suppose \(U\) is unitary. Then \cref{thm:inner_product_linear_isometry} ensures it is bijective and bounded. \cref{lem:adjoint_inner_product_preserving} yields
     \begin{equation*}
         U^* \circ U \circ U^{-1} = \unity_{\hilbert_1} \circ U^{-1} \implies U^* = U^{-1},
     \end{equation*}
@@ -492,7 +501,15 @@ We now give necessary and sufficient conditions for a unitary operator.
     \end{equation*}
     then \(U\) and \(U^*\) are linear isometries. We conclude (b)\(\implies\)(c).
 
-    Suppose \(U\) and \(U^*\) are linear isometries. In particular, \(U^*\) is injective, hence \(\range{U}^\perp = \ker{A^*} = \set{0}\) follows from \cref{prop:kernel_range_adjoint}.
+    Suppose \(U\) and \(U^*\) are linear isometries. By \cref{thm:inner_product_linear_isometry}, \(U\) and \(U^*\) are inner product preserving maps. Then, for all \(v, w \in \hilbert_1\) and all \(x, y \in \hilbert_2\), we have
+    \begin{equation*}
+        \inner{v}{w} = \inner{Uv}{Uw} = \inner{U^*\circ Uv}{w} = 0
+        \quad\text{and}\quad
+        \inner{x}{y} = \inner{U^*x}{U^*y} = \inner{U \circ U^*x}{y} = 0,
+    \end{equation*}
+    hence \(U^*\circ U = \unity_{\hilbert_1}\) and \(U\circ U^* = \unity_{\hilbert_2}\) follows from the non-degeneracy of the inner product. We have thus shown \(U\) is bijective, that is, (c)\(\implies\)(d).
+
+    Suppose \(U\) is a surjective linear isometry. By \cref{thm:inner_product_linear_isometry}, it follows that \(U\) preserves the inner product. Then, (d)\(\implies\)(a).
 \end{proof}
 \begin{corollary}
     Let \(\hilbert\) be a Hilbert space. If \(U : \hilbert \to \hilbert\) is unitary, then \(U\) is normal.
