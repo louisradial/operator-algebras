@@ -55,8 +55,123 @@ An important consequence of the orthogonal decomposition theorem is that every b
 \end{proof}
 Due to \cref{thm:isometric_extension_bounded_hilbert}, we can always assume a \emph{bounded} linear operator is defined on an entire Hilbert space, rather than just a linear subspace.
 
+\subsection{Adjoint of an operator}
+We consider densely defined linear operators, not necessarily bounded.
+\begin{proposition}{Domain of the adjoint map is a linear subspace}{domain_adjoint}
+    Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. If \(T : \domain{T} \subset \hilbert_1 \to \hilbert_2\) is a densely defined linear operator, then
+    \begin{equation*}
+        D = \setc{u \in \hilbert_2}{\exists \eta \in \hilbert_1 : \inner{u}{Tv}_{\hilbert_2} = \inner{\eta}{v}_{\hilbert_1}, \forall v \in \domain{T}}
+    \end{equation*}
+    is a linear subspace. Moreover, if \(u \in D\), there exists a unique \(\eta \in \hilbert_1\) such that
+    \begin{equation*}
+        \inner{u}{Tv}_{\hilbert_2} = \inner{\eta}{v}_{\hilbert_1}
+    \end{equation*}
+    for all \(v \in \domain{T}\).
+\end{proposition}
+\begin{proof}
+    Notice \(0 \in D\), since for all \(v \in \domain{T}\) we may choose \(\eta = 0\) such that \(\inner{0}{Tv}_{\hilbert_2} = \inner{0}{v}_{\hilbert_1}\). Let \(x, y \in D\), then there exist \(\eta_x, \eta_y \in \hilbert_1\) such that \(\inner{x}{Tv}_{\hilbert_2} = \inner{\eta_x}{v}_{\hilbert_1}\) for all \(v \in \domain{T}\) and analogously for \(y\). Let \(\alpha \in \mathbb{C}\), then
+    \begin{equation*}
+        \inner{\eta_x + \alpha \eta_y}{v}_{\hilbert_1} = \inner{\eta_x}{v}_{\hilbert_1} + \conj{\alpha} \inner{\eta_y}{v}_{\hilbert_2} = \inner{x}{Tv}_{\hilbert_2} + \conj{\alpha}\inner{y}{Tv}_{\hilbert_2} = \inner{x + \alpha y}{Tv}_{\hilbert_2}
+    \end{equation*}
+    for all \(v \in \domain{T}\). That is, \(x + \alpha y \in D\) and we conclude \(D\) is a linear subspace.
+
+    Let \(u \in D\), then there exists \(\eta \in \hilbert_1\) such that \(\inner{u}{Tv}_{\hilbert_2} = \inner{\eta}{v}_{\hilbert_1}\) for all \(v \in \domain{T}\). Suppose there exists \(\tilde{\eta} \in \hilbert_1\) satisfying the same property, then
+    \begin{equation*}
+        \inner{\tilde\eta}{v}_{\hilbert_1} = \inner{u}{Tv}_{\hilbert_2} = \inner{\eta}{v}_{\hilbert_1} \implies \inner{\tilde{\eta} - \eta}{v}_{\hilbert_1} = 0
+    \end{equation*}
+    for all \(v \in \domain{T}\). Hence, \(\tilde{\eta} - \eta \in \domain{T}^\perp\). Taking the orthogonal complement yields \(\cl_\hilbert\domain{T} \subset \set{\tilde{\eta} - \eta}^\perp\), and we conclude \(\eta = \tilde{\eta}\) since \(T\) is densely defined.
+\end{proof}
+This result defines the \emph{adjoint} map of a densely defined linear operator.
+\begin{definition}{Adjoint of an operator}{adjoint_densely_defined}
+    Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. The \emph{adjoint map of a densely defined operator \(T : \domain{T} \subset \hilbert_1 \to \hilbert_2\)} is the map
+    \begin{align*}
+        T^* : \domain{T^*} \subset \hilbert_2 &\to \hilbert_1\\
+                                            u &\to \eta_u,
+    \end{align*}
+    where \(\domain{T^*}\) is the linear subspace of \(\hilbert_2\) given by
+    \begin{equation*}
+        \domain{T^*} = \setc{u \in \hilbert_2}{\exists \eta_u \in \hilbert_1 : \inner{u}{Tv}_{\hilbert_2} = \inner{\eta_u}{v}_{\hilbert_1} \forall v \in \domain{T}}
+    \end{equation*}
+    and \(\eta_u\) is the unique element in \(\hilbert_1\) such that \(\inner{u}{Tv}_{\hilbert_2} = \inner{\eta_u}{v}_{\hilbert_1}\) for all \(v \in \domain{T}\).
+\end{definition}
+\begin{remark}
+    In \cref{prop:domain_adjoint} while showing the domain of the adjoint map \(T^*\) is a linear subspace of \(\hilbert_2\), we have shown that \(T^*\) is a linear map. Henceforth we will refer to the adjoint map as the adjoint operator.
+\end{remark}
+\begin{remark}
+    From the previous definition we see that
+    \begin{equation*}
+        \inner{T^*u}{v}_{\hilbert_1} = \inner{u}{Tv}_{\hilbert_2}
+    \end{equation*}
+    for all \(v \in \domain{T}\) and all \(u \in \domain{T^*}\).
+\end{remark}
+
+In Quantum Mechanics, the concept of the adjoint operator is of the utmost importance as the \emph{self-adjoint} operators represent observables. As we will later see, the Spectral Theorem holds for self-adjoint operators, which is intimately related to the probabilistic interpretation of Quantum Mechanics.
+\begin{definition}{Self-adjoint operator}{self_adjoint}
+    Let \(\hilbert\) be a Hilbert space. A \emph{self-adjoint operator \(T : \domain{T} \subset \hilbert \to \hilbert\)} is a map such that \(T = T^*\).
+\end{definition}
+\begin{remark}
+    It is important to stress that \(T = T^*\) means \(\domain{T} = \domain{T^*}\) and \(Tu = Tu\) for all \(u \in \domain{T}\).
+\end{remark}
+\begin{remark}
+    For self-adjoint operators we have
+    \begin{equation*}
+        \inner{Tu}{v} = \inner{u}{Tv}
+    \end{equation*}
+    for all \(u, v\in \domain{T}\).
+\end{remark}
+
+We now give a property of the operator norm of a self-adjoint bounded operator.
+\begin{theorem}{Norm of a self-adjoint bounded operator}{norm_self_adjoint}
+    Let \(T \in \bounded(\hilbert)\) be a self-adjoint bounded operator defined on a Hilbert space \(\hilbert\). Then its norm satisfies
+    \begin{equation*}
+        \norm{T} = \sup_{x \in \hilbert}\frac{\abs*{\inner{x}{Tx}}}{\norm{x}^2}.
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    Let
+    \begin{equation*}
+        M = \sup_{x \in \hilbert}{\frac{\abs*{\inner{x}{Tx}}}{\norm{x}^2}},
+    \end{equation*}
+    which is finite by the \nameref{thm:cauchy_schwarz}, which yields \(M \leq \norm{T}\). For all \(u, v \in \hilbert\), we have by symmetry that
+    \begin{equation*}
+        \inner{u}{Tv} = \inner{Tu}{v} = \conj{\inner{v}{Tu}}.
+    \end{equation*}
+    As a result, for all \(x, y \in \hilbert\) and \(\lambda \in \mathbb{C}\),
+    \begin{equation*}
+        \inner{x + \lambda y}{T(x + \lambda y)} = \inner{x}{Tx} + 2\Re{\left(\inner{x}{T(\lambda y)}\right)}+ \abs{\lambda}^2 \inner{y}{Ty}
+    \end{equation*}
+    and
+    \begin{equation*}
+        \inner{x - \lambda y}{T(x - \lambda y)} = \inner{x}{Tx} - 2\Re{\left(\inner{x}{T(\lambda y)}\right)} + \abs{\lambda}^2 \inner{y}{Ty},
+    \end{equation*}
+    which yields
+    \begin{equation*}
+        4 \Re{\left(\inner{x}{T(\lambda y)}\right)} = \inner{x + \lambda y}{T(x + \lambda y)} - \inner{x - \lambda y}{T(x - \lambda y)}.
+    \end{equation*}
+    Using the estimation provided by \(M\), we have
+    \begin{align*}
+        4\abs*{\Re{\left(\lambda \inner{x}{Ty}\right)}} &= \abs*{\inner{x + \lambda y}{T(x + \lambda y)} - \inner{x - \lambda y}{T(x - \lambda y)}}\\
+                                                        &\leq \abs*{\inner{x + \lambda y}{T(x + \lambda y)}} + \abs*{\inner{x - \lambda y}{T(x - \lambda y)}}\\
+                                                        &\leq M\left(\norm{x + \lambda y}^2 + \norm{x - \lambda y}^2\right)\\
+                                                        &\leq 2M\left(\norm{x}^2 + \abs{\lambda}^2 \norm{y}^2\right),
+    \end{align*}
+    where we have used the parallelogram identity. Set \(\lambda\) such that \(\lambda \inner{x}{Ty} = \abs*{\inner{x}{Ty}}\) and \(\abs*{\lambda} = 1\), then
+    \begin{equation*}
+        \abs*{\inner{x}{Ty}} \leq \frac12 M \left(\norm{x}^2 + \norm{y}^2\right),
+    \end{equation*}
+    for all \(x, y \in \hilbert\). If \(Tx = 0\), it is clear that \(\norm{Tx} \leq M \norm{x}\) holds trivially, so we may suppose \(Tx \neq 0\). Then, we set \(y = \frac{\norm{x}}{\norm{Tx}}Tx\), which yields
+    \begin{equation*}
+        M \norm{x}^2 \geq \abs*{\inner*{x}{\frac{\norm{x}}{\norm{Tx}}T(Tx)}} = \frac{\norm{x}}{\norm{Tx}} \abs*{\inner{Tx}{Tx}} = \norm{x}\cdot \norm{Tx}.
+    \end{equation*}
+    We have thus shown
+    \begin{equation*}
+        M \geq \frac{\norm{Tx}}{\norm{x}}
+    \end{equation*}
+    for all \(x \in \hilbert\), hence, \(M \geq \norm{T}\).
+\end{proof}
+
 \subsection{Adjoint of a bounded operator}
-We consider bounded operators \(A : \hilbert_1 \to \hilbert_2\), where \(\hilbert_1\) and \(\hilbert_2\) are Hilbert spaces. As a consequence of \nameref{thm:riesz_representation}, we'll show any bounded operator \(A \in \bounded(\hilbert_1, \hilbert_2)\) defines a unique operator \(B \in \bounded(\hilbert_2, \hilbert_1)\) such that \(\inner{y}{Ax}_{\hilbert_2} = \inner{By}{x}_{\hilbert_1}\), for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\).
+We consider bounded operators \(A : \hilbert_1 \to \hilbert_2\), where \(\hilbert_1\) and \(\hilbert_2\) are Hilbert spaces. As a consequence of \nameref{thm:riesz_representation}, we'll show any bounded operator \(A \in \bounded(\hilbert_1, \hilbert_2)\) defines a unique operator \(B \in \bounded(\hilbert_2, \hilbert_1)\) such that \(\inner{y}{Ax}_{\hilbert_2} = \inner{By}{x}_{\hilbert_1}\), for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\). We begin proving a lemma showing a bicontinuous sesquilinear form defines a bounded operator.
 \begin{lemma}{Bicontinuous sesquilinear form defines a unique operator}{sesquilinear_adjoint}
     Let \(\mathscr{A} : \hilbert_2 \times \hilbert_1 \to \mathbb{C}\) be a sesquilinear form defined on Hilbert spaces \(\hilbert_1\) and \(\hilbert_2\). Suppose \(\mathscr{A}\) is \emph{bicontinuous}, that is, there exists \(M > 0\) such that \(\abs{\mathscr{A}(u,v)} \leq M\norm{u}_{\hilbert_2} \norm{v}_{\hilbert_1}\) for all \(u \in \hilbert_2\) and all \(v \in \hilbert_1\). Then, there exists a unique linear operator \(B \in \bounded(\hilbert_2, \hilbert_1)\) such that
     \begin{equation*}
@@ -88,12 +203,13 @@ We consider bounded operators \(A : \hilbert_1 \to \hilbert_2\), where \(\hilber
     Let \(\tilde{B} \in \bounded(\hilbert_2, \hilbert_1)\) such that \(\mathscr{A}(u,v) = \inner{\tilde{B}u}{v}_{\hilbert_1}\) for all \(u \in \hilbert_2\) and \(v \in \hilbert_1\). Then, \(\inner{Bu}{v}_{\hilbert_1} = \inner{\tilde{B}u}{v}_{\hilbert_1}\), which implies \(\inner{(B - \tilde{B})u}{v}_{\hilbert_1} = 0\) for all \(u \in \hilbert_2\) and all \(v \in \hilbert_1\). Since the inner product is non-degenerate this yields \((B - \tilde{B})u = 0\) for all \(u \in \hilbert_2\), hence \(B = \tilde{B}\), which shows uniqueness.
 \end{proof}
 
+We now use a bounded operator to define a bicontinuous sesquilinear form, hence uniquely defining another bounded operator. Then, we show this operator is precisely the adjoint operator.
 \begin{theorem}{Existence of the adjoint of a bounded operator}{adjoint_bounded_hilbert}
     Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. If \(A \in \bounded(\hilbert_1, \hilbert_2)\) is a bounded linear operator, then there exists a unique bounded linear operator \(B \in \bounded(\hilbert_2, \bounded_1)\) such that
     \begin{equation*}
         \inner{y}{Ax}_{\hilbert_2} = \inner{By}{x}_{\hilbert_1}
-    \end{equation*}
-    for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\).
+\end{equation*}
+    for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\). Furthermore, \(B = A^*\).
 \end{theorem}
 \begin{proof}
     We claim the map
@@ -110,20 +226,22 @@ We consider bounded operators \(A : \hilbert_1 \to \hilbert_2\), where \(\hilber
         \inner{y}{Ax}_{\hilbert_2} = \inner{By}{x}_{\hilbert_1},
     \end{equation*}
     for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\).
+
+    The existence of \(B\) implies that \(\domain{T^*} = \hilbert_2\). Indeed, by definition we have
+    \begin{equation*}
+        \domain{A^*} = \setc{y \in \hilbert_2}{\exists \eta_y \in \hilbert_1 : \inner{y}{Ax}_{\hilbert_2} = \inner{\eta}{x}_{\hilbert_1} \forall x \in \hilbert_1},
+    \end{equation*}
+    but for all \(y \in \hilbert_2\), we have \(By \in \hilbert_1\) such that \(\inner{y}{Ax}_{\hilbert_2} = \inner{By}{x}_{\hilbert_1}\) for all \(x \in \hilbert_1\), hence \(y \in \domain{T^*}\). Moreover, the uniqueness of each \(\eta_y\) yields \(\eta_y = A^*y = By\) for all \(y \in \hilbert_2\), hence \(B = A^*\).
 \end{proof}
 
 Notice \cref{thm:adjoint_bounded_hilbert} establishes a map from \(\bounded(\hilbert_1, \hilbert_2)\) to \(\bounded(\hilbert_2, \hilbert_1)\).
-\begin{definition}{Adjoint of a bounded operator}{adjoint_bounded_hilbert}
+\begin{definition}{Adjoint operation on bounded operators}{adjoint_bounded_hilbert}
     Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. The map
     \begin{align*}
         ^* : \bounded(\hilbert_1, \hilbert_2) &\to \bounded(\hilbert_2, \hilbert_1)\\
                                            A &\mapsto A^*,
     \end{align*}
-    where \(A^*\) is the unique bounded operator such that
-    \begin{equation*}
-        \inner{y}{Ax}_{\hilbert_2} = \inner{A^*y}{x}_{\hilbert_1}
-    \end{equation*}
-    for all \(x \in \hilbert_1\) and \(y \in \hilbert_2\), is called an \emph{adjoint operation}, later \emph{involution}, on \(\bounded(\hilbert_1, \hilbert_2)\). The operator \(A^*\) is called the \emph{adjoint of \(A\)}.
+    where \(A^*\) is the adjoint operator of \(A\), is called an \emph{adjoint operation}, later \emph{involution}, on \(\bounded(\hilbert_1, \hilbert_2)\).
 \end{definition}
 The Banach space adjoint and the Hilbert space adjoint unfortunately share the same name, despite not being the same operation. They are, however, related by the Riesz representation map.
 
@@ -250,17 +368,12 @@ Due to the definition of the adjoint operator \(A^*\) to a bounded operator \(A\
     hence \(Ax = 0\) by non-degeneracy of the inner product. Thus showing that \(\range{A ^{\ast}}^\perp \subset \ker A\).
 \end{proof}
 
-\subsection{Self-adjoint bounded operators}
-In Quantum Mechanics, the concept of the adjoint operation is of the utmost importance as the \emph{self-adjoint} operators represent observables. As we will later see, the Spectral Theorem holds for self-adjoint operators, which is intimately related to the probabilistic interpretation of Quantum Mechanics.
-\begin{definition}{Self-adjoint bounded operator}{self_adjoint_bounded}
-    Let \(\hilbert\) be a Hilbert space. A bounded operator \(A \in \bounded(\hilbert)\) is \emph{self-adjoint} if \(A^{\ast} = A\).
-\end{definition}
-
+\subsection{Symmetric operators}
 Closely related to self-adjointness of a bounded operator is the notion of a symmetric operator.
 \begin{definition}{Symmetric operator}{symmetric_operator}
     Let \(\hilbert\) be a Hilbert space. A densely defined operator \(T : \domain{T} \subset \hilbert \to \hilbert\) is \emph{symmetric} if for all \(x, y \in \domain{T}\) it satisfies \(\inner{x}{Ay} = \inner{Ax}{y}\).
 \end{definition}
-It is clear that if a bounded operator \(T \in \bounded(\hilbert)\) is self-adjoint, then it is a symmetric operator. The following theorem shows a globally defined symmetric operator is bounded and self-adjoint.
+It is clear that if a densely defined operator \(T : \domain{T} \subset \hilbert \to \hilbert\) is self-adjoint, then it is a symmetric operator. The following theorem shows a globally defined symmetric operator is bounded and self-adjoint.
 \begin{theorem}{Hellinger-Toeplitz theorem}{Hellinger_Toeplitz}
     Let \(\hilbert\) be a Hilbert space. Suppose the operator \(T : \domain{T} \subset \hilbert \to \hilbert\) is globally defined, that is, \(\domain{T} = \hilbert\). If \(T\) is symmetric, then it is bounded and self-adjoint.
 \end{theorem}
@@ -286,56 +399,7 @@ It is clear that if a bounded operator \(T \in \bounded(\hilbert)\) is self-adjo
     \end{equation*}
     for all \(x, y \in \hilbert.\) By non-degeneracy, \((T - T^*)x = 0\) for all \(x \in \hilbert\), hence \(T = T^*\), that is, \(T\) is self-adjoint.
 \end{proof}
-An important insight from this result is that if an operator is unbounded, then it cannot be both globally defined and symmetric. As it may not be the case that an unbounded operator can be globally extended, the definition of the adjoint of an unbounded operator must take into account the domain of definition of such maps and provide a domain of definition for the adjoint.
-
-\begin{theorem}{Norm of a self-adjoint bounded operator}{norm_self_adjoint}
-    Let \(T \in \bounded(\hilbert)\) be a self-adjoint bounded operator defined on a Hilbert space \(\hilbert\). Then its norm satisfies
-    \begin{equation*}
-        \norm{T} = \sup_{x \in \hilbert}\frac{\abs*{\inner{x}{Tx}}}{\norm{x}^2}.
-    \end{equation*}
-\end{theorem}
-\begin{proof}
-    Let
-    \begin{equation*}
-        M = \sup_{x \in \hilbert}{\frac{\abs*{\inner{x}{Tx}}}{\norm{x}^2}},
-    \end{equation*}
-    which is finite by the \nameref{thm:cauchy_schwarz}, which yields \(M \leq \norm{T}\). For all \(u, v \in \hilbert\), we have by symmetry that
-    \begin{equation*}
-        \inner{u}{Tv} = \inner{Tu}{v} = \conj{\inner{v}{Tu}}.
-    \end{equation*}
-    As a result, for all \(x, y \in \hilbert\) and \(\lambda \in \mathbb{C}\),
-    \begin{equation*}
-        \inner{x + \lambda y}{T(x + \lambda y)} = \inner{x}{Tx} + 2\Re{\left(\inner{x}{T(\lambda y)}\right)}+ \abs{\lambda}^2 \inner{y}{Ty}
-    \end{equation*}
-    and
-    \begin{equation*}
-        \inner{x - \lambda y}{T(x - \lambda y)} = \inner{x}{Tx} - 2\Re{\left(\inner{x}{T(\lambda y)}\right)} + \abs{\lambda}^2 \inner{y}{Ty},
-    \end{equation*}
-    which yields
-    \begin{equation*}
-        4 \Re{\left(\inner{x}{T(\lambda y)}\right)} = \inner{x + \lambda y}{T(x + \lambda y)} - \inner{x - \lambda y}{T(x - \lambda y)}.
-    \end{equation*}
-    Using the estimation provided by \(M\), we have
-    \begin{align*}
-        4\abs*{\Re{\left(\lambda \inner{x}{Ty}\right)}} &= \abs*{\inner{x + \lambda y}{T(x + \lambda y)} - \inner{x - \lambda y}{T(x - \lambda y)}}\\
-                                                        &\leq \abs*{\inner{x + \lambda y}{T(x + \lambda y)}} + \abs*{\inner{x - \lambda y}{T(x - \lambda y)}}\\
-                                                        &\leq M\left(\norm{x + \lambda y}^2 + \norm{x - \lambda y}^2\right)\\
-                                                        &\leq 2M\left(\norm{x}^2 + \abs{\lambda}^2 \norm{y}^2\right),
-    \end{align*}
-    where we have used the parallelogram identity. Set \(\lambda\) such that \(\lambda \inner{x}{Ty} = \abs*{\inner{x}{Ty}}\) and \(\abs*{\lambda} = 1\), then
-    \begin{equation*}
-        \abs*{\inner{x}{Ty}} \leq \frac12 M \left(\norm{x}^2 + \norm{y}^2\right),
-    \end{equation*}
-    for all \(x, y \in \hilbert\). If \(Tx = 0\), it is clear that \(\norm{Tx} \leq M \norm{x}\) holds trivially, so we may suppose \(Tx \neq 0\). Then, we set \(y = \frac{\norm{x}}{\norm{Tx}}Tx\), which yields
-    \begin{equation*}
-        M \norm{x}^2 \geq \abs*{\inner*{x}{\frac{\norm{x}}{\norm{Tx}}T(Tx)}} = \frac{\norm{x}}{\norm{Tx}} \abs*{\inner{Tx}{Tx}} = \norm{x}\cdot \norm{Tx}.
-    \end{equation*}
-    We have thus shown
-    \begin{equation*}
-        M \geq \frac{\norm{Tx}}{\norm{x}}
-    \end{equation*}
-    for all \(x \in \hilbert\), hence, \(M \geq \norm{T}\).
-\end{proof}
+An important insight from this result is that if an operator is unbounded, then it cannot be both globally defined and symmetric.
 
 \subsection{Normal operators}
 It is clear a bounded operator \(A \in \bounded(\hilbert)\) can be written as a sum of self-adjoint bounded operators by defining the real and imaginary parts of \(A\),
@@ -468,6 +532,27 @@ We have shown in \cref{prop:isometry_bounded} that linear isometries are bounded
 \begin{definition}{Unitary operator and isomorphic Hilbert spaces}{unitary_operator}
     Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. A \emph{unitary operator} is a surjective map \(U : \hilbert_1 \to \hilbert_2\) that preserves the inner product. If there exists such a map, we say \(\hilbert_1\) and \(\hilbert_2\) are \emph{isomorphic}.
 \end{definition}
+
+Every choice of complete orthonormal basis on a separable Hilbert space defines a unitary operator onto the space of square-summable sequences \(\ell_2\).
+\begin{theorem}{Separable Hilbert spaces isomorphic to \(\ell_2\)}{separable_Hilbert_spaces_l2}
+    Let \(\hilbert\) be a separable Hilbert space, then it is isomorphic to \(\ell_2\).
+\end{theorem}
+\begin{proof}
+    Since \(\hilbert\) is a separable Hilbert space, there exists a countable complete orthonormal basis \(\family{e_n}{n\in \mathbb{N}}\subset \hilbert\). By \cref{thm:basis_separable,prop:convergent_series}, for every \(x \in \hilbert\), the sequence \(n \mapsto \inner{e_n}{x}\) is square-summable. That is, the complete orthonormal basis defines a map
+    \begin{align*}
+        j : \hilbert &\to \ell_2\\
+                   x &\mapsto \family{\inner{e_n}{x}}{n \in \mathbb{N}}.
+    \end{align*}
+    Let \(x, y \in \hilbert\), then
+    \begin{align*}
+        \inner{x}{y} &= \inner*{\lim_{n \to \infty}\sum_{k = 1}^n \inner{e_n}{x}e_n}{y}\\
+                     &= \lim_{n \to \infty} \sum_{k=1}^n \conj{\inner{e_n}{x}} \inner{e_n}{y}\\
+                     &= \inner{j(x)}{j(y)},
+    \end{align*}
+    that is, \(j\) preserves the inner product.
+
+    Let \(\Lambda = \family{\lambda_n}{n \in \mathbb{N}} \in \ell_2\) be a square-summable sequence, then the series \(\family{\sum_{k = 1}^n \lambda_k e_k}{n \in \mathbb{N}} \subset \hilbert\) converges to some \(\tilde{x} \in \hilbert\), by \cref{prop:convergent_series}. Notice \(\inner{e_n}{\tilde{x}} = \lambda_n\) follows from the uniqueness of the best approximation, hence we conclude \(j(\tilde{x}) = \Lambda\). That is, \(j\) is a unitary operator.
+\end{proof}
 % It is immediate that the adjoint of a unitary operator is unitary.
 % \begin{proposition}{Adjoint of a unitary operator}{adjoint_unitary}
 %     Let \(\hilbert_1, \hilbert_2\) be Hilbert spaces. If \(U : \hilbert_1 \to \hilbert_2\) is a unitary operator, then \(U^{-1} = U^*\) and \(U^*\) is a unitary operator.
@@ -530,22 +615,3 @@ We now give necessary and sufficient conditions for a unitary operator.
     Since \(U \circ U^* = U^* \circ U = \unity\), it follows that \(U\) commutes with \(U^*\).
 \end{proof}
 
-\begin{theorem}{Separable Hilbert spaces isomorphic to \(\ell_2\)}{separable_Hilbert_spaces_l2}
-    Let \(\hilbert\) be a separable Hilbert space, then it is isomorphic to \(\ell_2\).
-\end{theorem}
-\begin{proof}
-    Since \(\hilbert\) is a separable Hilbert space, there exists a countable complete orthonormal basis \(\family{e_n}{n\in \mathbb{N}}\subset \hilbert\). By \cref{thm:basis_separable,prop:convergent_series}, for every \(x \in \hilbert\), the sequence \(n \mapsto \inner{e_n}{x}\) is square-summable. That is, the complete orthonormal basis defines a map
-    \begin{align*}
-        j : \hilbert &\to \ell_2\\
-                   x &\mapsto \family{\inner{e_n}{x}}{n \in \mathbb{N}}.
-    \end{align*}
-    Let \(x, y \in \hilbert\), then
-    \begin{align*}
-        \inner{x}{y} &= \inner*{\lim_{n \to \infty}\sum_{k = 1}^n \inner{e_n}{x}e_n}{y}\\
-                     &= \lim_{n \to \infty} \sum_{k=1}^n \conj{\inner{e_n}{x}} \inner{e_n}{y}\\
-                     &= \inner{j(x)}{j(y)},
-    \end{align*}
-    that is, \(j\) preserves the inner product.
-
-    Let \(\Lambda = \family{\lambda_n}{n \in \mathbb{N}} \in \ell_2\) be a square-summable sequence, then the series \(\family{\sum_{k = 1}^n \lambda_k e_k}{n \in \mathbb{N}} \subset \hilbert\) converges to some \(\tilde{x} \in \hilbert\), by \cref{prop:convergent_series}. Notice \(\inner{e_n}{\tilde{x}} = \lambda_n\) follows from the uniqueness of the best approximation, hence we conclude \(j(\tilde{x}) = \Lambda\). That is, \(j\) is a unitary operator.
-\end{proof}
