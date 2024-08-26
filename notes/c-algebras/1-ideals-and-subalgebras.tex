@@ -1,5 +1,140 @@
 % vim: spl=en_us
-\section{Ideals and subalgebras}
-\begin{definition}{Subalgebra}{subalgebra}
-    Let \(\mathscr{A}\) be an algebra. A \emph{subalgebra} \(\mathscr{B}\) is a linear subspace \(\mathscr{B} \subset \mathscr{A}\) satisfying \(ab \in \mathscr{B}\) for all \(a, b \in \mathscr{B}\).
+\section{Ideals and quotient spaces}
+Let \(\algebra{A}\) be an algebra. A \emph{subalgebra} \(\algebra{B}\) is a linear subspace \(\algebra{B} \subset \algebra{A}\) satisfying \(ab \in \algebra{B}\) for all \(a, b \in \algebra{B}\). If \(\algebra{A}\) has more structure we name the subalgebra accordingly if it is closed with respect to the additional properties. For example, if \(\algebra{A}\) is involutive, \(\algebra{B}\) is a *-subalgebra if \(a \in \algebra{B} \implies a^* \in \algebra{B}\).
+\begin{definition}{Self-adjointness}{self_adjointness}
+    Let \(\algebra{A}\) be an involutive algebra. A \emph{self-adjoint} element \(a \in \algebra{A}\) satisfies \(a^* = a\). If \(B \subset \algebra{A}\) satisfies \(B^* = B\), then it is called a \emph{self-adjoint} subset of \(\algebra{A}\).
 \end{definition}
+\begin{remark}
+    It is clear that a *-subalgebra is a self-adjoint subset of an involutive algebra.
+\end{remark}
+
+Let \(A\) and \(B\) be non-empty subsets of an associative algebra \(\algebra{A}\). The image of the product restricted to \(A \times B\) is denoted by \(AB\), that is,
+\begin{equation*}
+    AB = \setc{x \in \algebra{A}}{\exists a \in A, \exists b \in B : x = ab}.
+\end{equation*}
+It should be clear \(AB\) is not generally equal to \(BA\).
+\begin{definition}{Ideals}{ideal}
+    Let \(\algebra{A}\) be an associative algebra. A linear subspace \(B \subset \algebra{A}\) is a
+    \begin{enumerate}[label=(\alph*)]
+        \item \emph{left ideal of \(\algebra{A}\)} if \(\algebra{A}B \subset B;\)
+        \item \emph{right ideal of \(\algebra{A}\)} if \(B\algebra{A} \subset B.\)
+    \end{enumerate}
+    If \(B\) is a left ideal and a right ideal of \(\algebra{A}\), then we say \(B\) is a \emph{two-sided ideal of \(\algebra{A}\)}.
+\end{definition}
+\begin{remark}
+    It is easy to conclude every ideal is a subalgebra. Indeed, suppose, for definiteness, \(B \subset \algebra{A}\) is a left ideal of \(\algebra{A}\), then \(BB \subset \algebra{A}B \subset B\), that is, \(B\) is an algebra.
+\end{remark}
+\begin{proposition}{Self-adjoint ideal is two-sided ideal}{self_adjoint_ideal}
+    Let \(\algebra{A}\) be a *-algebra. If \(\algebra{B} \subset \algebra{A}\) is a left (or right) ideal of \(\algebra{A}\) and self-adjoint, then \(\algebra{B}\) is a two-sided ideal.
+\end{proposition}
+\begin{proof}
+    Let \(b \in \algebra{B}\), then for all \(a \in \algebra{A}\), we have \(ab \in \algebra{B}\). Self-adjointness yields \(a^*b^* \in \algebra{B}\), hence \(ba \in \algebra{B}\) for all \(a \in \algebra{A}\). Since \(b\) is arbitrary, \(\algebra{B}\) is a right ideal.
+\end{proof}
+\begin{remark}
+    If an ideal is self-adjoint we'll say it is a *-ideal.
+\end{remark}
+
+Recall a linear subspace \(S\) on a linear space \(V\) defines an equivalence relation \(\sim_S\) by \(u \sim_S v\) if \(u - v \in S\). We write the quotient space \(V/S\) to denote the quotient set \(V/\sim_S\) and we call the map \(V \ni v \mapsto [v] \in V/S\) the \emph{quotient map}. Moreover, with the operations \(\alpha[v] = [\alpha v]\) and \([u]+[v] = [u+v]\), \(V/S\) is made into a linear space. Given a closed *-ideal of a Banach *-algebra, we'll show the quotient space can be made into a Banach *-algebra.
+
+\begin{theorem}{Quotient space of a Banach *-algebra by a closed *-ideal}{closed_ideal_quotient}
+    Let \(\algebra{A}\) be a Banach *-algebra and let \(\algebra{I}\subset \algebra{A}\) be a closed *-ideal of \(\algebra{A}\). Then, with the maps
+    \begin{align*}
+        \cdot : \algebra{A}/\algebra{I} \times \algebra{A}/\algebra{I} &\to \algebra{A}/\algebra{I}&
+        * : \algebra{A}/\algebra{I} &\to \algebra{A}/\algebra{I}&
+        \norm{\noarg} : \algebra{A}/\algebra{I} &\to \mathbb{R}\\
+        ([x],[y]) &\mapsto [xy]&
+        [x] &\mapsto [x^*]&
+        [x] &\mapsto \inf_{j \in \algebra{I}}{\norm{x + j}},
+    \end{align*}
+    the quotient space \(\algebra{A}/\algebra{I}\) is a Banach *-algebra.
+\end{theorem}
+
+We'll split the proof in three lemmas showing intermediate results.
+\begin{lemma}{Quotient space by a two-sided ideal is an associative algebra}{quotient_two_sided_associative_algebra}
+    Let \(\algebra{A}\) be an associative algebra. If \(\algebra{I}\) is a two-sided ideal, then \(\algebra{A}/\algebra{I}\) is an associative algebra. If, furthermore, \(\algebra{A}\) is unital, then \([\unity]\) is the identity of the quotient space \(\algebra{A}/\algebra{I}\).
+\end{lemma}
+\begin{proof}
+    We begin by showing the algebraic product is well-defined. Let \(x_1, x_2, y_1, y_2 \in \algebra{A}\) with \([x_1] = [x_2]\) and \([y_1] = [y_2]\), then there exist \(j_x = x_2 - x_1\) and \(j_y = y_2 - y_1\) with \(j_x, j_y \in \algebra{I}\). We have
+    \begin{equation*}
+        x_1y_1 - x_2 y_2 = x_1 y_1 - (x_1 + j_x) y_2 = x_1 (y_1 - y_2) - j_x y_2 = x_1 j_y - j_x y_2,
+    \end{equation*}
+    hence \([x_1 y_1] = [x_2 y_2]\) because \(\algebra{I}\) is a two-sided ideal. Therefore, the product is well-defined.
+
+    Let \([a], [b], [c] \in \algebra{A}/\algebra{I}\) and \(\alpha \in \mathbb{C}\), then
+    \begin{equation*}
+        [a] \cdot ([b]+[c]) = [a]\cdot[b+c] = [ab + ac] = [ab] + [ac]
+    \end{equation*}
+    and
+    \begin{equation*}
+        ([b]+[c])\cdot[a] = [b+c]\cdot[a] = [ba + ca] = [ba] + [ca],
+    \end{equation*}
+    that is, the product is distributive with respect to vector addition. We also have
+    \begin{align*}
+        \alpha([a]\cdot[b]) = \alpha[ab] = [\alpha ab] &= ([\alpha a])\cdot[b] = (\alpha[a])\cdot[b]\\
+                                                       &= [a]\cdot([\alpha b]) = [a]\cdot (\alpha[b]),
+    \end{align*}
+    then it follows that the product is compatible with scalar multiplication. Moreover, the product is associative since
+    \begin{equation*}
+        [a]\cdot([b]\cdot[c]) = [a]\cdot[bc]=[abc] = [ab] \cdot [c] = ([a]\cdot[b])\cdot[c],
+    \end{equation*}
+    hence \(\algebra{A}/\algebra{I}\) is an associative algebra. If, in addition, \(\algebra{A}\) is unital we have \([\unity]\cdot[x] = [\unity x] = [x]\) and \([x]\cdot[\unity] = [x \unity] = [x]\) for all \([x] \in \algebra{A}/\algebra{I}\), hence \([\unity]\) is the identity of \(\algebra{A}/\algebra{I}\).
+\end{proof}
+\begin{lemma}{Quotient space by a self-adjoint subspace is a *-algebra}{quotient_self_adjoint_star}
+    Let \(\algebra{A}\) be a *-algebra. If \(\algebra{I}\) is a self-adjoint linear subspace, then \(\algebra{A}/\algebra{I}\) is a *-algebra.
+\end{lemma}
+\begin{proof}
+    The well-definition of the map \([x] \mapsto [x^*]\) follows from the self-adjointness of the ideal. Indeed, let \(z_1, z_2 \in \algebra{A}\) with \([z_1] = [z_2]\), then there exists \(j \in \algebra{I}\) such that \(j = z_2 - z_1 \in \algebra{I}\), hence \(j^* = z_2^* - z_1^* \in \algebra{I}\), which shows \([z_1^*] = [z_2^*]\). Let \([a], [b] \in \algebra{A}/\algebra{I}\) and \(\lambda\in \mathbb{C}\), then * satisfies
+    \begin{enumerate}[label=(\alph*)]
+        \item involutivity: \(\left([a]^*\right)^* = [a^*]^* = [(a^*)^*] = [a]\);
+        \item antidistributivity: \(([a]\cdot[b])^* = [ab]^* = [(ab)^*] = [b^*a^*] = [b^*]\cdot[a^*] = [b]^* \cdot [a]^*\); and
+        \item antilinearity: \(([a] + \lambda[b])^* = [a + \lambda b]^* = [(a + \lambda b)^*] = [a^* + \conj{\lambda}b^*] = [a^*] + [\conj{\lambda} b^*] = [a]^* + \conj{\lambda}[b]^*\).
+    \end{enumerate}
+    If \(\algebra{A}\) is unital, we have \([\unity]^* = [\unity^*] = [\unity]\), hence \(*\) is an involution on \(\algebra{A}/\algebra{I}\).
+\end{proof}
+
+\begin{lemma}{Quotient space by a closed subspace is a normed linear space}{quotient_closed_normed}
+    Let \(\algebra{A}\) be a normed linear space. If \(\algebra{I}\) is a closed subspace, then \(\algebra{A}/\algebra{I}\) is a normed linear space.
+\end{lemma}
+\begin{proof}
+    Let \(w_1, w_2 \in \algebra{A}\) with \([w_1] = [w_2]\), then the sets \(\setc{w_1 + j}{j \in \algebra{I}}\) and \(\setc{w_2 + j}{j \in \algebra{I}}\) are equal, hence the map \(\norm{\noarg}\) is well-defined.
+
+    Let \(\lambda \in \mathbb{C}\setminus\set{0}\), then
+    \begin{equation*}
+        \norm{\lambda [y]} = \norm{[\lambda y]} = \inf_{j \in \algebra{I}}{\norm{\lambda y + \lambda j}}= \abs{\lambda} \inf_{j \in \algebra{I}}{\norm{y} + j} = \abs{\lambda}\cdot \norm{[y]}
+    \end{equation*}
+    for all \([y] \in \algebra{A}/\algebra{I}\). We also have \(\norm{0 [y]} = \norm{[0]} = \inf_{j \in \algebra{I}} \norm{j} = 0,\) for all \([y] \in \algebra{A}/\algebra{I}\), hence \(\norm{\noarg}\) is absolute homogeneous.
+
+    Let \([a], [b] \in \algebra{A}/\algebra{I}\), then
+    \begin{equation*}
+        \norm{[a] + [b]} = \norm{[a+b]} = \inf_{n,m \in \algebra{I}}{\norm{a+b+n+m}} \leq \inf_{n,m \in \algebra{I}}{\left(\norm{a + n} + \norm{b+m}\right)} = \norm{[a]} + \norm{[b]},
+    \end{equation*}
+    hence \(\norm{\noarg}\) is subadditive.
+
+    From the nonnegativity of the norm defined on \(\algebra{A}\), it follows that this map is non-negative. Let \([x] \in \algebra{A}/\algebra{I}\) be such that \(\norm{[x]} = 0\), then there exists no \(\epsilon > 0\) such that \(\norm{j - x} \geq \epsilon > 0\) for all \(j \in \algebra{I}\). As a result, every open ball centered at \(x\) has non-empty intersection with \(\algebra{I}\), then \(x \in \cl_{\algebra{A}}\algebra{I}\). Since \(\algebra{I}\) is closed, we have \(x \in \algebra{I}\). The positive-definiteness of the norm and the previous result yield
+    \begin{equation*}
+        \norm{[x]} = 0 \iff x \in \algebra{I} \iff [x] = [0],
+    \end{equation*}
+    hence \(\norm{\noarg}\) is positive-definite. That is, \(\norm{\noarg}\) defines a norm on \(\algebra{A}/\algebra{I}\).
+\end{proof}
+\begin{lemma}{Quotient space by a closed two-sided ideal is a normed algebra}{quotient_closed_ideal_normed}
+    Let \(\algebra{A}\) be a normed algebra. If \(\algebra{I}\) is a closed two-sided ideal, then \(\algebra{A}/\algebra{I}\) is a normed algebra.
+\end{lemma}
+\begin{proof}
+    Let \([u],[v] \in \algebra{A}/\algebra{I},\) then
+    \begin{align*}
+        \norm{[u]\cdot[v]} = \norm{[uv]} = \inf_{j\in \algebra{I}}{\norm{uv + j}}
+        &\leq \inf_{k,\ell \in \algebra{I}}{\norm{uv + \ell k}}\\
+        &\leq \inf_{k,\ell \in \algebra{I}}{\norm{uv + k\ell + u \ell + kv}}
+    \end{align*}
+    since \(\algebra{I}\) is a two-sided ideal and, in particular, a subalgebra. Notice \(uv + k\ell + u \ell + kv = (u + k)(v + \ell)\), then
+    \begin{align*}
+        \norm{[u]\cdot[v]} &\leq \inf_{k,\ell \in \algebra{I}}{\norm{(u+k)(v + \ell)}}\\
+                           &\leq \inf_{k\in\algebra{I}}{\norm{u+k}}\inf_{\ell \in \algebra{I}}{\norm{v+\ell}}\\
+                           &= \norm{[u]}\cdot\norm{[v]}.
+    \end{align*}
+    \todo[If \(\algebra{A}\) is unital] we have
+    \begin{equation*}
+        \norm{[x]} = \norm{[\unity]\cdot[x]} \leq \norm{[\unity]}\cdot\norm{[x]},
+    \end{equation*}
+    for all \([x] \in \algebra{A}/\algebra{I}\). In particular, we have \(\norm{[\unity]}\left(\norm{[\unity]} - 1\right) \geq 0\), hence either \(\norm{[\unity]} = 0\) or \(\norm{[\unity]}\geq 1\). \todo[how to continue?]
+\end{proof}
