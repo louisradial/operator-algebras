@@ -323,6 +323,26 @@ It is important to note that the convergence of a sequence cannot be understood 
     \end{equation*}
 \end{definition}
 
+\begin{proposition}{Convergent subsequence of a Cauchy sequence}{subsequence_Cauchy}
+    Let \((X, d)\) a metric space and let \(\family{x_n}{n \in \mathbb{N}}\subset X\) be a Cauchy sequence in \((X,d)\). If there exists a subsequence \(\family{x_{n_j}}{j \in \mathbb{N}}\) that converges to \(\tilde{x}\) in \((X, d)\), then the Cauchy sequence converges against \(\tilde{x}\).
+\end{proposition}
+\begin{proof}
+    Let \(\varepsilon > 0\), then there exists \(N > 0\) such that for all \(m, n > N\)
+    \begin{equation*}
+        d(x_n, x_m) < \frac12 \varepsilon,
+    \end{equation*}
+    since the sequence is Cauchy with respect to the metric \(d\). Moreover, there exists \(M > 0\) such that for all \(n_j > J\)
+    \begin{equation*}
+        d(x_{n_j}, \tilde{x}) < \frac12 \varepsilon.
+    \end{equation*}
+
+    Set \(L = \max\set{M,N}\), then for all \(m, n_j > M\) it follows that
+    \begin{align*}
+        d(x_m, \tilde{x}) \leq d(x_m, x_{n_j}) + d(x_{n_j}, \tilde{x}) < \varepsilon,
+    \end{align*}
+    that is, the Cauchy sequence converges against \(\tilde{x} \in X\) with respect to \((X,d)\).
+\end{proof}
+
 The convergent sequences we have considered so far are Cauchy sequences.
 \begin{proposition}{Every convergent sequence has the Cauchy property}{convergent_cauchy}
     Let \((X, d)\) be a metric space. If \family{x_n}{n\in \mathbb{N}} is a convergent sequence with respect to \((X, d)\), then it is a Cauchy sequence with respect to \((X, d)\).
