@@ -1,0 +1,284 @@
+% vim: spl=en_us
+\section{Adjoining an identity}
+A usual, we define the maps that preserve the structure of a given space. In the case of involutive algebras, we have *-homomorphisms.
+\begin{definition}{*-homomorphism}{star_morphism}
+    Let \(\algebra{A}, \algebra{B}\) be *-algebras. A \emph{*-homomorphism} is a linear map \(\pi : \algebra{A} \to \algebra{B}\) satisfying
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\pi(ab) = \pi(a) \pi(b)\) for all \(a, b \in \algebra{A}\); and
+        \item \(\pi\circ \inv_{\algebra{A}} = \inv_{\algebra{B}}\circ \pi\).
+    \end{enumerate}
+    If there exists a bijective *-homomorphism \(\pi: \algebra{A} \to \algebra{B}\), we say \(\algebra{A}\) is *-isomorphic to \(\algebra{B}\) and that \(\pi\) is a *-isomorphism.
+\end{definition}
+
+\begin{lemma}{Composition of *-homomorphisms is a *-homomorphism}{composition_star_homomorphism}
+    Let \(\algebra{A}, \algebra{B}, \algebra{C}\) be *-algebras. If \(\pi_1 : \algebra{A} \to \algebra{B}\) and \(\pi_2 : \algebra{B} \to \algebra{C}\) are *-homomorphisms, then \(\pi_2 \circ \pi_1\) is a *-homomorphism.
+\end{lemma}
+\begin{proof}
+    Let \(a, b \in \algebra{A}\), then
+    \begin{equation*}
+        \pi_2\circ \pi_1(ab) = \pi_2(\pi_1(a) \pi_1(b)) = \pi_2\circ \pi_1(a) \pi_2\circ\pi_1(b)
+    \end{equation*}
+    and
+    \begin{equation*}
+        \pi_2\circ \pi_1 \circ \inv_{\algebra{A}} = \pi_2 \circ \inv_{\algebra{B}} \circ \pi_1 = \inv_{\algebra{C}} \circ \pi_2 \circ \pi_1,
+    \end{equation*}
+    as desired.
+\end{proof}
+\begin{lemma}{*-isomorphism if and only if its inverse is a *-isomorphism}{inverse_star_isomorphism}
+    Let \(\algebra{A}, \algebra{B}\) be *-algebras. The bijective map \(\pi : \algebra{A} \to \algebra{B}\) is a *-isomorphism if and only if \(\pi^{-1} : \algebra{B} \to \algebra{A}\) is a *-isomorphism.
+\end{lemma}
+\begin{proof}
+    Recall that \(\pi \circ \pi^{-1} = \id{\algebra{B}}\) and \(\pi^{-1} \circ \pi = \id{\algebra{A}}\). Suppose \(\pi\) is a *-isomorphism, and let \(b_1, b_2 \in \algebra{B}\). Then,
+    \begin{equation*}
+        \pi^{-1} (b_1b_2) = \pi^{-1} \left(\pi\circ \pi^{-1}(b_1)\pi\circ \pi^{-1}(b_2)\right) = \pi^{-1} \circ \pi \left(\pi^{-1}(b_1)\pi^{-1}(b_2)\right) = \pi^{-1}(b_1) \pi^{-1}(b_2)
+    \end{equation*}
+    and
+    \begin{equation*}
+        \pi^{-1} \circ \inv_{\algebra{B}} = \pi^{-1} \circ \inv_{\algebra{B}} \circ \pi \circ \pi^{-1} = \pi^{-1} \circ \pi \circ \inv_{\algebra{A}} \circ \pi^{-1} = \inv_{\algebra{A}}\circ \pi^{-1}
+    \end{equation*}
+    hence \(\pi^{-1}\) is a *-isomorphism. The converse is shown mutatis mutandis.
+\end{proof}
+\begin{proposition}{Equivalence relation of *-algebras}{star_isomorphism}
+    The relation
+    \begin{equation*}
+        \algebra{A} \sim_* \algebra{B} \iff \algebra{A}\text{ is *-isomorphic to }\algebra{B}
+    \end{equation*}
+    is an equivalence relation on *-algebras.
+\end{proposition}
+\begin{proof}
+    \cref{lem:inverse_star_isomorphism,lem:composition_star_homomorphism} show \(\sim_*\) is transitive and symmetric, respectively. For any *-algebra \(\algebra{A}\), the identity map \(\id{\algebra{A}}\) is a *-isomorphism since
+    \begin{equation*}
+        \id{\algebra{A}}(ab) = \id{\algebra{A}}(a) \id{\algebra{A}}(b)
+        \quad\text{and}\quad
+        \id{\algebra{A}}(a^*) = \id{\algebra{A}}(a)^*
+    \end{equation*}
+    hold trivially for any \(a, b \in \algebra{A}\), hence \(\sim_*\) is reflexive.
+\end{proof}
+\begin{remark}
+    If \(\algebra{A}\) is *-isomorphic to \(\algebra{B}\), we say \(\algebra{A}\) and \(\algebra{B}\) are *-isomorphic.
+\end{remark}
+
+We show unital *-algebras cannot be *-isomorphic to *-algebras without identity.
+\begin{proposition}{*-isomorphism maps identity to identity}{star_isomorphism_identity}
+    Let \(\pi : \algebra{A} \to \algebra{B}\) be *-isomorphism of *-algebras. If \(\algebra{A}\) is unital with identity element \(\unity_{\algebra{A}}\), then \(\algebra{B}\) is unital with identity element \(\pi(\unity_{\algebra{A}})\).
+\end{proposition}
+\begin{proof}
+    Suppose \(\algebra{A}\) is unital and let \(\pi : \algebra{A} \to \algebra{B}\) be a *-isomorphism. Let \(b \in \algebra{B}\), then
+    \begin{align*}
+        b = \pi \circ \pi^{-1}(b) &= \pi(\unity_{\algebra{A}}\pi^{-1}(b)) = \pi(\unity_{\algebra{A}})\pi\circ \pi^{-1}(b) = \pi(\unity_{\algebra{A}})b\\
+                                  &= \pi(\pi^{-1}(b) \unity_{\algebra{A}}) = \pi\circ \pi^{-1}(b) \pi(\unity_{\algebra{A}}) = b\pi(\unity_\algebra{A}),
+    \end{align*}
+    hence \(\pi(\unity_{\algebra{A}})\) is the identity element of \(\algebra{B}\).
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) and \(\algebra{B}\) be *-isomorphic *-algebras. \(\algebra{A}\) is unital if and only if \(\algebra{B}\) is unital.
+\end{corollary}
+
+
+
+Even though a *-algebra need not be unital, we may \emph{always} *-isomorphically identify it as a *-subalgebra of a *-algebra with identity. We first show a *-algebra defines a unital *-algebra.
+\begin{proposition}{Construction of a unital *-algebra from a *-algebra}{c_plus_star_algebra}
+    Let \(\algebra{A}\) be a *-algebra. The operations
+    \begin{align*}
+        \cdot : \left(\mathbb{C}\times\algebra{A}\right) \times \left(\mathbb{C} \times \algebra{A}\right) &\to \mathbb{C} \times \algebra{A}\\
+        \left((\alpha, x),(\beta,y)\right)&\mapsto (\alpha\beta, \alpha y + \beta x + xy)
+    \end{align*}
+    and
+    \begin{align*}
+        * : \mathbb{C} \times \algebra{A} &\to \mathbb{C}\times\algebra{A}\\
+        (\alpha, x)&\mapsto (\conj{\alpha}, x^*)
+    \end{align*}
+    define a unital *-algebra on the linear space \(\mathbb{C} \times \algebra{A}\), which we will denote by \(\mathbb{C} \ltimes \algebra{A}\), where \((1, 0) \in \mathbb{C} \ltimes \algebra{A}\) is the identity element.
+\end{proposition}
+\begin{proof}
+    Let \((\alpha, x), (\beta, y), (\gamma, z) \in \mathbb{C} \ltimes \algebra{A}\) and \(\lambda \in \mathbb{C}\), then
+    \begin{align*}
+        (\alpha, x) \cdot \left((\beta, y) + (\gamma,z)\right)
+        &= (\alpha, x) \cdot (\beta + \gamma, y + z)\\
+        &= (\alpha \beta + \alpha \gamma, \alpha y + \beta x + xy + \alpha z + \gamma x + xz)\\
+        &= (\alpha \beta, \alpha y + \beta x + xy) + (\alpha \gamma, \alpha z + \gamma x + xz)\\
+        &= (\alpha, x)\cdot (\beta, y) + (\alpha, x)\cdot(\gamma, z),
+    \end{align*}
+    \begin{align*}
+        \left((\beta, y) + (\gamma,z)\right)\cdot (\alpha, x)
+        &= (\beta + \gamma, y + z)\cdot (\alpha, x) \\
+        &= (\beta \alpha + \gamma \alpha,  \beta x +\alpha y + yx +  \gamma x + \alpha z +zx)\\
+        &= (\beta \alpha,  \beta x + \alpha y +yx) + (\gamma \alpha,  \gamma x +\alpha z + zx)\\
+        &= (\beta, y)\cdot (\alpha, x) + (\gamma, z)\cdot(\alpha, x),
+    \end{align*}
+    \begin{align*}
+        (\alpha, x) \cdot \left(\lambda (\beta, y)\right) &= (\alpha, x) \cdot (\lambda \beta, \lambda y)\\
+                                                          &= (\alpha \lambda \beta, \alpha \lambda y + \lambda \beta x + \lambda x y) = \lambda \cdot \left((\alpha, x) \cdot (\beta, y)\right)\\
+                                                          &= (\alpha \lambda, \lambda x)\cdot (\beta, y) = \left(\lambda (\alpha, x)\right)\cdot (\beta, y),
+    \end{align*}
+    \begin{align*}
+        \left((\alpha,x)\cdot(\beta, y)\right)\cdot (\gamma, z) &= (\alpha \beta, \alpha y + \beta x + xy) \cdot (\gamma, z)\\
+                                                                &= (\alpha \beta \gamma, \alpha \beta z + \gamma \alpha y + \gamma \beta x + \gamma xy + \alpha y z + \beta x z + xy z),
+    \end{align*}
+    \begin{align*}
+        (\alpha,x)\cdot\left((\beta, y)\cdot(\gamma, z)\right) &= (\alpha, x) \cdot (\beta \gamma, \beta z + \gamma y + yz)\\
+                                                               &= (\alpha \beta \gamma, \alpha \beta z + \alpha \gamma y + \alpha yz + \beta \gamma x + \beta x z + \gamma xy + xyz),
+    \end{align*}
+    and
+    \begin{align*}
+        (1, 0) \cdot (\alpha,x) = (\alpha, x) = (\alpha, x) \cdot (1,0)
+    \end{align*}
+    that is, \(\mathbb{C} \ltimes \algebra{A}\) is an associative algebra with identity. Let \(\kappa \in \mathbb{C}\), then
+    \begin{equation*}
+        \left((\alpha, x)^*\right)^* = (\conj{\alpha}, x^*)^* = (\alpha, x),
+    \end{equation*}
+    \begin{equation*}
+        \left((\alpha, x)\cdot(\beta, y)\right)^* = (\alpha \beta, \alpha y + \beta x + xy)^* = (\conj{\alpha}\conj{\beta}, \conj{\alpha}y^* + \conj{\beta}x^* + y^* x^*) = (\conj{\beta}, y^*)\cdot(\conj{\alpha}, x^*) = (\beta, y)^*\cdot(\alpha, x)^*,
+    \end{equation*}
+    \begin{equation*}
+        \left(\lambda (\alpha, x) + \kappa (\beta, y)\right)^* = (\lambda \alpha + \kappa \beta, \lambda x + \kappa y)^* = (\conj{\lambda} \conj{\alpha} + \conj{\kappa}\conj{\beta}, \conj{\lambda}x^* + \conj{\kappa}y^*) = \conj{\lambda}(\alpha, x)^* + \conj{\kappa}(\beta, y)^*,
+    \end{equation*}
+    and \((1,0)^* = (1,0)\), hence \(\mathbb{C} \ltimes \algebra{A}\) is a *-algebra.
+\end{proof}
+
+We now show every *-algebra may be *-isomorphically identified with a *-ideal of a unital *-algebra.
+\begin{lemma}{*-isomorphism between \(\algebra{A}\) and a *-ideal of \(\mathbb{C} \ltimes \algebra{A}\)}{subalgebra_unit_isomorphism}
+    Let \(\algebra{A}\) be a *-algebra without identity. The set \(\algebra{A}_0 = \setc{(\alpha, x) \in \mathbb{C} \ltimes \algebra{A}}{\alpha = 0}\) is a *-ideal of \(\mathbb{C} \ltimes \algebra{A}\). Moreover,
+    \begin{align*}
+        \pi : \algebra{A} &\to \mathbb{C} \ltimes \algebra{A}\\
+                        a &\mapsto (0, a)
+    \end{align*}
+    is a *-homomorphism between \(\algebra{A}\) and \(\mathbb{C} \ltimes \algebra{A}\) with \(\pi(\algebra{A}) = \algebra{A}_0\), that is, \(\algebra{A}\) is *-isomorphic to \(\algebra{A}_0\).
+\end{lemma}
+\begin{proof}
+    It is clear \(\pi\) is injective and has range equal to \(\algebra{A}_0\). Let \(a, b \in \algebra{A}\), then
+    \begin{equation*}
+        \pi(ab) = (0,ab) = (0, a) \cdot (0, b) = \pi(a) \pi(b)
+        \quad\text{and}\quad
+        \pi(a^*) = (0, a^*) = (0, a)^* = \pi(a)^*,
+    \end{equation*}
+    hence \(\algebra{A}_0\) is self-adjoint and \(\pi\) is a *-homomorphism between \(\algebra{A}\) and \(\mathbb{C} \ltimes \algebra{A}\). Let \((\alpha, x) \in \mathbb{C}\ltimes \algebra{A}\) and let \(a \in \algebra{A}\), then
+    \begin{equation*}
+        (\alpha, x)\cdot \pi(a) = (0, \alpha a + xa) \in \algebra{A}_0,
+    \end{equation*}
+    hence \(\algebra{A}_0\) is a *-ideal, by \cref{prop:self_adjoint_ideal}.
+\end{proof}
+
+If \(\algebra{A}\) is a C*-algebra we may in fact define a norm on \(\mathbb{C} \ltimes \algebra{A}\) such that it becomes a C*-algebra. This embedding of a C*-algebra without identity in one with identity alleviates some of the difficulties when studying \(\algebra{A}\) due to the lack of an identity.
+
+\begin{theorem}{Isometric *-isomorphism between a \(\algebra{A}\) and a C*-subalgebra of \(\mathbb{C}\ltimes \algebra{A}\)}{adjoin_unity}
+    Let \(\algebra{A}\) be a C*-algebra without identity. Then, \(\mathbb{C} \ltimes \algebra{A}\) is a unital C*-algebra with respect to the norm
+    \begin{equation*}
+        \norm{(\alpha, x)} = \sup_{\substack{d \in \algebra{A}\\\norm{d}=1}}{\norm{\alpha d + xd}}.
+    \end{equation*}
+    Moreover, the map
+    \begin{align*}
+        \pi : \algebra{A} &\to \mathbb{C} \ltimes \algebra{A}\\
+                        a &\mapsto (0, a)
+    \end{align*}
+    is a isometric *-homomorphism between \(\algebra{A}\) and \(\mathbb{C} \ltimes \algebra{A}\) , that is, \(\algebra{A}\) is isometrically *-isomorphic to the C*-subalgebra \(\pi(\algebra{A})\).
+\end{theorem}
+\begin{proof}
+    Let us show that \(\norm{\noarg}_{\mathbb{C}\ltimes\algebra{A}}\) is a norm on \(\mathbb{C} \ltimes \algebra{A}\).  Let \((\alpha, x), (\beta, y) \in \mathbb{C} \ltimes \algebra{A},\) and \(\lambda \in \mathbb{C}\), then
+    \begin{equation*}
+        \norm{\lambda (\alpha, x)} = \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{\lambda\alpha d + \lambda xd}} = \abs{\lambda}\sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{\alpha d + xd}} = \abs{\lambda}\cdot\norm{(\alpha, x)},
+    \end{equation*}
+    and
+    \begin{align*}
+        \norm{(\alpha, x) + (\beta, y)} &= \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{(\alpha + \beta)d + (x + y)d}}\\
+                                        &= \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{(\alpha + \beta)d + (x + y)d}}\\
+                                        &\leq \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{\alpha d + x d}} + \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{\beta d + yd}}\\
+                                        &= \norm{(\alpha, x)} + \norm{(\beta, y)},
+    \end{align*}
+    hence \(\norm{\noarg}_{\mathbb{C} \ltimes \algebra{A}}\) is absolute homogeneous and subadditive.
+
+    It is clear it is non-negative since \(\norm{\noarg}_{\algebra{A}}\) is a norm, and it is clear that \(\norm{(0,0)} = 0\). Let \((\gamma, z) \in \mathbb{C} \ltimes \algebra{A}\) such that \(\norm{(\gamma, z)} = 0\).  Suppose \(\gamma \neq 0\), then absolute homogeneity yields
+    \begin{equation*}
+        \norm{(\gamma, z)} = \abs{\gamma}\cdot\norm{(1, \gamma^{-1}z)},
+    \end{equation*}
+    therefore \(\norm{(1, -e)} = 0\), where \(e = -\gamma^{-1}z\). That is, for every \(d \in \algebra{A}\) with \(\norm{d} = 1\), we have \(L_{e}d = d\). Since \(L_v\) is linear, we have \(L_{e} = \id{\algebra{A}},\) which shows \(e\) is a left identity for all \(a \in \algebra{A}\). Since the involution is bijective, we also have \(R_{e^*} = \id{\algebra{A}}\), showing \(e^*\) is a right identity for all \(a \in \algebra{A}\). In particular, \(L_e \circ R_{e^*} = R_{e^*}\circ L_e = \id{\algebra{A}}\), that is, \(e\) is self-adjoint. We have just shown \(e\) is an identity for \(\algebra{A},\) contradicting the hypothesis of the lack of an identity for \(\algebra{A}\). This ensures that \(\norm{(\gamma, z)} = 0\) implies we have \(\gamma = 0\). Now we have
+    \begin{equation*}
+        \norm{(0, z)} = \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{zd} = \norm{z},
+    \end{equation*}
+    hence the positive-definiteness of the norm \(\norm{\noarg}_{\algebra{A}}\) ensures \(z = 0\). We have thus shown
+    \begin{equation*}
+        \norm{(\gamma, z)} = 0 \iff (\gamma,z) = (0,0),
+    \end{equation*}
+    that is, \(\norm{\noarg}_{\mathbb{C} \ltimes \algebra{A}}\) is positive-definite and, therefore, a norm.
+
+    We now show the norm is submultiplicative. Trivially, \(\norm{(\alpha, x)\cdot(\beta,y)} \leq \norm{(\alpha, x)}\norm{(\beta, y)}\) is satisfied for \((\beta,y) = (0,0)\). Suppose \(\norm{(\beta,y)} > 0\), then the sets
+    \begin{equation*}
+        M = \setc{d \in \algebra{A}}{\norm{d} = 1 \land \norm{\beta d + yd} > 0}
+        \quad\text{and}\quad
+        N = \setc{d \in \algebra{A}}{\norm{d} = 1 \land \beta d = - yd}
+    \end{equation*}
+    are disjoint and cover \(\setc{d \in \algebra{A}}{\norm{d} = 1}\). Let \(d \in M\), then
+    \begin{equation*}
+        \alpha \beta d + (\alpha y + \beta x + xy)d = \alpha \beta d + \alpha (-\beta d) + \beta x d + x(-\beta d) = 0,
+    \end{equation*}
+    hence
+    \begin{equation*}
+        \sup_{d \in M}{\norm{\alpha \beta d + (\alpha y + \beta x + xy)d}} \leq \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{\alpha \beta d + (\alpha y + \beta x + xy)d}} = \sup_{d \in N}{\norm{\alpha \beta d + (\alpha y + \beta x + xy)d}}.
+    \end{equation*}
+    Let \(\tilde{d} \in N\) and set \(c = \frac{1}{\norm{\beta \tilde{d} + y \tilde{d}}}(\beta \tilde{d} + y \tilde{d})\), then
+    \begin{equation*}
+        \alpha \beta \tilde{d} + (\alpha y + \beta x + xy)\tilde{d} = \alpha(\beta \tilde{d} + y \tilde{d}) + x(\beta \tilde{d} + y \tilde{d}) =  \norm{\beta \tilde{d} + y \tilde{d}}(\alpha c + xc),
+    \end{equation*}
+    which yields
+    \begin{align*}
+        \norm{\alpha \beta \tilde{d} + (\alpha y + \beta x + xy)\tilde{d}}
+        &= \norm{\norm{\beta \tilde{d} + y \tilde{d}}(\alpha c + xc)}\\
+        &\leq \norm{\beta \tilde{d} + y \tilde{d}} \sup_{\substack{d \in \algebra{A}\\\norm{d}=1}}{\norm{\alpha d + xd}}\\
+        &= \norm{(\alpha,x)}\norm{\beta \tilde{d} + y \tilde{d}}.
+    \end{align*}
+    We then get the desired result since
+    \begin{align*}
+        \norm{(\alpha, x)\cdot(\beta, y)} &= \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{\alpha \beta d + (\alpha y + \beta x + xy)d}}\\
+                                          &= \sup_{\tilde{d} \in N}{\norm{\alpha \beta \tilde{d} + (\alpha y + \beta x + xy)\tilde{d}}}\\
+                                          &\leq \norm{(\alpha,x)} \sup_{\tilde{d} \in N}{\norm{\beta \tilde{d} + y \tilde{d}}}\\
+                                          &\leq \norm{(\alpha, x)}\norm{(\beta,y)}.
+    \end{align*}
+    We also have \(\norm{(1,0)} = \sup{\setc{\norm{d}}{d \in \algebra{A} : \norm{d} = 1}} = 1\), from which we conclude \(\mathbb{C} \ltimes \algebra{A}\) is a normed algebra.
+
+    The C*-property on \(\algebra{A}\) yields
+    \begin{align*}
+        \norm{\lambda b + ab}^2 &= \norm{(\lambda b + ab)^*(\lambda b + ab)}\\
+                                &= \norm{b^* (\conj{\lambda} \lambda b + \conj{\lambda}ab + \lambda a^*b + a^*a b)}\\
+                                &\leq \norm{b}\norm{\conj{\lambda} \lambda b + \conj{\lambda}ab + \lambda a^*b + a^*a b}
+    \end{align*}
+    for all \(a,b \in \algebra{A}\), and \(\lambda \in \mathbb{C}\). In particular, we let \((\alpha, x) \in \mathbb{C} \ltimes \algebra{A}\), then
+    \begin{align*}
+        \norm{(\alpha, x)}^2 &= \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{\alpha d + xd}^2}\\
+                             &\leq \sup_{\substack{d \in \algebra{A}\\\norm{d} = 1}}{\norm{\alpha \conj{\alpha} d  + \conj{\alpha}xd + \alpha x^*d + x^*x d}}\\
+                             &\leq \norm{(\alpha \conj{\alpha}, \conj{\alpha}x + \alpha x^* + x^*x)} = \norm{(\alpha, x)^*(\alpha, x)}\\
+                             &\leq\norm{(\alpha, x)^*}\norm{(\alpha, x)},
+    \end{align*}
+    and we may conclude \(\norm{(\alpha, x)} \leq \norm{(\alpha, x)^*}\). Replacing \((\alpha, x)\) with \((\alpha, x)^*\) yields \(\norm{(\alpha, x)^*} \leq \norm{(\alpha, x)}\), hence showing the B*-property. Moreover, we have shown \(\norm{(\alpha, x)}^2 \leq \norm{(\alpha, x)^*(\alpha, x)}\), then the B*-property and submultiplicativity show
+    \begin{equation*}
+        \norm{(\alpha, x)}^2 \leq \norm{(\alpha, x)^*(\alpha, x)} \leq \norm{(\alpha, x)^*}\norm{\alpha, x)} \leq \norm{(\alpha, x)}^2,
+    \end{equation*}
+    hence \(\mathbb{C} \ltimes \algebra{A}\) has the C*-property.
+
+    \cref{lem:subalgebra_unit_isomorphism} shows us \(\pi\) *-isomorphically identifies \(\algebra{A}\) with \(\pi(\algebra{A})\), a *-ideal of \(\mathbb{C}\ltimes \algebra{A}\). This map is also a isometry since
+    \begin{equation*}
+        \norm{\pi(a)} = \norm{(0,a)} =\sup_{\substack{d \in \algebra{A}\\\norm{d}=1}}{\norm{ad}} = \norm{a}.
+    \end{equation*}
+    An immediate consequence of this isometry is that a sequence \(\family{a_n}{n\in \mathbb{N}}\subset \algebra{A}\) is Cauchy if and only if \(\family{\pi(a_n)}{n\in \mathbb{N}}\subset \mathbb{C} \ltimes \algebra{A}\) is Cauchy. Furthermore, the sequence in \(\algebra{A}\) converges to \(\tilde{a}\) if and only if the sequence in \(\pi(\algebra{A})\) converges to \(\pi(\tilde{a})\). In particular, this ensures \(\pi(\algebra{A})\) is a closed *-ideal of \(\mathbb{C} \ltimes \algebra{A}\).
+
+    Let \(\family{(\alpha_n, x_n)}{n \in \mathbb{N}}\subset \mathbb{C} \ltimes \algebra{A}\) be a Cauchy sequence, then there exists \(M > 0\) such that \(\norm{(\alpha_n, x_n)} < M\) for all \(n \in \mathbb{N}\). First, we claim \(\family{\alpha_n}{n \in \mathbb{N}}\subset \mathbb{C}\) is bounded. Suppose it is not, then there exists a subsequence \(\family{\alpha_{n_j}}{j \in \mathbb{N}} \subset \mathbb{C}\) that diverges, that is, \(\norm{\alpha_{n_j}} \to \infty\) as \(j \to \infty\). We may remove, if necessary, elements from the sequence \(\family{n_j}{j \in \mathbb{N}}\subset \mathbb{N}\) until \(\alpha_{n_j} \neq 0\) for all \(j \in \mathbb{N}\), without changing the fact that the resulting subsequence diverges. Then, for all \(j \in \mathbb{N}\) we have
+    \begin{equation*}
+        \norm{(1, \alpha_{n_j}^{-1}x_{n_j})} = \frac1{\norm{\alpha_{n_j}}} \norm{(\alpha_{n_j}, x_{n_j})} = \frac{M}{\norm{\alpha_{n_j}}},
+    \end{equation*}
+    hence \((1, \alpha_{n_j}^{-1}x_{n_j}) \to (0,0)\). Continuity yields \(\pi(-\alpha_{n_j}^{-1} x_{n_j}) = (0, -\alpha_{n_j}^{-1} x_{n_j}) \to (1, 0) \notin \pi(\algebra{A})\), a contradiction. It must be the case, then, that \(\family{\alpha_n}{n \in \mathbb{N}}\) is bounded.
+
+    Let \(\varepsilon > 0\), then there exists \(N > 0\) such that \(n, m \geq N \implies \norm{(\alpha_m - \alpha_n, x_m - x_n)} < \frac12 \varepsilon\). As a bounded sequence of complex numbers, we may take a subsequence \(\family{\alpha_{n_k}}{k\in \mathbb{N}} \subset \mathbb{C}\) that converges to some \(\tilde{\alpha} \in \mathbb{C}\), per Bolzano-Weierstrass. Then, there exists \(K > 0\) such that for all \(k, \ell \geq K\) we have \(\abs{\alpha_{n_k} - \alpha_{n_\ell}} < \frac12 \varepsilon\). As a result, for all \(k, \ell \geq \max{\set{N, K}}\), we have
+    \begin{align*}
+        \norm{(0, x_{n_k}) - (0, x_{n_\ell})} &= \norm*{\left((\alpha_{n_k}, x_{n_k}) - (\alpha_{n_k}, 0)\right) - \left((\alpha_{n_\ell}, x_{n_\ell}) - (\alpha_{n_\ell}, 0)\right)}\\
+                                              &\leq \norm{(\alpha_{n_k} - \alpha_{n_\ell}, x_{n_k} - x_{n_\ell})} + \norm{(\alpha_{n_k} - \alpha_{n_\ell}, 0)}\\
+                                              &< \varepsilon,
+    \end{align*}
+    where we have used that, for all \(\lambda \in \mathbb{C}\) the map \((\lambda,0) \mapsto \lambda\) is an isometry. The previous result states \(\family{\pi(x_{n_k})}{k \in \mathbb{N}}\) is a Cauchy sequence, hence \(\family{x_{n_k}}{k \in \mathbb{N}}\) is a Cauchy sequence, which, by completeness, converges to some \(\tilde{x} \in \algebra{A}\) and, in turn, \(\pi(x_{n_k}) \to \pi(\tilde{x})\). Finally, we have
+    \begin{align*}
+        \norm{(\alpha_n, x_n) - (\tilde{\alpha}, \tilde{x})} &= \sup_{\substack{d\in\algebra{A}\\\norm{d}=1}}{\norm{(\alpha_n - \tilde{\alpha})d + (x_n - \tilde{x})d}}\\
+                                                             &\leq \sup_{\substack{d\in\algebra{A}\\\norm{d}=1}}{\left[\norm{(\alpha_n - \tilde{\alpha})d} + \norm{(x_n - \tilde{x})d}\right]}\\
+                                                             &\leq \sup_{\substack{d\in\algebra{A}\\\norm{d}=1}}{\left(\abs{\alpha_n - \tilde{\alpha}} + \norm{x_n - \tilde{x}}\right)\norm{d}}\\
+                                                             &=\abs{\alpha_n - \tilde{\alpha}} + \norm{x_n - \tilde{x}}
+    \end{align*}
+    for all \(n \in \mathbb{N}\), hence \((\alpha_n, x_n) \to (\tilde{\alpha}, \tilde{x})\), establishing \(\mathbb{C} \ltimes \algebra{A}\) as a C*-algebra with unity.
+\end{proof}
+
