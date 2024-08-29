@@ -24,6 +24,7 @@ It should be clear \(AB\) is not generally equal to \(BA\).
 \begin{remark}
     It is easy to conclude every ideal is a subalgebra. Indeed, suppose, for definiteness, \(B \subset \algebra{A}\) is a left ideal of \(\algebra{A}\), then \(BB \subset \algebra{A}B \subset B\), that is, \(B\) is an algebra.
 \end{remark}
+
 \begin{proposition}{Self-adjoint ideal is two-sided ideal}{self_adjoint_ideal}
     Let \(\algebra{A}\) be a *-algebra. If \(\algebra{B} \subset \algebra{A}\) is a left (or right) ideal of \(\algebra{A}\) and self-adjoint, then \(\algebra{B}\) is a two-sided ideal.
 \end{proposition}
@@ -36,7 +37,7 @@ It should be clear \(AB\) is not generally equal to \(BA\).
 
 Recall a linear subspace \(S\) on a linear space \(V\) defines an equivalence relation \(\sim_S\) by \(u \sim_S v\) if \(u - v \in S\). We write the quotient space \(V/S\) to denote the quotient set \(V/\sim_S\) and we call the map \(V \ni v \mapsto [v] \in V/S\) the \emph{quotient map}. Moreover, with the operations \(\alpha[v] = [\alpha v]\) and \([u]+[v] = [u+v]\), \(V/S\) is made into a linear space.
 
-Let \(\algebra{A}\) be a Banach *-algebra and let \(\algebra{I}\subset \algebra{A}\) be a \todo[non-trivial] closed *-ideal of \(\algebra{A}\). We'll show that with the maps
+Let \(\algebra{A}\) be a Banach *-algebra and let \(\algebra{I}\subset \algebra{A}\) be a closed *-ideal of \(\algebra{A}\). We'll show that with the maps
 \begin{align*}
     \cdot : \algebra{A}/\algebra{I} \times \algebra{A}/\algebra{I} &\to \algebra{A}/\algebra{I}&
     * : \algebra{A}/\algebra{I} &\to \algebra{A}/\algebra{I}&
@@ -114,7 +115,7 @@ the quotient space \(\algebra{A}/\algebra{I}\) is a Banach *-algebra. We'll spli
     hence \(\norm{\noarg}\) is positive-definite. That is, \(\norm{\noarg}\) defines a norm on \(\algebra{A}/\algebra{I}\).
 \end{proof}
 \begin{lemma}{Quotient space by a closed two-sided ideal is a normed algebra}{quotient_closed_ideal_normed}
-    Let \(\algebra{A}\) be a normed algebra. If \(\algebra{I}\) is a non-trivial closed two-sided ideal, then \(\algebra{A}/\algebra{I}\) is a normed algebra.
+    Let \(\algebra{A}\) be a normed algebra. If \(\algebra{I}\) is a closed two-sided ideal, then \(\algebra{A}/\algebra{I}\) is a normed algebra.
 \end{lemma}
 \begin{proof}
     Let \([u],[v] \in \algebra{A}/\algebra{I},\) then
@@ -124,11 +125,11 @@ the quotient space \(\algebra{A}/\algebra{I}\) is a Banach *-algebra. We'll spli
         &\leq \inf_{k,\ell \in \algebra{I}}{\norm{uv + k\ell + u \ell + kv}}
     \end{align*}
     since \(\algebra{I}\) is a two-sided ideal and, in particular, a subalgebra. Notice \(uv + k\ell + u \ell + kv = (u + k)(v + \ell)\), then
-    \begin{align*}
-        \norm{[u]\cdot[v]} &\leq \inf_{k,\ell \in \algebra{I}}{\norm{(u+k)(v + \ell)}}\\
-                           &\leq \inf_{k\in\algebra{I}}{\norm{u+k}}\inf_{\ell \in \algebra{I}}{\norm{v+\ell}}\\
-                           &= \norm{[u]}\cdot\norm{[v]}.
-    \end{align*}
+    \begin{equation*}
+        \norm{[u]\cdot[v]} \leq \inf_{k,\ell \in \algebra{I}}{\norm{(u+k)(v + \ell)}}
+                           \leq \inf_{k\in\algebra{I}}{\norm{u+k}}\inf_{\ell \in \algebra{I}}{\norm{v+\ell}}
+                           = \norm{[u]}\cdot\norm{[v]}.
+    \end{equation*}
     If \(\algebra{A}\) is unital we have
     \begin{equation*}
         \norm{[x]} = \norm{[\unity]\cdot[x]} \leq \norm{[\unity]}\cdot\norm{[x]},
@@ -137,19 +138,22 @@ the quotient space \(\algebra{A}/\algebra{I}\) is a Banach *-algebra. We'll spli
     \begin{equation*}
         \norm{[\unity]} = \inf_{j\in \algebra{I}}{\norm{\unity + j}} \leq \norm{\unity}+\inf_{j\in\algebra{I}}{\norm{j}} = 1,
     \end{equation*}
-    hence \(\norm{[\unity]} = 1\) or \(\norm{[\unity]} = 0\). In the second case we have \(\norm{[x]} = 0\) for all \([x] \in \algebra{A}/\algebra{I}\), that is, the quotient space is a trivial linear space, in contradiction with the hypothesis that \(\algebra{I}\) is a non-trivial ideal. We have thus shown that \(\algebra{A}/\algebra{I}\) is a normed algebra.
+    hence \(\norm{[\unity]} = 1\) or \(\norm{[\unity]} = 0\). In the second case we have \(\norm{[x]} = 0\) for all \([x] \in \algebra{A}/\algebra{I}\), that is, the quotient space is a trivial linear space, which is trivially a normed algebra. We have thus shown that \(\algebra{A}/\algebra{I}\) is a normed algebra.
 \end{proof}
 
 \begin{lemma}{Quotient space by a closed subspace is a Banach space}{quotient_closed_banach}
     Let \(\algebra{A}\) be a Banach space. If \(\algebra{I}\) is a closed subspace, then \(\algebra{A}/\algebra{I}\) is a Banach space.
 \end{lemma}
 \begin{proof}
-    We may assume \(\algebra{I}\) is a proper subspace of a non-trivial Banach space \(\algebra{A}\).
-
-    Let \(\family{[x_n]}{n \in \mathbb{N}} \subset \algebra{A}/\algebra{I}\) be a sequence in \(\algebra{A}/\algebra{I}\). For all \(n,m,p \in \mathbb{N}\) \todo[there exists] \(\ell(n,m,p) \in \algebra{I}\) satisfying
+    Let \(\family{[x_n]}{n \in \mathbb{N}} \subset \algebra{A}/\algebra{I}\) be a sequence in \(\algebra{A}/\algebra{I}\). For all \(n,m,p \in \mathbb{N}\) and \(\eta > 0\) there exists \(\ell(n,m,p, \eta) \in \algebra{I}\) satisfying
     \begin{equation*}
-        \norm{x_m - x_n + \ell(m,n,p)} \leq \norm{[x_m] - [x_n]} + \frac{1}{2^{p+1}}.
+        \norm{x_m - x_n + \ell(m,n,p,\eta)} \leq \norm{[x_m] - [x_n]} + \frac{\eta}{2^{p+1}},
     \end{equation*}
+    otherwise for some \(\tilde{m}, \tilde{n}, \tilde{p} \in \mathbb{N}\) and \(\tilde{\eta} > 0\) we would have
+    \begin{equation*}
+        \forall \ell \in \algebra{I}: \norm{[x_{\tilde{m}}] - [x_{\tilde{n}}]} + \frac{\eta}{2^{\tilde{p} + 1}} < \norm{x_{\tilde{m}} - x_{\tilde{n}} + \ell},
+    \end{equation*}
+    contradicting the fact that \(\norm{[x_{\tilde{m}}] - [x_{\tilde{n}}]}\) is the greatest lower bound for \(\setc{\norm{x_{\tilde{m}} - x_{\tilde{n}} + \ell}}{\ell \in \algebra{I}}\).
     We now suppose the sequence is Cauchy, then for all \(\varepsilon> 0\) there exists \(N_{\varepsilon} > 0\) such that for all \(m, n > N_{\varepsilon}\) we have \(\norm{[x_m] - [x_n]} < \varepsilon\). Then, we may choose a subsequence \(\family{[x_{i_j}]}{j \in \mathbb{N}}\) satisfying
     \begin{equation*}
         \norm{[x_{i_j}] - [x_{i_k}]} \leq \frac{1}{2^{k+1}}\varepsilon
@@ -179,7 +183,7 @@ the quotient space \(\algebra{A}/\algebra{I}\) is a Banach *-algebra. We'll spli
 \end{proof}
 
 \begin{theorem}{Quotient space of a Banach *-algebra by a closed *-ideal}{closed_ideal_Bstar}
-    Let \(\algebra{A}\) be a Banach *-algebra. If \(\algebra{I}\) is a \todo[non-trivial] closed *-ideal of \(\algebra{A}\), then \(\algebra{A}/\algebra{I}\) is a Banach *-algebra.
+    Let \(\algebra{A}\) be a Banach *-algebra. If \(\algebra{I}\) is a closed *-ideal of \(\algebra{A}\), then \(\algebra{A}/\algebra{I}\) is a Banach *-algebra.
 \end{theorem}
 \begin{proof}
     \cref{lem:quotient_two_sided_associative_algebra,lem:quotient_self_adjoint_star,lem:quotient_closed_ideal_normed,lem:quotient_closed_normed,lem:quotient_closed_banach} show \(\algebra{A}/\algebra{I}\) is a Banach algebra, so it remains to show the Banach *-algebra property. Let \([x] \in \algebra{A}/\algebra{I}\), then
