@@ -32,7 +32,7 @@ Prior to defining the spectrum of an operator of a Banach algebra, we study the 
 
 By abstracting the notion of inverses to Banach algebras, we may obtain results in this context and particularize them for bounded operators in Banach or Hilbert spaces.
 \begin{definition}{Inverse of an operator}{inverse_operator}
-    Let \(\algebra{A}\) be a Banach algebra with identity. An operator \(a \in \algebra{A}\) is said to be \emph{invertible} if there exists \(b \in \algebra{A}\) such that \(ab = ba = \unity\), which is then said to be the \emph{inverse element}, or simply \emph{inverse}, of \(a\). We denote the set of invertible elements of \(\algebra{A}\) by \(\invertible{\algebra{A}}\).
+    Let \(\algebra{A}\) be an associative algebra with identity. An operator \(a \in \algebra{A}\) is said to be \emph{invertible} if there exists \(b \in \algebra{A}\) such that \(ab = ba = \unity\), which is then said to be the \emph{inverse element}, or simply \emph{inverse}, of \(a\). We denote the set of invertible elements of \(\algebra{A}\) by \(\invertible{\algebra{A}}\).
 \end{definition}
 \begin{remark}
     It should be clear that an inverse element is unique from associativity.
@@ -65,8 +65,8 @@ We recall the definition of a group.
 \end{definition}
 
 We'll follow the group notation and denote the inverse element of \(a \in \algebra{A}\) by \(a^{-1}\).
-\begin{proposition}{Group of invertible elements}{group_invertible}
-    Let \(\algebra{A}\) be a Banach algebra with identity. Then \((\invertible{\algebra{A}}, \cdot)\) is a group.
+\begin{proposition}{Group of invertible operators}{group_invertible}
+    Let \(\algebra{A}\) be an associative algebra with identity. Then \((\invertible{\algebra{A}}, \cdot)\) is a group.
 \end{proposition}
 \begin{proof}
     Let \(a, b \in \invertible{\algebra{A}}\), then
@@ -76,10 +76,46 @@ We'll follow the group notation and denote the inverse element of \(a \in \algeb
     \end{equation*}
     that is, the product is closed in \(\invertible{\algebra{A}}\). It is clear that the identity element is \(\unity\) and the existence of the inverse elements follows by construction.
 \end{proof}
+\begin{proposition}{Unitary operators form a subgroup of the invertible operators}{unitary_subgroup}
+    Let \(\algebra{A}\) be a unital *-algebra. Then the set
+    \begin{equation*}
+        U = \setc{a \in \algebra{A}}{a^*a = \unity \land aa^* = \unity}
+    \end{equation*}
+     is a self-adjoint subgroup of \(\invertible{\algebra{A}}\).
+\end{proposition}
+\begin{proof}
+    Noting that \(\unity \in U\), we have in particular that \(U\) is non-empty. Let \(a \in U\), then \(a^*\) satisfies \(a^*(a^*)^* = a^*(a^*)^*= \unity\), hence \(a^* \in U\), that is, \(U\) is self-adjoint.
+
+    Notice that for any \(a \in U\), we have \(a^{-1} = a^*,\) and since \(U\) is self-adjoint, we have \(a^{-1} \in U\). Let \(u,v \in U\), then
+    \begin{equation*}
+        (uv)^*(uv) = v^*u^*uv = v^* v = \unity = uu^* = uvv^*u^* = (uv)(uv)^*,
+    \end{equation*}
+    that is, \(uv \in U\). Since \(\unity\) is the identity element of \(\invertible{\algebra{A}},\) we have \(U\) as a subgroup of the group of invertible operators.
+\end{proof}
+
+If \(\algebra{A}\) is an involutive algebra, the adjoint operation is compatible with the inverse map.
+\begin{proposition}{Involution is compatible with the inverse map}{involution_inverse}
+    Let \(\algebra{A}\) be a unital *-algebra. Then, \(\invertible{\algebra{A}}\) is self-adjoint and
+    \begin{equation*}
+        (w^{-1})^* = (w^*)^{-1}
+    \end{equation*}
+    for all \(w \in \invertible{\algebra{A}}\).
+\end{proposition}
+\begin{proof}
+    Let \(w \in \invertible{\algebra{A}}\), then
+    \begin{equation*}
+        (w^{-1}w)^* = \unity^* \implies w^* (w^{-1})^* = \unity
+    \end{equation*}
+    and
+    \begin{equation*}
+        (ww^{-1})^* = \unity^* \implies (w^{-1})^* w^* = \unity,
+    \end{equation*}
+    that is, \(w^* \in \invertible{\algebra{A}}\), with \((w^*)^{-1} = (w^{-1})^*\).
+\end{proof}
 
 It is often important to know sufficient conditions for the existence of the inverse of an operator.
 \begin{proposition}{Sufficient condition for the invertibility of an operator}{prop411}
-    Let \(\algebra{A}\) be a unital Banach algebra. Let \(u, v \in \algebra{A}\), then \(\unity - uv \in \invertible{\algebra{A}}\) if and only if \(\unity - vu \in \invertible{\algebra{A}}\).
+    Let \(\algebra{A}\) be a unital associative algebra. Let \(u, v \in \algebra{A}\), then \(\unity - uv \in \invertible{\algebra{A}}\) if and only if \(\unity - vu \in \invertible{\algebra{A}}\).
 \end{proposition}
 \begin{proof}
     Suppose \(\unity - vu \in \invertible{\algebra{A}}\) and set \(w = (\unity - vu)^{-1}\). Then,

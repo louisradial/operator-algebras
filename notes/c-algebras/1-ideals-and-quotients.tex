@@ -7,6 +7,19 @@ Let \(\algebra{A}\) be an algebra. A \emph{subalgebra} \(\algebra{B}\) is a line
 \begin{remark}
     It is clear that a *-subalgebra is a self-adjoint subset of an involutive algebra.
 \end{remark}
+\begin{proposition}{Necessary and sufficient conditions for self-adjoint subset}{self_adjoint_subset}
+    Let \(\algebra{A}\) be a *-algebra and \(B \subset \algebra{A}\) a non-empty subset. The following statements are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \item \(B^* \subset B\);
+        \item \(B \subset B^*\);
+        \item \(B\) is self adjoint.
+    \end{enumerate}\
+\end{proposition}
+\begin{proof}
+    It is evident that (c) implies (a). Suppose \(B^* \subset B\) and let \(b \in B\). Since \(b^* \in B^* \subset B\), \(b\) is the adjoint to some element in \(B\), namely \(b^*\), hence \(b \in B^*\).  That is, (a) implies (b).
+
+    Suppose \(B \subset B^*\) and let \(a \in B^*\). There exists \(b \in B\) such that \(a = b^*\), but \(b\) is the adjoint to some \(c \in B\), by hypothesis. That is, \(a = (c^*)^* = c \in B\), and we have shown \(B^* \subset B\), hence \(B\) is self-adjoint.
+\end{proof}
 
 Let \(A\) and \(B\) be non-empty subsets of an associative algebra \(\algebra{A}\). The image of the product restricted to \(A \times B\) is denoted by \(AB\), that is,
 \begin{equation*}
