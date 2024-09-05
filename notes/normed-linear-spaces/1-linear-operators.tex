@@ -20,6 +20,21 @@ Henceforth we consider linear spaces over the complex numbers unless otherwise s
     It is common to drop the parenthesis and write \(Tx = T(x)\). We will also use \enquote{linear operator} and \enquote{linear map} interchangeably.
 \end{remark}
 
+\begin{proposition}{Uniqueness and linearity of the inverse map of a bijective operator}{bijective_inverse}
+    Let \(V, W\) be linear spaces. A linear map \(A : V \to W\) is bijective if and only if there exists a linear map \(B : W \to V\) such that \(A\circ B = \id{W}\) and \(B \circ A = \id{V}\). If there exists such a map, it is unique.
+\end{proposition}
+\begin{proof}
+    If \(A\) is bijective, it admits an inverse map \(A^{-1} : W \to V\) that satisfies \(A \circ A^{-1} = \id{W}\) and \(A^{-1} \circ A = \id{V}\). Let \(\alpha, \beta \in \mathbb{C}\) and \(u, v \in W\), then
+    \begin{align*}
+        A^{-1}(\alpha u + \beta v) &= A^{-1}\left(\alpha A\circ A^{-1}(u) + \beta A \circ A^{-1}(v)\right)\\
+                                   &= A^{-1} \circ A \left(\alpha A^{-1}(u) + \beta A^{-1}(v)\right)\\
+                                   &= \alpha A^{-1}(u) + \beta A^{-1}(v),
+    \end{align*}
+    and we conclude \(A^{-1}\) is linear.
+
+    Suppose there exists a linear map \(B : W \to V\) such that \(A \circ B = \id{W}\) and \(B \circ A = \id{V}\). Let \(u, v \in V\) such that \(Au = Av\), then \(B(Au) = B(Av)\) implies \(u = v\), that is, \(A\) is injective. Let \(w \in W,\) then \(Bw \in V\) is such that \(A(Bw) = w\), hence \(A\) is surjective. Suppose, in addition, there exists \(\tilde{B} : W \to V\) satisfying \(\tilde{B} \circ A = \id{V}\) and \(A \circ \tilde{B} = \id{W}\). Composing with \(B\) yields \(\tilde{B} = B\), showing uniqueness.
+\end{proof}
+
 \begin{proposition}{Injective linear operator}{injective_linear}
     A linear operator is injective if and only if its kernel is the trivial subspace.
 \end{proposition}

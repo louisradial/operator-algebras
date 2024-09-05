@@ -1,2 +1,204 @@
 % vim: spl=en_us
 \section{Inverse of bounded operators}
+Prior to defining the spectrum of an operator of a Banach algebra, we study the inverse of linear maps in Banach spaces and the generalization for unital Banach algebras.
+\begin{theorem}{Inverse of a bounded operator}{inverse_bounded}
+    Let \(T \in \bounded(X)\) be a bounded operator acting on a Banach space \(X\). Only one of the following statements must hold:
+    \begin{enumerate}[label=(\alph*)]
+        \item If \(T\) is bijective, then \(T^{-1} \in \bounded(X)\).
+        \item If \(T\) is injective, not surjective, and \(\cl_X(\range{T}) = X\), then \(T^{-1} : \range{T} \to X\) exists but it is not bounded.
+        \item If \(T\) is injective, not surjective, and \(\cl_X(\range{T}) \subsetneq X\), then \(T^{-1} : \range{T} \to X\) exists.
+        \item If \(T\) is not injective, then we may not define an inverse on \(\range{T}\).
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    It is clear the situations are mutually exclusive. The case (a) is merely restating \cref{thm:bounded_inverse_theorem}. Case (d) is evident, as a map may not be a one-to-many relation. We move on to cases (b) and (c).
+
+    If \(T\) is injective and not surjective, then we may define a map \(T^{-1} : \range{T} \to X\) such that \(T^{-1} \circ T = \id{X}\) and \(T \circ T^{-1} = \id{\range{T}}\). If, in addition, \(\range{T}\) is dense in \(X\), then we show \(T^{-1} \notin \bounded(\range{T})\). Suppose, by contradiction, \(T^{-1}\) is bounded, then there exists a unique \(W \in \bounded(X)\) that extends \(T^{-1}\) by the BLT theorem. Since it is a extension, we have
+    \begin{equation*}
+        W \circ T = \restrict{W}{\range{T}} \circ T = T^{-1} \circ T = \id{X}.
+    \end{equation*}
+    Let \(x \in X\), then for every sequence \(\family{x_n}{n \in \mathbb{N}}\subset \range{T}\) that converges against \(x\), we have
+    \begin{equation*}
+        T\circ W(x) = T\left(\lim_{n\to \infty} T^{-1}x_n\right) = \lim_{n\to \infty} T\circ T^{-1} x_n = \lim_{n\to\infty} x_n = x,
+    \end{equation*}
+    that is, \(T \circ W = \id{X}\). This shows \(T\) is bijective, contradicting the hypothesis that \(T\) is not surjective, hence we conclude (b) and (c).
+\end{proof}
+\begin{corollary}
+    Let \(T\in \bounded(X)\) be a bounded operator in a Banach space \(X\). If \(T^{-1}\) exists and is bounded, then \(\range{T}\) is closed.
+\end{corollary}
+\begin{proof}
+    As \(T^{-1}\) is continuous, \(\range{T} = \preim{T^{-1}}{X}\) is closed.
+\end{proof}
+
+By abstracting the notion of inverses to Banach algebras, we may obtain results in this context and particularize them for bounded operators in Banach or Hilbert spaces.
+\begin{definition}{Inverse of an operator}{inverse_operator}
+    Let \(\algebra{A}\) be a Banach algebra with identity. An operator \(a \in \algebra{A}\) is said to be \emph{invertible} if there exists \(b \in \algebra{A}\) such that \(ab = ba = \unity\), which is then said to be the \emph{inverse element}, or simply \emph{inverse}, of \(a\). We denote the set of invertible elements of \(\algebra{A}\) by \(\invertible{\algebra{A}}\).
+\end{definition}
+\begin{remark}
+    It should be clear that an inverse element is unique from associativity.
+\end{remark}
+
+Unlike finite dimensional spaces, it is necessary to require both \(ab = \unity\) and \(ba = \unity\) in infinite dimensional spaces, as the following example illustrates.
+\begin{example}{Shift operators in \(\ell_2\)}{shift_example}
+    Let \(a \in \ell_2\), the \emph{shift operator} \(S : \ell_2 \to \ell_2\) is defined by the sequence \(Sa\), where \(Sa(1) = 0\) and \(Sa(n+1) = a(n)\) for all \(n \in \mathbb{N}\). Then its adjoint map \(S^*\) is defined by \(Sa(n) = a(n+1)\) for all \(n \in \mathbb{N}\) and satisfies \(S^*\circ S = \unity\), but does not satisfy \(S \circ S^* = \unity\).
+\end{example}
+\begin{proof}
+    Let \(x,y \in \ell_2\), then
+    \begin{equation*}
+        \inner{x}{Sy} = \sum_{k=1}^\infty \conj{x(k)} Sy(k) = \sum_{k=2}^\infty \conj{x(k)} y(k-1) = \sum_{k=1}^\infty \conj{x(k+1)}y(k) = \sum_{k=1}^\infty \conj{S^*x(k)}y(k) = \inner{S^*x}{y},
+    \end{equation*}
+    as claimed. We also have
+    \begin{equation*}
+        S^* \circ Sx(n) = S^*x(n+1) = x(n),
+    \end{equation*}
+    for all \(n \in \mathbb{N}\), that is \(S^* \circ S = \unity\). Notice, however the sequence \(S \circ S^* x\) has \(S\circ S^* x(1) = 0 \neq x(1),\) hence \(S \circ S^* \neq \unity\).
+\end{proof}
+
+We recall the definition of a group.
+\begin{definition}{Group}{group}
+    A \emph{group} \((S, \bullet)\) is a non-empty set \(S\) equipped with an associative product \(\bullet : S \times S \to S\) satisfying the following properties:
+    \begin{enumerate}[label=(\alph*)]
+        \item there exists a unique element \(e \in S\), called the \emph{identity element}, such that \(e\bullet s = s \bullet e = s\) for all \(s \in S\); and
+        \item for each \(s \in S\) there exists a unique element \(s^{-1} \in S\), called the \emph{inverse element of \(s\)}, such that \(s \bullet s^{-1} = s^{-1} \bullet s = e\).
+    \end{enumerate}
+    If, in addition, \topology{S} is a topological space, we say \(S\) is a \emph{topological group}, or \emph{continuous group}, if the maps \(\bullet : S \times S \to S\) and \(^{-1} : S \to S\) are continuous.
+\end{definition}
+
+We'll follow the group notation and denote the inverse element of \(a \in \algebra{A}\) by \(a^{-1}\).
+\begin{proposition}{Group of invertible elements}{group_invertible}
+    Let \(\algebra{A}\) be a Banach algebra with identity. Then \((\invertible{\algebra{A}}, \cdot)\) is a group.
+\end{proposition}
+\begin{proof}
+    Let \(a, b \in \invertible{\algebra{A}}\), then
+    \begin{equation*}
+        (b^{-1} a^{-1}) (ab) = b^{-1} (a^{-1}a)b = b^{-1}b = \unity\quad\text{e}\quad
+        (ab) (b^{-1} a^{-1}) = a(bb^{-1})a^{-1} = aa^{-1} = \unity,
+    \end{equation*}
+    that is, the product is closed in \(\invertible{\algebra{A}}\). It is clear that the identity element is \(\unity\) and the existence of the inverse elements follows by construction.
+\end{proof}
+
+It is often important to know sufficient conditions for the existence of the inverse of an operator.
+\begin{proposition}{Sufficient condition for the invertibility of an operator}{prop411}
+    Let \(\algebra{A}\) be a unital Banach algebra. Let \(u, v \in \algebra{A}\), then \(\unity - uv \in \invertible{\algebra{A}}\) if and only if \(\unity - vu \in \invertible{\algebra{A}}\).
+\end{proposition}
+\begin{proof}
+    Suppose \(\unity - vu \in \invertible{\algebra{A}}\) and set \(w = (\unity - vu)^{-1}\). Then,
+    \begin{align*}
+        (\unity - uv)(\unity + uwv) &= \unity + uwv - uv - uvuwv&
+        (\unity + uwv)(\unity - uv) &= \unity + uwv - uv - uwvuv\\
+                                    &= \unity - uv + u(\unity - vu)wv&
+                                    &= \unity - uv + uw(\unity - vu)v\\
+                                    &= \unity - uv + uv&
+                                    &= \unity - uv + uv\\
+                                    &= \unity&
+                                    &= \unity,
+    \end{align*}
+    that is, \(\unity - uv \in \invertible{\algebra{A}}\). The converse is shown by simply replacing \(u\) with \(v\).
+\end{proof}
+
+Recall \cref{thm:neumann-series} where we provided a strong limit for the inverse of a bounded operator defined on a Banach space. We now show that series is actually uniformly convergent.
+\begin{theorem}{C. Neumann series}{neumann_series_algebra}
+    Let \(\algebra{A}\) be a Banach algebra with identity. If \(w \in \algebra{A}\) is such that \(\norm{w} < 1\), then \(\unity - w \in \invertible{\algebra{A}}\) with
+    \begin{equation*}
+        (\unity - w)^{-1} = \unity + \sum_{k=1}^\infty w^k,
+    \end{equation*}
+    with convergence given with respect to the norm of \(\algebra{A}\).
+\end{theorem}
+\begin{proof}
+    Let \(s_n = \unity + \sum_{k=1}^n w^k\) for all \(n \in \mathbb{N}\).  Then, for all \(n, m \in \mathbb{N}\) with \(m > n\) we have
+    \begin{equation*}
+        \norm{s_n - s_m} \leq \sum_{k=n+1}^m \norm*{w^k}
+        \leq \sum_{k = n+1}^m \norm{w}^k
+        \leq \norm{w}^{n+1} \sum_{k=0}^{m-n-1} \norm{w}^k
+        < \norm{w}^{n+1} \sum_{k=0}^{\infty} \norm{w}^k = \frac{\norm{w}^{n+1}}{1 - \norm{w}}.
+    \end{equation*}
+    We may take \(n\) arbitrarily large as to make \(\norm{s_n - s_m}\) arbitrarily small, hence \(\family{s_n}{n\in \mathbb{N}}\) is a Cauchy sequence in \(\algebra{A}\). By completeness, we've shown \(\family{s_n}{n\in \mathbb{N}}\) converges against some  \(v \in \algebra{A}\).
+
+    Note also that \(w^k \to 0\) since \(\norm{w^k} < \norm{w}^k \to 0\). Then, the continuity of the product yields
+    \begin{align*}
+        wv &= w + w\left(\lim_{n\to \infty} \sum_{k=1}^n w^k\right)&
+        vw &= w + \left(\lim_{n\to \infty} \sum_{k=1}^n w^k\right)w\\
+           &= w + \lim_{n\to\infty} \sum_{k=1}^n w^{k+1}&
+           &= w + \lim_{n\to\infty} \sum_{k=1}^n w^{k+1}\\
+           &= w + \lim_{n \to \infty} \left(w^{n+1} - w + \sum_{k = 1}^n w^k\right)&
+           &= w + \lim_{n \to \infty} \left(w^{n+1} - w + \sum_{k = 1}^n w^k\right)\\
+           &= \lim_{n \to \infty} w^{n+1} + \lim_{n\to \infty} \sum_{k=1}^\infty w^k&
+           &= \lim_{n \to \infty} w^{n+1} + \lim_{n\to \infty} \sum_{k=1}^\infty w^k\\
+           &= v - \unity&
+           &= v - \unity,
+    \end{align*}
+    that is, \( (\unity-w)v = v(\unity- w) =\unity\).
+\end{proof}
+
+The following results will show the group of invertible elements in a unital Banach algebra is a topological group with respect to the uniform topology.
+\begin{proposition}{Set of invertible elements is open in the uniform topology}{invertible_open}
+    Let \(\algebra{A}\) be a unital Banach algebra. If \(v \in \algebra{A}\) satisfies \(\norm{\unity - v w^{-1}} < 1\) for some some \(w \in \invertible{\algebra{A}}\), then \(v \in \invertible{\algebra{A}}\) with
+    \begin{equation*}
+        v^{-1} = w^{-1} \left[\unity + \sum_{k=1}^\infty\left(\unity - vw^{-1}\right)^k\right],
+    \end{equation*}
+    converging in the uniform norm.
+\end{proposition}
+\begin{proof}
+    By \cref{thm:neumann_series_algebra}, we have \(vw^{-1} \in \invertible{\algebra{A}}\), hence \(v = vw^{-1}w\) is invertible. We also have
+    \begin{equation*}
+        wv^{-1} = (vw^{-1})^{-1} = \left[\unity - (\unity - vw^{-1})\right]^{-1} = \unity + \sum_{k=1}^\infty (\unity - vw^{-1})^{k},
+    \end{equation*}
+    and the result follows.
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital Banach algebra. Then the set of invertible elements \(\invertible{\algebra{A}}\) is open in the uniform topology.
+\end{corollary}
+\begin{proof}
+    Let \(w \in S\), then consider the open ball \(S\) of radius \(\norm{w^{-1}}^{-1}\) centered at \(w\). Let \(v \in S\), then
+    \begin{equation*}
+        \norm{\unity - vw^{-1}} \leq \norm{v - w}\norm{w^{-1}} < \norm{w^{-1}}^{-1}\norm{w^{-1}} = 1,
+    \end{equation*}
+    and it follows that \(v \in \invertible{\algebra{A}}\). That is, \(\invertible{\algebra{A}} \subset \inte_{\algebra{A}}\invertible{\algebra{A}}\).
+\end{proof}
+
+\begin{proposition}{The group of invertible operators is a continuous group}{invertible_continuous_group}
+    Let \(\algebra{A}\) be a unital Banach algebra. Then the map
+    \begin{align*}
+        \noarg^{-1} : \invertible{\algebra{A}} &\to \invertible{\algebra{A}}\\
+                                             w &\mapsto w^{-1}
+    \end{align*}
+    is continuous with respect to the topology on \(\invertible{\algebra{A}}\) induced by the uniform topology.
+\end{proposition}
+\begin{proof}
+    Let \(\tilde{v} \in \invertible{\algebra{A}}\), and let \(S\) be the open ball around \(\tilde{v}\) with radius \(\norm{\tilde{v}^{-1}}^{-1}\), which is contained in \(\invertible{\algebra{A}}\) by the previous result. For all \(u \in S\) we have
+    \begin{equation*}
+        u = u - \tilde{v} + \tilde{v} = \tilde{v}\tilde{v}^{-1}(u - \tilde{v}) + \tilde{v} = \tilde{v}\left[\unity + \tilde{v}^{-1}(u -\tilde{v})\right] \implies u^{-1} = \left[\unity + \tilde{v}^{-1}(u -\tilde{v})\right]^{-1} \tilde{v}^{-1},
+    \end{equation*}
+    hence
+    \begin{equation*}
+        u^{-1} - \tilde{v}^{-1} = \left\{\left[\unity + \tilde{v}^{-1}(u -\tilde{v})\right]^{-1} - \unity\right\}\tilde{v}^{-1}.
+    \end{equation*}
+    Now \(\norm{\tilde{v}^{-1}(u - \tilde{v})} \leq \norm{\tilde{v}^{-1}}\norm{u-\tilde{v}} < \norm{\tilde{v}^{-1}}\norm{\tilde{v}^{-1}}^{-1} = 1\), then
+    \begin{equation*}
+        u^{-1} - \tilde{v}^{-1} = \left\{\sum_{k=1}^\infty (-1)^k \left[\tilde{v}^{-1}(u-\tilde{v})\right]^k \right\}\tilde{v}^{-1},
+    \end{equation*}
+    for all \(u \in S\).
+
+    Let \(\varepsilon > 0\) and set
+    \begin{equation*}
+        \delta = \min\set*{\frac{\varepsilon\norm{\tilde{v}^{-1}}^{-1}}{\norm{\tilde{v}^{-1}} + \varepsilon}, \frac12\norm{\tilde{v}^{-1}}^{-1}},
+    \end{equation*}
+    then for all \(v \in \invertible{\algebra{A}}\) such that \(\norm{\tilde{v} - v} < \delta\),  we have \(v \in S\) and, as a consequence,
+    \begin{equation*}
+        \norm{v^{-1} - \tilde{v}^{-1}} \leq \norm{\tilde{v}^{-1}} \sum_{k=1}^\infty \norm{\tilde{v}^{-1}(v - \tilde{v})}^k = \norm{v^{-1}} \frac{\norm{\tilde{v}^{-1}(v - \tilde{v})}}{1 - \norm{\tilde{v}^{-1}(v - \tilde{v})}} \leq \frac{\norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}}{1 - \norm{\tilde{v}^{-1}}\norm{v - \tilde{v}}},
+    \end{equation*}
+    since \(\norm{\tilde{v}^{-1}(v-\tilde{v})} < 1\). Notice
+    \begin{equation*}
+        1 - \delta \norm{\tilde{v}^{-1}} < 1 - \norm{\tilde{v}^{-1}}\norm{\tilde{v} - v} < 1,
+    \end{equation*}
+    from which follows
+    \begin{align*}
+        \norm{v^{-1} - \tilde{v}^{-1}} \leq \frac{\norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}}{1 - \norm{\tilde{v}^{-1}} \norm{\tilde{v} - v}} &< \frac{\norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}}{1 - \delta \norm{\tilde{v}^{-1}}} \\
+        &= \norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}\min\set*{2, \norm{\tilde{v}^{-1}}^{-1}\varepsilon + 1}\\
+        &< \min\set*{\frac{2 \varepsilon \norm{\tilde{v}^{-1}}}{\norm{\tilde{v}^{-1}} + \varepsilon}, \norm{\tilde{v}^{-1}}, \varepsilon, \frac{\norm{\tilde{v}^{-1}} + \varepsilon}2} \leq \varepsilon,
+    \end{align*}
+    whenever \(\norm{\tilde{v} - v} < \delta\).
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital Banach algebra. Then, \(\invertible{\algebra{A}}\) is a topological group with respect to the topology induced on \(\invertible{\algebra{A}}\) by the uniform topology.
+\end{corollary}
