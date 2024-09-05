@@ -146,7 +146,7 @@ With the above definition, we may use the norm for estimating certain quantities
 
 We now abstract the adjoint operation on \(\bounded(\hilbert)\) to associative algebras.
 \begin{definition}{Involution and *-algebra}{involutive_algebra}
-    Let \(\algebra{A}\) be an associative algebra. An \emph{involution} is a map
+    Let \(\algebra{A}\) be an associative algebra. An \emph{involution}, or \emph{adjoint operation}, is a map
     \begin{align*}
         * : \algebra{A} &\to \algebra{A}\\
                       a &\mapsto a^*
@@ -158,13 +158,13 @@ We now abstract the adjoint operation on \(\bounded(\hilbert)\) to associative a
         \item antilinearity: \((\alpha a + \beta b)^* = \conj{\alpha}a^* + \conj{\beta}b^*\), for all \(a,b \in \algebra{A}\) and all \(\alpha, \beta \in \mathbb{C}\); and
         \item if \(\algebra{A}\) is unital, then \(\unity^* = \unity\).
     \end{enumerate}
-    If \(\algebra{A}\) has an involution, we say \(\algebra{A}\) is a \emph{*-algebra} or \emph{involutive algebra}.
+    If \(\algebra{A}\) has an involution, we say \(\algebra{A}\) is a \emph{*-algebra} or \emph{involutive algebra}. If \(a \in \algebra{A}\), we say \(a^*\) is the \emph{adjoint} of \(a\). If \(a^* = a,\) we say \(a\) is \emph{self-adjoint}.
 \end{definition}
 \begin{remark}
     Note the antilinearity of the involution implies \(0^* = (x-x)^* = x^* - x^* = 0\), that is \(0^* = 0\). Moreover, if \(a^* = 0 \iff a = 0\) by involutivity.
 \end{remark}
 \begin{remark}
-    We may denote an involution by \(\inv_{\algebra{A}} : \algebra{A} \to \algebra{A}\) when composing maps.
+    We may denote an involution by \(\adjoint_{\algebra{A}} : \algebra{A} \to \algebra{A}\) when composing maps.
 \end{remark}
 
 The following example uses the adjoint operation to define another involution on \(\bounded(\hilbert)\).

@@ -5,7 +5,7 @@ A usual, we define the maps that preserve the structure of a given space. In the
     Let \(\algebra{A}, \algebra{B}\) be *-algebras. A \emph{*-homomorphism} is a linear map \(\pi : \algebra{A} \to \algebra{B}\) satisfying
     \begin{enumerate}[label=(\alph*)]
         \item \(\pi(ab) = \pi(a) \pi(b)\) for all \(a, b \in \algebra{A}\); and
-        \item \(\pi\circ \inv_{\algebra{A}} = \inv_{\algebra{B}}\circ \pi\).
+        \item \(\pi\circ \adjoint_{\algebra{A}} = \adjoint_{\algebra{B}}\circ \pi\).
     \end{enumerate}
     If there exists a bijective *-homomorphism \(\pi: \algebra{A} \to \algebra{B}\), we say \(\algebra{A}\) is *-isomorphic to \(\algebra{B}\) and that \(\pi\) is a *-isomorphism.
 \end{definition}
@@ -20,7 +20,7 @@ A usual, we define the maps that preserve the structure of a given space. In the
     \end{equation*}
     and
     \begin{equation*}
-        \pi_2\circ \pi_1 \circ \inv_{\algebra{A}} = \pi_2 \circ \inv_{\algebra{B}} \circ \pi_1 = \inv_{\algebra{C}} \circ \pi_2 \circ \pi_1,
+        \pi_2\circ \pi_1 \circ \adjoint_{\algebra{A}} = \pi_2 \circ \adjoint_{\algebra{B}} \circ \pi_1 = \adjoint_{\algebra{C}} \circ \pi_2 \circ \pi_1,
     \end{equation*}
     as desired.
 \end{proof}
@@ -34,7 +34,7 @@ A usual, we define the maps that preserve the structure of a given space. In the
     \end{equation*}
     and
     \begin{equation*}
-        \pi^{-1} \circ \inv_{\algebra{B}} = \pi^{-1} \circ \inv_{\algebra{B}} \circ \pi \circ \pi^{-1} = \pi^{-1} \circ \pi \circ \inv_{\algebra{A}} \circ \pi^{-1} = \inv_{\algebra{A}}\circ \pi^{-1}
+        \pi^{-1} \circ \adjoint_{\algebra{B}} = \pi^{-1} \circ \adjoint_{\algebra{B}} \circ \pi \circ \pi^{-1} = \pi^{-1} \circ \pi \circ \adjoint_{\algebra{A}} \circ \pi^{-1} = \adjoint_{\algebra{A}}\circ \pi^{-1}
     \end{equation*}
     hence \(\pi^{-1}\) is a *-isomorphism. The converse is shown mutatis mutandis.
 \end{proof}
