@@ -27,7 +27,11 @@ Prior to defining the spectrum of an operator of a Banach algebra, we study the 
     Let \(T\in \bounded(X)\) be a bounded operator in a Banach space \(X\). If \(T^{-1}\) exists and is bounded, then \(\range{T}\) is closed.
 \end{corollary}
 \begin{proof}
-    As \(T^{-1}\) is continuous, \(\range{T} = \preim{T^{-1}}{X}\) is closed.
+    Let \(\family{y_n}{n\in \mathbb{N}} \subset \range{T}\) be a sequence that converges against some \(\tilde{y} \in X\), then there exists \(\family{x_n}{n \in \mathbb{N}} \subset X\) such that \(x_n = T^{-1} y_n\). Since \(T^{-1}\) is uniformly continuous, \(x_n\) is a Cauchy sequence, hence converges against some \(\tilde{x} \in X\). For all \(n \in \mathbb{N}\), we have
+    \begin{equation*}
+        \norm{T\tilde{x} - y_n} = \norm{T(\tilde{x} - x_n)} \leq \norm{T}\norm{\tilde{x} - x_n},
+    \end{equation*}
+    hence \(y_n \to T\tilde{x}\). That, is \(\tilde{y} = T\tilde{x} \in \range{T}\).
 \end{proof}
 
 By abstracting the notion of inverses to Banach algebras, we may obtain results in this context and particularize them for bounded operators in Banach or Hilbert spaces.
@@ -38,15 +42,33 @@ By abstracting the notion of inverses to Banach algebras, we may obtain results 
     It should be clear that an inverse element is unique from associativity.
 \end{remark}
 
+\begin{proposition}{Invertibility compatible with scalar multiplication}{invertible_scalar}
+    Let \(\algebra{A}\) be an associative algebra with identity. An operator \(w \in \algebra{A}\) is invertible if and only if \(\lambda w \in \invertible{\algebra{A}}\) for all \(\lambda \in \mathbb{C} \setminus \set{0}.\)
+\end{proposition}
+\begin{proof}
+    Suppose \(w \in \invertible{\algebra{A}}\) and let \(\lambda \in \mathbb{C} \setminus \set{0
+    }\). Then
+    \begin{equation*}
+        (\lambda^{-1} w^{-1})(\lambda w) = w^{-1} w = \unity
+        \quad\text{and}\quad
+        (\lambda w)(\lambda^{-1} w^{-1}) = w w^{-1} = \unity
+    \end{equation*}
+    that is, \(\lambda w \in \invertible{\algebra{A}}\). The converse is obviously true.
+\end{proof}
+
 Unlike finite dimensional spaces, it is necessary to require both \(ab = \unity\) and \(ba = \unity\) in infinite dimensional spaces, as the following example illustrates.
 \begin{example}{Shift operators in \(\ell_2\)}{shift_example}
     Let \(a \in \ell_2\), the \emph{shift operator} \(S : \ell_2 \to \ell_2\) is defined by the sequence \(Sa\), where \(Sa(1) = 0\) and \(Sa(n+1) = a(n)\) for all \(n \in \mathbb{N}\). Then its adjoint map \(S^*\) is defined by \(Sa(n) = a(n+1)\) for all \(n \in \mathbb{N}\) and satisfies \(S^*\circ S = \unity\), but does not satisfy \(S \circ S^* = \unity\).
 \end{example}
 \begin{proof}
     Let \(x,y \in \ell_2\), then
-    \begin{equation*}
-        \inner{x}{Sy} = \sum_{k=1}^\infty \conj{x(k)} Sy(k) = \sum_{k=2}^\infty \conj{x(k)} y(k-1) = \sum_{k=1}^\infty \conj{x(k+1)}y(k) = \sum_{k=1}^\infty \conj{S^*x(k)}y(k) = \inner{S^*x}{y},
-    \end{equation*}
+    \begin{align*}
+        \inner{x}{Sy} = \sum_{k=1}^\infty \conj{x(k)} Sy(k)
+                      = \sum_{k=2}^\infty \conj{x(k)} y(k-1)
+                      = \sum_{k=1}^\infty \conj{x(k+1)}y(k)
+                      = \sum_{k=1}^\infty \conj{S^*x(k)}y(k)
+                      = \inner{S^*x}{y},
+    \end{align*}
     as claimed. We also have
     \begin{equation*}
         S^* \circ Sx(n) = S^*x(n+1) = x(n),
@@ -217,7 +239,7 @@ The following results will show the group of invertible elements in a unital Ban
 
     Let \(\varepsilon > 0\) and set
     \begin{equation*}
-        \delta = \min\set*{\frac{\varepsilon\norm{\tilde{v}^{-1}}^{-1}}{\norm{\tilde{v}^{-1}} + \varepsilon}, \frac12\norm{\tilde{v}^{-1}}^{-1}},
+        \delta = \frac{\varepsilon\norm{\tilde{v}^{-1}}^{-1}}{\norm{\tilde{v}^{-1}} + \varepsilon} < \norm{\tilde{v}^{-1}}^{-1}
     \end{equation*}
     then for all \(v \in \invertible{\algebra{A}}\) such that \(\norm{\tilde{v} - v} < \delta\),  we have \(v \in S\) and, as a consequence,
     \begin{equation*}
@@ -229,9 +251,7 @@ The following results will show the group of invertible elements in a unital Ban
     \end{equation*}
     from which follows
     \begin{align*}
-        \norm{v^{-1} - \tilde{v}^{-1}} \leq \frac{\norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}}{1 - \norm{\tilde{v}^{-1}} \norm{\tilde{v} - v}} &< \frac{\norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}}{1 - \delta \norm{\tilde{v}^{-1}}} \\
-        &= \norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}\min\set*{2, \norm{\tilde{v}^{-1}}^{-1}\varepsilon + 1}\\
-        &< \min\set*{\frac{2 \varepsilon \norm{\tilde{v}^{-1}}}{\norm{\tilde{v}^{-1}} + \varepsilon}, \norm{\tilde{v}^{-1}}, \varepsilon, \frac{\norm{\tilde{v}^{-1}} + \varepsilon}2} \leq \varepsilon,
+        \norm{v^{-1} - \tilde{v}^{-1}} \leq \frac{\norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}}{1 - \norm{\tilde{v}^{-1}} \norm{\tilde{v} - v}} < \frac{\norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}}{1 - \delta \norm{\tilde{v}^{-1}}} = \norm{\tilde{v}^{-1}}^2\norm{v - \tilde{v}}\left(\norm{\tilde{v}^{-1}}^{-1}\varepsilon + 1\right) < \varepsilon
     \end{align*}
     whenever \(\norm{\tilde{v} - v} < \delta\).
 \end{proof}

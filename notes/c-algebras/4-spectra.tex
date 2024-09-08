@@ -1,3 +1,268 @@
 % vim: spl=en_us
 \section{Spectra of operators in Banach algebras}
-Please, \LaTeX
+As we have introduced the set of invertible operators of a unital associative algebra, we may study the notion of spectra and resolvent sets. In Banach algebras, the spectrum of an operator is much simpler than in general algebras, as we will show. The results here derived will be particularized to bounded operators in Banach or Hilbert spaces at a later point; for now we focus solely on Banach algebras.
+\begin{definition}{Resolvent and spectrum}{resolvent_spectrum}
+    Let \(\algebra{A}\) be a unital associative algebra and let \(a \in \algebra{A}\). The set
+    \begin{equation*}
+        \rho(a) = \setc*{\lambda \in \mathbb{C}}{\lambda \unity - a \in \invertible{\algebra{A}}}
+    \end{equation*}
+    is the \emph{resolvent set of \(a\)}.  The set
+    \begin{equation*}
+        \sigma(a) = \setc*{\lambda \in \mathbb{C}}{\lambda \unity - a \notin \invertible{\algebra{A}}}
+    \end{equation*}
+    is the \emph{spectrum \(\sigma(a)\) of \(a\)}.
+\end{definition}
+\begin{remark}
+    It is clear the spectrum is the complement of the resolvent set, that is, \(\sigma(a) = \mathbb{C} \setminus \rho(a)\).
+\end{remark}
+
+\cref{prop:prop411} can be stated in terms of the spectra and resolvent sets of \(uv\) and \(vu\).
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital associative algebra. Let \(u, v \in \algebra{A}\), then \(\sigma(uv) \setminus \set{0} = \sigma(vu) \setminus\set{0}\) and \(\rho(uv)\setminus\set{0} = \rho(vu)\setminus\set{0}\).
+\end{corollary}
+\begin{proof}
+    Let \(\lambda \in \rho(vu)\setminus\set{0}\), then \(\lambda \unity - vu \in \invertible{\algebra{A}}\). By \cref{prop:invertible_scalar}, we have \(\unity - \lambda^{-1} vu \in \invertible{\algebra{A}}\), hence \( \unity - \lambda^{-1} uv \in \invertible{\algebra{A}}\) by \cref{prop:prop411}, that is, \(\rho(vu) \setminus \set{0} \subset \rho(uv)\setminus \set{0}\). The converse is shown by replacing \(u\) and \(v\).
+
+    Let \(\lambda \in \sigma(uv) \setminus \set{0},\) then \(\lambda \unity - uv \notin \invertible{\algebra{A}}\). \cref{prop:invertible_scalar} shows that \(\unity - \lambda^{-1} uv\) must not be invertible. \cref{prop:prop411} lets us conclude \(\unity - \lambda^{-1} vu \notin \invertible{\algebra{A}}\), hence \(\lambda \in \sigma(vu) \setminus\set{0}\). The converse is shown \emph{mutatis mutandis}.
+\end{proof}
+
+That is, the spectra of \(uv\) and \(vu\) may only be different at zero, which we illustrate with the shift operators in \(\ell_2\).
+\begin{example}{Spectra of the shift operators}{spectra_shift}
+    Consider the shift operators \(S, S^* \in \bounded(\ell_2)\) defined in \cref{exam:shift_example}. Then \(\sigma(S\circ S^*) = \set{0,1}\) and \(\sigma(S^* \circ S) = \set{1}\).
+\end{example}
+\begin{proof}
+    It is clear \(\rho(S^*\circ S) = \mathbb{C} \setminus \set{1}\), since \(\lambda\unity - S^* \circ S = (\lambda - 1)\unity\), which is invertible for all \(\lambda \neq 1\). To see \(\set{0,1}\subset\sigma(S \circ S^*)  \), we consider the sequences \(u,v \in \ell_2\) defined by
+    \begin{equation*}
+        u(n) = \begin{cases}
+            1,&\text{if }n = 1\\
+            0,&\text{otherwise}.
+        \end{cases}
+        \quad\text{and}\quad
+        v(n) = \begin{cases}
+            0,&\text{if }n = 1\\
+            2^{-n},&\text{otherwise}
+        \end{cases}
+    \end{equation*}
+    Then, \(S \circ S^*u = 0\) and \((\unity - S \circ S^*)v = 0\), hence \(S \circ S^*\) and \((\unity - S\circ S^*)\) are not injective. The previous corollary guarantees the spectrum of \(S\circ S^*\) is \(\set{0,1}\).
+\end{proof}
+
+An immediate consequence of the previous corollary is the similarity invariance of the spectrum.
+\begin{proposition}{Similarity invariance}{similarity_invariance}
+    Let \(\algebra{A}\) be a unital associative algebra. If \(u \in \invertible{\algebra{A}}\), then \(\sigma(uvu^{-1}) = \sigma(v)\) for all \(v \in \algebra{A}\).
+\end{proposition}
+\begin{proof}
+    It is clear that \(\sigma(uvu^{-1})\setminus\set{0} = \sigma(v)\setminus\set{0}\). Since
+    \begin{equation*}
+        0 \in \rho(v) \iff v \in \invertible{\algebra{A}} \iff uvu^{-1} \in \invertible{\algebra{A}} \iff 0 \in \rho(uvu^{-1}),
+    \end{equation*}
+    we have \(\sigma(uvu^{-1}) = \sigma(v)\).
+\end{proof}
+\begin{corollary}
+    If \(u,v \in \invertible{\algebra{A}}\), then \(\sigma(uv) = \sigma(vu)\).
+\end{corollary}
+\begin{proof}
+    We have \(\sigma(u(vu)u^{-1}) = \sigma(vu)\) by the previous proposition.
+\end{proof}
+
+The spectra of the adjoint and of the inverse operators to an invertible operator can be easily related to its spectrum.
+\begin{proposition}{Spectrum of the inverse operator}{spectrum_inverse}
+    Let \(\algebra{A}\) be a unital associative algebra. If \(u \in \invertible{\algebra{A}}\), then \(\sigma(u^{-1}) = \setc{\lambda \in \mathbb{C}}{\lambda^{-1} \in \sigma(u)}\).
+\end{proposition}
+\begin{proof}
+    Since \(u \in \invertible{\algebra{A}}\), \(0 \notin \sigma(u)\). For \(\lambda \in \mathbb{C} \setminus \set{0}\), we have
+    \begin{equation*}
+        \lambda \unity - u^{-1} \notin \invertible{\algebra{A}} \iff -\lambda^{-1} u \left(\lambda \unity - u^{-1}\right) \notin \invertible{\algebra{A}} \iff \lambda^{-1}\unity - u \notin \invertible{\algebra{A}},
+    \end{equation*}
+    hence \(\lambda \in \sigma(u^{-1})\) if and only if \(\lambda^{-1} \in \sigma(u)\).
+\end{proof}
+\begin{proposition}{Spectrum of the adjoint of an operator}{spectrum_adjoint}
+    Let \(\algebra{A}\) be a unital *-algebra. If \(u \in \invertible{\algebra{A}}\), then \(\sigma(u^*) = \setc{\lambda \in \mathbb{C}}{\conj{\lambda} \in \sigma(u)}\).
+\end{proposition}
+\begin{proof}
+    Since \(\invertible{\algebra{A}}\) is self-adjoint, we have
+    \begin{equation*}
+        \lambda \unity - u^* \notin \invertible{\algebra{A}} \iff (\lambda \unity - u^*)^* \notin \invertible{\algebra{A}} \iff \conj{\lambda}\unity - u \notin \invertible{\algebra{A}},
+    \end{equation*}
+    hence \(\lambda \in \sigma(u^*)\) if and only if \(\conj{\lambda} \in \sigma(u)\).
+\end{proof}
+For an invertible operator \(u \in \invertible{\algebra{A}}\) in a unital *-algebra \(\algebra{A}\), we'll denote
+\begin{equation*}
+    \sigma(u)^{-1} = \setc{\lambda \in \mathbb{C}}{\lambda^{-1} \in \sigma(u)} \quad\text{and}\quad \conj{\sigma(u)} = \setc{\lambda \in \mathbb{C}}{\conj{\lambda} \in \sigma(u)}
+\end{equation*}
+for the spectra of \(u^{-1}\) and \(u^*\), respectively.
+
+\subsection{Topological properties of the spectrum}
+We may associate an operator with each complex number in the resolvent set of an operator.
+\begin{definition}{Resolvent operator}{resolvent_operator}
+    Let \(\algebra{A}\) be a unital associative algebra. Let \(a \in \algebra{A}\) and \(\lambda \in \rho(a)\), the operator
+    \begin{equation*}
+        R_\lambda(a) = (\lambda \unity - a)^{-1}
+    \end{equation*}
+    is the \emph{resolvent of \(a\) at \(\lambda\)}.
+\end{definition}
+
+By studying the resolvent operator, we may derive many conclusions about the spectra of operators. We begin with simple properties of the resolvent.
+\begin{proposition}{Resolvent and operator commute}{resolvent_commute}
+    Let \(\algebra{A}\) be a unital associative algebra. If \(R_{\lambda}(a) \in \algebra{A}\) is the resolvent of \(a \in \algebra{A}\) at \(\lambda \in \rho(a)\), then \(R_{\lambda}(a)a = aR_{\lambda}(a)\).
+\end{proposition}
+\begin{proof}
+    Since \(R_{\lambda}(a) \in \invertible{\algebra{A}}\), we have
+    \begin{equation*}
+        R_{\lambda}(a) R_{\lambda}(a)^{-1} = \unity \implies a R_{\lambda}(a) R_{\lambda}(a)^{-1} = a \implies a R_{\lambda}(a) = a R_{\lambda}(a),
+    \end{equation*}
+    as desired.
+\end{proof}
+
+\begin{proposition}{First resolvent identity}{first_resolvent_identity}
+    Let \(\algebra{A}\) be a unital associative algebra and let \(a \in \algebra{A}\). Then
+    \begin{equation*}
+        R_{\lambda}(a) - R_{\mu}(a) = (\mu - \lambda)R_{\lambda}(a)R_{\mu}(a)
+    \end{equation*}
+    for all \(\lambda, \mu \in \rho(a)\).
+\end{proposition}
+\begin{proof}
+    We have
+    \begin{equation*}
+        R_{\lambda}(a) = R_{\lambda}(a)(\mu \unity - a)R_{\mu}(a) = R_{\lambda}(a) \left[(\mu - \lambda)\unity + (\lambda \unity - u)\right]R_{\mu}(a) = (\mu - \lambda)R_{\lambda}(a) R_{\mu}(a) - R_{\mu}(a)
+    \end{equation*}
+    for all \(\lambda, \mu \in \rho(a)\).
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital associative algebra and let \(a \in \algebra{A}\). Then, \(R_{\lambda}(a)R_{\mu}(a) = R_{\mu}(a)R_{\lambda}(a)\) for all \(\lambda, \mu \in \rho(a)\).
+\end{corollary}
+\begin{proof}
+    The first resolvent identity yields
+    \begin{equation*}
+        (\mu - \lambda)R_{\lambda}(a)R_{\mu}(a) = R_{\lambda}(a) - R_{\mu}(a) = -(\lambda - \mu)R_{\mu}(a)R_{\lambda}(a),
+    \end{equation*}
+    then
+    \begin{equation*}
+        (\mu - \lambda)\left[R_{\lambda}(a) R_{\mu}(a) - R_{\mu}(a) R_{\lambda}(a)\right] = 0
+    \end{equation*}
+    for all \(\mu,\lambda \in \rho(a)\) and the result follows.
+\end{proof}
+\begin{proposition}{Second resolvent identity}{second_resolvent_identity}
+    Let \(\algebra{A}\) be a unital associative algebra and let \(u, v \in \algebra{A}\). Then,
+    \begin{equation*}
+        R_{\lambda}(u) - R_{\lambda}(v) = R_{\lambda}(u) (u - v) R_{\mu}(v)
+    \end{equation*}
+    for all \(\lambda \in \rho(u) \cap \rho(v)\).
+\end{proposition}
+\begin{proof}
+    We have
+    \begin{equation*}
+        R_{\lambda}(u) (u-v) R_{\lambda}(v) = R_{\lambda}(u) \left[(\lambda \unity - v) - (\lambda \unity - u)\right] R_{\lambda}(v) = R_{\lambda}(u) - R_{\lambda}(v)
+    \end{equation*}
+    for all \(\lambda \in \rho(u) \cap \rho(v)\).
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital associative algebra and let \(u, v \in \algebra{A}\). Then,
+    \begin{equation*}
+        R_{\lambda}(u) - R_{\lambda}(v) = R_{\lambda}(v) (u - v) R_{\mu}(u)
+    \end{equation*}
+    for all \(\lambda \in \rho(u) \cap \rho(v)\).
+\end{corollary}
+\begin{proof}
+    Exchanging \(u\) and \(v\) in the second identity yields the result.
+\end{proof}
+\begin{proposition}{Third resolvent identity}{third_resolvent_identity}
+    Let \(\algebra{A}\) be a unital associative algebra and let \(u, v \in \algebra{A}\). Then,
+    \begin{equation*}
+        R_{\lambda}(uv) = \lambda^{-1}\left[\unity + uR_{\lambda}(vu)v\right]
+    \end{equation*}
+    for all \(\lambda \in \rho(vu)\setminus\set{0}\).
+\end{proposition}
+\begin{proof}
+    Let \(\lambda \in \rho(vu)\setminus\set{0},\) then \(R_{\lambda}(vu) = \lambda^{-1}(\unity - \lambda^{-1}vu)^{-1}\). We repeat the proof of \cref{prop:prop411}:
+    \begin{align*}
+        \left[\lambda^{-1}\unity + \lambda^{-1}uR_{\lambda}(vu)v\right](\lambda\unity - uv)
+        &= \unity + uR_{\lambda}(vu)v - \lambda^{-1}uv - \lambda^{-1}uR_{\lambda}(vu)vuv\\
+        &= \unity - \lambda^{-1}uv + uR_{\lambda}(vu)(\unity - \lambda^{-1}vu)v\\
+        &= \unity - \lambda^{-1}uv + \lambda^{-1}uv\\
+        &= \unity,
+    \end{align*}
+    and
+    \begin{align*}
+        (\lambda\unity - uv)\left[\lambda^{-1}\unity + \lambda^{-1}uR_{\lambda}(vu)v\right]
+        &= \unity - \lambda^{-1}uv + uR_{\lambda}(vu)v - \lambda^{-1}uvuR_{\lambda}(vu)v\\
+        &= \unity - \lambda^{-1}uv + u(\unity - \lambda^{-1}vu)R_{\lambda}(vu)v\\
+        &= \unity - \lambda^{-1}uv + \lambda^{-1}uv\\
+        &= \unity,
+    \end{align*}
+    proving our claim.
+\end{proof}
+
+\begin{lemma}{Resolvent set is open}{resolvent_set_open}
+    Let \(\algebra{A}\) be a unital Banach algebra and let \(a \in \algebra{A}\). If \(\mu \in \rho(a)\), then the open ball \(B_{\norm{R_\mu(a)}^{-1}}(\mu)\) is contained in \(\rho(a)\) and
+    \begin{equation*}
+        R_{\lambda}(a) = R_\mu(a)\left\{\unity + \sum_{n = 1}^{\infty} \left[(\mu - \lambda)R_\mu(a)\right]^n\right\} = \left\{\unity + \sum_{n = 1}^{\infty}\left[(\mu - \lambda)R_\mu(a)\right]^n\right\}R_{\mu}(a)
+    \end{equation*}
+    for all \(\lambda \in B_{\norm{R_\mu(a)}^{-1}}(\mu)\).
+\end{lemma}
+\begin{proof}
+    Notice
+    \begin{equation*}
+        (\kappa \unity - a)R_\mu(a) = \left[(\kappa - \mu)\unity + (\mu \unity - a)\right]R_{\mu}(a) = \unity + (\kappa - \mu)R_{\mu}(a),
+    \end{equation*}
+    for all \(\kappa \in \mathbb{C}\).
+
+    Let \(\lambda \in B_{\norm{R_\mu(a)}^{-1}}(\mu)\), then \(\norm{(\mu - \lambda)R_{\mu}(a)} < 1\), hence \(\unity - (\mu - \lambda)R_{\mu}(a) \in \invertible{\algebra{A}}\) and
+    \begin{equation*}
+        \unity + \sum_{n = 1}^{\infty} \left[(\mu - \lambda)R_\mu(a)\right]^n = \left[\unity - (\mu - \lambda)R_{\mu}(a)\right]^{-1} = \left[(\lambda \unity - a)R_\mu(a)\right]^{-1}
+    \end{equation*}
+    by \cref{thm:neumann_series_algebra}. Since \(\invertible{\algebra{A}}\) is closed under the product and \(R_\mu(a) \in \invertible{\algebra{A}}\), we have \(\lambda \in \rho(a)\) and
+    \begin{equation*}
+        \unity + \sum_{n = 1}^{\infty} \left[(\mu - \lambda)R_\mu(a)\right]^n = (\mu\unity - a)R_{\lambda}(a),
+    \end{equation*}
+    concluding our proof.
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital Banach algebra. The spectrum of an operator is a closed subset of \(\mathbb{C}\).
+\end{corollary}
+\begin{proof}
+    Let \(a \in \algebra{A}.\) If \(\rho(a)\) is empty, then \(\sigma(a) = \mathbb{C}\) is closed, so we may assume \(\rho(a)\) is non-empty. Since every point of \(\rho(a)\) is an interior point by \cref{lem:resolvent_set_open}, we have \(\mathbb{C} \setminus \rho(a)\) open.
+\end{proof}
+
+\begin{lemma}{Linear functionals define holomorphic maps}{holomorphic}
+    Let \(\algebra{A}\) be a unital Banach algebra and \(a \in \algebra{A}\). Let \(\ell \in \algebra{A}^\dag\) be a continuous linear functional, then the map
+    \begin{align*}
+        f_{\ell} : \rho(a) &\to \mathbb{C}\\
+                   \lambda &\mapsto \ell(R_\lambda(a))
+    \end{align*}
+    is holomorphic in each connected component of \(\rho(a)\).
+\end{lemma}
+\begin{proof}
+    Let \(\mu \in \rho(a)\) and consider \(\lambda \in B_{\norm{R_\mu(a)}^{-1}}(\mu)\setminus \set{\mu},\) then
+    \begin{equation}
+        f_\ell(\lambda) = \ell(R_{\lambda}(a)) = \ell\left(R_{\mu}(a) + \sum_{n = 1}^{\infty} (\mu - \lambda)^n R_{\mu}(a)^{n+1}\right)
+    \end{equation}
+    by \cref{lem:resolvent_set_open}. Since the series converges to \((\mu \unity - a)R_{\lambda}(a) - \unity\) uniformly and \(\ell\) is uniformly continuous, we have
+    \begin{equation*}
+        f_\ell(\lambda) = \ell(R_{\mu}(a)) + \sum_{n = 1}^\infty (-1)^n\ell\left(R_\mu(a)^{n+1}\right)(\lambda - \mu)^n,
+    \end{equation*}
+    which converges absolutely in \(B_{\norm{R_\mu(a)}^{-1}}\). That is, \(f_\ell\) is holomorphic in \(B_{\norm{R_\mu(a)}^{-1}}\), hence it can be extended to the connected component of \(\rho(a)\) containing \(\mu\).
+\end{proof}
+
+\begin{theorem}{Spectrum of an operator is compact}{spectrum_compact}
+    Let \(\algebra{A}\) be a unital Banach algebra and \(a \in \algebra{A}\). Then \(\sigma(a)\) is non-empty and contained in \(\setc{\lambda \in \mathbb{C}}{\abs{\lambda} < \norm{a}}\).
+\end{theorem}
+\begin{proof}
+    Suppose, by contradiction, \(\rho(a) = \mathbb{C}\), then by \cref{lem:holomorphic} the map \(f_\ell\) is entire for every \(\ell \in \algebra{A}^\dag\). Let \(\lambda \in \setc{\lambda \in \mathbb{C}}{\abs{\lambda} > \norm{a}}\), then
+    \begin{equation*}
+        R_{\lambda}(a) = \lambda^{-1}(\unity - \lambda^{-1}a)^{-1} = \lambda^{-1}\left(\unity + \sum_{n = 1}^{\infty} \lambda^{-n}u^n\right)
+    \end{equation*}
+    by \cref{thm:neumann_series_algebra}. We have
+    \begin{equation*}
+        \norm{R_{\lambda}(a)} \leq \abs{\lambda}^{-1}\left[1 + \sum_{n = 1}^\infty \left(\frac{\norm{u}}{\abs{\lambda}}\right)^n\right] = \abs{\lambda}^{-1} \left[1 + \frac{\frac{\norm{u}}{\abs{\lambda}}}{1 - \frac{\norm{u}}{\abs{\lambda}}}\right] = \frac{1}{\abs{\lambda} - \norm{u}}
+    \end{equation*}
+    which shows \(\norm{R_{\lambda}(a)} \to 0\) as we take \(\abs{\lambda} \to \infty\). Since \(\ell\) is continuous, we have \(\abs{f_\ell(\lambda)} \leq \norm{\ell}\cdot \norm{R_{\lambda}(a)}\), from which follows \(\abs{f_\ell(\lambda)} \to 0\) as \(\abs{\lambda} \to \infty\). Liouville's theorem ensures \(f_\ell\) is identically zero in the entire complex plane. This implies \(R_\lambda(a) \in \bigcap_{\ell \in \algebra{A}^\dag}\ker{\ell},\) hence \(R_{\lambda}(a) = 0\), which is not invertible. This contradiction shows \(\rho(a) \neq \mathbb{C}\), and we conclude \(\sigma(a)\) is non-empty. Moreover, we have shown \(\setc{\lambda \in \mathbb{C}}{\abs{\lambda} > \norm{a}} \subset \rho(a),\) hence \(\sigma(a) \subset \setc{\lambda \in \mathbb{C}}{\abs{\lambda} < \norm{a}}\).
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital Banach algebra and let \(a \in \algebra{A}\). Then \(\sigma(a)\) is compact.
+\end{corollary}
+\begin{proof}
+    Since the complex plane has the Heine-Borel property, this result follows from the fact \(\norm{a}\) is a bound for the closed set \(\sigma(a)\).
+\end{proof}
+
+\subsection{Spectrum of projectors}
+\subsection{Spectral mapping theorem}
