@@ -265,4 +265,84 @@ By studying the resolvent operator, we may derive many conclusions about the spe
 \end{proof}
 
 \subsection{Spectrum of projectors}
+Abstracting the definition of projectors in Banach spaces and orthogonal projectors in Hilbert spaces we define projectors in general associative algebras.
+\begin{definition}{Projectors and orthogonal projectors}{projector_algebra}
+    Let \(\algebra{A}\) be an associative algebra. A \emph{projector} is an idempotent operator \(p \in \algebra{A}\), with \(p^2 = p\). If \(\algebra{A}\) is involutive, an \emph{orthogonal projector} is a self-adjoint projector.
+\end{definition}
+
+As expected from orthogonal projectors in Hilbert spaces, the norm of a orthogonal projector in C*-algebras is either zero or one.
+\begin{proposition}{Norm of projectors}{norm_projector}
+    Let \(\algebra{A}\) be a normed algebra. If \(p\in \algebra{A}\) is a projector, then either \(p = 0\) or \(\norm{p} \geq 1\). In addition, if \(\algebra{A}\) is a C*-algebra and \(p\) is an orthogonal projector, then \(\norm{p} \in \set{0,1}.\)
+\end{proposition}
+\begin{proof}
+    In a normed algebra, we have \( \norm{p} = \norm{p^2} \leq \norm{p}^2\), which yields \(\norm{p} \in \set{0}\cup(1,\infty)\). If follows from the C* property and self-adjointness of the orthogonal projector that
+    \begin{equation*}
+        \norm{p} = \norm{p^2} = \norm{p^*p} = \norm{p}^2,
+    \end{equation*}
+    hence \(\norm{p} \in \set{0,1}\).
+\end{proof}
+
+\begin{proposition}{Necessary and sufficient condition for a projector}{projector_sufficient}
+    Let \(\algebra{A}\) be a unital associative algebra. An operator \(p \in \algebra{A}\) is a projector if and only if \(\unity - p\) is a projector.
+\end{proposition}
+\begin{proof}
+    If \(p\) is a projector, then
+    \begin{equation*}
+        (\unity - p)^2 = \unity - 2p + p^2  = \unity - p,
+    \end{equation*}
+    that is, \(\unity - p\) is a projector.
+
+    Suppose \(\unity - p\) is a projector, then
+    \begin{equation*}
+        \unity - p=(\unity - p)^2 = \unity - 2p + p^2 \implies p^2 = p
+    \end{equation*}
+    that is, \(p\) is a projector.
+\end{proof}
+\begin{proposition}{Identity is the only invertible projector}{projector_invertible}
+    Let \(\algebra{A}\) be a unital associative algebra. A projector \(p \in \algebra{A}\) is invertible if and only if \(p = \unity\).
+\end{proposition}
+\begin{proof}
+    It is clear that \(\unity\) is a projector, since \(\unity^2 = \unity\). Suppose \(p \in \invertible{\algebra{A}}\) is a projector, then
+    \begin{equation*}
+        p^{-1}p^2 = p^{-1}p \implies p = \unity,
+    \end{equation*}
+    as desired.
+\end{proof}
+
+Let \(\algebra{A}\) be a unital Banach algebra, \(p \in \algebra{A}\) a projector, and \(\lambda \in \setc{\alpha \in \mathbb{C}}{\abs{\alpha} > 1}.\) Then \(\norm{\lambda^{-1}p} < 1\) and
+\begin{equation*}
+    \left(\unity - \lambda^{-1}p\right)^{-1} = \unity + \sum_{k = 1}^{\infty} \lambda^{-n}p^n  = \unity + \left(\sum_{k=1}^\infty \lambda^{-n}\right)p =\unity + \frac{1}{\lambda - 1}p
+\end{equation*}
+by \cref{thm:neumann_series_algebra}. \todo[Meromorphic map extension]
+\begin{lemma}{Resolvent of a projector}{resolvent_projector}
+    Let \(\algebra{A}\) be a unital associative algebra. If \(p\in\algebra{A}\) is a projector, then
+    \begin{equation*}
+        R_{\lambda}(p) = \frac{1}{\lambda}\unity + \frac{1}{\lambda(\lambda - 1)}p
+    \end{equation*}
+    is the resolvent of \(p\) at \(\lambda \in \mathbb{C} \setminus \set{0,1}.\)
+\end{lemma}
+\begin{proof}
+    Let \(\lambda \in \mathbb{C}\setminus\set{0,1}\), then
+    \begin{align*}
+        \left[\frac1\lambda\unity + \frac1{\lambda(\lambda - 1)}p\right](\lambda \unity - p)
+        &= \unity + \left(\frac{1}{\lambda-1} - \frac{1}{\lambda}\right)p - \frac{1}{\lambda(\lambda - 1)}p^2\\&= \unity + \left[\left(\frac{1}{\lambda-1} - \frac{1}{\lambda}\right) - \frac{1}{\lambda(\lambda - 1)}\right]p = \unity
+    \end{align*}
+    and
+    \begin{align*}
+        (\lambda \unity - p)\left[\frac1\lambda\unity + \frac1{\lambda(\lambda - 1)}p\right]
+        &= \unity + \left(\frac{1}{\lambda-1} - \frac{1}{\lambda}\right)p - \frac{1}{\lambda(\lambda - 1)}p^2 \\&= \unity + \left[\left(\frac{1}{\lambda-1} - \frac{1}{\lambda}\right) - \frac{1}{\lambda(\lambda - 1)}\right]p = \unity,
+    \end{align*}
+    hence \(\lambda \in \rho(p)\) and the result follows.
+\end{proof}
+
+\begin{proposition}{Spectra of projectors}{spectra_projector}
+    Let \(\algebra{A}\) be a unital associative algebra. The spectrum of a projector \(p \in \algebra{A}\) is contained in the set \(\set{0,1}\), with \(\sigma(p) = \set{0}\) if and only if \(p = 0\) and \(\sigma(p) = \set{1}\) if and only if \(p = \unity\).
+\end{proposition}
+\begin{proof}
+    \cref{lem:resolvent_projector} guarantees \(\mathbb{C} \setminus \set{0,1}\subset \rho(p)\), hence \(\sigma(p) \subset \set{0,1}\) for any projector.
+
+    In particular, \(0\) is not invertible, but \(\lambda \unity\) is invertible for all \(\lambda \in \mathbb{C} \setminus \set{0},\) thus showing that \(\sigma(0) = \set{0},\) and \(\unity\) is invertible with \((\lambda - 1)\unity\) invertible for all \(\lambda \in \mathbb{C}\setminus\set{1},\) that is, \(\sigma(\unity) = \set{1}\).
+
+    Suppose \(\sigma(p) = \set{0},\) then \(\unity - p \in \invertible{\algebra{A}}\), hence \(p = 0\) by \cref{prop:projector_invertible}. Suppose \(\sigma(p) = \set{1}\), then \(-p \in \invertible{\algebra{A}}\), hence \(p = \unity\).
+\end{proof}
 \subsection{Spectral mapping theorem}
