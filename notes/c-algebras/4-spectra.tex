@@ -345,4 +345,90 @@ by \cref{thm:neumann_series_algebra}. \todo[Meromorphic map extension]
 
     Suppose \(\sigma(p) = \set{0},\) then \(\unity - p \in \invertible{\algebra{A}}\), hence \(p = 0\) by \cref{prop:projector_invertible}. Suppose \(\sigma(p) = \set{1}\), then \(-p \in \invertible{\algebra{A}}\), hence \(p = \unity\).
 \end{proof}
+
 \subsection{Spectral mapping theorem}
+We consider a polynomial \(\varphi : \mathbb{C} \to \mathbb{C}\) of degree \(n \in \mathbb{N}\), then we may write
+\begin{equation*}
+    \varphi(z) = a_0 + \sum_{k = 1}^n a_k z^k
+    \quad\text{and}\quad
+    \varphi(z) = a_n \prod_{k = 1}^n (z - \alpha_k)
+\end{equation*}
+for all \(z \in \mathbb{C}\), where \(\ffamily{a_k}{k = 0}{n}\subset \mathbb{C} \) are the \emph{coefficients} of \(\varphi\) and \(\ffamily{\alpha_k}{k=1}{n} \subset \mathbb{C}\) are the \emph{roots} of \(\varphi\). In a unital associative algebra \(\algebra{A}\), we may define the polynomial
+\begin{align*}
+    \varphi_{\algebra{A}} : \algebra{A} &\to \algebra{A}\\
+    u &\mapsto a_0 \unity + \sum_{k=1}^{n} a_k u^k
+\end{align*}
+by the coefficients of the complex polynomial \(\varphi\) and as a result we have also
+\begin{equation*}
+    \varphi_\algebra{A}(u) = a_n \prod_{k=1}^n (u - \alpha_k \unity)
+\end{equation*}
+for all \(u \in \algebra{A}\), since any operator commutes with its powers and with the identity \(\unity\). In this context, the constant polynomial \(\mathbb{C} \ni z \mapsto a_0 \in \mathbb{C}\) becomes the constant map \(\algebra{A} \ni u \mapsto a_0\unity \in \algebra{A}\).
+\begin{proposition}{Operator commutes with its image under a polynomial}{operator_commutes_polynomial}
+    Let \(\algebra{A}\) be a unital associative algebra and \(u \in \algebra{A}\). If \(w \in \algebra{A}\) satisfies \(w u = uw\), then
+    \begin{equation*}
+        \varphi_{\algebra{A}}(u)w = w\varphi_{\algebra{A}}(u)
+    \end{equation*}
+    for any polynomial \(\varphi\).
+\end{proposition}
+\begin{proof}
+    By induction it is clear that \(u^kw = wu^k\) for any \(k \in \mathbb{N}\). Indeed, it holds for \(k = 1\) and supposing it holds for some \(m \in \mathbb{N}\), we have
+    \begin{equation*}
+        u^{m+1}w = u^{m}uw = u^mwu = wu^{m}u = wu^{m+1},
+    \end{equation*}
+    and it holds for \(m + 1\). The principle of finite induction ensures our claim holds for any \(k \in \mathbb{N}\).
+
+    If \(\varphi\) is a constant polynomial, the result follows since \(w\) commutes with the identity and with the zero operator, so we may assume \(\varphi\) is a polynomial of degree \(n \in \mathbb{N}\). There exist coefficients \(a_k \in \mathbb{C}\) such that
+    \begin{equation*}
+        \varphi_{\algebra{A}}(u) = a_0 \unity + \sum_{k=1}^n a_k u^k,
+    \end{equation*}
+    hence
+    \begin{equation*}
+        w\varphi_{\algebra{A}}(u) = a_0 w + \sum_{k = 1}^n a_k wu^k = a_0 w + \left(\sum_{k = 1}^n a_{k}u^{k}\right)w = \left(a_0 \unity + \sum_{k=1}^n a_k u^k\right) w= \varphi_{\algebra{A}}(u) w,
+    \end{equation*}
+    as claimed.
+\end{proof}
+
+This construction allows us to relate the spectra of operators that are related by the image of such a polynomial. We'll write
+\begin{equation*}
+    \varphi(\sigma(u)) = \setc{\mu \in \mathbb{C}}{\exists \lambda \in \sigma(u) : \mu = \varphi(\lambda)}
+\end{equation*}
+and we'll establish the equality of this set with the spectrum of \(\varphi_{\algebra{A}}(u)\),
+\begin{equation*}
+    \sigma(\varphi_\algebra{A}(u)) = \setc{\mu \in \mathbb{C}}{\mu \unity - \varphi_\algebra{A}(u) \notin \invertible{\algebra{A}}},
+\end{equation*}
+result known as the spectral mapping theorem.
+As a shorthand, we will simply denote the polynomial on the algebra by the same symbol as the complex polynomial, relying on the context to distinguish between them.
+\begin{lemma}{Invertibility and polynomials}{polynomial_spectrum}
+    Let \(\algebra{A}\) be a unital associative algebra and let \(u \in \algebra{A}\). If \(\lambda \in \sigma(u)\), then \((u - \lambda \unity)\psi(u) \notin \invertible{\algebra{A}}\) for any polynomial \(\psi\).
+\end{lemma}
+\begin{proof}
+    If \(\psi\) is the trivial polynomial, the result follows trivially, so we may assume \(\psi\) has degree \(n \in \mathbb{N}\). Suppose, by contradiction, \(v = (u - \lambda \unity)\psi(u)\) is invertible for some \(\lambda \in \sigma(u)\), then there exists \(w \in \algebra{A}\) such that \(wv = vw = \unity\). Notice \(v\) commutes with \(u\) by \cref{prop:operator_commutes_polynomial}, then
+    \begin{equation*}
+        v (uw - wu) = uvw - vw u = u - u = 0 \implies w v( uw - wu) = 0 \implies uw = wu,
+    \end{equation*}
+    that is, \(w\) commutes with \(u\), hence it commutes with \(\psi(u)\) and \(u - \lambda \unity\). We conclude
+    \begin{equation*}
+        \unity = wv = w(u - \lambda \unity) \psi(u) = w \psi(u) (u - \lambda \unity)
+    \end{equation*}
+    and
+    \begin{equation*}
+        \unity = vw = (u - \lambda \unity) \psi(u) w = (u - \lambda \unity)w \psi(u),
+    \end{equation*}
+    that is, \((u - \lambda \unity) \in \invertible{\algebra{A}}\), hence \(\lambda \in \rho(u)\cap \sigma(u) = \emptyset\). This contradiction shows \((u - \lambda \unity)\psi(u)\) is not invertible.
+\end{proof}
+\begin{theorem}{Spectral mapping theorem}{spectral_mapping}
+    Let \(\algebra{A}\) be a unital associative algebra and let \(u \in \algebra{A}\). Then
+    \begin{equation*}
+        \sigma(\varphi(u)) = \varphi(\sigma(u))
+    \end{equation*}
+    for any polynomial \(\varphi\).
+\end{theorem}
+\begin{proof}
+    Consider a constant polynomial \(\varphi\) with constant term \(a_0 \in \mathbb{C}\), then \(\sigma(\varphi(u)) = \sigma(a_0\unity) = \set{a_0}\) and \(\varphi(\sigma(u)) = \set{a_0}\), hence \(\sigma(\varphi(u)) = \varphi(\sigma(u))\). We now suppose \(\varphi\) is a polynomial with degree \(n \in \mathbb{N}\).
+
+    Let \(\mu \in \varphi(\sigma(u))\), then there exists \(\lambda \in \sigma(u)\) such that \(\varphi(\lambda) = \mu\). We consider the polynomial \(\varphi(z) - \mu\), which has \(\lambda\) as a root, hence there exists a polynomial \(\psi\) such that \(\varphi(z) - \mu = (z - \lambda)\psi(z)\). We then have \(\varphi(u) - \mu \unity = (u - \lambda \unity)\psi(u)\), that is, \(\varphi(u) - \mu \unity \notin \invertible{\algebra{A}}\) by \cref{lem:polynomial_spectrum}. This shows \(\mu \in \sigma(\varphi(u))\), hence \(\varphi(\sigma(u)) \subset \sigma(\varphi(u))\).
+
+    Let \(\mu \in \sigma(\varphi(u))\), and consider the polynomial \(\varphi(u) - \mu\unity = a_n \prod_{k=1}^n (u - \alpha_k\unity)\), where \(\alpha_k\) are the roots of the polynomial \(\varphi(z) - \mu\) and \(a_n \neq 0\) the \(n\)th term coefficient of \(\varphi\). The polynomial is not invertible by hypothesis, hence there exists \(m \in \set{1,2,\dots, n}\) such that \(\alpha_m \in \sigma(u)\), otherwise \(u - \alpha_k \unity \in \invertible{\algebra{A}}\) for all \(k \in \set{1,2, \dots, n}\) and \(\varphi(u) - \mu\) would be invertible. We have \(\varphi(\alpha_m) - \mu = 0,\) and we conclude \(\mu \in \varphi(\sigma(u))\), that is, \(\sigma(\varphi(u)) \subset \varphi(\sigma(u))\).
+\end{proof}
+
+\subsection{Spectral radius}

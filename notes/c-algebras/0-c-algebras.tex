@@ -196,6 +196,31 @@ The following example uses the adjoint operation to define another involution on
     hence \(\dag\) is an involution on \(\bounded(\hilbert)\).
 \end{proof}
 
+\begin{proposition}{Polarization identity for *-algebras}{polarization_star_algebra}
+    Let \(\algebra{A}\) be a *-algebra. For all \(a, b \in \algebra{A}\) we have
+    \begin{equation*}
+        b^*a = \frac14 \sum_{k=0}^3 i^k(a + i^kb)^*(a + i^kb).
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    We have
+    \begin{align*}
+        \sum_{k=0}^3 i^k(a + i^kb)^*(a + i^kb) &= \sum_{k=0}^3 i^k(a^* + i^{-k}b^*)(a + i^kb)\\
+                                               &= \sum_{k=0}^3 i^k(a^*a + i^ka^*b + i^{-k}b^*a + b^*b)\\
+                                               &= \sum_{k=0}^3 i^k(a^*a + b^*b) + \sum_{k=0}^3 i^{2k} a^*b + \sum_{k = 0}^3 b^*a\\
+                                               &= (a^*a + b^*b)\sum_{k=0}^3 i^k + a^*b\sum_{k=0}^3 (-1)^{k}  + 4b^*a\\
+                                               &= 4 b^*a,
+    \end{align*}
+    since \(\sum_{k=0}^3 i^k = \sum_{k=0}^3 (-1)^k = 0\).
+\end{proof}
+\begin{remark}
+    If \(\algebra{A}\) is unital, then
+    \begin{equation*}
+        a = \frac14 \sum_{k=0}^3 i^k(a + i^k\unity)^*(a + i^k\unity),
+    \end{equation*}
+    for all \(a \in \algebra{A}\)
+\end{remark}
+
 Our main object of study will be involutive algebras, in particular the ones which are complete with respect to the norm.
 \begin{definition}{Banach algebras and C*-algebras}{c_algebra}
     A Banach algebra \(\algebra{A}\) is a normed algebra that is a complete metric space with respect to its norm. If \(\algebra{A}\) has an involution that satisfies \(\norm{a} = \norm{a^*}\) for all \(a \in \algebra{A}\), we say \(\algebra{A}\) is a Banach *-algebra. If, in addition, the norm and the involution satisfy \(\norm{a^*a} = \norm{a}^2\) for all \(a \in \algebra{A}\), then \(\algebra{A}\) is a C*-algebra.
