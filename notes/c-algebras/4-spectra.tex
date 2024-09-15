@@ -432,3 +432,27 @@ As a shorthand, we will simply denote the polynomial on the algebra by the same 
 \end{proof}
 
 \subsection{Spectral radius}
+In \cref{thm:spectrum_compact}, we've shown that in a unital Banach algebra, the spectrum of an operator is contained in an open disk centered at zero of radius equal to its norm.
+\begin{definition}{Spectral radius}{spectral_radius}
+    Let \(\algebra{A}\) be a unital Banach algebra. For an operator \(a \in \algebra{A}\), we define
+    \begin{equation*}
+        r(a) = \sup_{\lambda \in \sigma(a)}{\abs{\lambda}}
+    \end{equation*}
+    as is its \emph{spectral radius}.
+\end{definition}
+It should be clear, then, \(r(a) \leq \norm{a}\) for all \(a \in \algebra{A}\), that is, the spectrum of an operator is contained in the closed disk centered at zero of radius equal to its spectral radius.
+
+\begin{theorem}{Spectral radius theorem}{spectral_radius_theorem}
+    If \(\algebra{A}\) is a unital Banach algebra, then
+    \begin{equation*}
+        r(a) = \inf_{n\in \mathbb{N}}{\norm{a^n}^{\frac{1}{n}}}= \lim_{n\to\infty}{\norm{a^n}^{\frac1n}}
+    \end{equation*}
+    for all \(a \in \algebra{A}\).
+\end{theorem}
+\begin{proof}
+    From \cref{thm:spectral_mapping}, we know that if \(\lambda \in \sigma(a)\), then \(\lambda^n \in \sigma(a^n)\) for all \(n \in \mathbb{N}\). The boundedness of spectra yields \(\abs{\lambda^n} \leq \norm{a^n}\) for all \(n \in \mathbb{N}\), hence
+    \begin{equation*}
+        r(a) = \sup_{\lambda \in \sigma(a)}{\abs{\lambda}}\leq\inf_{n\in \mathbb{N}}{\norm{a^n}^{\frac1n}} \leq \sup_{n \in \mathbb{N}}{\left(\inf_{m \in \mathbb{N}}{\setc*{\norm{a^m}^{\frac1m}}{m \geq n}}\right)} = \liminf_{n\to\infty}{\norm{a^n}^{\frac1n}}
+    \end{equation*}
+
+\end{proof}
