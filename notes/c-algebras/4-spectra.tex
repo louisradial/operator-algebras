@@ -452,7 +452,46 @@ It should be clear, then, \(r(a) \leq \norm{a}\) for all \(a \in \algebra{A}\), 
 \begin{proof}
     From \cref{thm:spectral_mapping}, we know that if \(\lambda \in \sigma(a)\), then \(\lambda^n \in \sigma(a^n)\) for all \(n \in \mathbb{N}\). The boundedness of spectra yields \(\abs{\lambda^n} \leq \norm{a^n}\) for all \(n \in \mathbb{N}\), hence
     \begin{equation*}
-        r(a) = \sup_{\lambda \in \sigma(a)}{\abs{\lambda}}\leq\inf_{n\in \mathbb{N}}{\norm{a^n}^{\frac1n}} \leq \sup_{n \in \mathbb{N}}{\left(\inf_{m \in \mathbb{N}}{\setc*{\norm{a^m}^{\frac1m}}{m \geq n}}\right)} = \liminf_{n\to\infty}{\norm{a^n}^{\frac1n}}
+        r(a) = \sup_{\lambda \in \sigma(a)}{\abs{\lambda}}\leq\inf_{n\in \mathbb{N}}{\norm{a^n}^{\frac1n}} \leq \sup_{n \in \mathbb{N}}{\inf_{m \in \mathbb{N}}{\setc*{\norm{a^m}^{\frac1m}}{m \geq n}}} = \liminf_{n\to\infty}{\norm{a^n}^{\frac1n}}.
     \end{equation*}
 
+    Let \(D = \setc{z \in \mathbb{C}}{\abs{z} \leq r(a)},\) then \(\sigma(a) \subset D\) and \(\mathbb{C} \setminus D\) is a connected component of \(\rho(a)\). As shown in \cref{lem:holomorphic}, for every \(\ell \in \algebra{A}^\dag\), the map \(f_\ell : \mathbb{C}\setminus D \to \mathbb{C}\) defined by \(\lambda \mapsto \ell(R_{\lambda}(a))\) is holomorphic in \(\mathbb{C} \setminus D\), hence there exist \(\alpha_k \in \mathbb{C}\) with \(k \in \mathbb{Z}\) such that
+    \begin{equation*}
+        f_\ell(\lambda) = \sum_{k \in \mathbb{Z}} \alpha_k \lambda^{-k}
+    \end{equation*}
+    is the Laurent series for \(f_\ell\) in \(\mathbb{C} \setminus D\). For all \(\lambda \in \setc{z \in \mathbb{C}}{\abs{z} > \norm{a}} \subset \mathbb{C} \setminus D\), we have \(\norm{\lambda^{-1}a} < 1\), then the \nameref{thm:neumann_series_algebra} yields
+    \begin{equation*}
+        f_\ell(\lambda) = \ell\left((\lambda \unity - a)^{-1}\right)= \lambda^{-1} \ell\left((\unity - \lambda^{-1}a)^{-1}\right) = \lambda^{-1} \ell\left[\unity + \sum_{k = 1}^\infty (\lambda^{-1}a)^k\right] = \ell(\unity)\lambda^{-1} + \sum_{k = 1}^\infty \ell(a^k)\lambda^{-1 - k},
+    \end{equation*}
+    since \(\ell\) is uniformly continuous. We may conclude \(\alpha_1 = \ell(\unity),\) \(\alpha_{n+1} = \ell(a^n)\) and \(\alpha_{-n} = 0\) for all \(n \in \mathbb{N}\), that is,
+    \begin{equation*}
+        f_\ell(\lambda) = \ell(\unity)\lambda^{-1} + \sum_{n = 1}^\infty \ell(a^n) \lambda^{-1 - n}
+    \end{equation*}
+    for all \(\lambda \in \mathbb{C} \setminus D\). In particular, the series converges, hence
+    \begin{equation*}
+        \lim_{n\to \infty}{\abs*{\ell(a^n) \lambda^{-1-n}}} = 0,
+    \end{equation*}
+    and we may conclude the sequence \(\family{\ell(a^n)\lambda^{-1-n}}{n \in \mathbb{N}}\) converges, thus bounded. Let
+    \begin{equation*}
+        \mathcal{T} = \setc{\lambda^{-1-n} \eval(a^n)}{n \in \mathbb{N}, \lambda \in \mathbb{C}\setminus D} \subset (\algebra{A}^\dag)^\dag,
+    \end{equation*}
+    then we have thus shown the set \(\setc{\abs{T\ell}}{T \in \mathcal{T}}\) is bounded for every \(\ell \in \algebra{A}^\dag\). The \nameref{thm:Banach_Steinhaus} ensures that \(\setc{\norm{T}}{T \in \mathcal{T}}\) is bounded by some \(M \geq 0\). Since the evaluation map is an isometry, we have \(\norm{\lambda^{-1-n}a^n} \leq M\) for all \(n \in \mathbb{N}\) and all \(\lambda \in \mathbb{C} \setminus D\). This yields
+    \begin{equation*}
+        \norm{a^n}^{\frac1n} \leq M^{\frac1n} \abs{\lambda}^{\frac1n} \abs{\lambda}
+    \end{equation*}
+    for all \(n \in \mathbb{N}\) and \(\lambda \in \mathbb{C} \setminus D\). It is a standard result in real analysis that \(x^{\frac1n} \to 1\) for any \(x > 0\), therefore
+    \begin{equation*}
+        \norm{a^n}^{\frac1n} \leq \inf_{\lambda \in \mathbb{C} \setminus D}{\abs{\lambda}} = r(a)
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). In particular, this yields
+    \begin{equation*}
+        \limsup_{n\to \infty}{\norm{a^n}^{\frac1n}} \leq r(a) \leq \inf_{n \in \mathbb{N}}{\norm{a^n}^{\frac1n}} \leq \liminf_{n\to\infty}{\norm{a^n}^{\frac1n}},
+    \end{equation*}
+    hence
+    \begin{equation*}
+        \lim_{n\to\infty}{\norm{a^n}^{\frac1n}} = r(a),
+    \end{equation*}
+    as desired.
 \end{proof}
+
+
