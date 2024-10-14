@@ -384,7 +384,7 @@ It is clear that if a densely defined operator \(T : \domain{T} \subset \hilbert
     \end{equation*}
     by the continuity of the inner product and the convergence of the sequence. Symmetry yields
     \begin{align*}
-        \inner{z}{y} &= \lim_{n\to\infty}{\inner{Tz}{x_n}} \\&= \inner{Tz}{\lim_{n\to\infty}{x_n}} \\&= \inner{Tz}{\tilde{x}}\\
+        \inner{z}{y} &= \lim_{n\to\infty}{\inner{Tz}{x_n}} \\&= \inner*{Tz}{\lim_{n\to\infty}{x_n}} \\&= \inner{Tz}{\tilde{x}}\\
                      &= \inner{z}{T\tilde{x}}
     \end{align*}
     for all \(z \in \hilbert\). Hence \(y = T\tilde{x}\) follows from the non-degeneracy of the inner product, and we conclude \(\tilde{y} \in \range{T}\). We have thus shown \(v_n \to \tilde{v} \in \graph{T}\), that is, \(T\) is bounded by \cref{thm:closed_graph}.

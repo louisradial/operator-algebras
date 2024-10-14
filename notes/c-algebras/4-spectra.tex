@@ -494,4 +494,76 @@ It should be clear, then, \(r(a) \leq \norm{a}\) for all \(a \in \algebra{A}\), 
     as desired.
 \end{proof}
 
+\begin{definition}{Quasi-nilpotent operator}{quasi_nilpotent}
+    Let \(X\) be a Banach space. A bounded operator \(A \in \bounded(X)\) that satisfies
+    \begin{equation*}
+        \lim_{n\to \infty} \norm{A^n}^{\frac1n} = 0
+    \end{equation*}
+    is said to be \emph{quasi-nilpotent}.
+\end{definition}
+\begin{remark}
+    By the spectral radius theorem, we conclude the spectrum of a quasi-nilpotent operator is always \(\set{0}\). Indeed, if \(A\) is quasi-nilpotent, then \(r(A) = 0\), which shows us \(\sigma(A) = \set{0}\).
+\end{remark}
 
+\begin{example}{Volterra operator in \(\mathcal{C}([0, 1], \mathbb{R})\)}{volterra}
+    Let \(X = \mathcal{C}([0,1], \mathbb{R})\) be equipped with the supremum norm and let \(W : X \to X\) be the \emph{Volterra operator} defined by
+    \begin{equation*}
+        Wf(x) = \int_0^x \dli{\xi} f(\xi)
+    \end{equation*}
+    for all \(f \in X\) and \(x \in [0,1]\). Then \(W\) is quasi-nilpotent and \(\norm{W} = 1\).
+\end{example}
+\begin{proof}
+    Let \(f \in X\), then for all \(\xi \in [0,1]\) we have \(\abs{f(\xi)} \leq \norm{f}_\infty\). This yields
+    \begin{equation*}
+        \abs{Wf(x)} \leq \int_0^x \dli{\xi} \abs{f(\xi)} \leq x \norm{f}_\infty
+    \end{equation*}
+    for all \(x \in [0,1]\), hence \(\norm{Wf}_\infty \leq \norm{f}_\infty\), which shows \(W\) is bounded with \(\norm{W} \leq 1\). By the same argument, we also have \(\abs{W1(x)} \leq x\) for all \(x \in [0,1]\), where \(1 \in X\) is the constant function \(1(x) = 1\). Then \(\norm{W1}_\infty = 1\) and \(\norm{1}_\infty = 1\), from which follows \(\norm{W} \geq 1\), and we conclude \(\norm{W} = 1\).
+
+    Consider the set
+    \begin{equation*}
+        S = \setc*{n \in \mathbb{N}}{\forall x \in [0,1], \forall f \in X : \abs*{(W^nf)(x)} \leq \frac{x^n}{n!} \norm{f}_\infty},
+    \end{equation*}
+    then we have just shown \(1 \in S\) and, in particular, that \(S\) is non-empty. Let \(k \in S\), then for all \(f \in X\) and \(x \in [0,1]\) we have
+    \begin{equation*}
+        \abs*{(W^{k+1}f)(x)} \leq \int_0^x \dli{\xi} \abs*{(W^kf)(\xi)} \leq \int_0^x \dli{\xi} \frac{\xi^k}{k!}\norm{f}_\infty = \frac{x^{k+1}}{(k+1)!}\norm{f}_\infty,
+    \end{equation*}
+    that is, \(k + 1 \in S\). By the principle of finite induction, we have shown that \(S = \mathbb{N}\). As a result, we have \(\norm{W^n f}_\infty \leq \frac{\norm{f}_\infty}{n!}\), which yields \(\norm{W^n} \leq \frac{1}{n!}\) for all \(n \in \mathbb{N}\).
+
+    For every \(n \in \mathbb{N}\) we have
+    \begin{equation*}
+        n! = \prod_{k = 1}^n k > \prod_{k = \ceil*{\frac{n}{2}}}^n k > \prod_{k = \ceil*{\frac{n}{2}}}^{n} \ceil*{\frac{n}{2}} = \ceil*{\frac{n}{2}}^{\ceil*{\frac{n}{2}}} > \left(\frac{n}{2}\right)^{\frac{n}{2}},
+    \end{equation*}
+    then
+    \begin{equation*}
+        0 < \frac{1}{n!} <  \left(\frac{2}{n}\right)^{\frac{n}{2}} \implies 0 < \left(\frac{1}{n!}\right)^{\frac1n} < \left(\frac{2}{n}\right)^{\frac12}.
+    \end{equation*}
+    Since the left and right hand sides converge to \(0\) as \(n \to \infty\), we have shown
+    \begin{equation*}
+        r(W) = \lim_{n\to\infty}{\norm{W^n}^{\frac1n}} = \lim_{n\to \infty}{\left(\frac{1}{n!}\right)^{\frac1n}} = 0,
+    \end{equation*}
+    that is, \(W\) is quasi-nilpotent.
+\end{proof}
+
+\begin{theorem}{Spectral radius for self-adjoint or normal operators in C*-algebras}{spectral_radius_cstar}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(a \in \setc{u \in \algebra{A}}{u^* = u \lor u^*u = uu^*}\), that is, if \(a\) is either a self-adjoint or a normal operator, then \(\norm{a} = r(a)\).
+\end{theorem}
+\begin{proof}
+    Let \(a \in \algebra{A}\) be a self-adjoint operator. Let us show by induction that for all \(n \in \mathbb{N}\) we have \(\norm{a^{(2^n)}} = \norm{a}^{(2^n)}\). Indeed, for \(n = 1\) we have \(\norm{a}^2 = \norm{a^*a} = \norm{a^2}\). Suppose it holds for some \(k \in \mathbb{N}\), then
+    \begin{equation*}
+        \norm{a^{(2^{k+1})}} = \norm{[a^{(2^k)}]^*a^{(2^k)}}= \norm{a^{(2^k)}}^2 = [\norm{a}^{(2^k)}]^2 = \norm{a}^{(2^{k+1})},
+    \end{equation*}
+    therefore it holds for \(k + 1 \in \mathbb{N}\). By the principle of finite induction we conclude it holds for all \(n \in \mathbb{N}\). We consider the sequence \(\family{\norm{a^n}^{\frac1n}}{n \in \mathbb{N}}\) which converges to \(r(a)\). By \cref{prop:convergence_subsequence} the subsequence \(\family{\norm{a^{(2^n)}}^{\frac1{2^n}}}{n \in \mathbb{N}}\) converges to \(r(a)\), which yields
+    \begin{equation*}
+        r(a) = \lim_{n \to \infty}{\norm{a^{(2^n)}}^{\frac1{2^n}}} = \lim_{n\to\infty}{\norm{a}} = \norm{a}.
+    \end{equation*}
+
+    Let \(b \in \algebra{A}\) be a normal operator, then \((b^*b)^{(2^{n})} = [b^{(2^n)}]^*b^{(2^n)}\) for all \(n \in \mathbb{N}\). Indeed, we have \((b^*b)^2 = b^*bb^*b = (b^*)^2 b^2\) and supposing true for some \(n \in \mathbb{N}\) we have
+    \begin{equation*}
+        [b^{(2^{n+1})}]^* b^{(2^{n+1})} = [b^{(2^n)}]^* [b^{(2^n)}]^* b^{(2^n)} b^{(2^n)} = [b^{(2^n)}]^*  b^{(2^n)} [b^{(2^n)}]^*b^{(2^n)} = [(b^*b)^{(2^n)}]^2 = (b^*b)^{(2^{n+1})},
+    \end{equation*}
+    that is, it also holds for \(n + 1 \in \mathbb{N}\). The claim is true for all \(n \in \mathbb{N}\) by the principle of finite induction. Since \(b^*b\) is self-adjoint, we have by a previous result and the C*-property that
+    \begin{equation*}
+        \norm{(b^*b)^{(2^n)}}= \norm{b^*b}^{(2^n)} = \norm{b}^{(2^{n+1})}
+    \end{equation*}
+    for all \(n \in \mathbb{N}.\) Repeating the subsequence argument yields \(r(b) = \norm{b}\).
+\end{proof}
