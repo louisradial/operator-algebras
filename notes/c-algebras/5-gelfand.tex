@@ -1,0 +1,66 @@
+% vim: spl=en_us
+\section{Gelfand representation}
+Let \(\algebra{A}\) be a unital C*-algebra and let \(a \in \algebra{A}\) be a self-adjoint operator. We'll denote by \(\mathcal{C}(\sigma(a), \mathbb{C})\) the set of \todo[continuous] complex-valued maps from defined on the spectrum of \(a\) and by \(\norm{\noarg}_{\infty}\) the supremum norm, that is, \(\left(\mathcal{C}(\sigma(a), \mathbb{C}), \norm{\noarg}_{\infty}\right)\) is a Banach *-algebra. Since the set of polynomials defined on \(\sigma(a)\) is a subalgebra of \(\mathcal{C}(\sigma(a), \mathbb{C})\), we may improve on the spectral mapping theorem and show the supremum norm of a such defined polynomial \(\varphi\) is equal to the norm \(\norm{\varphi(a)}\) in the C*-algebra.
+\begin{proposition}{Norm of a polynomial defined on the spectrum of an operator}{norm_polynomial}
+    Let \(\algebra{A}\) be a unital C*-algebra and let \(a \in \algebra{A}\) be a self-adjoint operator. Then \(\norm{\varphi}_\infty = \norm{\varphi(a)}\) for all polynomials \(\varphi : \sigma(a) \to \mathbb{C}\).
+\end{proposition}
+\begin{proof}
+    Let us write \(\varphi(z) = \sum_{k = 0}^{n} c_k z^k\) for all \(z \in \sigma(a)\). It follows from self-adjointness of \(a\) that
+    \begin{equation*}
+        \varphi(a)^*\varphi(a) = \sum_{k=0}^n \conj{c_k} a^k \sum_{\ell = 0}^n c_{\ell} a^\ell = \sum_{k = 0}^n \sum_{\ell = 0}^n \conj{c_k} c_k a^{\ell + k} = (\conj{\varphi}\varphi)(a).
+    \end{equation*}
+    \cref{thm:spectral_radius_cstar,thm:spectral_mapping} yield
+    \begin{equation*}
+        \norm{\varphi(a)^*\varphi(a)} = \norm{(\conj{\varphi}\varphi)(a)} = \sup_{\lambda \in \sigma\left[(\conj{\varphi}\varphi)(a)\right]}{\abs{\lambda}} = \sup_{\lambda \in \sigma(a)}{\abs*{(\conj{\varphi}\varphi)(\lambda)}} = \sup_{\lambda\in \sigma(a)}{\abs{\varphi(\lambda)}^2} = \norm{\varphi}_{\infty}^2,
+    \end{equation*}
+    then the proposition follows from the C* property, \(\norm{\varphi(a)}^2 = \norm{\varphi(a)^*\varphi(a)} = \norm{\varphi}_{\infty}^2\).
+\end{proof}
+
+\begin{theorem}{Weierstrass polynomial approximation theorem}{weierstrass_polynomial}
+    Let \(f \in \mathcal{C}\left([0,1], \mathbb{C}\right)\) be a continuous function. Then the sequence \(\family{\varphi_n}{n \in \mathbb{N}}\subset\mathcal{C}\left([0,1], \mathbb{C}\right)\) of polynomials defined by
+    \begin{equation*}
+        \varphi_n(x) = \sum_{k = 0}^n \binom{n}{k} f\left(\frac{k}{n}\right) x^k (1 - x)^{n - k}
+    \end{equation*}
+    converges uniformly to \(f\), that is, for all \(\varepsilon > 0\) there exists \(N \in \mathbb{N}\) such that \(\norm{f - \varphi_n}_\infty < \epsilon\) for all \(n \geq N\).
+\end{theorem}
+\begin{proof}
+    Let \(x, y \in [0,1]\) and \(n \in \mathbb{N}_0\), then
+    \begin{equation*}
+        nx(x + y)^{n-1} = x\diffp*{(x + y)^n}{x} = x\diffp*{\sum_{k = 0}^n\binom{n}{k} x^k y^{n-k}}{x} = \sum_{k=0}^n \binom{n}{k} k x^{k}y^{n - k}
+    \end{equation*}
+    and
+    \begin{equation*}
+        n(n-1)x^2(x + y)^{n-2} = x^2\diffp*[2]{(x + y)^n}{x} = x^2\diffp*{ \sum_{k=0}^n \binom{n}{k} k x^{k-1}y^{n - k}}{x} =  \sum_{k = 0}^n \binom{n}{k} k (k-1) x^{k} y^{n - k}.
+    \end{equation*}
+    Writing \(b^n_k(x) = \binom{n}{k} x^k (1 - x)^{n - k}\), we get
+    \begin{equation*}
+        \sum_{k = 0}^n b^n_k(x) = 1,
+        \quad
+        \sum_{k=0}^n k b^n_k(x) = n x,
+        \quad\text{and}\quad
+        \sum_{k=0}^n k(k-1) b^n_k(x) = n(n-1)x^2
+    \end{equation*}
+    for all \(x \in [0,1]\). This yields
+    \begin{align*}
+        \sum_{k = 0}^n (k - nx)^2 b^n_k(x) &= \sum_{k = 0}^n k^2 b^n_k(x) - 2nx\sum_{k=0}^n kb^n_k(x) + n^2 x^2 \sum_{k = 0}^n b^n_k(x)\\
+                                           &= \sum_{k = 0}^n k(k-1) b^n_k(x) + \sum_{k=0}^n k b^n_k(x) - n^2 x^2 \\
+                                           &= n(n-1)x^2 + nx - n^2x^2\\
+                                           &= nx(1 - x).
+    \end{align*}
+
+    \todo[Since \(f\) is defined on a compact set and continuous, it is uniformly continuous.] Let \(\varepsilon > 0\), then there exists \(\delta > 0\) such that \(\abs{f(x) - f(y)} < \frac12\epsilon\) whenever \(\abs{x - y} < \delta\). Let \(x \in [0,1]\), and we consider \(S_n = \setc{m \in \mathbb{N}_0}{m \leq n \land \abs{m - xn} < \delta n}\) and \(R_n = \setc{m \in \mathbb{N}_0}{m \leq n \land \abs{m - xn} \geq \delta n}\), then
+    \begin{align*}
+        \abs*{f(x) - \varphi_n(x)} &= \abs*{\sum_{k = 0}^n \left[f(x) - f\left(\frac{k}{n}\right)\right]b^n_k(x)}\\
+                                  &\leq \sum_{k = 0}^n \abs*{f(x) - f\left(\frac{k}{n}\right)}b^n_k(x)\\
+                                  &= \sum_{k \in S_n} \abs*{f(x) - f\left(\frac{k}{n}\right)}b^n_k(x) + \sum_{k \in R_n} \abs*{f(x) - f\left(\frac{k}{n}\right)}b^n_k(x)\\
+                                  &< \frac12\varepsilon \sum_{k \in S_n} b^n_k(x) + 2 \norm{f}_\infty \sum_{k \in R_n} b^n_k(x)\\
+                                  &\leq \frac12 \varepsilon \sum_{k = 0}^n b^n_k(x) + \frac{2\norm{f}_\infty}{n^2 \delta^2}\sum_{k=0}^n (k - nx)^2 b^n_k(x)\\
+                                  &= \frac12 \varepsilon + \frac{2 \norm{f}_{\infty}x(1 - x)}{n \delta^2}\\
+                                  &\leq \frac12 \varepsilon + \frac{\norm{f}_\infty}{2 \delta^2 n}.
+    \end{align*}
+    If \(\norm{f}_\infty\), we are done, so we may assume \(\norm{f}_\infty > 0\). We set \(N = \ceil{\frac{\norm{f}_\infty}{\delta^2 \varepsilon}}\), then
+    \begin{equation*}
+        n \geq N \implies \forall x \in [0,1]: \abs{f(x) - \varphi_n(x)} < \varepsilon,
+    \end{equation*}
+    that is, \(\norm{f - \varphi_n}_\infty < \varepsilon\) for all \(n \geq N\).
+\end{proof}
