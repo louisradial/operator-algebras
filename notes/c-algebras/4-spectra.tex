@@ -107,9 +107,11 @@ By studying the resolvent operator, we may derive many conclusions about the spe
 \end{proposition}
 \begin{proof}
     Since \(R_{\lambda}(a) \in \invertible{\algebra{A}}\), we have
-    \begin{equation*}
-        R_{\lambda}(a) R_{\lambda}(a)^{-1} = \unity \implies a R_{\lambda}(a) R_{\lambda}(a)^{-1} = a \implies a R_{\lambda}(a) = a R_{\lambda}(a),
-    \end{equation*}
+    \begin{align*}
+        R_{\lambda}(a)^{-1} R_{\lambda}(a) = R_{\lambda}(a) R_{\lambda}(a)^{-1} = \unity
+        &\implies  \lambda R_{\lambda(a)} - aR_{\lambda}(a) = \lambda R_{\lambda(a)} - R_{\lambda}(a) a\\
+        &\implies a R_{\lambda}(a) = R_{\lambda}(a)a
+    \end{align*}
     as desired.
 \end{proof}
 
@@ -566,4 +568,76 @@ It should be clear, then, \(r(a) \leq \norm{a}\) for all \(a \in \algebra{A}\), 
         \norm{(b^*b)^{(2^n)}}= \norm{b^*b}^{(2^n)} = \norm{b}^{(2^{n+1})}
     \end{equation*}
     for all \(n \in \mathbb{N}.\) Repeating the subsequence argument yields \(r(b) = \norm{b}\).
+\end{proof}
+
+We may use \cref{thm:spectral_mapping,thm:spectral_radius_cstar} to show a result reminiscent of Cayley-Hamilton theorem for linear operators in finite dimensional linear spaces.
+\begin{proposition}{Operator with finite and real spectrum}{cayley_hamilton}
+    Let \(\algebra{A}\) be a unital C*-algebra and let \(a \in \algebra{A}\) be a self-adjoint operator. Suppose \(\sigma(a) \subset \mathbb{R}\) is finite, and let \(\varphi : \mathbb{C} \to \mathbb{C}\) be a polynomial with zeros given by \(\sigma(a)\), then \(\varphi(a) = 0\).
+\end{proposition}
+\begin{proof}
+    We may assume without loss of generality that
+    \begin{equation*}
+        \varphi(z) = \prod_{\lambda \in \sigma(a)} (z - \lambda),
+    \end{equation*}
+    since \(\alpha \varphi\) satisfies \(\alpha \varphi(a) = 0\) if and only if \(\varphi(a) = 0\), for any \(\alpha \in \mathbb{C}\setminus \set{0}\). Since the spectrum is real, \(\varphi\) is a polynomial with real coefficients, hence \(\varphi(a)\) is self-adjoint as a real linear combination of self-adjoint operators. By \cref{thm:spectral_mapping} we have \(\sigma(\varphi(a)) = \set{0}\) and we conclude \(\norm{\varphi(a)} = 0\) from \cref{thm:spectral_radius_cstar}.
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(a \in \algebra{A}\) is self-adjoint and \(\sigma(a) \subset \set{-1,1}\), then \(a^2 = \unity\).
+\end{corollary}
+\begin{proof}
+    We consider the polynomial \(z^2 - 1\) whose zeros is a subset of \(\sigma(a)\), then by \cref{prop:cayley_hamilton} yields \(a^2 - 1 = 0\).
+\end{proof}
+
+Another consequence of the spectral radius theorem is that it algebraically defines the operator norm in a C*-algebra.
+\begin{proposition}{Spectral radius defines the norm in a C*-algebra}{norm_cstar_spectral_radius}
+    Let \(\algebra{A}\) be a unital C*-algebra. Then
+    \begin{equation*}
+        \norm{a} = \sqrt{r(a^*a)}
+    \end{equation*}
+    for all \(a \in \algebra{A}\).
+\end{proposition}
+\begin{proof}
+    Let \(a \in \algebra{A}\), then \(a^*a\) is self-adjoint. By \cref{thm:spectral_radius_cstar}, we have \(\norm{a^*a} = r(a^*a),\) and the result follows from the C* property.
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital *-algebra. If \(\norm{\noarg}_1 : \algebra{A} \to [0,\infty]\) and \(\norm{\noarg}_2 : \algebra{A} \to [0, \infty]\) are norms in \(\algebra{A}\) such that \((\algebra{A}, \norm{\noarg}_1)\) and \((\algebra{A},\norm{\noarg}_2)\) are C*-algebras, then \(\norm{\noarg}_1 = \norm{\noarg}_2\).
+\end{corollary}
+\begin{proof}
+    Indeed, for any operator \(a \in \algebra{A}\) we have \(\norm{a}_1 = \sqrt{r(a^*a)} = \norm{a}_2\).
+\end{proof}
+
+\begin{proposition}{Spectra of unitary operators lie in the unit circle}{spectra_unitary}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(a \in \algebra{A}\) is a unitary operator, then \(\sigma(a) \subset S^1 = \setc{z \in \mathbb{C}}{\abs{z} = 1}\).
+\end{proposition}
+\begin{proof}
+    Notice \(a\) is normal, since \(aa^* = \unity = a^*a\), hence \(\norm{a} = 1\) by \cref{thm:spectral_radius_cstar}. Since \(r(a) = 1\), we have \(\sigma(a) \subset D = \setc{z \in \mathbb{C}}{\abs{z} \leq 1}\). This also holds for \(a^{-1} = a^*\), that is, \(\sigma(a^*) = \sigma(a^{-1}) \subset D\), with \(\conj{\sigma(a^*)}= \sigma(a) = \sigma(a^{-1})^{-1}\). This shows every \(\lambda \in \sigma(a)\) satisfies \(\abs{\lambda} \leq 1\), \(\lambda^{-1} \in \sigma(a)\), and \(\conj{\lambda} \in \sigma(a)\) and therefore \(\lambda \in S^1\). Indeed, were it not the case, we would have \(\lambda^{-1} \in \mathbb{C} \setminus D\), which contradicts \(\sigma(a^{-1}) \subset D\).
+\end{proof}
+
+\begin{theorem}{Spectra of self-adjoint operators is a compact subset of \(\mathbb{R}\)}{spectra_self_adjoint}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(a \in \algebra{A}\) is self-adjoint, then \(\sigma(a)\) is a compact subset of \([-\norm{a}, \norm{a}]\).
+\end{theorem}
+\begin{proof}
+    We may assume without loss of generality \(a\neq0\), since \(\sigma(0) = \set{0}\) is a compact subset of \(\set{0}\).
+    Let \(\mu \in (0, \norm{a}^{-1})\), then \(\norm{\pm i\mu a} = \mu \norm{a} < 1\) and it follows from \cref{thm:neumann_series_algebra} that \(\unity \pm i \mu a \in \invertible{\algebra{A}}\).
+
+    We consider \(R = \setc{z \in \mathbb{C}}{\abs{z} \leq \norm{a} \land \Im(z) \neq 0}\) and we aim to show \(R \subset \rho(a)\). Let \(\lambda \in R\), then \(1 \pm i \mu \lambda \neq 0\) since \(\mu < \norm{a}^{-1} \leq \abs{\lambda}^{-1}\). Then
+    \begin{align*}
+        \lambda \unity - a &= \frac{(1 + i \mu \lambda) - (1 - i \mu \lambda)}{2i \mu}\unity - \frac{i\mu\left[(1 + i\mu \lambda) + (1 - i \mu \lambda)\right]}{2i \mu} a\\
+                           &= \frac{1}{2i\mu}\left[(1 + i\mu \lambda)(\unity - i\mu a) - (1 - i\mu \lambda)(\unity + i\mu a)\right]\\
+                           &= \frac{1 - i\mu \lambda}{2i\mu} \left[\frac{1 + i\mu \lambda}{1 - i\mu \lambda}(\unity - i\mu a) - (\unity + i\mu a)\right]\\
+                           &= \frac{1 - i\mu \lambda}{2i \mu} \left[\frac{1 + i\mu \lambda}{1 - i\mu \lambda}\unity - (\unity + i\mu a)(\unity - i\mu a)^{-1}\right](\unity - i\mu a).
+    \end{align*}
+    Let \(\kappa = \frac{1 + i\mu \lambda}{1 - i\mu \lambda}\), then
+    \begin{equation*}
+        \abs{\kappa}^2 = \frac{(1 + i\mu \lambda)(1 -i \mu \conj{\lambda})}{(1 - i\mu \lambda)(1 + i \mu \conj{\lambda})} = \frac{1 + \mu^2 \abs{\lambda}^2 - 2\mu \Im{\lambda}}{1 + \mu^2 \abs{\lambda}^2 + 2\mu \Im{\lambda}} = 1 - \frac{4\mu\Im{\lambda}}{1 + \mu^2 \abs{\lambda}^2 + 2 \mu \Im{\lambda}} \neq 1,
+    \end{equation*}
+    since \(\Im \lambda \neq 0\). Let \(u = (\unity + i\mu a)(\unity - i\mu a)^{-1}\), then \(u \in \invertible{\algebra{A}}\) and we have
+    \begin{equation*}
+        u^* = \left[(\unity - i \mu a)^{-1}\right]^*(\unity - i\mu a) = (\unity + i \mu a)^{-1} (\unity - i \mu a) = (\unity - i \mu a)(\unity + i \mu a)^{-1} = u^{-1},
+    \end{equation*}
+    where we have used \cref{prop:resolvent_commute}. Since \(\kappa \notin S^1\), we have \(\kappa \in \rho(u)\) by \cref{prop:spectra_unitary}, hence
+    \begin{equation*}
+        \lambda \unity - a = \frac{1 - i \mu \lambda}{2i \mu} R_{\kappa}(u)(1 - i \mu a) \in \invertible{\algebra{A}},
+    \end{equation*}
+    that is, \(\lambda \in \rho(a)\). \cref{thm:spectrum_compact} states \(\sigma(a)\) is a compact subset of \(\setc{z \in \mathbb{C}}{\abs{z} \leq \norm{a}} = R \cup [-\norm{a}, \norm{a}]\). As \(\sigma(a) \cap R = \emptyset\), we have \(\sigma(a) \subset [-\norm{a}, \norm{a}]\).
 \end{proof}
