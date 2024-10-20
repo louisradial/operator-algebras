@@ -16,6 +16,14 @@ Let \(\algebra{A}\) be a unital C*-algebra and let \(a \in \algebra{A}\) be a se
     then the proposition follows from the C* property, \(\norm{\varphi(a)}^2 = \norm{\varphi(a)^*\varphi(a)} = \norm{\varphi}_{\infty}^2\).
 \end{proof}
 
+\begin{proposition}{Norm of a power of a normal operator}{norm_normal}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(a \in \algebra{A}\) is a normal operator, then \(\norm{a}^n = \norm{a^n}\) for all \(n \in \mathbb{N}\).
+\end{proposition}
+\begin{proof}
+    Let \(n \in \mathbb{N}\), then for a normal operator we have \(\norm{a^n}^2 = \norm{(a^*)^n a^n} = \norm{(a^*a)^n}\). Since \(a^*a\) is self-adjoint, we have by \cref{prop:norm_polynomial} that \(\norm{(a^*a)^n} = \norm{a^*a}^n = \norm{a}^{2n}\). This yields \(\norm{a^n} = \norm{a^n}\) as desired.
+\end{proof}
+
+We recall the set of polynomials is dense in the set of continuous functions defined on a compact set with respect to the topology induced by the supremum norm. Indeed, we show the standard \nameref{thm:weierstrass_polynomial} for maps defined in the compact interval \([0,1]\), which may be generalized to continuous maps defined in any compact subset of \(\mathbb{R}\).
 \begin{theorem}{Weierstrass polynomial approximation theorem}{weierstrass_polynomial}
     Let \(f \in \mathcal{C}\left([0,1], \mathbb{C}\right)\) be a continuous function. Then the sequence \(\family{\varphi_n}{n \in \mathbb{N}}\subset\mathcal{C}\left([0,1], \mathbb{C}\right)\) of polynomials defined by
     \begin{equation*}
@@ -58,9 +66,44 @@ Let \(\algebra{A}\) be a unital C*-algebra and let \(a \in \algebra{A}\) be a se
                                   &= \frac12 \varepsilon + \frac{2 \norm{f}_{\infty}x(1 - x)}{n \delta^2}\\
                                   &\leq \frac12 \varepsilon + \frac{\norm{f}_\infty}{2 \delta^2 n}.
     \end{align*}
-    If \(\norm{f}_\infty\), we are done, so we may assume \(\norm{f}_\infty > 0\). We set \(N = \ceil{\frac{\norm{f}_\infty}{\delta^2 \varepsilon}}\), then
+    If \(\norm{f}_\infty\), we are done, so we may assume \(\norm{f}_\infty > 0\). We set \(N = \ceil*{\frac{\norm{f}_\infty}{\delta^2 \varepsilon}}\), then
     \begin{equation*}
         n \geq N \implies \forall x \in [0,1]: \abs{f(x) - \varphi_n(x)} < \varepsilon,
     \end{equation*}
     that is, \(\norm{f - \varphi_n}_\infty < \varepsilon\) for all \(n \geq N\).
+\end{proof}
+
+Let us denote by \(\mathcal{P}(\sigma(a)) \subset \mathcal{C}(\sigma(a), \mathbb{C})\) the subalgebra of polynomials defined on the spectrum of the self-adjoint operator \(a \in \algebra{A}\). Then by the generalized Weierstrass approximation theorem, we have \(\cl{\mathcal{P}(\sigma(a))} = \mathcal{C}(\sigma(a))\). \cref{prop:norm_polynomial} shows us the linear map
+\begin{align*}
+    \tilde{\Phi}_a : \mathcal{P}(\sigma(a)) &\to \algebra{A}\\
+                                    \varphi &\mapsto \varphi(a)
+\end{align*}
+is isometric, thus bounded. \cref{thm:blt} guarantees us the uniqueness and existence of a linear map
+\begin{align*}
+    \Phi_a : \mathcal{C}\left(\sigma(a), \mathbb{C}\right) &\to \algebra{A}\\
+                                                         f &\mapsto f(a)
+\end{align*}
+that isometrically extends \(\tilde{\Phi}_a\) to \(\mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) by defining
+\begin{equation*}
+    f(a) = \lim_{n\to\infty} \varphi_n(a),
+\end{equation*}
+where \(\family{\varphi_n}{n\in \mathbb{N}} \subset \mathcal{P}(\sigma(a))\) is \emph{any} sequence of polynomials that uniformly converges against \(f\).
+
+\begin{theorem}{Gelfand's homomorphism in C*-algebras}{gelfand_homomorphism}
+    Let \(\algebra{A}\) be unital C*-algebra, let \(a \in \algebra{A}\) be a self-adjoint operator and consider the above defined map \(\Phi_a : \mathcal{C}\left(\sigma(a), \mathbb{C}\right) \to \algebra{A}\). Then \(\Phi_a\) is a *-homomorphism and for all \(f \in \mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) we have
+    \begin{enumerate}[label=(\alph*)]
+        \item if \(f(\lambda) \geq 0\) for all \(\lambda \in \sigma(a)\), then \(\sigma(\Phi_a(f)) \subset [0, \infty)\);
+        \item if \(\family{f_n}{n\in \mathbb{N}}\subset \mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) is a sequence that uniformly converges against \(f\), then \(\family{\Phi_a(f_n)}{n\in \mathbb{N}} \subset \algebra{A}\) converges against \(\Phi_a(f)\); and
+        \item \(f(\sigma(a)) = \sigma(\Phi_a(f))\).
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+
+\end{proof}
+
+\begin{corollary}
+    The set \(\algebra{F} = \setc{\Phi_a(f)}{f \in \mathcal{C}\left(\sigma(a), \mathbb{C}\right)}\) is a unital abelian C*-subalgebra of \(\algebra{A}\).
+\end{corollary}
+\begin{proof}
+
 \end{proof}
