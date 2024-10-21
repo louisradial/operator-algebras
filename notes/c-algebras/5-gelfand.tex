@@ -85,7 +85,7 @@ is isometric, thus bounded. \cref{thm:blt} guarantees us the uniqueness and exis
 \end{align*}
 that isometrically extends \(\tilde{\Phi}_a\) to \(\mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) by defining
 \begin{equation*}
-    f(a) = \lim_{n\to\infty} \varphi_n(a),
+    f(a) = \lim_{n\to\infty}{\varphi_n(a)},
 \end{equation*}
 where \(\family{\varphi_n}{n\in \mathbb{N}} \subset \mathcal{P}(\sigma(a))\) is \emph{any} sequence of polynomials that uniformly converges against \(f\).
 
@@ -93,17 +93,54 @@ where \(\family{\varphi_n}{n\in \mathbb{N}} \subset \mathcal{P}(\sigma(a))\) is 
     Let \(\algebra{A}\) be unital C*-algebra, let \(a \in \algebra{A}\) be a self-adjoint operator and consider the above defined map \(\Phi_a : \mathcal{C}\left(\sigma(a), \mathbb{C}\right) \to \algebra{A}\). Then \(\Phi_a\) is a *-homomorphism and for all \(f \in \mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) we have
     \begin{enumerate}[label=(\alph*)]
         \item if \(f(\lambda) \geq 0\) for all \(\lambda \in \sigma(a)\), then \(\sigma(\Phi_a(f)) \subset [0, \infty)\);
-        \item if \(\family{f_n}{n\in \mathbb{N}}\subset \mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) is a sequence that uniformly converges against \(f\), then \(\family{\Phi_a(f_n)}{n\in \mathbb{N}} \subset \algebra{A}\) converges against \(\Phi_a(f)\); and
+        \item if a sequence \(\family{f_n}{n\in \mathbb{N}}\subset \mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) converges uniformly against \(f\) then \(\family{\Phi_a(f_n)}{n\in \mathbb{N}} \subset \algebra{A}\) converges against \(\Phi_a(f)\);
         \item \(f(\sigma(a)) = \sigma(\Phi_a(f))\).
     \end{enumerate}
 \end{theorem}
 \begin{proof}
+    Let \(f, g \in \mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) and let \(\family{\varphi_n}{n \in \mathbb{N}}, \family{\psi_n}{n \in \mathbb{N}} \subset \mathcal{P}(\sigma(a))\) be sequences of polynomials that uniformly converge to \(f\) and \(g\), respectively. Then for all \(\alpha, \beta \in \mathbb{C}\) we have
+    \begin{equation*}
+        \Phi_a( \alpha f + \beta g) = \lim_{n \to \infty}{(\alpha \varphi_n + \beta \psi_n)(a)}= \alpha \lim_{n\to\infty}{\varphi_n(a)} + \beta\lim_{n\to\infty}{\psi_n(a)} = \alpha \Phi_a(f) + \beta\Phi_a(g),
+    \end{equation*}
+    that is, \(\Phi_a\) is linear. The map preserves the product,
+    \begin{equation*}
+        \Phi_a(fg) = \lim_{n\to\infty}{(\varphi_n\psi_n)(a)} = \lim_{n\to\infty}{\varphi_n(a)\psi_n(a)}=\left[\lim_{n\to\infty}{\varphi_n(a)}\right]\left[\lim_{n\to\infty}{\psi_n(a)}\right] = \Phi_a(f)\Phi_a(g),
+    \end{equation*}
+    commutes with the involution,
+    \begin{equation*}
+        \Phi_a(\conj{f}) = \lim_{n\to\infty}{\conj{\varphi_n}(a)} = \lim_{n\to\infty}{\varphi_n(a)^*} = \left[\lim_{n\to\infty}{\varphi_n(a)}\right]^* = \Phi_a(f)^*,
+    \end{equation*}
+    and maps the identity element of \(\mathcal{C}(\sigma(a), \mathbb{C})\), the constant polynomial \(1\), to the identity element of the C*-algebra, \(\unity\), hence it is shown that it is a *-homomorphism.
 
+    Suppose \(f\) satisfies \(f(\lambda) \geq 0\) for all \(\lambda \in \sigma(a)\). Then there exists \(h \in \mathcal{C}(\sigma(a), \mathbb{R})\) such that \(f = h^2\). Since \(\Phi_a\) is a *-homomorphism, we know \(\Phi_a(h)\) is self-adjoint, hence its spectrum lies in \([-\norm{h}_\infty, \norm{h}_\infty]\). With the spectral mapping theorem, we know \(\sigma(\Phi_a(h)^2) \subset [0, \norm{h}_\infty^2]\) and we conclude (a).
+
+    Let \(\family{f_n}{n \in \mathbb{N}} \subset \mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) be a sequence that converges uniformly against \(f\), then
+    \begin{equation*}
+        \norm{\Phi_a(f) - \Phi_a(f_n)}= \norm{\Phi_a(f - f_n)} = \norm{f - f_n}_{\infty},
+    \end{equation*}
+    for all \(n \in \mathbb{N}\), since \(\Phi_a\) is a isometry. From this we conclude \(\family{\Phi_a(f_n)}{n\in \mathbb{N}}\) converges against \(\Phi_a(f)\), hence (b) follows.
+
+    Let \(\mu \in f(\sigma(a))\), then there exists \(\lambda \in \sigma(a)\) such that \(\mu = f(\lambda)\). Suppose, by  contradiction, \(\mu \in \rho(\Phi_a(f))\), then \(f(\lambda)\unity - \Phi_a(f)\) is invertible. Let \(\varepsilon > 0\), then there exists \(\varphi \in \mathcal{P}(\sigma(a))\) such that \(\norm{f - \varphi}_{\infty} < \frac12 \varepsilon\). Then
+    \begin{equation*}
+        \norm*{[f(\lambda)\unity - \Phi_a(f)] - [\varphi(\lambda)\unity - \Phi_a(\varphi)]} \leq \abs{f(\lambda) - \varphi(\lambda)} + \norm*{\Phi_a(f) - \Phi_a(\varphi)} \leq 2 \norm{f - \varphi}_\infty < \varepsilon,
+    \end{equation*}
+    that is, \(\varphi(\lambda)\unity - \Phi_a(\varphi)\) lies in the open ball centered in \(\mu \unity - \Phi_a(f)\) with radius \(\varepsilon\). If we set \(\varepsilon\) sufficiently small, we conclude by \cref{prop:invertible_continuous_group} that \(\varphi(\lambda) \unity - \Phi_a(\varphi)\) is invertible, hence \(\varphi(\lambda) \in \rho(\Phi_a(\varphi))\). However, we know from the spectral mapping theorem that \(\varphi(\lambda) \in \sigma(\Phi_a(\varphi)).\) This contradiction shows \(\mu \in \sigma(\Phi_a(f))\), that is, \(f(\sigma(a)) \subset \sigma(\Phi_a(f))\).
+
+    Let \(\kappa \in \mathbb{C} \setminus f(\sigma(a))\), then the map
+    \begin{align*}
+        r_{\kappa} : \sigma(a) &\to \mathbb{C}\\
+                           \xi &\mapsto \frac{1}{\kappa - f(\xi)}
+    \end{align*}
+    is continuous, that is, \(r_{\kappa} \in \mathcal{C}\left(\sigma(a), \mathbb{C}\right)\). Since \(\Phi_a\) is a *-homomorphism, we have
+    \begin{equation*}
+        1 = r_{\kappa} (\kappa - f) \implies \Phi_a(r_{\kappa}) \Phi_a(\kappa - f) = \unity \implies \Phi_a(r_{\kappa}) \left[\kappa \unity - \Phi_a(f)\right] = \unity
+    \end{equation*}
+    that is, \(\Phi_a(r_{\kappa}) = \left[\kappa\unity - \Phi_a(f)\right]^{-1}\), as \(\mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) is an abelian algebra. This shows \(\kappa \in \rho(\Phi_a(f))\), that is, \(\kappa \notin \sigma(\Phi_a(f))\). Therefore, \(\sigma(\Phi_a(f)) \subset f(\sigma(a))\), and we conclude (c).
 \end{proof}
 
 \begin{corollary}
     The set \(\algebra{F} = \setc{\Phi_a(f)}{f \in \mathcal{C}\left(\sigma(a), \mathbb{C}\right)}\) is a unital abelian C*-subalgebra of \(\algebra{A}\).
 \end{corollary}
 \begin{proof}
-
+    Let \(\family{u_n}{n \in \mathbb{N}} \subset \algebra{F}\) be a convergent sequence of operators in \(\algebra{F}\), then there exists a sequence \(\family{f_n}{n \in \mathbb{N}} \subset \mathcal{C}\left(\sigma(a), \mathbb{C}\right)\) such that \(\Phi_a(f_n) = u_n\) for all \(n \in \mathbb{N}\). As \(\Phi_a\) is an isometry and \family{u_n}{n \in \mathbb{N}} is a Cauchy sequence, it follows that \family{f_n}{n \in \mathbb{N}} is a Cauchy sequence. By completeness there exists a continuous function \(f : \sigma(a) \to \mathbb{C}\) against which the sequence \family{f_n}{n\in \mathbb{N}} converges uniformly. By \cref{thm:gelfand_homomorphism}, we know \family{u_n}{n\in \mathbb{N}} converges to \(\Phi_a(f) \in \algebra{F}\), that is, \(\algebra{F}\) is a closed subset of \(\algebra{A}\). The *-homomorphism properties there shown also ensure \(\algebra{F}\) is an abelian self-adjoint subalgebra of \(\algebra{A}\), therefore it is a C*-subalgebra of \(\algebra{A}\).
 \end{proof}
