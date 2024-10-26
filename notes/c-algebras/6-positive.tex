@@ -1,0 +1,65 @@
+% vim: spl=en_us
+\section{Positive operators of a C*-algebra}
+Consider the function \(f : \mathbb{C} \to \mathbb{C}\) defined by \(f(z) = \sqrt{1 - z}\), which is analytic in the unit disk with
+\begin{equation*}
+    f(z) = 1 - \frac12z - \sum_{n = 2}^\infty \frac{(2n - 3)!!}{(2n)!!} z^n,
+\end{equation*}
+for all \(\abs{z} < 1\). We state without proof the following result.
+\begin{theorem}{Square root of an operator}{square_root}
+    Let \(\algebra{A}\) be a unital Banach algebra, let \(u \in \algebra{A}\) with \(\norm{u} \leq 1\) and define
+    \begin{equation*}
+        \quad c_1 = -\frac12,\quad\text{e}\quad c_{n+1} = -\frac{(2n - 1)!!}{(2n + 2)!!}
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). There exists \(v \in \algebra{A}\) such that \(v^2 = \unity - u\). This operator is defined by
+    \begin{equation*}
+        v = \unity + \sum_{n = 1}^\infty c_n u^n \in \algebra{A}.
+    \end{equation*}
+\end{theorem}
+\begin{corollary}
+    Let \(u \in \algebra{A}\) with \(\norm{\unity - u} \leq 1\), then there exists \(v \in \algebra{A}\) such that \(v^2 = u\), defined by
+    \begin{equation*}
+        v = \unity + \sum_{n=1}^\infty c_n (\unity - u)^n
+    \end{equation*}
+    and we say it is the \emph{square root} of the operator \(u\).
+\end{corollary}
+\begin{proof}
+    The operator \(\unity - u\) satisfies the hypothesis in \cref{thm:square_root}, then there exists
+    \begin{equation*}
+        v = \unity + \sum_{n = 1}^\infty c_n (\unity - u)^n
+    \end{equation*}
+    which satisfies \(v^2 = \unity - (\unity - u) = u\).
+\end{proof}
+\begin{corollary}
+    If \(\algebra{A}\) is a unital Banach *-algebra and \(u \in \algebra{A}\) is self-adjoint with \(\norm{\unity - u} \leq 1\), then its square root is also self-adjoint.
+\end{corollary}
+\begin{proof}
+    Let \(\family{v_n}{n \in \mathbb{N}} \subset \algebra{A}\) be defined by
+    \begin{equation*}
+        v_n = \unity + \sum_{k = 1}^n c_k (\unity - u)^k
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). Since \(c_k \in \mathbb{R}\) for all \(k \in \mathbb{N}\), we have
+    \begin{equation*}
+        v_n^* = \unity^* + \sum_{k=1}^n c_k\left[(\unity - u)^k\right]^* = \unity + \sum_{k=1}^n c_k (\unity - u)^k = v_n,
+    \end{equation*}
+    for all \(n \in \mathbb{N}\), since \(\unity - u\) is self-adjoint. From the continuity of the adjoint operation, it follows that \(\displaystyle v = \lim_{n\to\infty} v_n\) is self-adjoint.
+\end{proof}
+\begin{corollary}
+    If \(\algebra{A}\) is a unital Banach *-algebra and if \(u \in \algebra{A}\) with \(\norm{u} \leq 1\), then there exists \(v \in \algebra{A}\) self-adjoint such that \(v^2 = \unity - u^*u\).
+\end{corollary}
+\begin{proof}
+    We have \(\norm{u^*u} \leq \norm{u^*}\norm{u} = \norm{u}^2 \leq 1\), then the result follows by \cref{thm:square_root} and by the previous corollary.
+\end{proof}
+\begin{corollary}
+    If \(u \in \algebra{A} \setminus\set{0}\) satisfies \(\norm{\unity - \norm{u}^{-1} u} \leq 1\), then there exists \(v \in \algebra{A}\) such that \(v^2 = u\), defined by
+    \begin{equation*}
+        v = \norm{u}^{\frac12} \left[\unity + \sum_{n = 1}^\infty c_n\left(\unity - \norm{u}^{-1}u\right)^n\right].
+    \end{equation*}
+    If, in addition, \(\algebra{A}\) is a Banach *-algebra and \(u\) is self-adjoint, then \(v\) is self-adjoint.
+\end{corollary}
+\begin{proof}
+    Using \cref{thm:square_root} to the operator \(\norm{u}^{-1}u\) yields \(v_0 \in \algebra{A}\) defined by
+    \begin{equation*}
+        v_0  = \unity + \sum_{n = 1}^\infty c_n\left(\unity - \norm{u}^{-1}u\right)^n
+    \end{equation*}
+    satisfying \(v_0^2 = \norm{u}^{-1} u\). Then \(v = \norm{u}^{\frac12}v_0\) satisfies \(v^2 = \norm{u} v_0^2 = u\). If \(u\) is self-adjoint, then \(v_0\) is self-adjoint, and the result follows.
+\end{proof}
