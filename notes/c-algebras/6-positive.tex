@@ -4,23 +4,102 @@ Consider the function \(f : \mathbb{C} \to \mathbb{C}\) defined by \(f(z) = \sqr
 \begin{equation*}
     f(z) = 1 - \frac12z - \sum_{n = 2}^\infty \frac{(2n - 3)!!}{(2n)!!} z^n,
 \end{equation*}
-for all \(\abs{z} < 1\). We state without proof the following result.
+for all \(\abs{z} < 1\).
+\begin{lemma}{Property of Taylor coefficients for \(z \mapsto \sqrt{1 - z}\) in the unit disk}{coefficients_square_root}
+    Denote the Taylor coefficients of the map \(z \mapsto \sqrt{1-z}\) with \(\abs{z} < 1\) by
+    \begin{equation*}
+        c_0 = 1,\quad c_1 = -\frac12,\quad\text{and}\quad c_{n+1} = -\frac{(2n-1)!!}{(2n+2)!!}
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). Then
+    \begin{equation*}
+        \sum_{k = 0}^\infty \abs{c_k} \leq 2
+    \end{equation*}
+    and the Taylor series for \(z \mapsto \sqrt{1-z}\) is absolutely convergent for all \(\abs{z} \leq 1\). Moreover,
+    \begin{equation*}
+        \sum_{\substack{k + \ell = m\\k,\ell \in \mathbb{N}_0}}{c_k c_\ell} = 0
+    \end{equation*}
+    for all \(m \geq 2\).
+\end{lemma}
+\begin{proof}
+    Notice \(\abs{c_k} = - c_k\) for all \(k \in \mathbb{N}\), then
+    \begin{equation*}
+        \sum_{k = 0}^n (\abs{c_k} + c_k) = 2c_0 = 2 \implies \sum_{k = 0}^n \abs{c_k} = 2 - \sum_{k = 0}^n c_k
+    \end{equation*}
+    for all \(n \in \mathbb{N}_0\). Let \(t \in (0,1)\), then
+    \begin{equation*}
+        \sum_{k=0}^n c_k t^k = \sqrt{1 - t} - \sum_{k = {n+1}}^\infty c_k t^k = \sqrt{1 - t} + \sum_{k = n+1} \abs{c_k}t^k \geq \sqrt{1 - t}
+    \end{equation*}
+    for all \(n \in \mathbb{N}_0\). We then have
+    \begin{equation*}
+        \sum_{k = 0}^n \abs{c_k} = 2 - \sum_{k = 0}^n c_k = 2 - \lim_{t \to 1^{-}}\sum_{k = 0}^{n} c_k t^k \leq 2 - \lim_{t \to 1^{-}} \sqrt{1 - t} = 2
+    \end{equation*}
+    for all \(n \in \mathbb{N}_0\), which guarantees
+    \begin{equation*}
+        \sum_{k = 0}^\infty \abs{c_k} \leq 2.
+    \end{equation*}
+    Then, for all \(z \in \mathbb{C}\) with \(\abs{z} \leq 1\), we have
+    \begin{equation*}
+        \sum_{k = 0}^n \abs{c_k}\abs{z}^k \leq \sum_{k = 0}^n \abs{c_k} \leq 2
+    \end{equation*}
+    for all \(n \in \mathbb{N}_0\), that is, \(\sum_{k = 0}^\infty c_k z^k\) is absolutely convergent for all \(\abs{z} \leq 1\).
+
+    Let \(z \in \mathbb{C}\) with \(\abs{z} < 1\), then
+    \begin{equation*}
+        1 - z = \left(\sum_{k = 0}^\infty c_k z^k\right)^2 = \sum_{k = 0}^\infty \sum_{\ell = 0}^\infty c_k c_\ell z^{k + \ell} = \sum_{m = 0}^\infty \sum_{\substack{k + \ell = m\\k,\ell \in \mathbb{N}_0}} c_kc_\ell z^m = 1 - z + \sum_{m = 2}^\infty z^m\sum_{\substack{k + \ell = m\\k,\ell \in \mathbb{N}_0}}c_k c_\ell.
+    \end{equation*}
+    From the uniqueness of the Taylor series we must have \(\sum_{\substack{k+\ell=m\\k,\ell \in \mathbb{N}_0}} c_k c_\ell = 0\) for all \(m \geq 2\).
+\end{proof}
+
 \begin{theorem}{Square root of an operator}{square_root}
-    Let \(\algebra{A}\) be a unital Banach algebra, let \(u \in \algebra{A}\) with \(\norm{u} \leq 1\) and define
+    Let \(\algebra{A}\) be a unital Banach algebra, let \(u \in \algebra{A}\) with \(\norm{u} \leq 1\), and let \(c_n\) be the coefficients defined in \cref{lem:coefficients_square_root} with \(n \in \mathbb{N}_0\). There exists \(v \in \algebra{A}\) such that \(v^2 = \unity - u\). The operator defined by the convergent series
     \begin{equation*}
-        \quad c_1 = -\frac12,\quad\text{e}\quad c_{n+1} = -\frac{(2n - 1)!!}{(2n + 2)!!}
+        v = \unity + \sum_{n = 1}^\infty c_n u^n
     \end{equation*}
-    for all \(n \in \mathbb{N}\). There exists \(v \in \algebra{A}\) such that \(v^2 = \unity - u\). This operator is defined by
-    \begin{equation*}
-        v = \unity + \sum_{n = 1}^\infty c_n u^n \in \algebra{A}.
-    \end{equation*}
+    satisfies \(v^2 = \unity - u\).
 \end{theorem}
+\begin{proof}
+    Let \(\family{v_n}{n \in \mathbb{N}}\subset \algebra{A}\) and \(\family{s_n}{n \in \mathbb{N}}\) be the sequences defined by the partial sums
+    \begin{equation*}
+        v_n = \unity + \sum_{k=1}^n c_k u^k\quad\text{and}\quad s_n = \sum_{k = 0}^n \abs{c_k}
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). \cref{lem:coefficients_square_root} guarantees the sequence \(s_n\) is convergent, as it is a bounded and monotonic sequence of real numbers, hence it is a Cauchy sequence. Then, for all \(n,m \in \mathbb{N}\) with \(n \geq m\) we have
+    \begin{equation*}
+        \norm{v_n - v_m} = \norm*{\sum_{k=m+1}^n c_k u^k} \leq \sum_{k = m+1}^n \abs{c_k} \norm{u^k} \leq \sum_{k = m+1}^n \abs{c_k} = \abs{s_n - s_m},
+    \end{equation*}
+    that is, \(v_n\) is a Cauchy sequence. By completeness, there exists \(v \in \algebra{A}\) such that \(v_n \to v\).
+
+    Let us write \(N_p = \setc{j \in \mathbb{N}_0}{j \leq p}\) for any \(p \in \mathbb{N}_0\) and use the convention \(u^0 = \unity\). Then
+    \begin{equation*}
+        v_n^2 = \sum_{k = 0}^n \sum_{\ell = 0}^n c_k c_\ell u^{k + \ell} = \sum_{m = 0}^{2n}u^m\sum_{\substack{k + \ell = m\\k, \ell \in N_n}} c_k c_\ell
+    \end{equation*}
+    for all \(n \in \mathbb{N}\) and, in particular, for \(n \geq 2\) we have
+    \begin{align*}
+        v_n^2 &= \unity - u + \sum_{m = 2}^{2n} u^m \sum_{\substack{k + \ell = m\\k, \ell \in N_n}}c_k c_\ell + \sum_{m = n + 1}^{2n} u^m \sum_{\substack{k + \ell = m\\k, \ell \in N_n}} c_k c_\ell\\
+              &= \unity - u + \sum_{m = 2}^n u^m \sum_{\substack{k + \ell = m\\k,\ell \in \mathbb{N}_0}} c_k c_\ell + \sum_{m = n+1}^{2n} u^m \sum_{\substack{k + \ell = m\\k,\ell \in N_n}} c_k c_\ell\\
+              &= \unity - u + \sum_{m = n+1}^{2n} u^m \sum_{\substack{k + \ell = m\\k,\ell \in N_n}} c_k c_\ell
+    \end{align*}
+    by \cref{lem:coefficients_square_root}. Notice we have for \(n + 1 \leq m \leq 2n\) and \(n \geq 2\) that
+    \begin{equation*}
+        \sum_{\substack{k + \ell = m\\k,\ell \in N_n}} c_k c_\ell = \sum_{k = m - n}^n c_k c_{m - k} = \sum_{k = 0}^n c_k c_{m - n} - \sum_{k = 0}^{m - n - 1} c_k c_{m - k} = \sum_{\substack{k + \ell = m\\k, \ell \in \mathbb{N}_0}} c_k c_\ell - \sum_{k = 0}^{m - n - 1} c_k c_{m - k} = - \sum_{k = 0}^{m - n - 1} c_k c_{m - k},
+    \end{equation*}
+    then
+    \begin{align*}
+        \norm{v_n^2 - (\unity - u)} &\leq \sum_{m = n + 1}^{2n} \norm{u}^m \abs*{\sum_{k = 0}^{m - n - 1} c_k c_{m-k}}\\
+                                    &\leq \sum_{m = 0}^{n-1} \sum_{k = 0}^{m} \abs{c_k}\abs{c_{m+n+1-k}}\\
+                                    &= \sum_{k = 0}^{n-1} \abs{c_k} \sum_{m = k}^{n-1} \abs{c_{m+n+1-k}}\\
+                                    &= \sum_{k = 0}^{n-1} \abs{c_k} \sum_{m = n+1}^{2n - k} \abs{c_m}\\
+                                    &\leq \sum_{k = 0}^{n-1} \abs{c_k} \sum_{m = n+1}^{2n} \abs{c_m}\\
+                                    &\leq 2 \sum_{m = n+1}^{2n} \abs{c_m}\\
+                                    &= 2 \abs{s_{2n} - s_{n+1}}.
+    \end{align*}
+    Since \(s_n\) is Cauchy, we may take \(n\) sufficiently big such that the right hand side becomes arbitrarily small, that is, \(v_n^2\) converges against \(\unity - u\). From the continuity of the product with respect to the uniform topology, this yields \(v^2 = \unity - u\).
+\end{proof}
 \begin{corollary}
-    Let \(u \in \algebra{A}\) with \(\norm{\unity - u} \leq 1\), then there exists \(v \in \algebra{A}\) such that \(v^2 = u\), defined by
+    Let \(u \in \algebra{A}\) with \(\norm{\unity - u} \leq 1\), then there exists \(v \in \algebra{A}\) such that \(v^2 = u\). The operator defined by
     \begin{equation*}
         v = \unity + \sum_{n=1}^\infty c_n (\unity - u)^n
     \end{equation*}
-    and we say it is the \emph{square root} of the operator \(u\).
+    satisfies \(v^2 = u\).
 \end{corollary}
 \begin{proof}
     The operator \(\unity - u\) satisfies the hypothesis in \cref{thm:square_root}, then there exists
@@ -30,7 +109,11 @@ for all \(\abs{z} < 1\). We state without proof the following result.
     which satisfies \(v^2 = \unity - (\unity - u) = u\).
 \end{proof}
 \begin{corollary}
-    If \(\algebra{A}\) is a unital Banach *-algebra and \(u \in \algebra{A}\) is self-adjoint with \(\norm{\unity - u} \leq 1\), then its square root is also self-adjoint.
+    If \(\algebra{A}\) is a unital Banach *-algebra and \(u \in \algebra{A}\) is self-adjoint with \(\norm{\unity - u} \leq 1\), then
+    \begin{equation*}
+        v = \unity + \sum_{n = 1}^{\infty}c_n(\unity - u)^n
+    \end{equation*}
+    is self adjoint.
 \end{corollary}
 \begin{proof}
     Let \(\family{v_n}{n \in \mathbb{N}} \subset \algebra{A}\) be defined by
@@ -50,11 +133,11 @@ for all \(\abs{z} < 1\). We state without proof the following result.
     We have \(\norm{u^*u} \leq \norm{u^*}\norm{u} = \norm{u}^2 \leq 1\), then the result follows by \cref{thm:square_root} and by the previous corollary.
 \end{proof}
 \begin{corollary}
-    If \(u \in \algebra{A} \setminus\set{0}\) satisfies \(\norm{\unity - \norm{u}^{-1} u} \leq 1\), then there exists \(v \in \algebra{A}\) such that \(v^2 = u\), defined by
+    If \(u \in \algebra{A} \setminus\set{0}\) satisfies \(\norm{\unity - \norm{u}^{-1} u} \leq 1\), then there exists \(v \in \algebra{A}\) such that \(v^2 = u\). The operator defined by
     \begin{equation*}
-        v = \norm{u}^{\frac12} \left[\unity + \sum_{n = 1}^\infty c_n\left(\unity - \norm{u}^{-1}u\right)^n\right].
+        v = \norm{u}^{\frac12} \left[\unity + \sum_{n = 1}^\infty c_n\left(\unity - \norm{u}^{-1}u\right)^n\right]
     \end{equation*}
-    If, in addition, \(\algebra{A}\) is a Banach *-algebra and \(u\) is self-adjoint, then \(v\) is self-adjoint.
+    satisfies \(v^2 = u\). If, in addition, \(\algebra{A}\) is a Banach *-algebra and \(u\) is self-adjoint, then \(v\) is self-adjoint.
 \end{corollary}
 \begin{proof}
     Using \cref{thm:square_root} to the operator \(\norm{u}^{-1}u\) yields \(v_0 \in \algebra{A}\) defined by
@@ -62,4 +145,204 @@ for all \(\abs{z} < 1\). We state without proof the following result.
         v_0  = \unity + \sum_{n = 1}^\infty c_n\left(\unity - \norm{u}^{-1}u\right)^n
     \end{equation*}
     satisfying \(v_0^2 = \norm{u}^{-1} u\). Then \(v = \norm{u}^{\frac12}v_0\) satisfies \(v^2 = \norm{u} v_0^2 = u\). If \(u\) is self-adjoint, then \(v_0\) is self-adjoint, and the result follows.
+\end{proof}
+
+Let \(D = \setc{a \in \algebra{A}}{\norm{a} \leq 1}\) be the unit closed disk around the zero operator. We now show the map
+\begin{align*}
+    \psi:D&\to \algebra{A}\\
+        u &\mapsto \unity + \sum_{k = 1}^\infty c_k u^k,
+\end{align*}
+satisfying \(\psi(u)^2 = \unity - u\) for all \(u \in D\), is continuous with respect to the uniform topology.
+\begin{proposition}{Uniform continuity of the square root of an operator}{square_root_continuous}
+    Let \(\algebra{A}\) be a unital Banach algebra and let \(\psi : D \to \algebra{A}\) be as above. Then \(\psi\) is a continuous map with respect to the uniform topology.
+\end{proposition}
+\begin{proof}
+    For convenience, we write
+    \begin{equation*}
+        \psi_n(w) = \unity + \sum_{k = 1}^n c_k w^k
+    \end{equation*}
+    for all \(n \in \mathbb{N}\) and \(w \in D\). Let \(\varepsilon > 0\), then \cref{lem:coefficients_square_root} shows us there exists \(N \in \mathbb{N}\) such that
+    \begin{equation*}
+        \norm*{\psi(w) - \psi_n(w)} \leq \sum_{k = n + 1}^\infty \abs{c_k} \norm{w}^k \leq \sum_{k = n + 1}^\infty \abs{c_k} < \frac13\varepsilon
+    \end{equation*}
+    for all \(n \geq N\) and all \(w \in D\).
+
+    Let \(\family{u_n}{n\in \mathbb{N}} \subset D\) be a sequence that converges against \(u \in D\), then it follows from \cref{lem:estimate_difference_power} that
+    \begin{equation*}
+        \norm*{\psi_N(u_m) - \psi_N(u)} \leq \sum_{k = 1}^N \abs{c_k} \norm{u_m^k-u^k} \leq \sum_{k = 1}^N k\abs{c_k}\norm{u_m - u}
+    \end{equation*}
+    for all \(m \in \mathbb{N}\). Since \(u_n \to u\), there exists \(M \in \mathbb{N}\) such that \(\norm{u_m - u} < \frac{\varepsilon}{6N}\) for all \(m \geq M\), then
+    \begin{equation*}
+        \norm*{\psi_N(u_m) - \psi_N(u)} < \sum_{k = 1}^N \frac{k \varepsilon}{6N} \abs{c_k} \leq \frac16 \varepsilon\sum_{k = 1}^N \abs{c_k} \leq \frac13\varepsilon
+    \end{equation*}
+    for all \(m \geq M\). Then, for all \(m \geq \max\set{N, M}\) we have by the triangle inequality that
+    \begin{equation*}
+        \norm{\psi(u) - \psi(u_m)} \leq \norm*{\psi(u) - \psi_N(u)} + \norm*{\psi_N(u) - \psi_N(u_m)} + \norm*{\psi_N(u_m) - \psi(u_m)} < \varepsilon,
+    \end{equation*}
+    that is, \(\psi\) is continuous with respect to the uniform topology.
+\end{proof}
+
+We now show every non-zero self-adjoint operator in a C*-algebra with a positive spectrum admits a unique square root. Let us denote the real half-lines by \(\mathbb{R}_+ = [0,\infty)\) and \(\mathbb{R}_- = (-\infty, 0]\).
+\begin{definition}{Positive element of an involutive algebra}{positive}
+    Let \(\algebra{A}\) be a *-algebra. A \emph{positive element} \(a \in \algebra{A}\) is self-adjoint and its spectrum lies in the positive half-line, \(\sigma(a) \subset \mathbb{R}_+\). The set of all positive elements is denoted by \(\algebra{A}_+\).
+\end{definition}
+
+\begin{lemma}{Positive elements of a C*-algebra has no pair of distinct opposite operators}{positive_salient}
+    Let \(\algebra{A}\) be a unital C*-algebra. Then \(\algebra{A}_+ \cap (-\algebra{A}_+) = \set{0}\).
+\end{lemma}
+\begin{proof}
+    Notice \(0 \in \algebra{A}\) is a positive element, as it is self-adjoint with \(\sigma(0) = \set{0} \subset \mathbb{R}_+\). As \(-0 = 0\), we have \(0 \in \algebra{A}_+ \cap (-\algebra{A}_+)\). Let \(a \in \algebra{A}_+ \cap (-\algebra{A}_+)\), then \(\sigma(a) \subset \mathbb{R}_+\) and there exists \(b \in \algebra{A}_+\) such that \(a = -b\). \cref{thm:spectral_mapping}, yields \(\sigma(a) = -\sigma(b) \subset \mathbb{R}_-\). As \(\sigma(a)\in \algebra{A}_+\), we have \(\sigma(a) \subset \mathbb{R}_+\), then it follows that \(\sigma(a) = \set{0}\). That is, \(r(a) = 0\), and we conclude from \cref{thm:spectral_radius_cstar} that \(a = 0\).
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(a, b\in \algebra{A}_+\) such that \(a + b = 0\), then \(a = b = 0\).
+\end{corollary}
+\begin{proof}
+    If \(a + b = 0\), then \(\algebra{A}_+ \ni a = -b \in (-\algebra{A}_+)\), that is, \(a \in \algebra{A}_+ \cap (-\algebra{A}_+)\). We conclude \(a = 0\) from \cref{lem:positive_salient}, hence \(b = 0\).
+\end{proof}
+
+\begin{lemma}{If two positive operators commute, then their product is positive}{positive_commute}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(a,b \in \algebra{A}_+\) such that \(ab = ba\), then \(ab \in \algebra{A}_+\).
+\end{lemma}
+\begin{proof}
+    Gelfand homomorphism yields \(c,d \in \algebra{A}\) such that \(c^2 = a\) and \(d^2 = d\), where \(c\) and \(d\) are obtained by the limit of sequences of polynomials of \(a\) and \(b\), hence \(cd = dc\) as \(a\) and \(b\) commute. Then \(ab = c^2 d^2 = (cd)^2\), and we conclude \(\sigma(ab) \subset [0, \norm{cd}^2] \subset \mathbb{R}_+\) from \cref{thm:spectral_mapping}.
+\end{proof}
+
+\begin{theorem}{Square root in C*-algebra}{square_root_cstar}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(u \in \algebra{A}\setminus\set{0}\) is self-adjoint, then the following statements are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \item \(u \in \algebra{A}_+\);
+        \item \(\norm*{\unity - \norm{u}^{-1}u} \leq 1\); and
+        \item there exists \(v \in \algebra{A}\) self-adjoint such that \(v^2 = u\).
+    \end{enumerate}
+    In addition, if \(u\) is positive, then there exists a unique \(w \in \algebra{A}_+\) such that \(w^2 = u\), and we say \(w = \sqrt{u}\) is \emph{the positive square root of \(u\)}.
+\end{theorem}
+\begin{proof}
+    Suppose (a) and consider the polynomial \(\varphi(z) = 1 - \frac{z}{\norm{u}}\). By \cref{thm:spectral_mapping}, we have \(\sigma(\varphi(u)) = \varphi(\sigma(u)) \subset \varphi([0, \norm{u}]) = [0,1]\). Then, (b) follows from \cref{thm:spectral_radius_cstar}. Supposing (b), (c) follows from \cref{thm:square_root}. Supposing (c), we have \(\sigma(u) = \sigma(v^2) = \sigma(v)^2 \subset [0, \norm{v}^2]\) by \cref{thm:spectral_mapping,thm:spectral_radius_cstar}, hence \(u \in \algebra{A}_+\), and we conclude (a).
+
+    If \(u \in \algebra{A}_+\setminus\set{0}\), then \(\sigma(u) \subset [0, \norm{u}]\). The map \(\id{\sigma(u)} : \sigma(u) \to \sigma(u)\) is continuous and so is the map \(\sqrt{\noarg} : \mathbb{R} \to \mathbb{R}\), then the map \(\psi = \restrict{\sqrt{\noarg}}{\sigma(u)} \circ \id{\sigma(u)} : \sigma(u) \to \mathbb{R}\) is continuous by \cref{prop:restriction_map} and satisfies \(\psi(\lambda) \geq 0\) for all \(\lambda \in \sigma(u)\). By \cref{thm:gelfand_homomorphism}, we know \(w = \Phi_u(\psi)\) is self-adjoint and satisfies both \(\sigma(w) \subset \mathbb{R}_+\) and
+    \begin{equation*}
+        w^2 = \Phi_u(\psi)^2 = \Phi_u(\id{\sigma(u)}) = u.
+    \end{equation*}
+    It remains to show \(w \in \algebra{A}_+\) is the only such positive element of \(\algebra{A}\).
+
+    Let \(v \in \algebra{A}_+\) such that \(v^2 = u\), then \(v\) commutes with \(u\), as \(uv = v^3 = vu\). As \(w\) is the limit of polynomials of \(u\), it commutes with \(u\), and therefore it commutes with any operator that commutes with \(u\) therefore, in particular, we have \(wv = vw\). This yields
+    \begin{equation*}
+        0 = (u - u)(v - w) = (v^2 - w^2)(v - w) = (v + w)(v - w)^2 = v(v - w)^2 + w(v - w)^2.
+    \end{equation*}
+    Notice \((v - w)^2 \in \algebra{A}_+\), then \cref{lem:positive_commute} guarantees \(v(v - w)^2\) and \(w(v - w)^2\) are positive. We have then written \(0\) as the sum of two positive operators, and we conclude by \cref{lem:positive_salient} that both must be equal to the zero operator. Then,
+    \begin{equation*}
+        0 = v(v - w)^2 - w(v - w)^2 = (v - w)^3 \implies (v - w)^4 = 0,
+    \end{equation*}
+    hence
+    \begin{equation*}
+        \norm{(v - w)}^4 = \norm{(v - w)^2}^2 = \norm{(v - w)^4} = 0
+    \end{equation*}
+    follows from the self-adjointness of \(v - w\) and the C*-property. That is, \(v - w = 0\), which shows the uniqueness of the positive square root.
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(u \in \algebra{A}\) is self-adjoint and \(\norm{u} \leq 1\), then there exists a unique \(v \in \algebra{A}_+\) such that \(v^2 = \unity - u\), and we write \(v = \sqrt{\unity - u}\).
+\end{corollary}
+\begin{proof}
+    We consider \(w = \unity - u\), then \(\norm{\unity - w} = \norm{u} \leq 1\), then it follows from \cref{thm:square_root} that there exists \(v \in \algebra{A}\) such that \(v^2 = w\). By \cref{thm:square_root_cstar}, we know \(w \in \algebra{A}_+\) and we may take \(v\) as the unique element of \(\algebra{A}_+\) such that \(v^2 = w\).
+\end{proof}
+
+\begin{theorem}{Set of positive elements of a C*-algebra is a closed convex salient cone}{positive_cone}
+    Let \(\algebra{A}\) be a unital C*-algebra. Then
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\algebra{A}_+\) is a salient cone, that is, if \(u \in \algebra{A}_+\) and \(\lambda \in \mathbb{R}_+\), then \(\lambda u \in \algebra{A}_+\) and it has the property \(\algebra{A}_+ \cap (-\algebra{A}_+) = \set{0}\);
+        \item \(\algebra{A}_+\) is convex, that is, if \(u, v \in \algebra{A}_+\) and \(\lambda \in [0,1]\), then \(\lambda u + (1 - \lambda)v \in \algebra{A}_+\); and
+        \item \(\algebra{A}_+\) is closed in the uniform topology;
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Let \(u \in \algebra{A}_+\) and \(\lambda \in \mathbb{R}_+\), then \(\sigma(\lambda u) = \lambda \sigma(u) \subset [0, \lambda \norm{u}] \subset \mathbb{R}_+\) and \(\lambda u\) is self-adjoint, hence \(\lambda u \in \algebra{A}_+\), that is, \(\algebra{A}_+\) is a cone. We have shown that it is salient in \cref{lem:positive_salient}, thus (a) follows.
+
+    Let us consider \(a \in \algebra{A}_+\) and \(\mu \geq \norm{a}\) with \(\mu \neq 0\). Then by \cref{thm:spectral_mapping} we have
+    \begin{equation*}
+        \sigma(\unity - \mu^{-1} a) = \setc*{1 - \frac{\lambda}{\mu}}{\lambda \in \sigma(a)} \subset \left[1 - \frac{\norm{a}}{\mu}, 1\right] \subset [0, 1],
+    \end{equation*}
+    and it follows from \cref{thm:spectral_radius_cstar} that \(\norm{\unity - \mu^{-1} a} \leq 1\). Let \(u,v \in \algebra{A}_+\) and let \(\lambda \in [0,1]\), then for any \(\kappa \geq \max\set{\norm{u}, \norm{v}}\) with \(\kappa \neq 0\), we have
+    \begin{align*}
+        \norm*{\unity - \kappa^{-1}\left[\lambda u + (1 - \lambda)v\right]}
+        &= \norm*{\lambda\left(\unity - \kappa^{-1} u\right) + (1- \lambda) (\unity - \kappa^{-1}v)}\\
+        &\leq \lambda \norm{\unity - \kappa^{-1}u} + (1 - \lambda) \norm{\unity - \kappa^{-1} v}\\
+        &\leq \lambda + 1 - \lambda = 1,
+    \end{align*}
+    thus showing \(\sigma\left\{\unity - \kappa^{-1}\left[\lambda u + (1 - \lambda)v\right]\right\} \subset [-1,1]\) and as a result, \(\sigma\left[\lambda u + (1 - \lambda)v\right] \subset [0, 2 \kappa]\). That is, \(\lambda u + (1 - \lambda)v \in \algebra{A}_+\) and we conclude (b).
+
+    Let \(\family{u_n}{n \in \mathbb{N}} \subset \algebra{A}_+\) be a sequence of positive operators that converge against \(u \in \algebra{A}\). We may assume without loss of generality that \(u_n \neq 0\) for all \(n \in \mathbb{N}\), for if the sequence were to converge against \(0 \in \algebra{A}_+\) there would be nothing to show and if the sequence converges against \(u \in \algebra{A}\setminus{0}\), we may take a convergent subsequence. For \(n \in \mathbb{N}\), we have \(u_n \in \algebra{A}_+\setminus\set{0}\), then \cref{thm:square_root_cstar} yields \(\norm*{\unity - \norm{u_n}^{-1}u_n}\leq 1\) and we have
+    \begin{equation*}
+        \norm*{\unity - \norm{u}^{-1}u} = \lim_{n \to \infty} \norm*{\unity - \norm{u_n}^{-1}u_n} \leq \lim_{n \to \infty} 1 = 1,
+    \end{equation*}
+    that is, \(u \in \algebra{A}_+\).
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(u,v\in \algebra{A}_+\), then \(u + v \in \algebra{A}_+\).
+\end{corollary}
+\begin{proof}
+    Since \(\frac12 u + \frac12 v\) is a convex linear combination of positive operators, it is a positive operator. As \(\algebra{A}_+\) is a cone, \(2 \left(\frac12 u + \frac12 v\right) = u + v \in \algebra{A}_+\).
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(u \in \algebra{A}\) is such that \(-u^*u \in \algebra{A}_+\), then \(u = 0\).
+\end{corollary}
+\begin{proof}
+    Since \(\sigma(u^*u) \setminus\set{0} = \sigma(uu^*)\setminus\set{0}\), we know that \(-u^*u\) is positive if and only if \(-uu^*\) is positive, then by \cref{thm:positive_cone}, we know \(\frac12 uu^* + \frac12 u^*u \in -\algebra{A}_+\). We define the self adjoint operators \(x = \frac12 (u + u^*)\) and \(y = \frac1{2i}(u - u^*)\), with
+    \begin{equation*}
+        x^2 + y^2 = \frac12(u^*u + uu^*) \in -\algebra{A}_+.
+    \end{equation*}
+    Notice \(x^2, y^2 \in \algebra{A}_+\), then by the previous corollary \(x^2 + y^2 \in \algebra{A}_+\). Since \(\algebra{A}_+\) is a salient cone, we have \(x^2 = y^2 = 0\). The C* property then yields \(x = y = 0\), thus showing \(u = x + iy = 0\).
+\end{proof}
+
+We will now show every positive element of a C*-algebra is of the form \(x^*x\). First we show the following decomposition result.
+\begin{lemma}{Orthogonal decomposition of an operator}{orthogonal_decomposition_cstar}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(u \in \algebra{A}\) is self-adjoint, then there exists unique positive operators \(u_+, u_- \in \algebra{A}_+\) such that \(u = u_+ - u_-\) and \(u_+u_- = u_-u_+ = 0\).
+\end{lemma}
+\begin{proof}
+    We consider the continuous maps
+    \begin{align*}
+        f_+ : \sigma(u) &\to \mathbb{R}&
+        f_- : \sigma(u) &\to \mathbb{R}\\
+                \lambda &\mapsto \frac12\left(\abs{\lambda} + \lambda\right)&
+                \lambda &\mapsto \frac12\left(\abs{\lambda} - \lambda\right)
+    \end{align*}
+    which verify
+    \begin{equation*}
+        (f_+\cdot f_-)(\lambda) = f_+(\lambda)f_-(\lambda) = \frac14 \left(\abs{\lambda}^2 - \lambda^2\right) = 0,
+    \end{equation*}
+    \begin{equation*}
+        (f_+ - f_-)(\lambda) = f_+(\lambda) - f_-(\lambda) = \lambda,
+    \end{equation*}
+    and
+    \begin{equation*}
+        (f_+ + f_-)(\lambda) = f_+(\lambda) + f_-(\lambda) = \abs{\lambda} = \sqrt{\lambda^2}
+    \end{equation*}
+    for all \(\lambda \in \sigma(u)\), that is, \(f_+ f_- = \id{\sigma(u)}\) and \(f_+ - f_- = 0\). We define \(u_+ = \Phi_u(f_+)\) and \(\Phi_u(f_-)\), then \(u_+ - u_- = u\) and \(u_+ u_- = 0\). As the image of Gelfand homomorphism is a commutative C*-subalgebra, we also have \(u_- u_+ = 0\).
+
+    Let \(\tilde{u}_+, \tilde{u}_- \in \algebra{A}_+\) such that \(\tilde{u}_+ - \tilde{u}_- = u\) and \(\tilde{u}_+\tilde{u}_- = \tilde{u}_-\tilde{u}_+ = 0\). Then
+    \begin{equation*}
+        u^2 = \left(\tilde{u}_+ - \tilde{u}_-\right)^2 = \tilde{u}_+^2 + \tilde{u}_-^2 = \left(\tilde{u}_+ + \tilde{u}_-\right)^2 \implies u_+ + u_- = \sqrt{u^2} = \tilde{u}_+ + \tilde{u}_-,
+    \end{equation*}
+    which yields \(\tilde{u}_+ = u_+\) and \(\tilde{u}_- = u_-\).
+\end{proof}
+
+\begin{theorem}{Characterization of positive elements of a C*-algebra}{positive_cstar}
+    Let \(\algebra{A}\) be a unital C*-algebra. Then \(\algebra{A}_+ = \setc{u^*u}{u \in \algebra{A}}\).
+\end{theorem}
+\begin{proof}
+    Let \(u \in \algebra{A}_+\), then \(\sqrt{u} \in\algebra{A}_+\) satisfies \(\sqrt{u}^* \sqrt{u} = \sqrt{u}^2 = u\).
+
+    Let \(a \in \algebra{A}\) and let \(b = a^*a\), with orthogonal decomposition \(b_+, b_- \in \algebra{A}_+\). Consider \(c = ab_-\), then \(- c^*c = - b_- a^* a b_- = b_-bb_- = (b_-)^3 \in \algebra{A}_+\). By \cref{thm:positive_cone}, we know \(c = 0\), which yields \(0 = a^*c = b b_- = -(b_-)^2\), and we conclude \(b_- = 0\) by the C* property. That is, \(a^*a = b_+ \in \algebra{A}_+\).
+\end{proof}
+
+
+Recall \cref{prop:polarization_star_algebra}, which shows we may write any operator \(a \in \algebra{A}\) of a unital *-algebra as
+\begin{equation*}
+    a = \frac14 \sum_{k = 0}^3 i^k(a + i^k \unity)^*(a + i^k \unity).
+\end{equation*}
+In a C*-algebra, this shows every operator can be written as a linear combination of four positive operators.
+\begin{proposition}{Unitary decomposition}{unitary_decomposition}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(a \in \algebra{A}\) is self-adjoint, then there exist \(u_+, u_- \in \algebra{A}\) unitary such that \(a = \frac{\abs{a}}{2}(u_+ + u_-)\). If \(b \in \algebra{A}\), then for \(k \in \set{1,2,3,4}\) there exist \(u_k \in \algebra{A}\) unitary and \(\beta_k \in \setc{\lambda \in \mathbb{C}}{\abs{\lambda} \leq \frac12 \abs{b}}\) such that \(b = \sum_{k = 1}^4 \beta_k u_k\).
+\end{proposition}
+\begin{proof}
+\todo
 \end{proof}
