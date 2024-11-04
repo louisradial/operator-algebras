@@ -1,0 +1,91 @@
+% vim: spl=en_us
+\section{Approximate identity in C*-algebras}
+Even though it is always possible to adjoin an identity to a C*-algebra, it is sometimes more worthwhile to intrinsically work with the original algebra, using \emph{approximate identities.}
+
+\begin{definition}{Directed sets and convergence}{directed_set}
+    A \emph{directed set} \((\lambda, \preceq)\) is a set \(\Lambda\) with a partial order \(\preceq\) with the property that for all \(\lambda, \lambda' \in \Lambda\), there exists \(\mu \in \Lambda\) such that \(\lambda \preceq \mu\) and \(\lambda' \preceq \mu\).
+
+    Let \(X\) be a non-empty set. If \(x : \Lambda \to X\) is a map, we say \(x\) is a \emph{net} on \(X\) based on the directed set \(\Lambda\). As with sequences, we may denote a net by \(\family{x_{\lambda}}{\lambda \in \Lambda}\), if the partial order is understood by context. If \(\tau\) is a topology on \(X\), we say \(\tilde{x} \in X\) is a limit point of \(x\) with respect to \(\tau\) if for any open neighborhood \(U \in \tau\) of \(\tilde{x}\) there exists \(\kappa\in \Lambda\) such that \(x_{\lambda} \in U\) for all \(\lambda \succeq \kappa\). If \(\tilde{x}\) is a limit point of \(x\) with respect to \(\tau\) we write \(\lim_{\lambda} x_{\lambda} = \tilde{x}\) if the topology and the directed set are understood by context.
+\end{definition}
+
+\begin{definition}{Approximate identity}{approximate_identity}
+    Let \(\algebra{A}\) be a C*-algebra and let \(\algebra{I}\) be a right ideal of \(\algebra{A}\). An \emph{approximate identity on \(\algebra{A}\) by elements of the right ideal \(\algebra{I}\)} is a net \(e : \Lambda \to \algebra{I}\) satisfying
+    \begin{enumerate}[label=(\alph*)]
+        \item \(e_{\lambda} \in \algebra{A}_+\) for all \(\lambda \in \Lambda\);
+        \item \(\norm{e_{\lambda}}\leq 1\) for all \(\lambda \in \Lambda\);
+        \item if \(\lambda, \lambda' \in \Lambda\) with \(\lambda \succeq \lambda'\), then \(e_{\lambda} \geq e_{\lambda'}\); and
+        \item \(\lim_{\lambda}{\norm{a - e_{\lambda}a}}= 0\) for all \(a \in \algebra{I}\).
+    \end{enumerate}
+    If \(\algebra{I} = \algebra{A}\), then we say \(e : \Lambda \to \algebra{A}\) is an \emph{approximate identity on \(\algebra{A}\)}.
+\end{definition}
+
+\begin{theorem}{Existence of approximate identity on a ideal of a unital C*-algebra}{approximate_identity}
+    Let \(\algebra{A}\) be a unital C*-algebra. If \(\algebra{I} \subset \algebra{A}\) is a right ideal, then there exists an approximate identity on \(\algebra{A}\) by elements of \(\algebra{I}\).
+\end{theorem}
+\begin{proof}
+    Consider the set
+    \begin{equation*}
+        \Lambda = \setc{\lambda \in \mathbb{P}(\algebra{I})}{\lambda\text{ is finite}}
+    \end{equation*}
+    partially ordered by inclusion, that is, \(\lambda \preceq \lambda'\) if \(\lambda' \subset \lambda \subset \algebra{I}\). It is clear that \((\Lambda, \preceq)\) is a directed set, since for all \(\lambda, \lambda' \in \Lambda\) we have \(\lambda \preceq \lambda \cup \lambda'\) and \(\lambda' \preceq \lambda \cup \lambda'\), with \(\lambda \cup \lambda'\) finite.
+
+    We consider the net \(f\) on \(\algebra{I}\) based on \(\Lambda\) by
+    \begin{equation*}
+        f_{\lambda} = \sum_{u \in \lambda} uu^*
+    \end{equation*}
+    As \(f_{\lambda}\) is a finite sum of positive elements of \(\algebra{A}\), we have \(f_{\lambda} \in \algebra{A}_+\), which leads us to conclude \(\unity + x f_{\lambda} \in \invertible{\algebra{A}}\) and \((\unity + x f_{\lambda})^{-1} \in \algebra{A}_+\) for all \(x \in \mathbb{R}_+\) by \cref{prop:positive_resolvent}. In particular, we consider \(\abs{\lambda} \in \mathbb{R}^+\), where \(\abs{\lambda} \in \mathbb{N}_0\) denotes the number of elements of \(\lambda \in \Lambda\), and define the net
+    \begin{align*}
+        e : \Lambda &\to \algebra{I}\\
+            \lambda &\mapsto \abs{\lambda} f_{\lambda} (\unity + \abs{\lambda} f_{\lambda})^{-1}
+    \end{align*}
+    with \(e_{\lambda} \in \algebra{A}_+\) for all \(\lambda \in \Lambda\) by \cref{lem:positive_commute,prop:resolvent_commute}. Notice
+    \begin{equation*}
+        e_{\lambda} = (\unity + \abs{\lambda} f_{\lambda} - \unity)(\unity + \abs{\lambda}f_{\lambda})^{-1} = \unity - (\unity + \abs{\lambda} f_{\lambda})^{-1},
+    \end{equation*}
+    then \(\unity - e_{\lambda} \in \algebra{A}_+\), that is, \(e_{\lambda} \leq \unity\), which yields \(\norm{e}_{\lambda} \leq 1\) by \cref{prop:properties_order}. If \(\lambda \succeq \lambda'\), then \(f_{\lambda} \geq f_{\lambda'}\),  since we have
+    \begin{equation*}
+        f_{\lambda} - f_{\lambda'} = \sum_{u \in \lambda \setminus \lambda'} uu^* \geq 0,
+    \end{equation*}
+    which yields
+    \begin{equation*}
+        e_{\lambda} - e_{\lambda'} = \left[\unity - (\unity + \abs{\lambda} f_{\lambda})^{-1}\right] - \left[\unity - (\unity + \abs{\lambda'} f_{\lambda'})^{-1}\right] = (\unity + \abs{\lambda'}f_{\lambda'})^{-1} - (\unity + \abs{\lambda}f_{\lambda})^{-1} \geq 0
+    \end{equation*}
+    by \cref{prop:positive_resolvent}, that is, \(e_{\lambda} \geq e_{\lambda'}\).
+
+    Let \(a \in \algebra{I}\), then
+    \begin{equation*}
+    (a - e_{\lambda}a)(a - e_{\lambda}a)^* = (\unity - e_{\lambda})a a^* (\unity - e_{\lambda})^* = (\unity + \abs{\lambda}f_{\lambda})^{-1}aa^* (\unity + \abs{\lambda}f_{\lambda})^{-1}
+    \end{equation*}
+    for all \(\lambda \in \Lambda\). For all \(\lambda \succeq \set{a} \in \Lambda\), we have \(f_{\lambda} \geq f_{\set{a}} = aa^*\) and \(\abs{\lambda} \in \mathbb{N}\), therefore \cref{prop:congruence_order} yields
+    \begin{align*}
+        (a - e_{\lambda}a)(a - e_{\lambda}a)^* &\leq (\unity + \abs{\lambda}f_{\lambda})^{-1} f_{\lambda} (\unity + \abs{\lambda}f_{\lambda})^{-1}\\
+                                               &= \frac{1}{\abs{\lambda}} (\unity + \abs{\lambda}f_{\lambda})^{-1} (\unity + \abs{\lambda}f_{\lambda} - \unity) (\unity + \abs{\lambda}f_{\lambda})^{-1}\\
+                                               &= \frac{1}{\abs{\lambda}} \left[\unity - (\unity + \abs{\lambda}f_{\lambda})^{-1}\right](\unity + \abs{\lambda}f_{\lambda})^{-1} = \frac{1}{\abs{\lambda}} g_{\lambda},
+    \end{align*}
+    where \(g_{\lambda} = \left[\unity - (\unity + \abs{\lambda}f_{\lambda})^{-1}\right](\unity + \abs{\lambda}f_{\lambda})^{-1}\). \cref{prop:properties_order} ensures
+    \begin{equation*}
+        \norm{a - e_{\lambda}a}^2 = \norm{(a - e_{\lambda}a)(a - e_{\lambda}a)^*} \leq \frac{1}{\abs{\lambda}} \norm{g_{\lambda}}
+    \end{equation*}
+    for all \(\lambda \succ \set{a}\). \cref{thm:spectral_mapping} yields
+    \begin{equation*}
+        \sigma(g_{\lambda}) = \setc*{\left[1 - \frac{1}{1 + \abs{\lambda}z}\right]\frac{1}{1 + \abs{\lambda}z}}{z \in \sigma(f_{\lambda})} \subset \setc*{\frac{\abs{\lambda}z}{(1 + \abs{\lambda}z)^2}}{z \in \mathbb{R}^+} = \setc{\xi(\abs{\lambda}z)}{z \in \mathbb{R}_+},
+    \end{equation*}
+    where we defined the real function \(\xi(x) = \frac{x}{(1 + x)^2}\) for \(x\in\mathbb{R}_+\), with range in \(\mathbb{R}_+\). Notice \(\xi'(x) = \frac{1 - x}{(1 + x)^3}\), then \(\xi'\) changes sign from positive to negative at \(x = 1\), hence it is a local maximum and \(\xi\) is decreasing in \((1, \infty)\). That is, \(\xi(1) = \frac14\) is a global maximum of \(\xi\) and we conclude \(\norm{g_{\lambda}} \leq \frac14\) for all \(\lambda \succ \set{a}\) by \cref{thm:spectral_radius_cstar}. We have thus shown
+    \begin{equation*}
+        \norm{a - e_{\lambda}a}^2 \leq \frac{1}{4\abs{\lambda}}
+    \end{equation*}
+    for all \(\lambda \succ \set{a}\), that is, \(\lim_{\lambda}\norm{a - e_{\lambda}a} = 0\).
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a C*-algebra. Then there exists an approximate identity on \(\algebra{A}\).
+\end{corollary}
+\begin{proof}
+    We may assume \(\algebra{A}\) has no identity, then we adjoin one. \cref{thm:adjoin_unity} guarantees \(\algebra{A}\) is isometrically *-isomorphic to the *-ideal \(\pi(\algebra{A})\) of \(\mathbb{C} \ltimes \algebra{A}\). Let \(e : \Lambda \to \pi(\algebra{A})\) be an approximate identity on \(\mathbb{C} \ltimes \algebra{A}\) by elements of \(\pi(\algebra{A})\), then \(\pi^{-1} \circ e : \Lambda \to \algebra{A}\) is an approximate identity on \(\algebra{A}\).
+\end{proof}
+
+\begin{lemma}{}{}
+    Let \(\algebra{A}\) be a unital C*-algebra and let \(\algebra{I} \subset \algebra{A}\) be a right ideal. If \(e : \Lambda \to \algebra{I}\) is an approximate identity on \(\algebra{A}\) by elements of \(\algebra{I}\), then \(\norm{\unity - e_{\lambda}} \leq 1\) for all \(\lambda \in \Lambda\).
+\end{lemma}
+\begin{proof}
+
+\end{proof}
