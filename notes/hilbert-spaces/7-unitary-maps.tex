@@ -615,3 +615,31 @@ We now give necessary and sufficient conditions for a unitary operator.
     Since \(U \circ U^* = U^* \circ U = \unity\), it follows that \(U\) commutes with \(U^*\).
 \end{proof}
 
+\subsection{Orthogonal projectors}
+We have already defined orthogonal projectors as the linear operators that realize the best approximation with respect to a closed subset of a Hilbert space.
+\begin{lemma}{Complement of an orthogonal projector}{complement_orthogonal_projector}
+    Let \(\hilbert\) be a Hilbert space. If \(P : \hilbert \to \hilbert\) is an orthogonal projector, then \(\unity - P\) is the orthogonal projector onto \(V^\perp\) with \(\ker(\unity - P) = \range{P}\) and \(\range{\unity - P} = \ker(P)\).
+\end{lemma}
+\begin{proof}
+    Let \(V = \range{P}\) be the closed subspace onto which \(P\) is an orthogonal projector. By \cref{thm:orthogonal_decomposition}, \(\unity - P\) is the map
+    \begin{align*}
+        \unity - P : \hilbert &\to \hilbert\\
+                            v &\mapsto v_\perp
+    \end{align*}
+    where \(v_\perp \in \range{P}^\perp\). By \cref{prop:orthogonal_closed}, we know \(\range{P}^\perp\) is a closed subspace of \(\hilbert\), then \cref{thm:orthogonal_decomposition} guarantees there is a unique decomposition \(v = v_1 + v_2\) with \(v_1 \in \range{P}^\perp\) and \(v_2 \in (\range{P}^\perp)^\perp\). As \(\range{P}\) is closed, we have \(v_2 \in \range{P}\), then by the uniqueness of the decomposition we have \(v_1 + v_2 = v_\parallel + v_\perp,\) that is, \(\range{P} \ni v_2 - v_\parallel = v_\perp - v_1 \in \range{P}^\perp\). Since \(\range{P}^\perp \cap \range{P} = \set{0}\), we have thus shown \(v_1 = v_\perp = P(v)\), that is, \(v_\perp\) is the unique best approximation of \(v \in \range{P}^\perp\). We conclude \(\unity - P\) is the orthogonal projector onto \(\range{P}^\perp\).
+\end{proof}
+
+\begin{theorem}{Necessary and sufficient conditions for an orthogonal projector}{orthogonal_projector_condition}
+    Let \(\hilbert\) be a Hilbert space. A linear operator \(P : \domain{P} \to \hilbert\) is self-adjoint and idempotent, \(P\circ P = P = P^*\), if and only if \(P\) is an orthogonal projector.
+\end{theorem}
+\begin{proof}
+    Suppose \(P : \hilbert \to \hilbert\) is a orthogonal projector, then \(P \circ P(v) = P(v_\parallel) = v_\parallel = P(v)\)  for all \(v \in \hilbert\), that is, it is idempotent. Let \(x, y \in \hilbert\), then
+    \begin{equation*}
+        \inner{P^*y}{x} = \inner{y}{Px} = \inner{Py + (\unity - P)y}{Px} = \inner{Py}{Px}
+    \end{equation*}
+    and
+    \begin{equation*}
+        \inner{Py}{x} = \inner{Py}{Px + (\unity - P)x} = \inner{Py}{Px}
+    \end{equation*}
+    since \((\unity - P)\)
+\end{proof}
