@@ -1,0 +1,81 @@
+% vim: spl=en_us
+\section{An introduction to von Neumann algebras}
+In this section, we consider the C*-algebra of bounded operators \(\bounded(\hilbert)\) on a Hilbert space \(\hilbert\).
+\begin{definition}{Commutant of a set of operators}{}
+    Let \(\hilbert\) be a Hilbert space. The \emph{commutant} \(\algebra{M}'\) of a subset \(\algebra{M} \subset \bounded(\hilbert)\) is the set
+    \begin{equation*}
+        \algebra{M}' = \setc{b \in \bounded(\hilbert)}{\forall a \in \algebra{M} : ab = ba}.
+    \end{equation*}
+    The \emph{bicommutant} \(\algebra{M}''\) of \(\algebra{M}\) is the commutant of \(\algebra{M}'\).
+\end{definition}
+\begin{remark}
+    If \(\algebra{M} \subset \algebra{N} \subset \bounded(\hilbert)\) are sets, then
+    \begin{equation*}
+        b \in \algebra{N}' \implies \forall a \in \algebra{N} : ab = ba \implies \forall a \in \algebra{M} : ab = ba \implies b \in \algebra{M}',
+    \end{equation*}
+    that is, \(\algebra{N}' \subset \algebra{M}'\).
+\end{remark}
+
+\begin{proposition}{Commutant is a Banach subalgebra}{commutant_Banach}
+    Let \(\hilbert\) be a Hilbert space and \(\algebra{M} \subset \bounded(\hilbert)\) a subset of bounded operators. The commutant \(\algebra{M}'\) is a unital Banach subalgebra of \(\bounded(\hilbert)\). If \(\algebra{M}\) is self-adjoint, then \(\algebra{M}'\) is a unital C*-subalgebra of \(\bounded(\hilbert)\).
+\end{proposition}
+\begin{proof}
+    The commutant of the subset \(\algebra{M}\) of \(\bounded(\hilbert)\) is a subalgebra since if \(\algebra{M}\) is the empty set, then its commutant is \(\bounded(\hilbert)\), and if it is not empty, then for all \(\lambda \in \mathbb{C}\) and all \(a,b \in \algebra{M}'\), then
+    \begin{equation*}
+        c(ab) = acb = (ab)c,\quad
+        c(a+b) = ca + cb = ac + bc = (a+b)c,\quad\text{and}\quad
+        c(\lambda a) = \lambda ca = (\lambda a)c,
+    \end{equation*}
+    for all \(c \in \algebra{M}\). Moreover, it is trivial to check \(\algebra{M}'\) contains the identity.
+
+    Let \(x : \mathbb{N} \to \algebra{M}'\) be a convergent sequence to some \(\tilde{x} \in \bounded(\hilbert)\). If \(a \in \algebra{M}\), then for all \(n \in \mathbb{N}\) we have
+    \begin{align*}
+        \norm{\tilde{x}a - a\tilde{x}} &\leq \norm{(\tilde{x} - x_n)a - a(\tilde{x} - x_n) + x_na - a x_n} \\
+                                       &\leq \norm{a(\tilde{x} - x_n)} + \norm{(\tilde{x}- x_n)a} \\
+                                       &\leq 2\norm{a} \norm{\tilde{x} - x_n},
+    \end{align*}
+    therefore \(\norm{\tilde{x} a - a\tilde{x}} = 0\), that is, \(\tilde{x} \in \algebra{M}'\). As a closed subalgebra of a complete algebra, we have shown \(\algebra{M}'\) is a unital Banach subalgebra of \(\bounded(\hilbert)\).
+
+    Suppose \(\algebra{M}\) is self-adjoint and let \(b \in \algebra{M}'\), then
+    \begin{align*}
+        b \in \algebra{M}' \implies \forall a \in \algebra{M} : a^*b = ba^* \implies \forall a \in \algebra{M} : b^*a = ab^* \implies b^* \in \algebra{M}',
+    \end{align*}
+    that is, the commutant \(\algebra{M}'\) is self-adjoint, therefore a C*-subalgebra of \(\bounded(\hilbert)\).
+\end{proof}
+
+\begin{proposition}{Higher order commutant of a set}{motivation_von_neumann}
+    Let \(\hilbert\) be a Hilbert space and \(\algebra{M} \subset \bounded(\hilbert)\) a subset of bounded operators. For \(n \in \mathbb{N}\), let us briefly denote the commutant of \(\algebra{M}^{(n)}\) as \(\algebra{M}^{(n+1)}\), where \(\algebra{M}^{(1)} = \algebra{M}'\). Then
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\algebra{M} \subset \algebra{M}'',\)
+        \item \({(\algebra{M}^{(n)})}^{(m)} = \algebra{M}^{(n+m)},\)
+        \item \(\algebra{M}^{(2n)} = \algebra{M}^{(2m)},\) and
+        \item \(\algebra{M}^{(2n+1)} = \algebra{M}^{(2m+1)}\),
+    \end{enumerate}
+    for all \(n, m \in \mathbb{N}\).
+\end{proposition}
+\begin{proof}
+    It is clear a set is contained in its bicommutant, as \(a \in \algebra{M}\) commutes with every operator of \(\algebra{M}'\), hence \(a \in \algebra{M}''\) and we conclude (a).
+
+    Let \(n \in \mathbb{N}\), and we show (b) by induction on \(m \in \mathbb{N}\). First \({(\algebra{M}^{(n)})}^{(1)} = {(\algebra{M}^{(n)})}' = \algebra{M}^{(n+1)}\) follows by definition. Suppose it holds for some \(m \in \mathbb{N}\), then
+    \begin{equation*}
+        {(\algebra{M}^{(n)})}^{(m+1)} = {\left({(\algebra{M}^{(n)})}^{(m)}\right)}' = {(\algebra{M}^{(n+m)})}' = \algebra{M}^{n+m+1},
+    \end{equation*}
+    hence it also holds for \(m + 1\). By the principle of finite induction, it holds for all \(m \in \mathbb{N}\) and we conclude (b) since \(n\) is arbitrary.
+
+    In order to show (c) and (d) we must only prove \(\algebra{M}' = \algebra{M}^{(3)}\), since by (b) this would imply \(\algebra{M}^{(k)} = \algebra{M}^{(k + 2)}\) for all \(k \in \mathbb{N}\). Taking the commutant of (a) yields \(\algebra{M}^{(3)} \subset \algebra{M}'\), and since \(\algebra{M}^{(3)}\) is the bicommutant of \(\algebra{M}'\), we have from (a) that \(\algebra{M}' \subset \algebra{M}^{(3)}\), concluding the proof.
+\end{proof}
+
+\begin{definition}{von Neumann algebras}{von_neumann}
+    A \emph{von Neumann algebra \(\algebra{M}\) on a Hilbert space \(\hilbert\)} is a *-subalgebra \(\algebra{M}\) of \(\bounded(\hilbert)\) such that \(\algebra{M}'' = \algebra{M}\). The \emph{center of a von Neumann algebra \(\algebra{M}\)} is the intersection \(\mathfrak{Z}(\algebra{M}) = \algebra{M} \cap \algebra{M}'\). A von Neumann algebra \(\algebra{M}\) is a \emph{factor} if its center is trivial, that is, \(\mathfrak{Z}(\algebra{M}) = \mathbb{C} \unity\), where \(\mathbb{C} \unity\) denotes the algebra generated by the identity.
+\end{definition}
+
+\begin{proposition}{Trivial factors}{trivial_factors}
+    Let \(\hilbert\) be a Hilbert space. Then \(\bounded(\hilbert)\) and \(\mathbb{C} \unity\) are factors with \(\bounded(\hilbert)' = \mathbb{C} \unity\) and \(\mathbb{C} \unity' = \bounded(\hilbert)\).
+\end{proposition}
+\begin{proof}
+    From \cref{prop:motivation_von_neumann}, we have \(\bounded(\hilbert) \subset \bounded(\hilbert)'' \subset \bounded(\hilbert)\), hence \(\bounded(\hilbert)\) is a von Neumann algebra. As \(\bounded(\hilbert)\) is self-adjoint, then its commutant \(\bounded(\hilbert)'\) is self-adjoint and contains \(\mathbb{C} \unity\) by \cref{prop:commutant_Banach}. For \(\phi \in \hilbert\) with \(\norm{\phi} = 1\), let us denote by \(p_{\phi} \in \bounded(\hilbert)\) the orthogonal projector onto the linear subspace spanned by \(\phi\). If \(a \in \bounded(\hilbert)'\), then for all unitary vectors \(\phi \in \hilbert\) we have \(a p_\phi = p_\phi a\) and \(a^* p_\phi = p_\phi a^*\), hence
+    \begin{equation*}
+        \inner{\phi}{a \psi}\phi = p_\phi a\psi = ap_\phi \psi  = \inner{\phi}{\psi}a\phi
+    \end{equation*}
+    for all \(\psi \in \hilbert\). In the particular case \(\psi = \phi\), this yields \(a\phi = \inner{\phi}{a\phi}\phi\) and, analogously, \(a^*\phi = \inner{\phi}{a^*\phi}\phi\).
+\end{proof}
