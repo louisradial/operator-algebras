@@ -2,8 +2,9 @@
 \section{Approximate identity in C*-algebras}
 Even though it is always possible to adjoin an identity to a C*-algebra, it is sometimes more worthwhile to intrinsically work with the original algebra, using \emph{approximate identities.}
 
+%TODO: maybe move this definition to the topology part?
 \begin{definition}{Directed sets and convergence}{directed_set}
-    A \emph{directed set} \((\lambda, \preceq)\) is a set \(\Lambda\) with a partial order \(\preceq\) with the property that for all \(\lambda, \lambda' \in \Lambda\), there exists \(\mu \in \Lambda\) such that \(\lambda \preceq \mu\) and \(\lambda' \preceq \mu\).
+    A \emph{directed set} \((\Lambda, \preceq)\) is a set \(\Lambda\) with a partial order \(\preceq\) with the property that for all \(\lambda, \lambda' \in \Lambda\), there exists \(\mu \in \Lambda\) such that \(\lambda \preceq \mu\) and \(\lambda' \preceq \mu\).
 
     Let \(X\) be a non-empty set. If \(x : \Lambda \to X\) is a map, we say \(x\) is a \emph{net} on \(X\) based on the directed set \(\Lambda\). As with sequences, we may denote a net by \(\family{x_{\lambda}}{\lambda \in \Lambda}\), if the partial order is understood by context. If \(\tau\) is a topology on \(X\), we say \(\tilde{x} \in X\) is a limit point of \(x\) with respect to \(\tau\) if for any open neighborhood \(U \in \tau\) of \(\tilde{x}\) there exists \(\kappa\in \Lambda\) such that \(x_{\lambda} \in U\) for all \(\lambda \succeq \kappa\). If \(\tilde{x}\) is a limit point of \(x\) with respect to \(\tau\) we write \(\lim_{\lambda} x_{\lambda} = \tilde{x}\) if the topology and the directed set are understood by context.
 \end{definition}
@@ -27,13 +28,17 @@ Even though it is always possible to adjoin an identity to a C*-algebra, it is s
     \begin{equation*}
         \Lambda = \setc{\lambda \in \mathbb{P}(\algebra{I})}{\lambda\text{ is finite}}
     \end{equation*}
-    partially ordered by inclusion, that is, \(\lambda \preceq \lambda'\) if \(\lambda' \subset \lambda \subset \algebra{I}\). It is clear that \((\Lambda, \preceq)\) is a directed set, since for all \(\lambda, \lambda' \in \Lambda\) we have \(\lambda \preceq \lambda \cup \lambda'\) and \(\lambda' \preceq \lambda \cup \lambda'\), with \(\lambda \cup \lambda'\) finite.
+    partially ordered by inclusion, that is, \(\lambda' \preceq \lambda\) if \(\lambda' \subset \lambda \subset \algebra{I}\). It is clear that \((\Lambda, \preceq)\) is a directed set, since for all \(\lambda, \lambda' \in \Lambda\) we have \(\lambda \preceq \lambda \cup \lambda'\) and \(\lambda' \preceq \lambda \cup \lambda'\), with \(\lambda \cup \lambda'\) finite.
 
     We consider the net \(f\) on \(\algebra{I}\) based on \(\Lambda\) by
     \begin{equation*}
-        f_{\lambda} = \sum_{u \in \lambda} uu^*
+        f_{\lambda} = \sum_{u \in \lambda} uu^*,
     \end{equation*}
-    As \(f_{\lambda}\) is a finite sum of positive elements of \(\algebra{A}\), we have \(f_{\lambda} \in \algebra{A}_+\), which leads us to conclude \(\unity + x f_{\lambda} \in \invertible{\algebra{A}}\) and \((\unity + x f_{\lambda})^{-1} \in \algebra{A}_+\) for all \(x \in \mathbb{R}_+\) by \cref{prop:positive_resolvent}. In particular, we consider \(\abs{\lambda} \in \mathbb{R}^+\), where \(\abs{\lambda} \in \mathbb{N}_0\) denotes the number of elements of \(\lambda \in \Lambda\), and define the net
+    which clearly lies in \(\algebra{I}\) since it is a right ideal. By \cref{thm:positive_cstar}, for all \(a \in \algebra{A}\) the operator \(aa^*\) is positive,
+    \begin{equation*}
+        aa^* = (a^*)^*(a^*) \in \algebra{A}_+,
+    \end{equation*}
+    then \(f_{\lambda}\) is a finite sum of positive elements of \(\algebra{A}\), hence positive. Thus we conclude \(\unity + \nu f_{\lambda} \in \invertible{\algebra{A}}\) and \((\unity + \nu f_{\lambda})^{-1} \in \algebra{A}_+\) for all \(\nu \in \mathbb{R}_+\) by \cref{prop:positive_resolvent}. In particular, we consider \(\abs{\lambda} \in \mathbb{R}^+\), where \(\abs{\lambda} \in \mathbb{N}_0\) denotes the number of elements of \(\lambda \in \Lambda\), and define the net
     \begin{align*}
         e : \Lambda &\to \algebra{I}\\
             \lambda &\mapsto \abs{\lambda} f_{\lambda} (\unity + \abs{\lambda} f_{\lambda})^{-1}
@@ -83,9 +88,112 @@ Even though it is always possible to adjoin an identity to a C*-algebra, it is s
     We may assume \(\algebra{A}\) has no identity, then we adjoin one. \cref{thm:adjoin_unity} guarantees \(\algebra{A}\) is isometrically *-isomorphic to the *-ideal \(\pi(\algebra{A})\) of \(\mathbb{C} \ltimes \algebra{A}\). Let \(e : \Lambda \to \pi(\algebra{A})\) be an approximate identity on \(\mathbb{C} \ltimes \algebra{A}\) by elements of \(\pi(\algebra{A})\), then \(\pi^{-1} \circ e : \Lambda \to \algebra{A}\) is an approximate identity on \(\algebra{A}\).
 \end{proof}
 
-\begin{lemma}{}{}
+\begin{lemma}{Norm of elements of an approximate identity in a unital C*-algebra}{norm_approximant}
     Let \(\algebra{A}\) be a unital C*-algebra and let \(\algebra{I} \subset \algebra{A}\) be a right ideal. If \(e : \Lambda \to \algebra{I}\) is an approximate identity on \(\algebra{A}\) by elements of \(\algebra{I}\), then \(\norm{\unity - e_{\lambda}} \leq 1\) for all \(\lambda \in \Lambda\).
 \end{lemma}
 \begin{proof}
+    For all \(\lambda \in \Lambda\), the spectrum of the positive operator \(e_{\lambda}\) lies in the interval \([0,1]\) by the \cref{thm:spectral_radius_cstar}. Since \(\unity - e_{\lambda}\) is self-adjoint, we have
+    \begin{equation*}
+        \norm{\unity - e_{\lambda}} = r(\unity - e_{\lambda}) = \sup_{x \in \sigma(e_{\lambda})}{\abs{1 - x}} \leq \sup_{x \in [0,1]}{\abs{1 - x}} = 1,
+    \end{equation*}
+    by the \nameref{thm:spectral_mapping}.
+\end{proof}
 
+We recall the construction of \cref{thm:adjoin_unity} and the isometric *-isomorphism \(\pi : \algebra{A} \to \mathbb{C} \ltimes \algebra{A}\).
+\begin{lemma}{Approximate identity in the C*-algebra with an adjoined identity}{approximate_identity_adjoin}
+    Let \(\algebra{A}\) be a C*-algebra, \(\algebra{I}\) a closed two-sided ideal of \(\algebra{A}\) and \(e : \Lambda \to \algebra{I}\) an approximate identity on \(\algebra{A}\) by elements in \(\algebra{I}\), where \((\Lambda, \preceq)\) is a directed set. Then \(\pi(\algebra{I})\) is a closed two-sided ideal of \(\mathbb{C} \ltimes \algebra{A}\) and \(\pi \circ e\) is an approximate identity on \(\mathbb{C} \ltimes \algebra{A}\) by elements of \(\pi(\algebra{I})\).
+\end{lemma}
+\begin{proof}
+    It is clear that \(\pi(\algebra{I})\) is a linear subspace of \(\mathbb{C}\ltimes \algebra{A}\) since \(\pi\) is linear. Let \((\alpha, a) \in \mathbb{C} \ltimes \algebra{A}\) and \(b \in \algebra{I}\), then
+    \begin{equation*}
+        (\alpha, a)\cdot (0, b) = (0, \alpha b + ab) \in \pi(\algebra{I})
+        \quad\text{and}\quad
+        (0, b)\cdot (\alpha, a) = (0, \alpha b + ba) \in \pi(\algebra{I}),
+    \end{equation*}
+    hence \(\pi(\algebra{I})\) is a two-sided ideal. Let \(\xi : \mathbb{N} \to \pi(\algebra{I})\) is a converging sequence to some \(\tilde{\xi} \in \mathbb{C} \ltimes \algebra{A}\), then there exists a unique sequence \(x : \mathbb{N} \to \algebra{I}\) such that \(\xi = \pi\circ x\), since \(\pi\) bijectively associates \(\algebra{I}\) with \(\pi(\algebra{I})\). As \(\xi\) is Cauchy and \(\pi\) is an isometry, then \(x\) is Cauchy, hence convergent to some \(\tilde{x} \in \algebra{I}\), as the ideal is a C*-subalgebra. Then \(\tilde{\xi} = \pi(\tilde{x})\) since for all \(n \in \mathbb{N}\) we have
+    \begin{equation*}
+        \norm{\xi_n - \pi(\tilde{x})} = \norm{\pi(x_n - \tilde{x})} = \norm{x_n - \tilde{x}},
+    \end{equation*}
+    and we conclude \(\pi(\algebra{I})\) is a closed two-sided ideal.
+
+    Let \(\lambda \in \Lambda\), then \(e_{\lambda} \in \algebra{A}_+\) and there must exist \(a \in \algebra{A}\) such that \(e_{\lambda} = a^*a\), and as \(\pi\) is a *-isomorphism, we have
+    \begin{equation*}
+        \pi(e_{\lambda}) = \pi(a^*a) = \pi(a^*) \pi(a) = \pi(a)^* \pi(a) \in (\mathbb{C} \ltimes \algebra{A})_+,
+    \end{equation*}
+    hence \(\pi \circ e\) is a net of positive elements of \(\mathbb{C} \ltimes \algebra{A}\). As \(\pi\) is an isometry, it is clear that \(\norm{\pi(e_{\lambda})} = \norm{e_{\lambda}} \leq 1\) for all \(\lambda \in \Lambda\). Let \(\lambda, \lambda' \in \Lambda\), then
+    \begin{align*}
+        \lambda \succeq \lambda' &\implies e_{\lambda} \geq e_{\lambda'}\\
+                                 &\implies e_{\lambda} - e_{\lambda'} \in \algebra{A}_+\\
+                                 &\implies \exists b \in \algebra{A} : b^*b = e_{\lambda} - e_{\lambda'}\\
+                                 &\implies \exists b \in \algebra{A} : \pi(e_{\lambda}) - \pi(e_{\lambda'}) = \pi(b)^*\pi(b)\\
+                                 &\implies \pi(e_{\lambda}) - \pi(e_{\lambda'}) \in (\mathbb{C}\ltimes \algebra{A})_+\\
+                                 &\implies \pi(e_{\lambda}) \geq \pi(e_{\lambda'}).
+    \end{align*}
+    Let \((0,c) \in \pi(\algebra{I})\), then
+    \begin{equation*}
+        \lim_{\lambda}{\norm{(0,c) - \pi(e_{\lambda})(0,c)}} = \lim_{\lambda}{\norm{\pi(c) - \pi(e_{\lambda})\pi(c)}} = \lim_{\lambda}{\norm{\pi(c - e_{\lambda}c)}} = \lim_{\lambda}{\norm{c - e_{\lambda}c}} = 0,
+    \end{equation*}
+    and we conclude \(\pi \circ e\) is an approximate identity.
+\end{proof}
+
+\subsection{Cosets by closed two-sided ideals in C*-algebras}
+If \(\algebra{A}\) is a C*-algebra and \(\algebra{I}\) is a closed *-ideal, we have already established in \cref{thm:closed_ideal_Bstar} that the coset \(\algebra{A} / \algebra{I}\) is a Banach *-algebra. We now show that if \(\algebra{I}\) is a closed two-sided ideal, then the coset \(\algebra{A}/\algebra{I}\) is a C*-algebra.
+
+\begin{proposition}{Closed two-sided ideal of a C*-algebra is a *-ideal}{closed_bi_ideal_cstar}
+    Let \(\algebra{A}\) be a C*-algebra. Let \(\algebra{I} \subset \algebra{A}\) be a two-sided ideal that is closed with respect to the uniform topology in \(\algebra{A}\). Then \(\algebra{I}\) is self-adjoint.
+\end{proposition}
+\begin{proof}
+    By \cref{thm:approximate_identity}, there exists an approximate identity \(e : \Lambda \to \algebra{I}\) on \(\algebra{A}\) by elements of \(\algebra{I}\), where \((\Lambda, \preceq)\) is a directed set. Let \(j \in \algebra{I}\), then for all \(\lambda \in \Lambda\) we have
+    \begin{equation*}
+        \lim_{\lambda}\norm{j^* - j^*e_{\lambda}} = \lim_{\lambda} \norm{(j - e_{\lambda}j)^*} = \lim_{\lambda} \norm{j - e_{\lambda}j} = 0,
+    \end{equation*}
+    hence \(j^* = \lim_{\lambda} j^* e_{\lambda}\). Since \(\algebra{I}\) is a two-sided ideal, then for all \(\lambda \in \Lambda\) the operator \(j^* e_{\lambda}\) lies in \(\algebra{I}\), hence the net \(f : \Lambda \to \algebra{I}\) defined by \(\lambda \mapsto j^* e_{\lambda}\) converges to \(j^*\), that is, \(j^* \in \algebra{I}\) since the ideal is closed.
+\end{proof}
+\begin{remark}
+    We may conclude a closed two-sided ideal is a C*-subalgebra of a C*-algebra.
+\end{remark}
+
+
+We need only show the coset \(\algebra{A}/\algebra{I}\) has the C* property, but first we have to show the
+\begin{lemma}{Norm of an element of the coset of a C*-algebra and a closed two sided ideal}{norm_coset}
+    Let \(\algebra{A}\) be a C*-algebra, \(\algebra{I}\) a closed two-sided ideal of \(\algebra{A}\) and \(e : \Lambda \to \algebra{I}\) an approximate identity of elements in \(\algebra{I}\), with \((\Lambda, \preceq)\) a directed set. Then
+    \begin{equation*}
+        \norm{[a]} = \lim_{\lambda}{\norm{a - e_{\lambda} a}}= \lim_{\lambda}{\norm{a - a e_{\lambda}}}
+    \end{equation*}
+    for all \(a \in \algebra{A}\).
+\end{lemma}
+\begin{proof}
+    We may assume without loss of generality that \(\algebra{A}\) is a unital C*-algebra by \cref{lem:approximate_identity_adjoin}. Let \(a \in \algebra{A}\), then for all \(\varepsilon > 0\) there exists \(j_{\varepsilon} \in \algebra{I}\) such that \(\norm{[a]} \leq \norm{a + j_{\varepsilon}} \leq \norm{[a]} + \frac12\varepsilon\), and there also exists \(\lambda_{\varepsilon} \in \Lambda\) such that \(\norm{j_{\lambda_{\varepsilon}} - e_{\lambda_{\varepsilon}}j_{\varepsilon}} \leq \frac12\varepsilon\). Notice
+    \begin{equation*}
+        a - e_{\lambda_{\varepsilon}}a = j_{\varepsilon} + a - (j_{\varepsilon} - e_{\lambda_{\varepsilon}}j_{\varepsilon}) - (e_{\lambda_{\varepsilon}}j_{\varepsilon} + e_{\lambda_{\varepsilon}}a) = (\unity - e_{\lambda_{\varepsilon}})(j_{\epsilon} + a) - (j_{\varepsilon} - e_{\lambda_{\varepsilon}} j_{\varepsilon}),
+    \end{equation*}
+    therefore
+    \begin{align*}
+        \norm{a - e_{\lambda_{\varepsilon}}a} &\leq \norm{(\unity - e_{\lambda_{\varepsilon}})(a + j_{\lambda_{\varepsilon}})} + \norm{j_{\varepsilon} - e_{\lambda_{\varepsilon}}j_{\varepsilon}}\\
+                                              &\leq \norm{\unity - e_{\lambda_{\varepsilon}}}\norm{a + j_{\varepsilon}} + \frac12 \varepsilon\\
+                                              &\leq \norm{a + j_{\varepsilon}} + \frac12 \varepsilon\\
+                                              &\leq \norm{[a]} + \varepsilon
+    \end{align*}
+    by \cref{lem:norm_approximant}. Since \(-e_{\lambda_{\varepsilon}}a \in \algebra{I}\), we have shown \(\norm{[a]} \leq \norm{a - e_{\lambda_{\varepsilon}}a} \leq \norm{[a]} + \varepsilon\), hence we conclude the limit \(\norm{[a]} = \lim_{\lambda}{\norm{a - e_{\lambda}a}}\). Notice
+    \begin{equation*}
+        \lim_{\lambda}{\norm{a - a e_{\lambda}}}= \lim_{\lambda}{\norm{a^* - e_{\lambda}a^*}} = \norm{[a^*]} = \norm{[a]^*} = \norm{[a]}
+    \end{equation*}
+    for all \(a \in \algebra{A}\), concluding the proof.
+\end{proof}
+
+\begin{theorem}{Coset of a C*-algebra by a closed two-sided ideal is a C*-algebra}{coset_cstar}
+    Let \(\algebra{A}\) be a C*-algebra. If \(\algebra{I}\) is a closed two-sided ideal of \(\algebra{A}\), then the coset \(\algebra{A}/\algebra{I}\) is a C*-algebra.
+\end{theorem}
+\begin{proof}
+    We adjoin an identity to \(\algebra{A}\), if necessary. Let \(a \in \algebra{A}\) and let \(e : \Lambda \to \algebra{I}\) be a approximate identity of \(\algebra{A}\) by elements of the ideal \(\algebra{I}\), then by \cref{lem:norm_approximant} we have
+    \begin{equation*}
+        \norm{[a]}^2 = \lim_{\lambda}{\norm{a - ae_{\lambda}}^2} = \lim_{\lambda}{\norm{(a - ae_{\lambda})^*(a - ae_{\lambda})}} = \lim_{\lambda}{\norm{(\unity - e_{\lambda})a^*a(\unity - e_{\lambda})}}.
+    \end{equation*}
+    For all \(j \in \algebra{I}\) we have
+    \begin{align*}
+        \norm{[a]}^2 &= \lim_{\lambda}{\norm{(\unity - e_{\lambda})(a^*a + j)(\unity - e_{\lambda}) - (\unity - e_{\lambda})j(\unity - e_{\lambda})}}\\
+                     &\leq \norm{\unity - e_{\lambda}}^2\lim_{\lambda}{\left(\norm{a^*a + j} + \norm{j}\right)}\\
+                     &\leq \lim_{\lambda}{\norm{a^*a + j}},
+    \end{align*}
+    that is, \(\norm{[a]^2} \leq \inf_{j \in \algebra{I}}{\norm{a^*a + j}} = \norm{[a^*a]}\), and we conclude the coset is a C*-algebra.
 \end{proof}
