@@ -73,9 +73,72 @@ In this section, we consider the C*-algebra of bounded operators \(\bounded(\hil
     Let \(\hilbert\) be a Hilbert space. Then \(\bounded(\hilbert)\) and \(\mathbb{C} \unity\) are factors with \(\bounded(\hilbert)' = \mathbb{C} \unity\) and \(\mathbb{C} \unity' = \bounded(\hilbert)\).
 \end{proposition}
 \begin{proof}
-    From \cref{prop:motivation_von_neumann}, we have \(\bounded(\hilbert) \subset \bounded(\hilbert)'' \subset \bounded(\hilbert)\), hence \(\bounded(\hilbert)\) is a von Neumann algebra. As \(\bounded(\hilbert)\) is self-adjoint, then its commutant \(\bounded(\hilbert)'\) is self-adjoint and contains \(\mathbb{C} \unity\) by \cref{prop:commutant_Banach}. For \(\phi \in \hilbert\) with \(\norm{\phi} = 1\), let us denote by \(p_{\phi} \in \bounded(\hilbert)\) the orthogonal projector onto the linear subspace spanned by \(\phi\). If \(a \in \bounded(\hilbert)'\), then for all unitary vectors \(\phi \in \hilbert\) we have \(a p_\phi = p_\phi a\) and \(a^* p_\phi = p_\phi a^*\), hence
+    From \cref{prop:motivation_von_neumann}, we have \(\bounded(\hilbert) \subset \bounded(\hilbert)'' \subset \bounded(\hilbert)\), hence \(\bounded(\hilbert)\) is a von Neumann algebra. As \(\bounded(\hilbert)\) is self-adjoint, then its commutant \(\bounded(\hilbert)'\) is self-adjoint and contains \(\mathbb{C} \unity\) by \cref{prop:commutant_Banach}. We must show \(\bounded(\hilbert)' \subset \mathbb{C} \unity\) in order to conclude \(\bounded(\hilbert)' = \mathbb{C} \unity\) and \(\mathbb{C} \unity' = \bounded(\hilbert)'' = \bounded(\hilbert)\), with \(\mathfrak{Z}(\mathbb{C}\unity) = \mathfrak{Z}(\bounded(\hilbert)) = \mathbb{C} \unity\).
+
+    Let \(a \in \bounded(\hilbert)'\), then \(a^* \in \bounded(\hilbert)'\). We aim to show there exists a constant \(\alpha \in \mathbb{C}\) such that \(a\psi = \alpha \psi\) for all \(\psi \in \hilbert,\) that is, that \(a = \alpha \unity\). For \(\phi \in \hilbert\) with \(\norm{\phi} = 1\), let us denote by \(p_{\phi} \in \bounded(\hilbert)\) the orthogonal projector onto the linear subspace spanned by \(\phi\). If \(a \in \bounded(\hilbert)'\), then for all unitary vectors \(\phi \in \hilbert\) we have \(a p_\phi = p_\phi a\) and \(a^* p_\phi = p_\phi a^*\), hence
     \begin{equation*}
         \inner{\phi}{a \psi}\phi = p_\phi a\psi = ap_\phi \psi  = \inner{\phi}{\psi}a\phi
     \end{equation*}
-    for all \(\psi \in \hilbert\). In the particular case \(\psi = \phi\), this yields \(a\phi = \inner{\phi}{a\phi}\phi\) and, analogously, \(a^*\phi = \inner{\phi}{a^*\phi}\phi\).
+    for all \(\psi \in \hilbert\). Setting \(\psi = \phi\) yields \(a\phi = \inner{\phi}{a\phi}\phi\) and, analogously, \(a^*\phi = \inner{\phi}{a^*\phi}\phi\).
+
+    Let \(\tilde{\phi} \in \hilbert\) with \(\norm{\tilde{\phi}}=1\), then
+    \begin{equation*}
+        \inner{\tilde{\phi}}{a\phi} = \inner{\tilde{\phi}}{\phi}\inner{\phi}{a\phi}
+        \quad\text{and}\quad
+        \inner{\tilde{\phi}}{a\phi} = \inner{a^*\tilde{\phi}}{\phi} = \inner{a^*\tilde{\phi}}{\tilde{\phi}}\inner{\tilde{\phi}}{\phi} = \inner{\tilde{\phi}}{\phi} \inner{\tilde{\phi}}{a \tilde{\phi}}.
+    \end{equation*}
+    We may assume without loss of generality that \(\hilbert\) is not unidimensional, for if it were, then \(\phi\) and \(\tilde{\phi}\) would not be orthogonal, yielding \(\inner{\phi}{a\phi} = \inner{\tilde{\phi}}{a\tilde{\phi}} = \alpha,\) hence \(a = \alpha \unity\). If \(\tilde{\phi} \perp \phi\), then \(\Phi = \frac{1}{\sqrt{2}}(\phi + \tilde{\phi})\) is not orthogonal to either \(\phi\) or \(\tilde{\phi}\) and satisfies \(\norm{\Phi} = 1\), therefore
+    \begin{equation*}
+        \inner{\phi}{a\phi} = \inner{\Phi}{a\Phi} = \inner{\tilde{\phi}}{a\tilde{\phi}} = \alpha,
+    \end{equation*}
+    and we conclude \(a \in \mathbb{C} \unity\).
+\end{proof}
+
+\begin{proposition}{Commutant of a set is weakly and strongly closed}{}
+    Let \(\hilbert\) be a Hilbert space. If \(\algebra{M} \subset \bounded(\hilbert),\) then \(\algebra{M}'\) is weakly and strongly closed
+\end{proposition}
+\begin{proof}
+    \todo[operator topologies and seminorms]
+\end{proof}
+
+
+Let \(\hilbert\) be a Hilbert space, \(\phi \in \hilbert\) be a vector, \(\mathscr{V} \subset \hilbert\) be a set of vectors, and \(\mathscr{A} \subset \bounded(\hilbert)\) be a set of bounded operators, then we denote \(\mathscr{A}\mathscr{V} = \setc{a \psi}{a \in \mathscr{A}, \psi \in \mathscr{V}}\) and \(\mathscr{A}\phi = \mathscr{A}\set{\phi}\).
+\begin{enumerate}[label=(\alph*)]
+    \item If \(\algebra{A} \subset \bounded(\hilbert)\) is an algebra and \(\phi \in \hilbert\), then \(\lspan(\algebra{A}\phi) = \algebra{A}\phi\) for all \(\phi \in \hilbert\). Indeed, if \(\tilde{\phi} \in \lspan(\algebra{A}\phi)\), then there exists a finite subset \(\mathscr{F} \subset \algebra{A}\) such that \(\tilde{\phi} = \sum_{a \in \mathscr{F}} a\phi = \left(\sum_{a \in \mathscr{F}} a\right)\phi \in \algebra{A}\phi\).
+    \item If \(\mathscr{A} \subset \bounded(\hilbert)\) and \(\mathscr{V} \subset \hilbert\), then \(\lspan(\mathscr{AV})^{\perp} = (\mathscr{AV})^{\perp}\). By \cref{lem:complement_subsets}, we already know that \(\lspan(\mathscr{A}\mathscr{V})^{\perp} \subset (\mathscr{A}\mathscr{V})^\perp\). If \(\psi \in (\mathscr{AV})^{\perp}\), then it is orthogonal to any finite linear combination of elements of \(\mathscr{AV}\), hence \(\psi \in \lspan(\mathscr{AV})^{\perp}\).
+\end{enumerate}
+\begin{definition}{Non-degenerate operator algebra}{non_degenerate_algebra}
+    Let \(\hilbert\) be a Hilbert space. A \emph{non-degenerate operator algebra \(\algebra{A}\)} is an algebra \(\algebra{A} \subset \bounded(\hilbert)\) such that \(\algebra{A}\hilbert\) is \emph{total}, that is, \((\algebra{A}\hilbert)^{\perp} = \set{0}\).
+\end{definition}
+\begin{remark}
+    By the previous remarks, an algebra \(\algebra{A} \subset \bounded(\hilbert)\) is non-degenerate if \(\lspan(\algebra{A}\hilbert)\) and only if it is dense in the Hilbert space \(\hilbert\) with respect to the uniform topology.
+\end{remark}
+
+\begin{lemma}{Self-adjoint non-degenerate operator algebra}{non_degenerate_self_adjoint_algebra}
+    Let \(\hilbert\) be a Hilbert space. A self-adjoint algebra \(\algebra{A} \subset \bounded(\hilbert)\) is non-degenerate if and only if \(\algebra{A}\psi = \set{0}\) implies \(\psi=0\).
+\end{lemma}
+\begin{proof}
+    Since \(\algebra{A}\) is self-adjoint, we have
+    \begin{align*}
+        \algebra{A}\psi = \set{0} &\iff \forall a \in \algebra{A} : a^* \psi = 0\\
+                                  &\iff \forall a \in \algebra{A}, \forall \phi \in \hilbert : \inner{a^*\psi}{\phi} = 0\\
+                                  &\iff \forall a \in \algebra{A}, \forall \phi \in \hilbert : \inner{\psi}{a\phi} = 0\\
+                                  &\iff \forall \phi \in \algebra{A}\hilbert : \inner{\psi}{\phi} = 0\\
+                                  &\iff \psi \in (\algebra{A}\hilbert)^{\perp}.
+    \end{align*}
+    If \(\algebra{A}\) is non-degenerate, then \(\algebra{A}\psi = \set{0} \iff \psi = 0\). If \(\algebra{A} \psi = \set{0} \iff \psi = 0\), then \(\psi \in (\algebra{A}\hilbert)^{\perp} \iff \psi = 0,\) hence \((\algebra{A}\hilbert)^{\perp} = \set{0}\) and the algebra is non-degenerate.
+\end{proof}
+
+\begin{theorem}{Bicommutant theorem}{bicommutant}
+    Let \(\hilbert\) be a Hilbert space and let \(\algebra{M} \subset \bounded(\hilbert)\) be a self-adjoint non-degenerate operator algebra. The following statements are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\algebra{M}\) is a von Neumann algebra;
+        \item \(\algebra{M}\) is weakly closed;
+        \item \(\algebra{M}\) is \(\sigma\)-weakly closed;
+        \item \(\algebra{M}\) is strongly closed; and
+        \item \(\algebra{M}\) is \(\sigma\)-strongly closed.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \todo[lots]
 \end{proof}
