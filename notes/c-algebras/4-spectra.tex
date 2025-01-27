@@ -277,7 +277,7 @@ As expected from orthogonal projectors in Hilbert spaces, the norm of a orthogon
     Let \(\algebra{A}\) be a normed algebra. If \(p\in \algebra{A}\) is a projector, then either \(p = 0\) or \(\norm{p} \geq 1\). In addition, if \(\algebra{A}\) is a C*-algebra and \(p\) is an orthogonal projector, then \(\norm{p} \in \set{0,1}.\)
 \end{proposition}
 \begin{proof}
-    In a normed algebra, we have \( \norm{p} = \norm{p^2} \leq \norm{p}^2\), which yields \(\norm{p} \in \set{0}\cup(1,\infty)\). If follows from the C* property and self-adjointness of the orthogonal projector that
+    In a normed algebra, we have \( \norm{p} = \norm{p^2} \leq \norm{p}^2\), which yields \(\norm{p} \in \set{0}\cup(1,\infty)\). It follows from the C* property and self-adjointness of the orthogonal projector that
     \begin{equation*}
         \norm{p} = \norm{p^2} = \norm{p^*p} = \norm{p}^2,
     \end{equation*}
@@ -436,13 +436,13 @@ As a shorthand, we will simply denote the polynomial on the algebra by the same 
 \subsection{Spectral radius}
 In \cref{thm:spectrum_compact}, we've shown that in a unital Banach algebra, the spectrum of an operator is contained in an open disk centered at zero of radius equal to its norm.
 \begin{definition}{Spectral radius}{spectral_radius}
-    Let \(\algebra{A}\) be a unital Banach algebra. For an operator \(a \in \algebra{A}\), we define
+    Let \(\algebra{A}\) be a unital algebra. For an operator \(a \in \algebra{A}\), we define
     \begin{equation*}
         r(a) = \sup_{\lambda \in \sigma(a)}{\abs{\lambda}}
     \end{equation*}
     as is its \emph{spectral radius}.
 \end{definition}
-It should be clear, then, \(r(a) \leq \norm{a}\) for all \(a \in \algebra{A}\), that is, the spectrum of an operator is contained in the closed disk centered at zero of radius equal to its spectral radius.
+In a Banach algebra \(\algebra{A}\), we have \(r(a) \leq \norm{a}\) for all \(a \in \algebra{A}\), that is, the spectrum of an operator is contained in the closed disk centered at zero of radius equal to its spectral radius.
 
 \begin{theorem}{Spectral radius theorem}{spectral_radius_theorem}
     If \(\algebra{A}\) is a unital Banach algebra, then

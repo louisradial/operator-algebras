@@ -1,0 +1,247 @@
+% vim: spl=en_us
+\section{States and representations of C*-algebras}
+We'll refer to *-homomorphisms between involutive algebras simply as *-morphisms. We show now a *-(iso)morphism preserves the order relation defined by positivity and that a *-morphism is always continuous with respect to the uniform topology, with a *-isomorphism even being a isometry.
+\begin{proposition}{*-morphism preserves positivity}{morphism_positivity}
+    Let \(\pi : \algebra{A} \to \algebra{B}\) be a *-morphism between C*-algebras \(\algebra{A}\) and \(\algebra{B}\). Then \(\pi\) preserves positivity, \(\pi(\algebra{A}_+)\subset \algebra{B}_+\) and it is continuous with respect to the uniform topology, enjoying the property \(\norm{\pi(a)} \leq \norm{a}\) for all \(a \in \algebra{A}\).
+\end{proposition}
+\begin{remark}
+    It is clear that \(\pi(\algebra{A}_+) \subset \algebra{B}_+\) implies that if \(a \geq b\) then \(\pi(a) \geq \pi(b)\) as \(\pi\) is linear and \(\pi(a-b) \in \algebra{B}_+\).
+\end{remark}
+\begin{proof}
+    Let \(a \in \algebra{A}_+\), then there exists \(b \in \algebra{A}\) such that \(a = b^*b\), hence \(\pi(a) = \pi(b)^* \pi(b) \in \algebra{B}_+\), that is, \(\pi(\algebra{A}_+)\subset \algebra{B}_+\).
+
+    It is clear that if \(a \in \ker\pi\), then \(\norm{\pi(a)} \leq \norm{a}\). Recall \cref{prop:properties_order,thm:positive_cstar}, then for all \(a \in \algebra{A}\setminus\ker{\pi}\) we have
+    \begin{align*}
+        \norm{a^*a} a^*a \geq (a^*a)^2 &\implies \norm{a^*a} \pi(a^*a) \geq \pi(a^*a)^2\\
+                                       &\implies \norm{a}^2 \pi(a^*a) \geq \pi(a^*a)^2\\
+                                       &\implies \norm*{\norm{a}^2 \pi(a^*a)} \geq \norm*{\pi(a^*a)^2}\\
+                                       &\implies \norm{a}^2 \norm{\pi(a^*a)} \geq \norm*{\pi(a^*a)^* \pi(a^*a)}\\
+                                       &\implies \norm{a}^2 \norm{\pi(a^*a)} \geq \norm*{\pi(a^*a)}^2\\
+                                       &\implies \norm{a}^2 \geq \norm{\pi(a^*a)}\\
+                                       &\implies \norm{a}^2 \geq \norm{\pi(a)^* \pi(a)}\\
+                                       &\implies \norm{a}^2 \geq \norm{\pi(a)}^2\\
+                                       &\implies \norm{a} \geq \norm{\pi(a)},
+    \end{align*}
+    that is, for all \(a \in \algebra{A}\) it is true that \(\norm{a} \geq \norm{\pi(a)}\). This is enough to guarantee \(\pi\) is continuous with respect to the uniform topology.
+\end{proof}
+\begin{corollary}
+    If, in addition, \(\pi\) is bijective, then \(\pi\) is an isometry.
+\end{corollary}
+\begin{proof}
+    As \(\pi\) and \(\pi^{-1}\) are *-isomorphisms, then
+    \begin{equation*}
+        \norm{\pi(a)} \leq \norm{a} = \norm{\pi^{-1}\circ \pi(a)} \leq \norm{\pi(a)},
+    \end{equation*}
+    that is, \(\norm{\pi(a)} = \norm{a}\) for all \(a \in \algebra{A}\).
+\end{proof}
+
+It is an elementary result that the kernel of a group morphism \(\pi : G \to H\) is a normal subgroup of \(G\), and that the coset \(G / \ker\pi\) is isomorphic to the subgroup \(\ran\pi \subset H\). We will now show a similar result with the additional structure of C*-algebras.
+\begin{proposition}{Kernel of a *-morphism is a closed two-sided ideal}{kernel_ideal}
+    Let \(\pi : \algebra{A} \to \algebra{B}\) be a *-morphism between the C*-algebras \(\algebra{A}\) and \(\algebra{B}\). Then \(\ker \pi\) is a closed two-sided ideal of \(\algebra{A}\).
+\end{proposition}
+\begin{proof}
+    As \(\pi\) is continuous, we know from \cref{prop:kernel_closed} that its kernel is a linear subspace that is closed in the uniform topology. Let \(a \in \ker\pi\) and \(b \in \algebra{A}\), then \(\pi(ab) = \pi(a)\pi(b) = 0\pi(b) = 0\) and \(\pi(ba) = \pi(b)\pi(a) = 0\), hence \(\ker\pi\) is a two-sided ideal.
+\end{proof}
+\begin{lemma}{Projector in a Banach *-algebra defines a unital Banach *-subalgebra}{projector_star_subalgebra}
+    Let \(\algebra{A}\) be a Banach *-algebra. If \(p \in \algebra{A}\) is an orthogonal projector, then
+    \begin{equation*}
+        \algebra{B} = \setc{b \in \algebra{A}}{\exists a \in \algebra{A} : b = pap}
+    \end{equation*}
+    is a Banach *-algebra. If \(p \neq 0\), then \(p\) is the identity element for \(\algebra{B}\).
+\end{lemma}
+\begin{proof}
+    We may assume without loss of generality that \(p \neq 0\), for if it were, then \(\algebra{B} = \set{0}\) is obviously a Banach *-algebra. The set \(\algebra{B}\) is not empty as it clearly contains at least \(0\) and \(p\). Let \(b_1,b_2 \in \algebra{B}\) and \(\alpha \in \mathbb{C}\), then there exist \(a_1,a_2 \in \algebra{A}\) such that \(b_i = pa_ip\), which yields
+    \begin{equation*}
+        b_1 + \alpha b_2 = p(a_1 + \alpha a_2)p \in \algebra{B},
+        \quad
+        b_1 b_2 = pa_1 p^2 a_2 p \in \algebra{B},
+        \quad\text{and}\quad
+        b_1^* = (pa_1p)^* = pa_1^*p \in \algebra{B},
+    \end{equation*}
+    hence \(\algebra{B}\) is a *-subalgebra of \(\algebra{A}\). Since \(p\) is idempotent, then \(p = p^3 \in \algebra{B}\) and it is the identity element of \(\algebra{B}\) as
+    \begin{equation*}
+        pb = p^2ap = pap = b
+        \quad\text{and}\quad
+        bp = pap^2 = pap = b
+    \end{equation*}
+    for all \(b = pap \in \algebra{B}\).
+
+    Let \(x : \mathbb{N} \to \algebra{B}\) be a sequence of elements in \(\algebra{B}\) that converges to some \(\tilde{x} \in \algebra{A}\). \cref{prop:norm_projector} guarantees \(\norm{p} = 1\), then
+    \begin{equation*}
+        \norm{x_n - p\tilde{x}p} = \norm{px_np - p\tilde{x}p} =
+        \norm{p(x_n - \tilde{x})p} \leq \norm{p}^2 \norm{x_n - \tilde{x}} = \norm{x_n - \tilde{x}},
+    \end{equation*}
+    for all \(n \in \mathbb{N}\), hence \(\tilde{x} = p \tilde{x} p \in \algebra{B}\). As a closed *-subalgebra of \(\algebra{A}\), \(\algebra{B}\) is a unital Banach *-algebra.
+\end{proof}
+
+\begin{lemma}{*-morphism maps identity to an orthogonal projector}{morphism_projector}
+    Let \(\algebra{A}\) be a unital *-algebra and \(\algebra{B}\) a *-algebra. If \(\pi : \algebra{A} \to \algebra{B}\) is a *-morphism, then the following statements hold
+    \begin{enumerate}[label=(\alph*)]
+        \item \(p = \pi(\unity_{\algebra{A}})\) is an orthogonal projector;
+        \item \(p = 0\) if and only if \(\ker{\pi} = \algebra{A}\);
+        \item \(\ran{\pi}\) is a *-subalgebra contained in \(\algebra{C} = \setc{c \in \algebra{B}}{\exists b \in \algebra{B} : c = pbp}\).
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    Notice
+    \begin{equation*}
+        p = \pi(\unity_\algebra{A}) = \pi(\unity_\algebra{A}^2) = \pi(\unity_\algebra{A})^2 = p^2
+    \end{equation*}
+    \begin{equation*}
+        p^* = \pi(\unity_\algebra{A})^* = \pi(\unity_\algebra{A}^*) = \pi(\unity_\algebra{A}) = p,
+    \end{equation*}
+    and
+    \begin{equation*}
+        p = 0 \iff \forall a \in \algebra{A}: p \pi(a) = 0 \iff a \in \algebra{A} : \pi(a) = 0 \iff \ker{\pi} = \algebra{A}
+    \end{equation*}
+    hence \(p\) is an orthogonal projector and it is the zero operator if and only if \(\pi\) is identically zero. Clearly \(\ran{\pi}\) is a *-subalgebra of \(\algebra{B}\), so it remains to show it is contained in \(\algebra{C}\). Let \(b \in \ran\pi\), then there exists \(a \in \algebra{A}\) such that \(b = \pi(a)\). As such, we have \(b = \pi(\unity_{\algebra{A}} a \unity_{\algebra{A}}) = p\pi(a)p = pbp \in \algebra{C}\), as desired.
+\end{proof}
+
+\begin{proposition}{*-morphism is non-expansive}{morphism_non_expansive}
+    Let \(\algebra{A}\) be a *-subalgebra with identity \(\unity\) of a unital Banach *-algebra, and let \(\algebra{B}\) be a C*-algebra. If \(\pi : \algebra{A} \to \algebra{B}\) is a *-morphism, then \(\pi\) is non-expansive, that is, for all \(a \in \algebra{A}\) it is true that \(\norm{\pi(a)} \leq \norm{a}\).
+\end{proposition}
+\begin{proof}
+    It is clear that \(\pi\) is non-expansive with respect to its kernel, so we may assume without loss of generality that \(\ker\pi \neq \algebra{A}\), then by \cref{lem:projector_star_subalgebra,lem:morphism_projector} we know \(\algebra{C} = \setc{c \in \algebra{B}}{\exists b \in \algebra{B}: c = \pi(\unity)b\pi(\unity)}\) is a C*-algebra with identity \(p = \pi(\unity)\) that contains the *-subalgebra \(\ran\pi\). By \cref{prop:norm_cstar_spectral_radius}, we know the restriction of the norm for \(\algebra{B}\) to the C*-subalgebra \(\algebra{C}\) is equal to the spectral radius norm, that is, \(\norm{c} = \sqrt{r_{\algebra{C}}(c^*c)}\) for all \(c \in \algebra{C}\), where the spectral radius is defined with the identity \(p\).
+
+    Let \(a \in \algebra{A}\) be a self-adjoint operator, then
+    \begin{equation*}
+        \lambda \notin \sigma_{\algebra{A}}(a) \implies a - \lambda \unity \in \invertible{\algebra{A}} \implies \pi(a) - \lambda p \in \invertible{\algebra{C}} \implies \lambda \notin \sigma_{\algebra{C}}(\pi(a)),
+    \end{equation*}
+    that is, \(\sigma_{\algebra{C}}(\pi(a))\subset \sigma_{\algebra{A}}(a)\). \cref{thm:spectral_radius_cstar} then yields
+    \begin{equation*}
+        \norm{\pi(a)} = r_{\algebra{C}}(\pi(a)) \leq r_{\algebra{A}}(a) \leq \norm{a}.
+    \end{equation*}
+    If we now consider \(a \in \algebra{A}\) not self-adjoint, then
+    \begin{equation*}
+        \norm{\pi(a)}^2 = \norm{\pi(a)^*\pi(a)} = \norm{\pi(a^*a)} \leq \norm{a^*a} \leq \norm{a^*}\norm{a} = \norm{a}^2,
+    \end{equation*}
+    hence \(\norm{\pi(a)} \leq \norm{a}\).
+\end{proof}
+\begin{remark}
+    This result shows that a *-morphism between C*-algebras is continuous with respect to the uniform topology.
+\end{remark}
+
+
+
+\begin{proposition}{Range of *-morphism is a C*-subalgebra of its codomain}{range_cstar}
+    Let \(\pi : \algebra{A} \to \algebra{B}\) be a *-morphism between the unital C*-algebra \(\algebra{A}\) and the C*-algebra \(\algebra{B}\). Then \(\ran\pi\) is a C*-subalgebra of \(\algebra{B}\) and the map
+    \begin{align*}
+        \hat{\pi} : \algebra{A}/\ker\pi &\to \ran\pi\\
+                                    [a] &\mapsto \pi(a)
+    \end{align*}
+    is a *-isomorphism.
+\end{proposition}
+\begin{proof}
+    We claim the map \(\tilde{\pi} : \algebra{A}/\ker\pi \to \algebra{B}\) defined by \([a] \mapsto \pi(a)\) is well-defined, since if \(a \in \algebra{A}\) and \(\tilde{a} \in [a]\), then \(\tilde{a} - a \in \ker\pi\), hence \(\tilde{\pi}([\tilde{a}]) = \pi(\tilde{a}) = \pi(a) = \tilde{\pi}([a])\). Let \(a_1, a_2 \in \algebra{A}\) and \(\alpha \in \mathbb{C}\), then \(\tilde{\pi}([0]) = \pi(0) = 0\),
+    \begin{equation*}
+        \tilde{\pi}([a_1] + \alpha[a_2]) = \tilde{\pi}([a_1 + \alpha a_2]) = \pi(a_1 + \alpha a_2) = \pi(a_1) + \alpha \pi(a_2) = \tilde{\pi}([a_1]) + \alpha \tilde{\pi}([a_2]),
+    \end{equation*}
+    \begin{equation*}
+        \tilde{\pi}([a_1][a_2]) = \tilde{\pi}([a_1a_2]) = \pi(a_1a_2) = \pi(a_1)\pi(a_2) = \tilde{\pi}([a_1])\tilde{\pi}([a_2]),
+    \end{equation*}
+    and
+    \begin{equation*}
+        \tilde{\pi}([a_1])^* = \pi(a_1)^* = \pi(a_1)^* = \pi(a_1^*) = \tilde{\pi}([a_1^*]) = \tilde{\pi}([a_1]^*),
+    \end{equation*}
+    thus showing \(\tilde{\pi}\) is a *-morphism.
+
+    By construction \(\tilde{\pi}\) is injective, hence the map with the codomain restricted to its range, \(\hat{\pi} : \algebra{A}/\ker{\pi} \to \ran\pi\), is bijective, thus a *-isomorphism. In particular, the inverse map \(\hat{\pi}^{-1} : \ran\pi \to \algebra{A}/\ker{\pi}\) is a *-morphism from the *-subalgebra with identity \(\ran\pi\) of the unital Banach *-algebra \(\algebra{C} = \setc{\pi(\unity_{\algebra{A}})b\pi(\unity_{\algebra{A}})}{b \in \algebra{B}}\) to the C*-algebra \(\algebra{A}/\ker\pi\), hence \(\hat{\pi}^{-1}\) is non-expansive by \cref{prop:morphism_non_expansive}. As a result and since \(\tilde{\pi}\) is also non-expansive as a *-morphism between C*-algebras, we have
+    \begin{equation*}
+        \norm{[a]} = \norm{\hat{\pi}^{-1}\circ \hat{\pi}([a])} \leq \norm{\hat{\pi}([a])} = \norm{\tilde{\pi}([a])} \leq \norm{[a]},
+    \end{equation*}
+    for all \(a \in \algebra{A}\), that is, the map \(\hat{\pi}\) is an isometry. From \cref{prop:isometry_Banach}, \(\ran{\pi}\) is a C*-algebra.
+\end{proof}
+
+\begin{definition}{C*-algebra representation}{representation}
+    Let \(\algebra{A}\) be a C*-algebra. A \emph{representation \((\hilbert, \pi)\) of \(\algebra{A}\) on the Hilbert space \(\hilbert\)} is a *-morphism \(\pi : \algebra{A} \to \bounded(\hilbert)\). If \(\pi\) is injective, the representation is \emph{faithful}.
+\end{definition}
+\begin{remark}
+    In an abuse of language, we refer to the representation simply to the *-morphism.
+\end{remark}
+
+\begin{proposition}{Faithful representation is isometric}{faithful_isometric}
+    Let \(\pi : \algebra{A} \to \algebra{B}\) be a *-morphism between C*-algebras \(\algebra{A}\) and \(\algebra{B}\). The following statements are equivalent
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\pi\) is injective;
+        \item \(\pi\) is an isometry;
+        \item if \(a \in \algebra{A}_+ \setminus\set{0}\), then \(\pi(a) \in \algebra{B}_+\setminus\set{0}\).
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Suppose \(\pi\) is injective, then the map \(\pi^{-1} : \ran\pi \to \algebra{A}\) is a *-isomorphism, and so must be \(\pi : \algebra{A} \to \ran\pi\), hence \(\pi\) is isometric.
+
+    Suppose \(\pi\) is an isometry, then if \(a > 0\), we have \(\pi(a) \in \algebra{B}_+\) with \(a \neq 0\), and as a result \(\norm{\pi(a)} = \norm{a} > 0\), hence \(\pi(a) \neq 0\).
+
+    Suppose \(\pi\) is not injective, then there exists \(a \in \ker{\algebra{A}}\setminus\set{0}\) and as a result \(\pi(a^*a) = 0\). As \(\norm{a^*a} = \norm{a}^2 > 0\), we have \(a^*a > 0\) with \(\pi(a^*a) = 0\).
+\end{proof}
+\begin{definition}{Stable subspace under a representation}{stable_under_representation}
+    Let \(\algebra{A}\) be a C*-algebra and \((\hilbert, \pi)\) a representation. A linear subspace \(\mathscr{V} \subset \hilbert\) is \emph{stable}, or \emph{invariant}, \emph{under the representation \(\pi\)} if \(\pi(\algebra{A})\mathscr{V} \subset \mathscr{V}\).
+\end{definition}
+
+\begin{proposition}{Orthogonal decomposition stable under a representation}{orthogonal_stable_representation}
+    Let \(\algebra{A}\) be a C*-algebra and \(\hilbert, \pi\) a representation. A closed linear subspace \(\mathscr{V}\subset \hilbert\) is stable under \(\pi\) if and only if \(\mathscr{V}^{\perp}\) is stable under \(\pi\).
+\end{proposition}
+\begin{proof}
+    We have
+    \begin{align*}
+        \pi(\algebra{A})\mathscr{V} \subset \mathscr{V}
+        &\iff
+        \forall a \in \algebra{A}, \forall \psi \in \mathscr{V} : \pi(a)\psi \in \mathscr{V}\\
+        &\iff
+        \forall a \in \algebra{A}, \forall \psi \in \mathscr{V}, \forall \phi \in \mathscr{V}^{\perp} : \inner{\phi}{\pi(a)\psi} = 0\\
+        &\iff
+        \forall a \in \algebra{A}, \forall \psi \in \mathscr{V}, \forall \phi \in \mathscr{V}^{\perp}: \inner{\psi}{\pi(a^*)\phi} = 0\\
+        &\iff
+        \forall a \in \algebra{A}, \forall \psi \in \mathscr{V}, \forall \phi \in \mathscr{V}^{\perp}: \inner{\psi}{\pi(a)\phi} = 0\\
+        &\iff
+        \forall a \in \algebra{A},\forall \phi \in \mathscr{V}^{\perp} : \pi(a)\phi \in \mathscr{V}^{\perp}\\
+        &\iff
+        \pi(\algebra{A})\mathscr{V}^{\perp} \subset \mathscr{V}^{\perp}
+    \end{align*}
+    as desired.
+\end{proof}
+
+\begin{proposition}{Necessary and sufficient condition for a closed stable subspace}{subspace_stable}
+    Let \(\algebra{A}\) be a C*-algebra and \((\hilbert, \pi)\) be a representation. The closed linear subspace \(\mathscr{V} \subset \hilbert\) is stable under \(\pi\) if and only if the orthogonal projector \(p_{\mathscr{V}}\) onto \(\mathscr{V}\) lies in the commutant \(\pi(\algebra{A})'\).
+\end{proposition}
+\begin{proof}
+    Suppose \(p_{\mathscr{V}}\) commutes with every representant of \(\algebra{A}\), then for all\(\psi \in \mathscr{V}\) we have
+    \begin{equation*}
+        \pi(a) \psi = \pi(a)p_\mathscr{V} \psi = p_{\mathscr{V}} \pi(a) \psi \subset \mathscr{V},
+    \end{equation*}
+    hence \(\mathscr{V}\) is stable under \(\pi\).
+
+    If \(\mathscr{V}\) is stable under \(\pi\), then \(p_\mathscr{V} \pi(a) p_{\mathscr{V}} = \pi(a) p_{\mathscr{V}}\) for all \(a \in \algebra{A}\), since \(\pi(a) p_{\mathscr{V}}\psi \in \mathscr{V}\) for all \(\psi \in \hilbert\). This yields
+    \begin{equation*}
+        \pi(a)p_{\mathscr{V}} = (p_{\mathscr{V}}\pi(a^*)p_{\mathscr{V}})^* = (\pi(a^*)p_{\mathscr{V}})^* = p_{\mathscr{V}} \pi(a),
+    \end{equation*}
+    hence \(p_{\mathscr{V}} \in \pi(\algebra{A})'\).
+\end{proof}
+
+\begin{proposition}{Subrepresentation}{subrepresentation}
+    Let \(\algebra{A}\) be a C*-algebra and \((\hilbert, \pi)\) be a representation. If \(\mathscr{V}\) is a closed linear subspace stable under \(\pi\), then the map
+    \begin{align*}
+        \pi_{\mathscr{V}} : \algebra{A} &\to \bounded(\mathscr{V})\\
+                                      a &\mapsto p_\mathscr{V} \pi(a) p_{\mathscr{V}}
+    \end{align*}
+    is a *-morphism, and the representation \((\mathscr{V}, \pi_{\mathscr{V}})\) is referred to as a \emph{subrepresentation} of \((\hilbert, \pi)\).
+\end{proposition}
+\begin{proof}
+    The map is clearly linear, as we have similarly shown in \cref{lem:projector_star_subalgebra}. Let \(a, b \in \algebra{A}\), then
+    \begin{equation*}
+        \pi_{\mathscr{V}}(a)\pi_{\mathscr{V}}(b) = p_{\mathscr{V}} \pi(a) p_{\mathscr{V}}^2 \pi(b) p_{\mathscr{V}} = p_{\mathscr{V}}^2 \pi(a)\pi(b) p_{\mathscr{V}}^2 = p_{\mathscr{V}} \pi(ab) p_\mathscr{V} = \pi_{\mathscr{V}}(ab)
+    \end{equation*}
+    and
+    \begin{equation*}
+        \pi_{\mathscr{V}}(a)^* = p_{\mathscr{V}} \pi(a)^* p_{\mathscr{V}} = p_{\mathscr{V}}\pi(a^*) p_{\mathscr{V}} = \pi_{\mathscr{V}}(a^*),
+    \end{equation*}
+    hence \(\pi_\mathscr{V}\) is a *-morphism.
+\end{proof}
+
+The subrepresentation allows for a decomposition of a representation. If \(\hilbert_1 \subset \hilbert\) is a closed linear subspace of a Hilbert space \(\hilbert\), then we set \(\hilbert_2 = \hilbert_1^{\perp}\), and then \(\hilbert = \hilbert_1 \oplus \hilbert_2\). By the previous propositions, \(\pi_1 = p_{\hilbert_1} \pi p_{\hilbert_1}\) and \(\pi_2 = p_{\hilbert_2} \pi p_{\hilbert_2}\) are representations and we may consider \(\pi = \pi_1 \oplus \pi_2\) and write \((\hilbert, \pi) = (\hilbert_1, \pi_1) \oplus (\hilbert_2, \pi_2)\).
+
+A set \(\algebra{M}\subset \bounded(\hilbert)\) of bounded operators on a Hilbert space \(\hilbert\) is said to act \emph{nondegenerately} if \(\algebra{M}\hilbert \neq \set{0}\). An important class of nondegenerate representations is the one of \emph{cyclic representations}.
+\begin{definition}{Cyclic vector and cyclic representation}{cyclic_representation}
+    Let \(\algebra{A}\) be a C*-algebra and \(\hilbert\) be a Hilbert space. A vector \(\psi \in \hilbert\) is \emph{cyclic} for a set of bounded operators \(\algebra{M} \subset \bounded(\hilbert)\) if \(\algebra{M}\psi\) is dense in \(\hilbert\). A \emph{cyclic representation \((\hilbert, \pi, \Omega)\) of \(\algebra{A}\)} is a representation \((\hilbert, \pi)\) for which \(\Omega \in \hilbert\) is a cyclic vector.
+\end{definition}
+
