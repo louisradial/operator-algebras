@@ -238,10 +238,29 @@ It is an elementary result that the kernel of a group morphism \(\pi : G \to H\)
     hence \(\pi_\mathscr{V}\) is a *-morphism.
 \end{proof}
 
-The subrepresentation allows for a decomposition of a representation. If \(\hilbert_1 \subset \hilbert\) is a closed linear subspace of a Hilbert space \(\hilbert\), then we set \(\hilbert_2 = \hilbert_1^{\perp}\), and then \(\hilbert = \hilbert_1 \oplus \hilbert_2\). By the previous propositions, \(\pi_1 = p_{\hilbert_1} \pi p_{\hilbert_1}\) and \(\pi_2 = p_{\hilbert_2} \pi p_{\hilbert_2}\) are representations and we may consider \(\pi = \pi_1 \oplus \pi_2\) and write \((\hilbert, \pi) = (\hilbert_1, \pi_1) \oplus (\hilbert_2, \pi_2)\).
 
 A set \(\algebra{M}\subset \bounded(\hilbert)\) of bounded operators on a Hilbert space \(\hilbert\) is said to act \emph{nondegenerately} if \(\algebra{M}\hilbert \neq \set{0}\). An important class of nondegenerate representations is the one of \emph{cyclic representations}.
 \begin{definition}{Cyclic vector and cyclic representation}{cyclic_representation}
     Let \(\algebra{A}\) be a C*-algebra and \(\hilbert\) be a Hilbert space. A vector \(\psi \in \hilbert\) is \emph{cyclic} for a set of bounded operators \(\algebra{M} \subset \bounded(\hilbert)\) if \(\algebra{M}\psi\) is dense in \(\hilbert\). A \emph{cyclic representation \((\hilbert, \pi, \Omega)\) of \(\algebra{A}\)} is a representation \((\hilbert, \pi)\) for which \(\Omega \in \hilbert\) is a cyclic vector.
 \end{definition}
 
+% TODO: study direct sum of hilbert spaces, including uncountable ones
+A subrepresentation allows for a decomposition of a representation. If \(\hilbert_1 \subset \hilbert\) is a closed linear subspace of a Hilbert space \(\hilbert\), then we set \(\hilbert_2 = \hilbert_1^{\perp}\), and then \(\hilbert = \hilbert_1 \oplus \hilbert_2\). By the previous propositions, \(\pi_1 = p_{\hilbert_1} \pi p_{\hilbert_1}\) and \(\pi_2 = p_{\hilbert_2} \pi p_{\hilbert_2}\) are representations and we may consider \(\pi = \pi_1 \oplus \pi_2\) and write \((\hilbert, \pi) = (\hilbert_1, \pi_1) \oplus (\hilbert_2, \pi_2)\). We extend this definition to general direct sums of representations as follows: if \(\family{(\hilbert_{\lambda}, \pi_{\lambda})}{\lambda \in \Lambda}\) is a family of representations of a C*-algebra \(\algebra{A}\), then \(\hilbert = \bigoplus_{\lambda \in \Lambda} \hilbert_{\lambda}\) is \todo[defined in the usual manner] and \(\pi = \bigoplus_{\lambda \in \Lambda} \pi_{\lambda}\) is defined by setting \(\pi(a)\) equal to \(\pi_{\lambda}(a)\) in each component \(\hilbert_{\lambda}\), for all \(a \in \algebra{A}\). It follows that \(\pi : \algebra{A} \to \hilbert\) is a representation since each \(\pi_{\lambda}\) is non-expansive by \cref{prop:morphism_non_expansive}.
+\begin{proposition}{Non-degenerate representation is a direct sum of cyclic representations}{direct_sum_representation}
+    Let \((\hilbert, \pi)\) be a representation of the C*-algebra \(\algebra{A}\). If \(\pi\) is non-degenerate, then there exists a family of cyclic subrepresentations \family{(\hilbert_{\lambda}, \pi_{\lambda})}{\lambda \in \Lambda} such that \((\hilbert, \pi) = \bigoplus_{\lambda \in \Lambda}(\hilbert_{\lambda}, \pi)\).
+\end{proposition}
+\begin{proof}
+    % TODO: prove the following claim
+    Let \(\family{\Omega_{\lambda}}{\lambda \in \Lambda} \subset \hilbert \setminus \set{0}\) be a maximal family of nonzero vectors such that
+    \begin{equation*}
+        \alpha, \beta \in \Lambda : \alpha \neq \beta \implies \forall a, b \in \algebra{A} : \inner{\pi(a)\Omega_{\alpha}}{\pi(b)\Omega_{\beta}} = 0,
+    \end{equation*}
+    which \todo[exists due to Zorn's lemma]. Then \(\hilbert_{\lambda} = \cl_{\hilbert}(\pi(\algebra{A}\Omega_{\lambda}))\) defines a closed linear subspace that is stable under \(\pi\) as each representative is a bounded operator. Indeed, if \(\tilde{\psi} \in \hilbert_{\lambda}\) then there exists a convergent sequence \(\psi : \mathbb{N} \to \hilbert_{\lambda}\) such that \(\psi \to \tilde{\psi}\), and as a result, for all \(a \in \algebra{A}\) we have \(\pi(a)\tilde{\psi} = \lim_{n\in \mathbb{N}}{\pi(a)\psi} \in \hilbert_{\lambda}\) as \(\pi(a)\) is continuous.
+
+    Following \cref{prop:subrepresentation}, we define the cyclic subrepresentation \((\hilbert_{\lambda}, \pi_{\lambda}, \Omega_{\lambda})\) with
+    \begin{align*}
+        \pi_{\lambda} : \algebra{A} &\to \bounded(\hilbert)\\
+                                  a &\mapsto p_{\hilbert_{\lambda}}\pi(a)p_{\hilbert_{\lambda}}
+    \end{align*}
+    where \(p_{\hilbert_{\lambda}} \in \bounded(\hilbert)\) is the orthogonal projector onto \(\hilbert_{\lambda}\). \todo[Wrap this up]
+\end{proof}
