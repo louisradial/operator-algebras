@@ -205,7 +205,7 @@ It is an elementary result that the kernel of a group morphism \(\pi : G \to H\)
     Let \(\algebra{A}\) be a C*-algebra and \((\hilbert, \pi)\) be a representation. The closed linear subspace \(\mathscr{V} \subset \hilbert\) is stable under \(\pi\) if and only if the orthogonal projector \(p_{\mathscr{V}}\) onto \(\mathscr{V}\) lies in the commutant \(\pi(\algebra{A})'\).
 \end{proposition}
 \begin{proof}
-    Suppose \(p_{\mathscr{V}}\) commutes with every representant of \(\algebra{A}\), then for all\(\psi \in \mathscr{V}\) we have
+    Suppose \(p_{\mathscr{V}}\) commutes with every representant of \(\algebra{A}\), then for all \(\psi \in \mathscr{V}\) we have
     \begin{equation*}
         \pi(a) \psi = \pi(a)p_\mathscr{V} \psi = p_{\mathscr{V}} \pi(a) \psi \subset \mathscr{V},
     \end{equation*}
@@ -247,20 +247,50 @@ A set \(\algebra{M}\subset \bounded(\hilbert)\) of bounded operators on a Hilber
 % TODO: study direct sum of hilbert spaces, including uncountable ones
 A subrepresentation allows for a decomposition of a representation. If \(\hilbert_1 \subset \hilbert\) is a closed linear subspace of a Hilbert space \(\hilbert\), then we set \(\hilbert_2 = \hilbert_1^{\perp}\), and then \(\hilbert = \hilbert_1 \oplus \hilbert_2\). By the previous propositions, \(\pi_1 = p_{\hilbert_1} \pi p_{\hilbert_1}\) and \(\pi_2 = p_{\hilbert_2} \pi p_{\hilbert_2}\) are representations and we may consider \(\pi = \pi_1 \oplus \pi_2\) and write \((\hilbert, \pi) = (\hilbert_1, \pi_1) \oplus (\hilbert_2, \pi_2)\). We extend this definition to general direct sums of representations as follows: if \(\family{(\hilbert_{\lambda}, \pi_{\lambda})}{\lambda \in \Lambda}\) is a family of representations of a C*-algebra \(\algebra{A}\), then \(\hilbert = \bigoplus_{\lambda \in \Lambda} \hilbert_{\lambda}\) is \todo[defined in the usual manner] and \(\pi = \bigoplus_{\lambda \in \Lambda} \pi_{\lambda}\) is defined by setting \(\pi(a)\) equal to \(\pi_{\lambda}(a)\) in each component \(\hilbert_{\lambda}\), for all \(a \in \algebra{A}\). It follows that \(\pi : \algebra{A} \to \hilbert\) is a representation since each \(\pi_{\lambda}\) is non-expansive by \cref{prop:morphism_non_expansive}.
 \begin{proposition}{Non-degenerate representation is a direct sum of cyclic representations}{direct_sum_representation}
-    Let \((\hilbert, \pi)\) be a representation of the C*-algebra \(\algebra{A}\). If \(\pi\) is non-degenerate, then there exists a family of cyclic subrepresentations \family{(\hilbert_{\lambda}, \pi_{\lambda})}{\lambda \in \Lambda} such that \((\hilbert, \pi) = \bigoplus_{\lambda \in \Lambda}(\hilbert_{\lambda}, \pi)\).
+    Let \((\hilbert, \pi)\) be a representation of the C*-algebra \(\algebra{A}\). If \(\pi\) is non-degenerate, then there exists a family of cyclic subrepresentations \family{(\hilbert_{\lambda}, \pi_{\lambda}, \Omega_\lambda)}{\lambda \in \Lambda} such that \((\hilbert, \pi) = \bigoplus_{\lambda \in \Lambda}(\hilbert_{\lambda}, \pi)\).
 \end{proposition}
 \begin{proof}
-    % TODO: prove the following claim
-    Let \(\family{\Omega_{\lambda}}{\lambda \in \Lambda} \subset \hilbert \setminus \set{0}\) be a maximal family of nonzero vectors such that
+    We consider the set
     \begin{equation*}
-        \alpha, \beta \in \Lambda : \alpha \neq \beta \implies \forall a, b \in \algebra{A} : \inner{\pi(a)\Omega_{\alpha}}{\pi(b)\Omega_{\beta}} = 0,
+        \mathfrak{O} = \setc*{\mathscr{V} \in \mathbb{P}(\hilbert\setminus\set{0})}{\forall \psi,\phi \in \mathscr{V} : \psi \neq \phi \implies \pi(\algebra{A})\psi \perp \pi(\algebra{A})\phi},
     \end{equation*}
-    which \todo[exists due to Zorn's lemma]. Then \(\hilbert_{\lambda} = \cl_{\hilbert}(\pi(\algebra{A}\Omega_{\lambda}))\) defines a closed linear subspace that is stable under \(\pi\) as each representative is a bounded operator. Indeed, if \(\tilde{\psi} \in \hilbert_{\lambda}\) then there exists a convergent sequence \(\psi : \mathbb{N} \to \hilbert_{\lambda}\) such that \(\psi \to \tilde{\psi}\), and as a result, for all \(a \in \algebra{A}\) we have \(\pi(a)\tilde{\psi} = \lim_{n\in \mathbb{N}}{\pi(a)\psi} \in \hilbert_{\lambda}\) as \(\pi(a)\) is continuous.
+    partially ordered by inclusion. Notice that if \(\phi \in \lspan\set{\psi}\setminus \set{0,\psi}\), then \(\set{\phi,\psi} \notin \mathfrak{O}\). If \(\hilbert\) is unidimensional, then there exists \(\xi \in \hilbert\setminus\set{0}\) such that \(\hilbert = \lspan\set{\xi}\) and as \(\pi\) is nondegenerate, we have \(\pi(\algebra{A})\xi \neq \set{0}\), and as a result \(\set{\xi}\) is a maximal element of \(\mathfrak{O}\). Suppose \(\hilbert\) has dimension greater than one. Let \(\mathcal{F} \subset \mathfrak{O}\) be a non-empty linearly ordered subset of \(\mathfrak{O}\), then its union 
+    \begin{equation*}
+        \bigcup \mathcal{F} = \bigcup_{\mathscr{V} \in \mathcal{F}} \mathscr{V} = \setc{\psi \in \hilbert}{\exists \mathscr{X} \in \mathcal{F} : \psi \in \mathscr{X}}
+    \end{equation*}
+    is an upper bound for \(\mathcal{F}\). Let \(\psi, \phi \in \bigcup \mathcal{F}\) with \(\psi \neq \phi\), then there exist \(\mathscr{U},\mathscr{V} \in \mathcal{F}\) such that \(\psi \in \mathscr{U}\) and \(\phi \in \mathscr{V}\). By linear order, we may assume without loss of generality that \(\mathscr{U} \subset \mathscr{V}\), hence \(\psi \in \mathscr{V}\), and we conclude \(\pi(\algebra{A})\psi \perp \pi(\algebra{A}\phi)\) as \(\mathscr{V} \in \mathfrak{O}\), therefore \(\bigcup \mathcal{F} \in \mathfrak{O}\). 
 
-    Following \cref{prop:subrepresentation}, we define the cyclic subrepresentation \((\hilbert_{\lambda}, \pi_{\lambda}, \Omega_{\lambda})\) with
+    We have shown every linearly ordered subset of \(\mathfrak{O}\) has an upper bound in \(\mathfrak{O}\), hence by \nameref{thm:zorn} there exists a maximal family of nonzero vectors \(\family{\Omega_{\lambda}}{\lambda \in \Lambda} \subset \hilbert \setminus \set{0}\) such that
+    \begin{equation*}
+        \alpha, \beta \in \Lambda : \alpha \neq \beta \implies \forall a, b \in \algebra{A} : \inner{\pi(a)\Omega_{\alpha}}{\pi(b)\Omega_{\beta}} = 0.
+    \end{equation*}
+    Then \(\hilbert_{\lambda} = \cl_{\hilbert}\left(\pi(\algebra{A})\Omega_{\lambda}\right)\) defines a closed linear subspace that is stable under \(\pi\). Indeed, if \(\tilde{\psi} \in \hilbert_{\lambda}\) then there exists a convergent sequence \(\psi : \mathbb{N} \to \hilbert_{\lambda}\) such that \(\psi \to \tilde{\psi}\), and as a result, for all \(a \in \algebra{A}\) we have \(\pi(a)\tilde{\psi} = \lim_{n\to\infty}{\pi(a)\psi_n} \in \hilbert_{\lambda}\) as \(\pi(a)\) is continuous. Following \cref{prop:subrepresentation}, we define the subrepresentation \((\hilbert_{\lambda}, \pi_{\lambda})\) with
     \begin{align*}
         \pi_{\lambda} : \algebra{A} &\to \bounded(\hilbert)\\
                                   a &\mapsto p_{\hilbert_{\lambda}}\pi(a)p_{\hilbert_{\lambda}}
     \end{align*}
-    where \(p_{\hilbert_{\lambda}} \in \bounded(\hilbert)\) is the orthogonal projector onto \(\hilbert_{\lambda}\). \todo[Wrap this up]
+    where \(p_{\hilbert_{\lambda}} \in \bounded(\hilbert)\) is the orthogonal projector onto \(\hilbert_{\lambda}\), and for which \(\Omega_\lambda\) is the cyclic vector by construction. Defining the Hilbert space \(\tilde{\hilbert} = \bigoplus_{\lambda \in \Lambda} \hilbert_\lambda\) and its representation \(\tilde{\pi} : \algebra{A} \to \bounded(\hilbert)\) defined by
+    \begin{align*}
+        \tilde{\pi}(a) : \hilbert &\to \hilbert\\
+                             \psi &\mapsto \bigoplus_{\lambda \in \Lambda} \pi_{\lambda}(a)\psi
+    \end{align*}
+    for all \(a \in \algebra{A}\), we aim to show that \((\hilbert, \pi) = (\tilde{\hilbert}, \tilde{\pi})\).
+
+    Notice that if \(\lambda, \mu \in \Lambda\) with \(\lambda \neq \mu\), then \(\hilbert_{\lambda} \perp \hilbert_{\mu}\) by construction, as the inner product is continuous. Suppose, by contradiction, there exists \(\tilde{\Phi} \in \hilbert\) that does not lie in the direct sum \(\tilde{\hilbert} = \bigoplus_{\lambda \in \Lambda} \hilbert_\lambda\), hence \(\tilde{\Phi} \in \hilbert_\lambda^\perp\) for all \(\lambda \in \Lambda\), and in particular, \(\tilde{\Phi} \in \algebra{A}\Omega_{\lambda}\) for all \(\lambda \in \Lambda\). That is, we have
+    \begin{align*}
+        \tilde{\Phi} \notin \tilde{\hilbert} &\implies \forall \lambda \in \Lambda, \forall a \in \algebra{A} : \inner{\tilde{\Phi}}{\pi(a^{\ast})\pi(b)\Omega_\lambda} = 0\\
+                                             &\implies \forall \lambda \in \Lambda, \forall a,b\in \algebra{A} : \inner{\tilde{\Phi}}{\pi(a)^{\ast}\pi(b)\Omega_{\lambda}} = 0\\
+                                             &\implies \forall \lambda \in \Lambda, \forall a,b \in \algebra{A}: \inner{\pi(a)\tilde{\Phi}}{\pi(b)\Omega_\lambda} = 0,
+    \end{align*}
+    therefore \(\set{\tilde{\Phi}}\cup \family{\Omega_\lambda}{\lambda \in \Lambda}\) is an upper bound for the maximal family. By definition, this means \(\tilde{\Phi} \in \family{\Omega_\lambda}{\lambda \in \Lambda}\), which is absurd as \(\tilde{\Phi} \in \hilbert_{\lambda}^\perp\) for all \(\lambda \in \Lambda\). This contradiction shows us \(\hilbert = \tilde{\hilbert}\).
+
+    Notice for all \(a \in \algebra{A}\) and \(\lambda \in \Lambda\) the operators \(\pi(a)\) and \(p_{\hilbert_\lambda}\) commute. Indeed, since \(\pi(a) \hilbert_\lambda \subset \hilbert_\lambda\) we know \(\pi(a)p_{\hilbert_\lambda} = p_{\hilbert_\lambda}\pi(a)p_{\hilbert_\lambda}\), then taking the adjoint and using the fact that \(\algebra{A}\) is self-adjoint yields \(\pi(a)p_{\hilbert_\lambda} = p_{\hilbert_\lambda}\pi(a)\) for all \(a \in \algebra{A}\) and \(\lambda \in \Lambda\). Let \(\psi \in \hilbert\), then we may decompose it as \(\psi = \oplus_{\lambda \in \Lambda}p_{\hilbert_\lambda}\psi\), yielding
+    \begin{align*}
+        \tilde{\pi}(a)\psi &= \tilde{\pi}(a)\bigoplus_{\lambda \in \Lambda} p_{\hilbert_\lambda}\psi\\
+                           &= \bigoplus_{\lambda \in \Lambda} \pi_{\lambda}(a) p_{\hilbert_\lambda}\psi\\
+                           &= \bigoplus_{\lambda \in \Lambda} p_{\hilbert_\lambda} \pi(a) p_{\hilbert_\lambda}^2 \psi\\
+                           &= \bigoplus_{\lambda \in \Lambda} p_{\hilbert_\lambda} \pi(a) \psi\\
+                           &= \pi(a) \psi
+    \end{align*}
+    for all \(a \in \algebra{A}\), hence \(\tilde{\pi} = \pi\).
 \end{proof}
