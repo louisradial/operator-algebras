@@ -159,6 +159,7 @@ It is an elementary result that the kernel of a group morphism \(\pi : G \to H\)
     In an abuse of language, we refer to the representation simply to the *-morphism.
 \end{remark}
 
+
 \begin{proposition}{Faithful representation is isometric}{faithful_isometric}
     Let \(\pi : \algebra{A} \to \algebra{B}\) be a *-morphism between C*-algebras \(\algebra{A}\) and \(\algebra{B}\). The following statements are equivalent
     \begin{enumerate}[label=(\alph*)]
@@ -293,4 +294,63 @@ A subrepresentation allows for a decomposition of a representation. If \(\hilber
                            &= \pi(a) \psi
     \end{align*}
     for all \(a \in \algebra{A}\), hence \(\tilde{\pi} = \pi\).
+\end{proof}
+
+\begin{definition}{Topologically Irreducible set of bounded operators}{irreducible}
+    Let \(\hilbert\) be a Hilbert space. A set \(\algebra{M}\) of bounded operators on \(\hilbert\) is \emph{topologically irreducible} if the only closed subspaces of \(\hilbert\) which are invariant under the action of \(\algebra{M}\) are the trivial subspaces \(\set{0}\) and \(\hilbert\). A representation \((\hilbert, \pi)\) of a C*-algebra \(\algebra{A}\) is \emph{topologically irreducible} if \(\pi(\algebra{A})\) is irreducible.
+\end{definition}
+\begin{remark}
+    We will refer to topological irreducibility simply by irreducibility. The notion of \emph{algebraic} irreducibility requires that the only invariant subspaces are the trivial ones. 
+    %TODO: find proof of this
+    In fact, the both notions coincide for representations of C*-algebras.
+\end{remark}
+
+\begin{proposition}{Irreducible self-adjoint set of bounded operators}{irreducible_self_adjoint}
+    Let \(\hilbert\) be a Hilbert space and let \(\algebra{M} \subset \bounded(\hilbert)\) be a self-adjoint set of bounded operators on \(\hilbert\). The following statements are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\algebra{M}\) is irreducible;
+        \item \(\psi \in \hilbert \setminus \set{0}\) is cyclic for \(\algebra{M}\), or \(\algebra{M} = \set{0}\) and \(\hilbert = \mathbb{C}\); and
+        \item \(\algebra{M}' = \mathbb{C} \unity\).
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Assume \(\algebra{M}\) is irreducible. If \(\algebra{M} = \set{0}\), then the only closed subspaces of \(\hilbert\) are \(\set{0}\) and itself, hence \(\hilbert\) is unidimensional and we conclude \(\hilbert = \mathbb{C}\), up to isomorphism. If \(\algebra{M} \neq \set{0}\), then we suppose, by contradiction, there exists \(\psi \in \hilbert \setminus \set{0}\) such that \(\algebra{M}\psi\) is not dense in \(\hilbert\). Then \((\algebra{M}\psi)^\perp\) contains a non-zero vector and it is invariant by the action of \(\algebra{M}\) as we have
+    \begin{align*}
+        \phi \in (\algebra{M}\psi)^{\perp}\setminus\set{0} &\iff \forall a,b \in \algebra{M} : \inner{\phi}{a^{\ast}b\psi} = 0\\
+                                                           &\iff \forall a,b \in \algebra{M} : \inner{a\phi}{b\psi} = 0\\
+                                                           &\iff \forall a \in \algebra{M} : a\phi \in (\algebra{M}\psi)^\perp,
+    \end{align*}
+    since \(\algebra{M}\) is self-adjoint. Notice we must have \((\algebra{M}\psi)^\perp \neq \hilbert\), otherwise this would imply \(\algebra{M}\psi = \set{0}\), and as a result \(\lspan\set{\psi}\) would be an invariant subspace under \(\algebra{M}\), contradicting its irreducibility. The only other possibility is that \((\algebra{M}\psi)^\perp\) is a non-trivial closed subspace invariant under \(\algebra{M}\), which also contradicts the hypothesis. The contradiction thus shows every non-zero vector of \(\hilbert\) must be cyclic for \(\algebra{M}\).
+
+    %TODO: try and come up with a more elementary proof
+    Clearly if \(\algebra{M} = \set{0}\) and \(\hilbert = \mathbb{C}\), we must have \(\algebra{M}' = \mathbb{C} \unity\), so we may assume \(\algebra{M} \neq \set{0}\) and \(\dim\hilbert > 1\). Suppose every non-zero vector of \(\hilbert\) is cyclic for \(\algebra{M}\). \todo[spectral projectors?]
+
+    Suppose \(\algebra{M}\) is not irreducible, then there exists a non-trivial closed subspace \(\mathscr{V}\subset \hilbert\) such that \(\algebra{M}\mathscr{V} \subset \mathscr{V}\). Let \(p_{\mathscr{V}}\in \bounded(\hilbert)\) be the orthogonal projector onto \(\mathscr{V}\), then it follows that \(ap_{\mathscr{V}} = p_{\mathscr{V}}a p_{\mathscr{V}}\) for all \(a \in \algebra{A}\) and taking the adjoint yields \(ap_{\mathscr{V}} = p_{\mathscr{V}} a\), that is, \(p_{\mathscr{V}} \in \algebra{M}'\). As \(\mathscr{V}\) is non-trivial, it follows that \(p_{\mathscr{V}} \notin \lspan\set\unity\), hence \(\algebra{M}' \neq \mathbb{C} \unity\).
+\end{proof}
+
+Unitary operators in \(\bounded(\hilbert)\) may be used together with a representation to define yet another representation.
+\begin{proposition}{Representations and unitary operators}{representation_unitary}
+    Let \(\algebra{A}\) be a C*-algebra and let \(u : \hilbert_1 \to \hilbert_2\) be a unitary operator between the Hilbert spaces \(\hilbert_1\) and \(\hilbert_2\). If \((\hilbert_1, \pi)\) is a representation of \(\algebra{A}\), then the *-morphism \(\pi_u : \algebra{A} \to \bounded(\hilbert_2)\) defined by \(\pi_u(a) = u\pi(a)u^*\) for all \(a \in \algebra{A}\) establishes a representation of \(\algebra{A}\) in \(\hilbert_2\).
+\end{proposition}
+\begin{proof}
+    Clearly \(\pi_u\) is linear and for all \(a, b \in \algebra{A}\) we have
+    \begin{equation*}
+        \pi_u(ab) = u \pi(ab) u^* = u \pi(a) \pi(b) u^* = u \pi(a) u^* u \pi(b) u^* = \pi_u(a)\pi_u(b)
+    \end{equation*}
+    and 
+    \begin{equation*}
+        \pi_u(a)^* = (u \pi(a) u^*)^* = u \pi(a)^* u^* = u \pi(a^*)u^* = \pi_u(a^*),
+    \end{equation*}
+    hence \(\pi_u\) is a *-morphism.
+\end{proof}
+In fact, this construction establishes an equivalence relation on the set of representations of a C*-algebra.
+\begin{proposition}{Unitarily equivalent representations of a C*-algebra}{unitary_equivalence_representation}
+    Let \(\algebra{A}\) be a C*-algebra and let \(\mathfrak{R}_{\algebra{A}}\) denote the set of representations of \(\algebra{A}\). If \((\hilbert_1, \pi_1), (\hilbert_2, \pi_2) \in \mathfrak{R}_{\algebra{A}}\) are such that there exists a unitary operator \(u : \hilbert_1 \to \hilbert_2\) that satisfies \(\pi_2(a) = u\pi_1(a) u^*\) for all \(a \in \algebra{A}\), then the representations are \emph{unitarily equivalent} and we write \(\pi_1 \simeq \pi_2\). Unitary equivalence is an equivalent relation on \(\mathfrak{R}_{\algebra{A}}\).
+\end{proposition}
+\begin{proof}
+    Let \((\hilbert_1, \pi_1), (\hilbert_2, \pi_2), (\hilbert_3, \pi_3) \in \mathfrak{R}_{\algebra{A}}\) be representations. Clearly, \(\pi(a) = \id{\hilbert_1} \pi(a) \id{\hilbert_1}^*\) for all \(a \in \algebra{A},\) hence unitary equivalence is reflexive. If \((\hilbert_1, \pi_1) \simeq (\hilbert_2, \pi_2\), then there exists a unitary operator \(u_{12} : \hilbert_1 \to \hilbert_2\) such that \(\pi_2(a) = u_{12}\pi_1(a)u_{12}^*\) for all \(a \in \algebra{A}\), hence the unitary map \(u_{21} = u_{12}^*\) satisfies \(\pi_1(a) = u_{21}\pi_2(a) u_{21}^*\) for all \(a \in \algebra{A}\), hence unitary equivalence is symmetric. If \((\hilbert_1, \pi_1) \simeq (\hilbert_2, \pi_2)\) and \((\hilbert_2, \pi_2) \simeq (\hilbert_3, \pi_3)\), then with the notation used so far we have 
+    \begin{equation*}
+        \pi_3(a) = u_{23}\pi_2(a) u_{23}^* = u_{23} u_{12} \pi_1(a) u_{12}^* u_{23}^* = u_{13} \pi_1(a) u_{13}^*,
+    \end{equation*}
+    for all \(a \in \algebra{A}\), where \(u_{13} = u_{23} u_{12}\) is a composition of unitary maps, thus unitary, that is, unitary equivalence is transitive.
 \end{proof}

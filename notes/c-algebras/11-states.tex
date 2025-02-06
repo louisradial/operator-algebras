@@ -1,0 +1,86 @@
+% vim: spl=en_us
+\section{States}
+As usual we denote the topological dual of a C*-algebra \(\algebra{A}\) by \(\algebra{A}^\dag\), which is a Banach space with respect to the operator norm, and contained in the algebraic dual \(\algebra{A}'\), which consists of all linear functionals \(\omega : \algebra{A} \to \mathbb{C}\).
+\begin{definition}{Positive linear functional and states}{state}
+    Let \(\algebra{A}\) be a C*-algebra. The linear functional \(\omega \in \algebra{A}'\) is \emph{positive} if \(\omega(a^*a) \geq 0\) for all \(a \in \algebra{A}\). A \emph{state} is a positive linear functional \(\omega\) with \(\norm{\omega} = 1\).
+\end{definition}
+
+A positive linear functional defines a positive sesquilinear form on \(\algebra{A}\), then, in this sense, this linear functional satisfies the Cauchy-Schwarz inequality.
+\begin{proposition}{Properties of a positive sesquilinear form}{sesquilinear_positive_form}
+    Let \(\inner{\noarg}{\noarg} : V \to \mathbb{C}\) be a sesquilinear form on a complex linear space \(V\), that is, it is anti-linear in the first argument, linear in the second argument. If it is positive, that is, it satisfies \(\inner{v}{v} \geq 0\) for all \(v \in V\), then
+    \begin{enumerate}[label=(\alph*)]
+        \item this sesquilinear form is Hermitian, \(\inner{u}{v} = \conj{\inner{v}{u}}\); and
+        \item the Cauchy-Schwarz inequality holds, \(\abs{\inner{u}{v}}^2 \leq \inner{u}{u} \inner{v}{v}\),
+    \end{enumerate}
+    for all \(u,v \in V.\)
+\end{proposition}
+\begin{proof}
+    As the sesquilinear form is positive, we have
+    \begin{equation*}
+        \inner{u+\lambda v}{u + \lambda v} = \inner{u}{u} + \lambda \inner{u}{v} + \conj{\lambda} \inner{v}{u} + \abs{\lambda}^2\inner{v}{v} \geq 0,
+    \end{equation*}
+    for all \(u,v \in V\) and \(\lambda \in \mathbb{C}\). The imaginary part of the left-hand side must be zero, hence
+    \begin{equation*}
+        0 = \Im\left(\lambda \inner{u}{v} + \conj{\lambda} \inner{v}{u}\right) = \Re(\lambda) \Im\left(\inner{u}{v} + \inner{v}{u}\right) + \Im(\lambda)\Re\left(\inner{u}{v} - \inner{v}{u}\right),
+    \end{equation*}
+    and by setting \(\lambda = 1\) and \(\lambda = i\) we conclude
+    \begin{equation*}
+        \Im\left(\inner{u}{v}\right) = - \Im\left(\inner{v}{u}\right)
+        \quad\text\quad
+        \Re\left(\inner{u}{v}\right) = \Re\left(\inner{v}{u}\right),
+    \end{equation*}
+    that is, \(\inner{u}{v} = \conj{\inner{v}{u}}\). As a consequence we have
+    \begin{align*}
+        0 \leq \inner{u+\lambda v}{u + \lambda v} &= \inner{u}{u} + 2 \Re\left(\lambda \inner{u}{v}\right) + \abs{\lambda}^2\inner{v}{v}\\
+                                                  &= \inner{u}{u} + 2 \Re(\lambda) \Re\left(\inner{u}{v}\right) - 2 \Im(\lambda) \Im\left(\inner{u}{v}\right) + \abs{\lambda}^2 \inner{v}{v}.
+    \end{align*}
+    If \(\inner{v}{v} = 0\), then the inequality can only hold for all \(\lambda\in \mathbb{C}\) if \(\inner{u}{v} = 0\), case for which the Cauchy-Schwarz inequality holds trivially, so we must assume \(\inner{v}{v} \neq 0\) without loss of generality. Notice
+    \begin{equation*}
+        \inner{v}{v}\left[\Re(\lambda) + \frac{\Re(\inner{u}{v})}{\inner{v}{v}}\right]^2 = \inner{v}{v} \Re(\lambda)^2 + \frac{\Re(\inner{u}{v})^2}{\inner{v}{v}} + 2\Re(\lambda) \Re(\inner{u}{v}
+    \end{equation*}
+    and
+    \begin{equation*}
+        \inner{v}{v}\left[\Im(\lambda) - \frac{\Im(\inner{u}{v})}{\inner{v}{v}}\right]^2 = \inner{v}{v} \Im(\lambda)^2 + \frac{\Im(\inner{u}{v})^2}{\inner{v}{v}} - 2\Im(\lambda) \Im(\inner{u}{v},
+    \end{equation*}
+    then
+    \begin{equation*}
+        \inner{u+\lambda v}{u + \lambda v} = \inner{u}{u} + \inner{v}{v}\left[\left(\Re(\lambda) + \frac{\Re(\inner{u}{v})}{\inner{v}{v}}\right)^2 + \left(\Im(\lambda) - \frac{\Im(\inner{u}{v})}{\inner{v}{v}}\right)^2\right] - \frac{\abs{\inner{u}{v}}^2}{\inner{v}{v}},
+    \end{equation*}
+    and thus positivity yields
+    \begin{equation*}
+        \inner{u}{u} \geq \frac{\abs{\inner{u}{v}}^2}{\inner{v}{v}}
+    \end{equation*}
+    and the Cauchy-Schwarz inequality follows.
+\end{proof}
+\begin{corollary}
+    Let \(\algebra{A}\) be a C*-algebra and let \(\omega \in \algebra{A}'\) be a positive linear functional. Then
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\omega(a^*b) = \conj{\omega(b^*a)}\), and
+        \item \(\abs{\omega(a^*b)}^2 \leq \omega(a^*a) \omega(b^*b)\),
+    \end{enumerate}
+    for all \(a, b \in \algebra{A}\).
+\end{corollary}
+\begin{proof}
+    The map
+    \begin{align*}
+        \inner{\noarg}{\noarg} : \algebra{A} \times \algebra{A} &\to \mathbb{C}\\
+                                                          (a,b) &\mapsto \omega(a^*b),
+    \end{align*}
+    is a positive sesquilinear form. Indeed, let \(a, b,c,d \in \algebra{A}\) and \(\lambda,\mu \in \mathbb{C}\), then
+    \begin{align*}
+        \inner{a + \lambda b}{c + \mu d} &= \omega\left(a^*c + \mu a^*d + \conj{\lambda} b^* c + \conj{\lambda}\mu b^*d\right)\\
+                                         &= \omega(a^*c) + \mu \omega(a^*d) + \conj{\lambda} \omega(b^*c) + \conj{\lambda}\mu \omega(b^*d)\\
+                                         &= \inner{a}{c} + \mu \inner{a}{d} + \conj{\lambda} \inner{b}{c} + \conj{\lambda}\mu \inner{b}{d},
+    \end{align*}
+    hence it is a sesquilinear form and it is positive since \(\inner{a}{a} = \omega(a^*a) \geq 0\) by hypothesis. The corollary then follows from the previous proposition.
+\end{proof}
+
+\begin{proposition}{Positive linear functionals are continuous}{state_continuous}
+    Let \(\omega : \algebra{A} \to \mathbb{C}\) be a linear functional over a C*-algebra \(\algebra{A}\). The following statements are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\omega\) is positive;
+        \item \(\omega\) is continuous and \(\norm{\omega} = \lim_{\lambda} \omega(e_{\lambda})\) for some approximate identity \(\family{e_{\lambda}}{\lambda \in \Lambda} \subset \algebra{A}_+\).
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+\end{proof}
