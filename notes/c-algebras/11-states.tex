@@ -1,5 +1,5 @@
 % vim: spl=en_us
-\section{States}
+\section{States and positive linear functionals on C*-algebras}
 As usual we denote the topological dual of a C*-algebra \(\algebra{A}\) by \(\algebra{A}^\dag\), which is a Banach space with respect to the operator norm, and contained in the algebraic dual \(\algebra{A}'\), which consists of all linear functionals \(\omega : \algebra{A} \to \mathbb{C}\).
 \begin{definition}{Positive linear functional and states}{state}
     Let \(\algebra{A}\) be a C*-algebra. The linear functional \(\omega \in \algebra{A}'\) is \emph{positive} if \(\omega(a^*a) \geq 0\) for all \(a \in \algebra{A}\). A \emph{state} is a positive linear functional \(\omega\) with \(\norm{\omega} = 1\).
@@ -82,5 +82,79 @@ A positive linear functional defines a positive sesquilinear form on \(\algebra{
         \item \(\omega\) is continuous and \(\norm{\omega} = \lim_{\lambda} \omega(e_{\lambda})\) for some approximate identity \(\family{e_{\lambda}}{\lambda \in \Lambda} \subset \algebra{A}_+\).
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{proof}[Proof that (a) \(\implies\) (b)]
+    Consider the set \(B_+ = \setc{a \in \algebra{A}_+}{\norm{a} \leq 1}\), which is closed with respect to the uniform topology as the intersection of two closed sets. If \(\lambda : \mathbb{N} \to \mathbb{R}\) is a summable sequence of non-negative numbers, then for any sequence \(a : \mathbb{N} \to B_+\) we have \(s : \mathbb{N} \to \algebra{A}_+\) defined by \(s_n = \sum_{k = 1}^{n}\lambda_k a_k\) uniformly and monotonically convergent to some positive element \(\tilde{s} \in \algebra{A}_+\). Indeed, for all \(n, m \in \mathbb{N}\) with \(n \leq m\) we have
+    \begin{equation*}
+        s_m - s_n = \sum_{k=n+1}^m \lambda_k a_k \in \algebra{A}_+
+    \end{equation*}
+    and
+    \begin{equation*}
+        \norm{s_m - s_n} \leq \sum_{k = n+1}^m \norm{\lambda_k a_k} \leq \sum_{k = n+1}^M \abs{\lambda_k},
+    \end{equation*}
+    hence \(s\) is Cauchy, and thus converges uniformly and is monotonic. As a result, by positivity and linearity we have
+    \begin{equation*}
+        \sum_{k = 1}^{n} \lambda_k \omega(a_k) \leq \omega(\tilde{s}) < \infty
+    \end{equation*}
+    for all \(n \in \mathbb{N}\).
+
+    Suppose, by contradiction, the set \(\omega(B_+)\) is unbounded, then there must exist a sequence \(a : \mathbb{N} \to B_+\) such that \(\omega(a_n) \geq n\) for all \(n \in \mathbb{N}\). Consider the summable sequence \(\lambda : \mathbb{N} \to \mathbb{R}\) defined by \(\lambda_n = \frac1{n^2}\), then by the previous discussion, the sequence \(s : \mathbb{N} \to \algebra{A}_+\) defined by \(s_n = \sum_{k = 1}^{n} \lambda_k a_k\) converges uniformly and monotonically in \(\algebra{A}_+\) to some \(\tilde{s} \in \algebra{A}_+\) and we have
+    \begin{equation*}
+        \sum_{k = 1}^{n} \frac{1}{k^2} \omega(a_k) \leq \omega(\tilde{s}) < \infty
+    \end{equation*}
+    for all \(n \in \mathbb{N}\). However, the sum on the left is bounded below by \(\sum_{k} \frac1k\), which diverges. This contradiction informs us there exists \(M = \sup{\setc{\omega(a)}{a \in B_+}} \geq 0\) with \(M < \infty\).
+
+    %TODO: add non-unital case for lemma 4.17 and add information about norm of the decomposition
+    Recall that any operator \(a \in \algebra{A}\) may be written as a sum of two self-adjoint operators with \todo[norms no greater than \(\norm{a}\)] and in turn these self-adjoint operators may be written as a difference of positive operators with \todo[norm no greater than \(\norm{a}\)]. As a result we have \(\omega(a) = \norm{a} \omega(\frac1{\norm{a}}a) \leq 4M \norm{a}\) for all \(a \in \algebra{A} \setminus \set{0}\). We have thus shown \(\omega\) is bounded, thus continuous with \(M \leq \norm{\omega} \leq 4M\).
+
+    Let \(e : \Lambda \to \algebra{A}_+\) be an approximate identity on \(\algebra{A}\), where \(\Lambda\) is some directed set. For all \(\lambda \in \Lambda\) we have by the Cauchy-Schwarz inequality that
+    \begin{equation*}
+        \abs{\omega(a e_\lambda)}^2 \leq \omega(a^*a) \omega(e_\lambda^2) \leq M \norm{a^*a} \omega(e_{\lambda}^2) = M \norm{a}^2\omega(e_\lambda^2),
+    \end{equation*}
+    which yields for all \(a \in \algebra{A}\) that
+    \begin{equation*}
+        \abs{\omega(a)}^2 \leq M L \abs{a}^2,
+    \end{equation*}
+    where \(L = \sup\setc{\omega(e_\lambda^2)}{\lambda \in \Lambda}\). We may infer, then, that \(L \leq M\) as \(e_{\lambda}^2 \in B_+\), hence \(M^2 \leq \norm{\omega}^2 \leq ML \leq M^2\). That is, \(M = L = \norm{\omega}\). As \(e_\lambda^2 \leq e_\lambda\), we get \(\norm{\omega} = L \leq \sup\setc{\omega(e_\lambda)}{\lambda \in \Lambda} \leq M = \norm{\omega}\), and we conclude the proof.
+\end{proof}
+\begin{proof}[Proof that (b) \(\implies\) (a)]
+    We may assume \(\norm{\omega} > 0,\) otherwise \(\omega\) is trivially positive. In this case, \(\frac{1}{\norm{\omega}}\omega\) is a state if and only if \(\omega\) is positive, so we may assume without loss of generality that \(\norm{\omega} = 1\). If \(\algebra{A}\) is unital, then it is clear that \(\omega(\unity) = \norm{\omega} = 1\). If \(\algebra{A}\) is not unital, we consider the continuous linear functional
+    \begin{align*}
+        \hat{\omega} : \mathbb{C} \ltimes \algebra{A} &\to \mathbb{C}\\
+                                           (\alpha,a) &\mapsto \alpha + \omega(a)
+    \end{align*}
+    which extends \(\omega\) to \(\mathbb{C} \ltimes \algebra{A}\) and clearly satisfies \(\hat{\omega}(\unity) = 1\). For all \(a \in \algebra{A}\) and \(\lambda \in \Lambda\) we have
+    \begin{equation*}
+        a - ae_{\lambda}^2 = a - ae_{\lambda} + (a - ae_{\lambda})e_{\lambda}
+    \end{equation*}
+    hence \(ae_{\lambda}^2 \to a\), thus yielding
+    \begin{align*}
+        \abs{\hat{\omega}((\alpha, a))} = \abs{\alpha + \omega(a)} 
+        &= \lim_{\lambda \in \Lambda}{\abs*{\alpha \omega(e_{\lambda}^2) + \omega(a e_{\lambda}^2)}}\\
+        &\leq \limsup_{\lambda \in \Lambda}{\norm*{\alpha e_{\lambda}^2 + a e_{\lambda}^2}}\\
+        &= \limsup_{\lambda \in \Lambda}{\norm*{(\alpha, a) (0, e_{\lambda}^2)}}\\
+        &\leq \norm{(\alpha, a)}
+    \end{align*}
+    for all \((\alpha, a) \in \mathbb{C} \ltimes \algebra{A}\), and we conclude \(\norm{\hat{\omega}} = 1\). In either case, we may assume \(\algebra{A}\) is unital with \(\omega(\unity) = \norm{\omega} = 1.\)
+
+    Consider the self-adjoint operator \(a \in \algebra{A} \setminus \set{0}\), then the operator \(a + i\alpha \unity\) is normal for all \(\alpha \in \mathbb{R}\) with spectrum \(\sigma(a + i \alpha \unity) = \setc{\lambda + i \alpha}{\lambda \in [-\norm{a}, \norm{a}]}\). By \cref{thm:spectral_radius_cstar} we have
+    \begin{equation*}
+        \norm{a + i \alpha \unity} = r(a + i \alpha \unity) = \sqrt{\norm{a}^2 + \alpha^2}
+    \end{equation*}
+    and thus
+    \begin{equation*}
+        \abs{\Im\left(\omega(a)\right) + \alpha} = \abs{\Im\left(\omega(a + i \alpha \unity)\right)} \leq \abs{\omega(a + i \alpha \unity)} \leq \norm{a + i \alpha \unity} = \sqrt{\norm{a}^2 + \alpha^2}
+    \end{equation*}
+    for all \(\alpha \in \mathbb{R}\). This yields
+    \begin{equation*}
+        \Im\left(\omega(a)\right)^2 \leq \norm{a}^2 - 2 \alpha \Im\left(\omega(a)\right)
+    \end{equation*}
+    for all \(\alpha \in \mathbb{R}\), hence we must have \(\omega(a) \in \mathbb{R}\). In particular, this means \(\omega(\algebra{A}_+)\) is real. Let \(a \in \algebra{A}_+\setminus{0}\), then by \cref{thm:square_root_cstar} we have
+    \begin{equation*}
+        \norm*{\unity - \norm{a}^{-1}a} \leq 1,
+    \end{equation*}
+    hence
+    \begin{equation*}
+        \abs{1 - \norm{a}^{-1} \omega(a)} = \abs*{\omega\left(\unity - \norm{a}^{-1}a\right)} \leq \norm{\unity - \norm{a}^{-1}a} \leq 1
+    \end{equation*}
+    which yields \(\omega(a) \in [0, \norm{a}]\). In particular, we have shown \(\omega(\algebra{A}_+) \subset [0, \infty)\), and thus \(\omega\) is a state.
 \end{proof}
