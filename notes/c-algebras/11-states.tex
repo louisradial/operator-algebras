@@ -79,8 +79,9 @@ A positive linear functional defines a positive sesquilinear form on \(\algebra{
     Let \(\omega : \algebra{A} \to \mathbb{C}\) be a linear functional over a C*-algebra \(\algebra{A}\). The following statements are equivalent:
     \begin{enumerate}[label=(\alph*)]
         \item \(\omega\) is positive;
-        \item \(\omega\) is continuous and \(\norm{\omega} = \lim_{\lambda} \omega(e_{\lambda})\) for some approximate identity \(\family{e_{\lambda}}{\lambda \in \Lambda} \subset \algebra{A}_+\).
+        \item \(\omega\) is continuous and \(\norm{\omega} = \lim_{\lambda\in\Lambda} \omega(e_{\lambda}^2)\) for some approximate identity \(\family{e_{\lambda}}{\lambda \in \Lambda} \subset \algebra{A}_+\).
     \end{enumerate}
+    If \(\omega\) is positive, then \(\norm{\omega} = \lim_{\lambda \in \Lambda}{\omega(e_\lambda)}\).
 \end{proposition}
 \begin{proof}[Proof that (a) \(\implies\) (b)]
     Consider the set \(B_+ = \setc{a \in \algebra{A}_+}{\norm{a} \leq 1}\), which is closed with respect to the uniform topology as the intersection of two closed sets. If \(\lambda : \mathbb{N} \to \mathbb{R}\) is a summable sequence of non-negative numbers, then for any sequence \(a : \mathbb{N} \to B_+\) we have \(s : \mathbb{N} \to \algebra{A}_+\) defined by \(s_n = \sum_{k = 1}^{n}\lambda_k a_k\) uniformly and monotonically convergent to some positive element \(\tilde{s} \in \algebra{A}_+\). Indeed, for all \(n, m \in \mathbb{N}\) with \(n \leq m\) we have
@@ -156,5 +157,76 @@ A positive linear functional defines a positive sesquilinear form on \(\algebra{
     \begin{equation*}
         \abs{1 - \norm{a}^{-1} \omega(a)} = \abs*{\omega\left(\unity - \norm{a}^{-1}a\right)} \leq \norm{\unity - \norm{a}^{-1}a} \leq 1
     \end{equation*}
-    which yields \(\omega(a) \in [0, \norm{a}]\). In particular, we have shown \(\omega(\algebra{A}_+) \subset [0, \infty)\), and thus \(\omega\) is a state.
+    which yields \(\omega(a) \in [0, \norm{a}]\). In particular, we have shown \(\omega(\algebra{A}_+) \subset [0, \infty)\), and thus \(\omega\) is a state, concluding the proof.
+\end{proof}
+\begin{proposition}{Properties of positive linear functionals over C*-algebras}{state_properties}
+    Let \(\algebra{A}\) be a C*-algebra. If \(\omega : \algebra{A} \to \mathbb{C}\) is a positive linear functional, then
+    \begin{enumerate}[label=(\alph*)]
+        \item \(\omega(a^*) = \conj{\omega(a)}\);
+        \item \(\abs{\omega(a)}^2 \leq \omega(a^*a)\norm{\omega}\);
+        \item \(\abs{\omega(a^*ba)} \leq \omega(a^*a) \norm{b}\); and
+        \item \(\norm{\omega} = \sup\setc{\omega(a^*a)}{a \in \algebra{A} : \norm{a} = 1}\);
+    \end{enumerate}
+    for all \(a, b \in \algebra{A}\).
+\end{proposition}
+\begin{proof}
+Let \(a, b \in \algebra{A}\)  and \(e : \Lambda \to \algebra{A}_+\) be an approximate identity on \(\algebra{A}\). \cref{prop:sesquilinear_positive_form} yields
+    \begin{equation*}
+        \omega(a^* e_\lambda) = \conj{\omega(e_\lambda a)}
+        \quad\text{and}\quad
+        \abs{\omega(e_\lambda a)}^2 \leq \omega(e_\lambda^2) \omega(a^*a)
+    \end{equation*}
+    hence we conclude (a) and (b) by taking the limit and using continuity. The Cauchy-Schwarz inequality also informs us that
+    \begin{equation*}
+        \abs{\omega(a^*ba)}^2 \leq \omega(a^*a) \omega(a^*b^*ba),
+    \end{equation*}
+    and the \cref{prop:properties_order,prop:congruence_order} yield
+    \begin{equation*}
+        \todo[b^*b \leq \norm{b}^2 \unity \implies] a^* b^*b a \leq \norm{b}^2 a^*a \implies \omega(a^*b^*ba) \leq \norm{b}^2 \omega(a^*a),
+    \end{equation*}
+    hence we conclude (c). 
+
+    Let \(m = \sup\setc{\omega(a^*a)}{a \in \algebra{A} : \norm{a} = 1},\) then clearly \(m \leq \norm{\omega}\). From (b) we have
+    \begin{equation*}
+        m = \sup_{\substack{a \in \algebra{A}\\\norm{a} = 1}}{\omega(a^*a)} \geq \norm{\omega}^{-1} \sup_{\substack{a \in \algebra{A}\\\norm{a} = 1}} \abs{\omega(a)}^2 = \norm{\omega},
+    \end{equation*}
+    hence \(m = \norm{\omega}\), and we conclude (d).
+\end{proof}
+
+\begin{proposition}{States over a C*-algebra form a convex set}{states_convex}
+    Let \(\algebra{A}\) be a C*-algebra. If \(\omega_1, \omega_2 \in \algebra{A}^\dag\) are positive linear functionals over \(\algebra{A}\), then so is \(\omega_1 + \omega_2\), which satisfies \(\norm{\omega_1 + \omega_2} = \norm{\omega_1} + \norm{\omega_2}\). The set \(E_{\algebra{A}}\) of states over \(\algebra{A}\) for a convex subset of \(\algebra{A}^\dag\).
+\end{proposition}
+\begin{proof}
+    Let \(e : \Lambda \to \algebra{A}_+\) be an approximate identity on \(\algebra{A}\), then 
+    \begin{equation*}
+        \norm{\omega_1 + \omega_2} = \lim_{\lambda \in \Lambda}{\left[\omega_1(e_\lambda^2) + \omega_2(e_\lambda^2)\right]} = \lim_{\lambda \in \Lambda}{\omega_1(e_\lambda^2)} + \lim_{\lambda \in \Lambda}{\omega_2(e_\lambda^2)} = \norm{\omega_1} + \norm{\omega_2}
+    \end{equation*}
+    and the positivity of \(\omega_1 + \omega_2\) follows trivially. Let \(\alpha \in [0,1],\) and suppose \(\omega_1\) and \(\omega_2\) are states, then \(\alpha \omega_1 + (1 - \alpha) \omega_2\) is positive with
+    \begin{equation*}
+        \norm{\alpha \omega_1 + (1 - \alpha)\omega_2} = \alpha \norm{\omega_1} + (1 - \alpha) \norm{\omega_2} = 1,
+    \end{equation*}
+    hence \(\alpha \omega_1 + (1 - \alpha) \omega_2\) is a state.
+\end{proof}
+
+Similar to positive elements in a C*-algebra \(\algebra{A}\), the set of positive linear functionals has a natural order. Indeed, if \(\omega_1, \omega_2 \in \algebra{A}^\dag\) are positive linear functionals, then we write \(\omega_1 \geq \omega_2\) whenever \(\omega_1 - \omega_2\) is a positive linear functional and say \(\omega_1\) \emph{majorizes} \(\omega_2\). If \(\omega_1, \omega_2\) are states and \(\alpha \in [0,1]\), then \(\omega = \alpha \omega_1 + (1 - \alpha) \omega_2\) is a state with \(\omega \geq \alpha \omega_1\) and \(\omega \geq (1 - \alpha) \omega_2\).
+\begin{definition}{Pure states}{pure_state}
+    Let \(\algebra{A}\) be a C*-algebra. A state \(\omega \in \algebra{A}^\dag\) is \emph{pure} if the only positive linear functionals majorized by \(\omega\) are of the form \(\alpha \omega\) with \(\alpha \in [0,1]\). The set of all pure states is denoted by \(P_{\algebra{A}}\).
+\end{definition}
+
+%TODO: topology of states and pure states.
+
+\begin{proposition}{States defined by a representation of a C*-algebra}{vector_state}
+    Let \(\algebra{A}\) be a C*-algebra. If \((\hilbert, \pi)\) is a representation and \(\Omega \in \hilbert\) is a non-zero vector, then
+    \begin{align*}
+        \omega_{\Omega} : \algebra{A} &\to \mathbb{C}\\
+                                    a &\mapsto \inner{\Omega}{\pi(a)\Omega}
+    \end{align*}
+    is a positive linear functional. This linear functional is a state if \(\norm{\Omega} = 1\) and \(\pi\) is non-degenerate.
+\end{proposition}
+\begin{proof}
+    It is clear that \(\omega_{\Omega}\) is a linear functional, but it is positive since
+    \begin{equation*}
+        \omega_{\Omega}(a^*a) = \inner{\Omega}{\pi(a^*a)\Omega} = \inner{\pi(a)\Omega}{\pi(a)\Omega} = \norm{\pi(a)\Omega}^2 \geq 0
+    \end{equation*}
+    for all \(a \in \algebra{A}\).
 \end{proof}
