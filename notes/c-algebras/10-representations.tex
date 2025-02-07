@@ -239,8 +239,50 @@ It is an elementary result that the kernel of a group morphism \(\pi : G \to H\)
     hence \(\pi_\mathscr{V}\) is a *-morphism.
 \end{proof}
 
+\begin{definition}{Nondegenerate representation}{nondegenerate_representation}
+    Let \(\algebra{A}\) be a C*-algebra. A representation \((\hilbert, \pi)\) of \(\algebra{A}\) is \emph{nondegenerate} if for any nonzero \(\psi \in \hilbert\) there exists \(a \in \algebra{A}\) such that \(\pi(a)\psi \neq 0\).
+\end{definition}
 
-A set \(\algebra{M}\subset \bounded(\hilbert)\) of bounded operators on a Hilbert space \(\hilbert\) is said to act \emph{nondegenerately} if \(\algebra{M}\hilbert \neq \set{0}\). An important class of nondegenerate representations is the one of \emph{cyclic representations}.
+A useful and equivalent characterization of nondegeneracy is shown in the
+\begin{lemma}{Necessary and sufficient condition for a nondegenerate representation}{nondegenerate_representation}
+    Let \(\algebra{A}\) be a C*-algebra and \((\hilbert, \pi)\) a representation. The set \(\pi(\algebra{A})\hilbert\) is dense in \(\hilbert\) if and only if \(\pi\) is nondegenerate.
+\end{lemma}
+\begin{proof}
+    Suppose \(\pi\) is nondegenerate and let \(\psi \in \pi(\algebra{A})\hilbert^\perp\). Then,
+    \begin{equation*}
+        \inner{\psi}{\pi(a^*a)\psi} = \norm{\pi(a)\psi} = 0
+    \end{equation*}
+    for all \(a \in \algebra{A}\), hence \(\psi = 0.\) That is, \(\pi(\algebra{A})\hilbert^{\perp}= \set{0}\) and we conclude \(\pi(\algebra{A})\hilbert\) is dense in \(\hilbert\).
+    
+    Suppose \(\pi(\algebra{A})\hilbert\) is dense in \(\hilbert\), and let \(\psi \in \hilbert\) such that \(\pi(a)\psi = 0\) for all \(a \in \algebra{A}\). Then
+    \begin{equation*}
+        \forall a \in \algebra{A}, \varphi \in \hilbert : \inner{\pi(a^*)\psi}{\varphi} = 0 \implies \forall a \in \algebra{A}, \varphi \in \hilbert: \inner{\psi}{\pi(a)\varphi} = 0 \implies \psi \in \pi(\algebra{A})\hilbert^{\perp} = \set{0},
+    \end{equation*}
+    hence we conclude \(\pi\) is nondegenerate.
+\end{proof}
+
+\begin{proposition}{Non-degenerate representation preserve approximate identities}{representation_approximate_identity}
+    Let \(\algebra{A}\) be a C*-algebra and let \(e : \Lambda \to \algebra{A}_+\) be an approximate identity on \(\algebra{A}\). If \((\hilbert, \pi)\) is a non-degenerate representation of \(\algebra{A}\), then \(\pi \circ e : \Lambda \to \bounded(\hilbert)\) is an approximate identity on \(\bounded(\hilbert)\) with respect to the strong operator topology, that is, for all \(b \in \bounded(\hilbert)\) and \(\psi \in \hilbert\) we have \(\lim_{\lambda \in \Lambda}{\norm{b\psi - \tilde{e}_{\lambda}b\psi}} = 0\).
+\end{proposition}
+\begin{proof}
+    Let us denote \(\tilde{e} = \pi \circ e\). It is clear the range of \(e\) lies in \(\setc{a \in \bounded(\hilbert)_+}{\norm{a} \leq 1}\) as \(\pi\) preserves positivity and is non-expansive. By the same argument, we have 
+    \begin{equation*}
+        \lambda, \lambda' \in \Lambda : \lambda \succeq \lambda' \implies e_{\lambda} - e_{\lambda'} \in \algebra{A}_+ \implies \tilde{e}_{\lambda} \geq \tilde{e}_{\lambda'}.
+    \end{equation*}
+    Let \(b \in \bounded(\hilbert)\) and let \(\varepsilon > 0\). By \cref{lem:nondegenerate_representation}, for all \(\psi \in \hilbert\), there exist \(a_{\varepsilon} \in \algebra{A}\) and \(\psi_\varepsilon \in \hilbert\) such that \(\norm{\pi(a_{\varepsilon})\psi_{\varepsilon} - b\psi} < \frac\varepsilon3\). Notice we have
+    \begin{align*}
+        \norm{b \psi - \tilde{e}_{\lambda}b \psi} &\leq \norm{b\psi - \pi(a_\varepsilon)\psi_\varepsilon} + \norm{\pi(a_\varepsilon)\psi_\varepsilon - \tilde{e}_{\lambda}\pi(a_\varepsilon)\psi_\varepsilon} + \norm{\tilde{e}_\lambda\pi(a_\varepsilon)\psi_\varepsilon - \tilde{e}_\lambda b\psi}\\
+                                                  &< \frac\varepsilon3 + \norm{\pi(a_\varepsilon - e_\lambda a_\varepsilon)\psi_\varepsilon} + \norm{\tilde{e}_\lambda} \norm{\pi(a_\varepsilon) \psi_\varepsilon - b \psi}\\
+                                                  &\leq \frac{2\varepsilon}{3} + \norm{a_\varepsilon - e_\lambda a_\varepsilon} \norm{\psi_\varepsilon}
+    \end{align*}
+    for all \(\lambda \in \Lambda\). As \(e\) is an approximate identity with respect to the uniform topology, there exists \(\tilde{\lambda} \in \Lambda\) such that for all \(\lambda \succeq \tilde{\lambda}\) we have \(\norm{a_\varepsilon - e_\lambda a_\varepsilon} < \frac{\varepsilon}{3\norm{\psi_\varepsilon}}\), hence
+    \begin{equation*}
+        \norm{b\psi - \tilde{e}_{\lambda}b\psi} < \varepsilon,
+    \end{equation*}
+    that is, \(\tilde{e}_\lambda b\psi\) converges strongly against \(b\psi\).
+\end{proof}
+
+An important class of nondegenerate representations is the one of \emph{cyclic representations}.
 \begin{definition}{Cyclic vector and cyclic representation}{cyclic_representation}
     Let \(\algebra{A}\) be a C*-algebra and \(\hilbert\) be a Hilbert space. A vector \(\psi \in \hilbert\) is \emph{cyclic} for a set of bounded operators \(\algebra{M} \subset \bounded(\hilbert)\) if \(\algebra{M}\psi\) is dense in \(\hilbert\). A \emph{cyclic representation \((\hilbert, \pi, \Omega)\) of \(\algebra{A}\)} is a representation \((\hilbert, \pi)\) for which \(\Omega \in \hilbert\) is a cyclic vector.
 \end{definition}
