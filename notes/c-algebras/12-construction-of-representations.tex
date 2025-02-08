@@ -1,0 +1,113 @@
+% vim: spl=en_us
+\section{Construction of representations}
+As an application of the Hahn-Banach theorem, we can show the existence of states and, thus, of positive linear functionals on a C*-algebra.
+\begin{proposition}{Existence of states}{states_existence}
+    Let \(\algebra{A}\) be a C*-algebra and let \(a \in \algebra{A}\) be an operator. There exists a state \(\omega_a \in P_{\algebra{A}}\) such that \(\omega_a(a^*a) = \norm{a}^2\).
+\end{proposition}
+\begin{remark}
+    In fact, such a state is a pure state.
+\end{remark}
+\begin{proof}
+    If \(\algebra{A}\) does not have an identity, adjoin one. Consider the linear subspace \(B = \lspan\set{\unity, a^*a}\) of normal operators and its linear functional
+    \begin{align*}
+        f : B &\to \mathbb{C}\\
+        \alpha \unity + \beta a^*a &\mapsto \alpha + \beta \norm{a}^2,
+    \end{align*}
+    which satisfies \(f(a^*a) = \norm{a}^2\) and \(f(\unity) = 1.\) Let \(\alpha \unity + \beta a^*a \in B\), then
+    \begin{equation*}
+        \abs{f(\alpha \unity + \beta a^*a)} = \abs{\alpha + \beta \norm{a}^2} \leq \sup_{\lambda \in \sigma(a)}{\abs{\alpha + \beta \lambda}} = r(\alpha \unity + \beta a^*a) = \norm{\alpha \unity + \beta a^*a},
+    \end{equation*}
+    that is, there exists \(m \in [0,1]\) such that \(\abs{f(b)}\leq m \norm{b}\) for all \(b \in B\). The \nameref{thm:Hahn_Banach_normed} guarantees the existence of a bounded linear functional \(\omega : \algebra{A} \to \mathbb{C}\) that extends \(f\) with \(\norm{\omega} = m\). As \(\omega(\unity) = f(\unity) = 1\) and \(\omega\) is continuous, then \(\norm{\omega} = 1\) and \(\omega\) is a state by \cref{prop:state_continuous}.
+\end{proof}
+
+Moreover, given a representation of a C*-algebra, there exists a \emph{vector state} which uses the structure of the representation. Its definition is shown in the
+\begin{proposition}{States defined by a representation of a C*-algebra}{vector_state}
+    Let \(\algebra{A}\) be a C*-algebra. If \((\hilbert, \pi)\) is a representation and \(\Omega \in \hilbert\) is a non-zero vector, then
+    \begin{align*}
+        \omega_{\Omega} : \algebra{A} &\to \mathbb{C}\\
+                                    a &\mapsto \inner{\Omega}{\pi(a)\Omega}
+    \end{align*}
+    is a positive linear functional. This linear functional is a state if \(\norm{\Omega} = 1\) and \(\pi\) is non-degenerate, called a \emph{vector state}. 
+\end{proposition}
+\begin{proof}
+    It is clear that \(\omega_{\Omega}\) is a linear functional, but it is positive since
+    \begin{equation*}
+        \omega_{\Omega}(a^*a) = \inner{\Omega}{\pi(a^*a)\Omega} = \inner{\pi(a)\Omega}{\pi(a)\Omega} = \norm{\pi(a)\Omega}^2 \geq 0
+    \end{equation*}
+    for all \(a \in \algebra{A}\). If \(e : \Lambda \to \algebra{A}_+\) is an approximate identity on \(\algebra{A}\) we have by \cref{prop:state_continuous} that
+    \begin{equation*}
+        \norm{\omega_\Omega} = \lim_{\lambda \in \Lambda}{\omega_\Omega(e_\lambda^2)} = \lim_{\lambda \in \Lambda}{\norm{\pi(e_{\lambda})\Omega}^2}.
+    \end{equation*}
+    If \(\pi\) is non-degenerate we know by \cref{prop:representation_approximate_identity} that \(\pi \circ e\) is an approximate identity in \(\bounded(\hilbert)\) with respect to the strong operator topology, hence \(\pi(e_\lambda)\Omega\) converges against \(\Omega\). Hence \(\omega_\Omega\) is a state if \(\pi\) is non degenerate and \(\norm{\Omega} = 1\).
+\end{proof}
+
+We have not shown the existence of representations, and we will prove by concluding every state of a C*-algebra is a vector state of some cyclic representation. 
+\begin{theorem}{Canonical cyclic representation}{gns_construction}
+    Let \(\algebra{A}\) be a C*-algebra. If \(\omega \in E_\algebra{A}\) is a state, then there exists a cyclic representation \((\hilbert_\omega, \pi_\omega, \Omega_\omega)\) such that 
+    \begin{equation*}
+        \omega(a) = \inner{\Omega_\omega}{\pi_{\omega}(a)\Omega_\omega}_{\hilbert_{\omega}}
+    \end{equation*}
+    for all \(a \in \algebra{A}\). Up to unitary equivalence, this cyclic representation is unique.
+\end{theorem}
+\begin{remark}
+    This representation is referred to as \emph{GNS construction}, due to Gelfand, Naimark, and Segal. The triple \((\hilbert_{\omega}, \pi_{\omega}, \Omega_{\omega})\) is referred to as the \emph{GNS triple} associated with the state \(\omega\) over the C*-algebra \(\algebra{A}\).
+\end{remark}
+\begin{proof}
+    We consider the set \(\algebra{J}_\omega = \setc{a \in \algebra{A}}{\omega(a^*a) = 0} \subset \setc{a \in \algebra{A}}{\forall b \in \algebra{A} : \omega(b^*a) = 0}\). Let \(a \in \algebra{J}_\omega\) and \(b \in \algebra{A}\), then \(\abs{\omega(b^*a)}^2 \leq \omega(a^*a) \omega(b^*b) = 0,\) hence \(\omega(b^*a) = 0\) and we conclude
+    \begin{equation*}
+        \algebra{J}_\omega = \setc{a \in \algebra{A}}{\forall b \in \algebra{A} : \omega(b^*a) = 0}.
+    \end{equation*}
+    Let \(a, b \in \algebra{J}_\omega\) and \(\lambda \in \mathbb{C}\), then
+    \begin{equation*}
+        \forall c \in \algebra{A} : \omega(c^*a) + \lambda \omega(c^*b) = 0 \implies \forall c \in \algebra{A} : \omega(c^*(a + \lambda b)) = 0 \implies a + \lambda b \in \algebra{J}_\omega,
+    \end{equation*}
+    hence \(\algebra{J}_\omega\) is a linear subspace of \(\algebra{A}\). Let \(a : \mathbb{N} \to \algebra{J}_\omega\) be a convergent sequence to some \(\tilde{a} \in \algebra{A},\) then
+    \begin{equation*}
+        \omega(b^*\tilde{a}) = \lim_{n \to \mathbb{N}}{\omega(b^*a_n)} = 0
+    \end{equation*}
+    for all \(b \in \algebra{A},\) hence \(\tilde{a} \in \algebra{J}_\omega\) and we conclude \(\algebra{J}_\omega\) is closed. Furthermore, \(\algebra{J}_\omega\) is a left ideal of \(\algebra{A}\) since 
+    \begin{equation*}
+        \omega((ba)^*(ba)) = \omega((a^*b^*b)a) = 0
+    \end{equation*}
+    for all \(b \in \algebra{A}\) and \(a \in \algebra{J}_\omega\). 
+
+    We now consider the linear space on the coset \(\algebra{A}/\algebra{J}_\omega\). Let \([a], [b] \in \algebra{A}/\algebra{J}_\omega\) and let \(\tilde{a} \in [a]\) and \(\tilde{b} \in [b]\), then there exist \(j_a, j_b \in \algebra{J}_\omega\) such that \(\tilde{a} = a + j_a\) and \(\tilde{b} = b + j_b\), hence
+    \begin{equation*}
+        \omega(\tilde{a}^*\tilde{b}) = \omega(\tilde{a}^*(b + j_b)) = \omega(\tilde{a}^*b) = \omega((a + j_a)^*b) = \omega(a^*b).
+    \end{equation*}
+    We have thus shown the map
+    \begin{align*}
+        \inner{\noarg}{\noarg} : \algebra{A}/\algebra{J}_\omega \times \algebra{A}/\algebra{J}_\omega &\to \mathbb{C}\\
+        ([a],[b]) &\mapsto \omega(a^*b)
+    \end{align*}
+    is well-defined. We have already established this is a positive sesquilinear form, so \((\algebra{A}/\algebra{J}_\omega, \inner{\noarg}{\noarg})\) is an inner product space as we have
+    \begin{equation*}
+        \inner{[a]}{[a]} = 0 \implies \omega(a^*a) = 0 \implies a \in \algebra{J}_\omega \implies [a] = [0].
+    \end{equation*}
+    \todo[We define \(\hilbert_\omega\) as the canonical completion of \(\algebra{A}/\algebra{J}_\omega\),] and we'll denote the embedding of \(\algebra{A}/\algebra{J}_\omega\) in \(\hilbert_\omega\) by the linear isometry
+    \begin{align*}
+        \Psi : \algebra{A} &\to \hilbert_\omega\\
+                         a &\mapsto \Psi_{[a]}
+    \end{align*}
+    with \(\preim{\Psi}{\set{\Psi_{[a]}}} = [a]\) for all \(a \in \algebra{A}\).
+
+    Let \(a,b \in \algebra{A}\), and \(\tilde{b} \in [b]\), then there exists \(j \in \algebra{I}_\omega\) and we have
+    \begin{equation*}
+        \Psi(a \tilde{b}) = \Psi(ab + aj) = \Psi(ab)
+    \end{equation*}
+    since \(\algebra{I}_\omega\) is a left ideal. This means for all \(a \in \algebra{A}\) the linear map
+    \begin{align*}
+        p_a : \Psi(\algebra{A}) &\to \Psi(\algebra{A})\\
+                         \Psi_b &\mapsto \Psi_{ab}
+    \end{align*}
+    is well-defined. Let \(b \in \algebra{A} \setminus \algebra{I}_\omega\), then \(\norm{b} \neq 0\) and we have
+    \begin{equation*}
+        \norm{p_a \Psi_b}^2 = \norm{\Psi_{ab}}^2 = \omega(b^*a^*a b) \leq \omega(b^*b) \norm{a^*a} = \norm{a}^2\norm{\Psi_b}^2
+    \end{equation*}
+    by \cref{prop:state_properties}, hence \(p_a\) is bounded and densely defined. We thus define the map
+    \begin{align*}
+        \pi_{\omega} : \algebra{A} &\to \bounded(\hilbert_\omega)\\
+                                 a &\mapsto \pi_\omega(a),
+    \end{align*}
+    where, for all \(a \in \algebra{A}\), \(\pi_\omega(a)\) is the bounded linear extension of \(p_a\) to \(\hilbert_\omega\) defined in \cref{thm:blt}.
+\end{proof}
