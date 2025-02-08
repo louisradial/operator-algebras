@@ -214,19 +214,9 @@ Similar to positive elements in a C*-algebra \(\algebra{A}\), the set of positiv
 \end{definition}
 
 %TODO: topology of states and pure states.
-
-\begin{proposition}{States defined by a representation of a C*-algebra}{vector_state}
-    Let \(\algebra{A}\) be a C*-algebra. If \((\hilbert, \pi)\) is a representation and \(\Omega \in \hilbert\) is a non-zero vector, then
-    \begin{align*}
-        \omega_{\Omega} : \algebra{A} &\to \mathbb{C}\\
-                                    a &\mapsto \inner{\Omega}{\pi(a)\Omega}
-    \end{align*}
-    is a positive linear functional. This linear functional is a state if \(\norm{\Omega} = 1\) and \(\pi\) is non-degenerate.
-\end{proposition}
+\begin{theorem}{Topology of states}{state_topology}
+    Let \(\algebra{A}\) be a C*-algebra and let \(B_\algebra{A}\) denote the set of positive linear functionals over \(\algebra{A}\) with norm less than or equal to one. Then \(B_\algebra{A}\) is a convex weakly* compact subset of \(\algebra{A}^\dag\) whose extremal points are \(0\) and the pure states \(P_{\algebra{A}}\). Furthermore, \(B_\algebra{A}\) is the weak* closure of the convex envelope of its extremal points. The set of states \(E_{\algebra{A}}\) is weakly* compact if and only if \(\algebra{A}\) is unital. If it is so, the extremal points of \(E_\algebra{A}\) are the pure states and \(E_\algebra{A}\) is the weak* closure of the convex envelope of \(P_\algebra{A}\).
+\end{theorem}
 \begin{proof}
-    It is clear that \(\omega_{\Omega}\) is a linear functional, but it is positive since
-    \begin{equation*}
-        \omega_{\Omega}(a^*a) = \inner{\Omega}{\pi(a^*a)\Omega} = \inner{\pi(a)\Omega}{\pi(a)\Omega} = \norm{\pi(a)\Omega}^2 \geq 0
-    \end{equation*}
-    for all \(a \in \algebra{A}\).
+
 \end{proof}
