@@ -93,3 +93,48 @@ We now show a linear isometry maps a Banach space to a Banach space.
     \end{equation*}
     hence \(u_n \to T(\tilde{s})\). We conclude \((\range{T}, \restrict{\norm{\noarg}_W}{\range{T}})\) is a Banach space.
 \end{proof}
+
+We may now show a corollary to the canonical completion of a metric space in the context of normed linear space and Banach spaces.
+\begin{proposition}{Canonical completion of a normed linear space}{completion_normed_linear_space}
+    Let \((V, \norm{\noarg}_V)\) be a normed linear space. There exists a Banach space \((\tilde{V}, \norm{\noarg}_{\tilde{V}})\) and a linear isometry \(\imath : V \to \tilde{V}\) such that \(\tilde{V}\) is the completion of \(\imath(V)\). Moreover, this Banach space is unique, up to isomorphism.
+\end{proposition}
+\begin{proof}
+    Following the construction and notation of \cref{thm:canonical_completion}, it remains to show the overall linear structure. It is clear the set \(\mathfrak{C}_{(V, \norm{\noarg}_{V})}\) of Cauchy sequences in \(V\) is a linear space with addition and scalar multiplication defined point-wise. The equivalence relation \({\sim}\) prompts us to consider the set of Cauchy sequences that converge to zero, denoted by \(D_0 \subset \mathfrak{C}_{(V, \norm{\noarg}_V)}\), since we have
+    \begin{equation*}
+        \sequnder{u} \sim \sequnder{v} \iff D(\sequnder{u}, \sequnder{v}) = 0 \iff \lim_{n\to\infty}{\norm{\sequnder{u}_n - \sequnder{v}_n}_V} = 0 \iff \sequnder{u} - \sequnder{v} \in D_0.
+    \end{equation*}
+    It is clear that \(0 \in D_0\) and for all \(\sequnder{u}, \sequnder{v} \in D_0\) and \(\lambda \in \mathbb{C}\) we have
+    \begin{equation*}
+        \lim_{n\to\infty}{\norm{\sequnder{u}_n + \lambda\sequnder{v}_n}_V} \leq \lim_{n\to\infty}{\norm{\sequnder{u}_n}_V} + \abs{\lambda}\lim_{n\to\infty}{\norm{\sequnder{v}_n}_V} = 0,
+    \end{equation*}
+    hence \(D_0\) is a linear subspace of \(\mathfrak{C}_{(V, \norm{\noarg}_V)}\). We know the linear space \(\tilde{V} = \mathfrak{C}_{(V, \norm{\noarg}_V)}/D_0\) with the metric
+    \begin{align*}
+        \tilde{d} : \tilde{V} \times \tilde{V} &\to \mathbb{R}\\
+        [\sequnder{u},\sequnder{v}] &\mapsto \lim_{n\to\infty}{\norm{\sequnder{u}_n - \sequnder{v}_n}_V}
+    \end{align*}
+    is a complete metric space with \(\imath(V)\) as a dense subset isometric to \(V\). Note \(\imath\) is a linear isometry, as we have
+    \begin{equation*}
+        \tilde{d}\left(\imath(u + \lambda v), \imath(u) + \lambda \imath(v)\right) = \lim_{n\to\infty}{\norm{\sequnder{\widehat{u + \lambda v}}_n - \sequnder{\hat{u}}_n - \lambda \sequnder{\hat{v}}_n}_{V}} = \lim_{n\to\infty}\norm{u + \lambda v - u - \lambda v}_V = 0,
+    \end{equation*}
+    for all \(u, v \in V\) and \(\lambda \in \mathbb{C}\). Notice we have
+    \begin{equation*}
+        \tilde{d}([\sequnder{u}] + [\sequnder{t}], [\sequnder{v}] + [\sequnder{t}]) = \lim_{n\to\infty}{\norm{\sequnder{u}_n - \sequnder{v}_n}_{V}} = \tilde{d}([\sequnder{u}],[\sequnder{v}])
+    \end{equation*}
+    and
+    \begin{equation*}
+        \tilde{d}(\alpha[\sequnder{u}], \alpha[\sequnder{v}]) = \lim_{n\to\infty}{\norm{\alpha \sequnder{u}_n - \alpha\sequnder{v}_n}_V} = \abs{\alpha} \lim_{n\to\infty}{\norm{\sequnder{u}_n - \sequnder{v}_n}_V} = \abs{\alpha} \tilde{d}([\sequnder{u}], [\sequnder{v}]),
+    \end{equation*}
+    hence the metric \(\tilde{d}\) is induced by a norm, namely
+    \begin{align*}
+        \norm{\noarg}_{\tilde{V}} : \tilde{V} &\to \mathbb{R}\\
+                                [\sequnder{v}]&\mapsto \lim_{n\to\infty}{\norm{\sequnder{v}_n}_V},
+    \end{align*}
+    thus \((\tilde{V}, \norm{\noarg}_{\tilde{V}})\) is a Banach space.
+
+    Let \(\jmath : V \to V'\) be a linear isometry where \((V', \norm{\noarg}_{V'})\) is a Banach space completion of \(\jmath(V)\). As in \cref{thm:canonical_completion}, let 
+    \begin{align*}
+        \Psi : V' &\to \tilde{V}\\
+               v' &\mapsto \lim_{n\to\infty}{\imath \circ \jmath^{-1}(v'_n)},
+    \end{align*}
+    where \(\family{v'_n}{n \in \mathbb{N}} \subset \jmath(V)\) is any sequence that converges against \(v'\), then it is well-defined and it is a bijective isometry. As addition is continuous and \(\imath\) and \(\jmath\) are isometries, it follows that \(\Psi\) is a linear map, hence \((V', \norm{\noarg}_{V'})\) is isomorphic to \((\tilde{V}, \norm{\noarg}_{\tilde{V}})\).
+\end{proof}
