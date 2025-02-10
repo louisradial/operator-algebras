@@ -4,11 +4,58 @@ We now move on to metric spaces, which can be seen as a specialization of topolo
 \begin{definition}{Metric space}{metric_space}
     A \emph{metric space} \((X, d)\) is a non-empty set \(X\) equipped with a map \(d : X \times X \to \mathbb{R}\), called \emph{metric} or \emph{distance function}, satisfying
     \begin{enumerate}[label=(\alph*)]
-        \item \(d(x, y) \geq 0\), for all \(x, y \in X\), with \(d(x, y) = 0 \iff x = y\);
+        \item \(d(x,y) = 0 \iff x = y\);
+        \item \(d(x, y) \geq 0\), for all \(x, y \in X\);
         \item \(d(x, y) = d(y, x)\), for all \(x, y \in X\); and
-        \item \(d(x, y) = d(x, z) + d(z, y)\), for all \(x,y,z \in X\).
+        \item \(d(x, y) \leq d(x, z) + d(y,z)\), for all \(x,y,z \in X\).
     \end{enumerate}
 \end{definition}
+
+\begin{proposition}{Sufficient conditions for a metric}{metric_space}
+    Let \(X\) be a non-empty set and let \(d : X \times X \to \mathbb{R}\) be a map satisfying
+    \begin{enumerate}[label=(\alph*)]
+        \item \(d(x,x) = 0\) for all \(x \in X\); and
+        \item \(d(x, y) \leq d(x, z) + d(y, z)\), for all \(x,y,z \in X\).
+    \end{enumerate}
+    As a result, it follows that \(d(x, y) = d(y, x)\) for all \(x, y \in X\). Moreover, \((X,d)\) is a metric space if and only if \(d\) is point separating: \(d(x,y) = 0 \iff x = y\).
+\end{proposition}
+\begin{proof}
+    Let \(x, y \in X\), then by the triangle inequality we have \(d(x, y) \leq d(x, y)\) and \(d(y, x) \leq d(y, x)\) by setting \(z = y\) and \(z = x)\), respectively, hence \(d(x,y) = d(y, x)\), and we conclude \(d\) is symmetric.
+
+    Let \(x,y,z \in X\). By the triangle inequality, we have
+    \begin{equation*}
+        d(x,y) \geq d(x, z) - d(y, z)
+    \end{equation*}
+    then using the symmetry of \(d\) and exchanging \(x\) and \(y\) we have
+    \begin{equation*}
+        d(x,y) \geq d(y, z) - d(x, z),
+    \end{equation*}
+    hence \(d(x, y) \geq \abs{d(y,z) - d(x, z)} \geq 0\), and we conclude \(d\) is positive.
+\end{proof}
+
+\begin{proposition}{Reverse triangle inequality}{reverse_triangle}
+    Let \((X, d)\) be a metric space. Then
+    \begin{equation*}
+        \abs{d(x,z) - d(y,z)} \leq d(x,y)
+    \end{equation*}
+    for all \(x,y,z \in X\).
+\end{proposition}
+\begin{proof}
+    Let \(x,y,z \in X\), then by the triangle inequality we have
+    \begin{equation*}
+        d(x,z) - d(y,z) \leq d(x,y).
+    \end{equation*}
+    If \(d(x,z) - d(y,z) \geq 0\), then \(\abs{d(x,z) - d(y,z)} \leq d(x,y)\), so we may suppose \(d(x,z) - d(y,z) < 0\). By the triangle inequality and the symmetry of the metric we also have
+    \begin{equation*}
+        0 < d(y,z) - d(x, z) \leq d(x,y),
+    \end{equation*}
+    hence
+    \begin{equation*}
+        d(x,y) \geq \abs{d(x,z) - d(y,z)},
+    \end{equation*}
+    as desired.
+\end{proof}
+
 \begin{example}{Supremum metric for continuous complex-valued functions}{continuous_complex_ab}
     Let \(\mathcal{C}([a,b];\mathbb{C})\) denote the set of continuous functions from the interval \([a,b]\subset \mathbb{R}\) to the complex plane \(\mathbb{C}\) and let the \emph{supremum metric}, or \emph{sup metric}, be the map
     \begin{align*}
@@ -194,6 +241,24 @@ We may specialize the topological definition of continuity and state whether a m
         d_X(x, x_0) < \delta \implies d_Y(f(x), f(x_0)) < \varepsilon.
     \end{equation*}
 \end{definition}
+
+\begin{proposition}{Metric is continuous}{metric_continuous}
+    The distance function of a metric space is continuous with respect to the metric topology.
+\end{proposition}
+\begin{proof}
+    Let \((X,d)\) be a metric space, then
+    \begin{align*}
+        d_{X\times X} : (X\times X) \times (X\times X) &\to \mathbb{R}\\
+                                       ((x,y),(x',y')) &\mapsto \max{\set{d(x, x'), d(y, y')}}
+    \end{align*}
+    is a metric on \(X \times X\). Let \((x_0, y_0) \in X\times X\) and \(\varepsilon > 0\), then whenever \(d_{X\times X}((x,y), (x_0, y_0)) < \frac12 \varepsilon\), we have
+    \begin{align*}
+        \abs{d(x,y) - d(x_0, y_0)} &\leq \abs{d(x,y) - d(x_0, y)} + \abs{d(x_0,y) - d(x_0, y_0)}\\
+                                   &\leq d(x,x_0) + d(y, y_0)\\
+                                   &< \varepsilon
+    \end{align*}
+    by \cref{prop:reverse_triangle}, hence \(d\) is continuous.
+\end{proof}
 % \begin{remark}
 %     Even though it should be clear from the fact that the definition makes explicit use of the metrics in each metric space, we stress that the notion of continuity depends on the choice of metric on a set.
 % \end{remark}
@@ -506,4 +571,194 @@ Finally, we give Baire's category argument.
         d(\tilde{x}, x_n) \leq d(x_n, x_m) + d(x_m, \tilde{x}) \leq r_n + d(x_m, \tilde{x})
     \end{equation*}
     for all \(n,m \in \mathbb{N}\) with \(n < m\). By convergence, we have \(d(\tilde{x}, x_n) \leq r_n\), hence \(\tilde{x} \in \cl_X(B_{r_n}(x_n))\) for all \(n\in \mathbb{N}\). By construction, \(\tilde{x} \in \bigcap_{n\in \mathbb{N}} (X\setminus M_n)\), then by \cref{lem:complement_union}, we have \(\tilde{x} \in X \setminus \bigcup_{n\in \mathbb{N}} M_n\). This contradicts the hypothesis the collection \(\family{M_n}{n\in \mathbb{N}}\) covers \(X\), thus showing there is no such collection.
+\end{proof}
+
+\subsection{Completion of a metric space}
+It is often the case that a metric space is not complete with respect to its metric, but we may always isometrically embed it in a complete metric space.
+\begin{definition}{Completion of a metric space}{completion}
+    A metric space \((Y,d_Y)\) is a \emph{completion} of the metric space \((X,d_X)\) if
+    \begin{enumerate}[label=(\alph*)]
+        \item \(X \subset Y\);
+        \item \(\restrict{d_Y}{X} = d_X\);
+        \item \(X\) is dense in \(Y\) with respect to \(d_Y\); and
+        \item \(Y\) is complete with respect to \(d_Y\).
+    \end{enumerate}
+\end{definition}
+
+\newcommand{\sequnder}[1]{\underline{\smash{#1}\mkern-2mu}\mkern2mu}
+In this section, we'll denote sequences in \(X\) by underlined letters, such as \(\sequnder{x} : \mathbb{N} \to X\)  with \(\sequnder{x}(n) = \sequnder{y}_n\). The construction of the completion begins by defining a convenient pseudometric on the metric space.
+\begin{lemma}{Pseudometric on the set of Cauchy sequences on a metric space}{pseudometric_cauchy}
+    Let \((X, d)\) be a metric space and let \(\mathfrak{C}_{(X,d)}\) denote the set of Cauchy sequences in \(X\) with respect to the metric \(d\). The map
+    \begin{align*}
+        D : \mathfrak{C}_{(X,d)} \times \mathfrak{C}_{(X,d)} &\to \mathbb{R}\\
+        (\sequnder{x},\sequnder{y}) &\mapsto \lim_{n\to \infty}{d(\sequnder{x}_n, \sequnder{y}_n)}
+    \end{align*}
+    is a \emph{pseudometric} on \(\mathfrak{C}_{(X,d)}\), that is, it satisfies
+    \begin{enumerate}[label=(\alph*)]
+        \item \(D(\sequnder{x}, \sequnder{y}) \geq 0\);
+        \item \(D(\sequnder{x},\sequnder{y}) = D(\sequnder{y},\sequnder{x})\);
+        \item \(D(\sequnder{x},\sequnder{y}) \leq D(\sequnder{x},\sequnder{z}) + D(\sequnder{y}, \sequnder{z})\); and
+        \item \(D(\sequnder{x},\sequnder{x}) = 0\);
+    \end{enumerate}
+    for all \(\sequnder{x}, \sequnder{y}, \sequnder{z} \in \mathfrak{C}_{(X,d)}\).
+\end{lemma}
+\begin{proof}
+    Let \(\sequnder{x}, \sequnder{y} \in \mathfrak{C}_{(X,d)}\) and let us consider the sequence \(\gamma : \mathbb{N} \to \mathbb{R}\) defined by \(\gamma_n = d(\sequnder{x}_n, \sequnder{y}_n)\) for all \(n \in \mathbb{N}\). Let \(n, m \in \mathbb{N}\), then
+    \begin{align*}
+        \abs{\gamma_m - \gamma_n} &= \abs{d(\sequnder{x}_m, \sequnder{y}_m) - d(\sequnder{x}_n, \sequnder{y}_n)}\\
+                                  &\leq \abs{d(\sequnder{x}_m, \sequnder{x}_n) + d(\sequnder{x}_n, \sequnder{y}_m) - d(\sequnder{y}_m, \sequnder{y}_n) - d(\sequnder{x}_n, \sequnder{y}_m)}\\
+                                  &= d(\sequnder{x}_m, \sequnder{x}_n) + d(\sequnder{y}_m, \sequnder{y}_n)
+    \end{align*}
+    and we conclude \(\gamma\) is Cauchy, hence converges to some \(\tilde{\gamma} \in \mathbb{R}\). Thus, \(D\) is well defined. 
+
+    It is quite obvious that (d) is satisfied since \(d\) is a metric. Let \(\sequnder{x}, \sequnder{y}, \sequnder{z} \in \mathfrak{C}_{(X,d)}\), then
+    \begin{align*}
+        D(\sequnder{x},\sequnder{y}) &= \lim_{n\to\infty}{d(\sequnder{x}_n,\sequnder{y}_n)}\\
+               &\leq \lim_{n\to\infty}{\left[d(\sequnder{x}_n, \sequnder{z}_n) +d(\sequnder{y}_n, \sequnder{z}_n)\right]}\\
+               &= \lim_{n\to\infty}{d(\sequnder{x}_n,\sequnder{z}_n)} + \lim_{n\to\infty}{d(\sequnder{y}_n,\sequnder{z}_n)}\\
+               &= D(\sequnder{x},\sequnder{z}) + D(\sequnder{y},\sequnder{z}),
+    \end{align*}
+    hence \(D\) satisfies the triangle inequality. By \cref{prop:metric_space}, we know \(D\) is symmetric and positive, hence \(D\) is a pseudometric on \(\mathfrak{C}_{(X,d)}\).
+\end{proof}
+
+As the pseudometric does not separate points, we may consider sequences equivalent up to this pseudometric.
+\begin{lemma}{Equivalence relation on the set of Cauchy sequences on a metric space}{cauchy_equivalence}
+    With the previous notation and definitions,
+    \begin{equation*}
+        {\sim} = \setc{(\sequnder{x},\sequnder{y}) \in \mathfrak{C}_{(X,d)} \times \mathfrak{C}_{(X,d)}}{D(\sequnder{x},\sequnder{y}) = 0}
+    \end{equation*}
+    is an equivalence relation on \(\mathfrak{C}_{(X,d)}\).
+\end{lemma}
+\begin{proof}
+    As we have
+    \begin{equation*}
+        \sequnder{x} \in \mathfrak{C}_{(X,d)} \implies D(\sequnder{x},\sequnder{x}) = 0 \implies (\sequnder{x},\sequnder{x}) \in {\sim},
+    \end{equation*}
+    \begin{equation*}
+        (\sequnder{x},\sequnder{y}) \in {\sim} \iff D(\sequnder{x},\sequnder{y}) = 0 \iff D(\sequnder{y},\sequnder{x}) = 0 \iff (\sequnder{y}, \sequnder{x}) \in {\sim},
+    \end{equation*}
+    and
+    \begin{equation*}
+        (\sequnder{x},\sequnder{y}), (\sequnder{y},\sequnder{z}) \in {\sim} \iff D(\sequnder{x},\sequnder{y}) = D(\sequnder{y},\sequnder{z}) = 0 \implies D(\sequnder{x},\sequnder{z}) = 0 \implies (\sequnder{x},\sequnder{z}) \in {\sim},
+    \end{equation*}
+    we conclude \({\sim}\) is an equivalence relation.
+\end{proof}
+
+We now may define the completion of \((X,d)\) and show it is a metric space.
+\begin{lemma}{Coset of Cauchy sequences on a metric space is a metric space}{completion_metric}
+    With the previous notation and definitions, the coset \(\tilde{X} = \mathfrak{C}_{(X,d)}/{\sim}\) equipped with the map
+    \begin{align*}
+        \tilde{d} : \tilde{X} \times \tilde{X} &\to \mathbb{R}\\
+                                     ([\sequnder{x}],[\sequnder{y}]) &\mapsto D(\sequnder{x},\sequnder{y})
+    \end{align*}
+    is a metric space.
+\end{lemma}
+\begin{proof}
+    Let \(\sequnder{x}, \sequnder{y} \in \mathfrak{C}_{(X,d)}\), \(\sequnder{x}' \in [\sequnder{x}]\), and \(\sequnder{y}' \in [\sequnder{y}]\), then
+    \begin{equation*}
+        D(\sequnder{x}',\sequnder{y}') \leq D(\sequnder{x}', \sequnder{x}) + D(\sequnder{y}', \sequnder{x}) \leq D(\sequnder{x}', \sequnder{x}) + D(\sequnder{y}', \sequnder{y}) + D(\sequnder{x}, \sequnder{y}) = D(\sequnder{x},\sequnder{y})
+    \end{equation*}
+    and 
+    \begin{equation*}
+        D(\sequnder{x},\sequnder{y}) \leq D(\sequnder{x}, \sequnder{x}') + D(\sequnder{y}, \sequnder{x}') \leq D(\sequnder{x}, \sequnder{x}') + D(\sequnder{y}, \sequnder{y}') + D(\sequnder{x}', \sequnder{y}') = D(\sequnder{x}',\sequnder{y}'),
+    \end{equation*}
+    hence \(D(\sequnder{x}', \sequnder{y}') = D(\sequnder{x},\sequnder{y})\), and the map \(\tilde{d}\) is well-defined.
+
+    Notice we have
+    \begin{equation*}
+        [\sequnder{x}] = [\sequnder{y}] \iff \sequnder{x} \sim \sequnder{y} \iff D(\sequnder{x},\sequnder{y}) = 0 \iff \tilde{d}([\sequnder{x}],[\sequnder{y}]) = 0,
+    \end{equation*}
+    and
+    \begin{equation*}
+        \tilde{d}([\sequnder{x}],[\sequnder{y}]) = D(\sequnder{x},\sequnder{y}) \leq D(\sequnder{x},\sequnder{z}) + D(\sequnder{y}, \sequnder{z}) = \tilde{d}([\sequnder{x}], [\sequnder{z}]) + \tilde{d}([\sequnder{y}], [\sequnder{z}])
+    \end{equation*}
+    for all \(\sequnder{x},\sequnder{y},\sequnder{z} \in X\), hence \(\tilde{d}\) is a metric on \(\tilde{X}\), by \cref{prop:metric_space}.
+\end{proof}
+
+For all \(x \in X,\) let \(\sequnder{\hat{x}} \in \mathfrak{C}_{(X,d)}\) denote the constant sequence \(\sequnder{\hat{x}}_n = x\) for all \(n \in \mathbb{N}\). This map from \(X\) to \(\mathfrak{C}_{(X,d)}\) allows us to define an isometry from \(X\) to \(\tilde{X}\).
+\begin{lemma}{Isometry from metric space to a dense subset of its canonical completion}{isometry_completion}
+    With the previous notation and definitions, 
+    \begin{align*}
+        \imath : X &\to \tilde{X}\\
+        x &\mapsto [\sequnder{\hat{x}}],
+    \end{align*}
+    is an isometry. Furthermore, \(\imath(X)\) is dense in \(\tilde{X}\) with respect to \(\tilde{d}\).
+\end{lemma}
+\begin{proof}
+    Let \(x, y \in X\), then
+    \begin{equation*}
+        \tilde{d}(\imath(x), \imath(y)) = \tilde{d}([\sequnder{\hat{x}}], [\sequnder{\hat{y}}]) = D(\sequnder{\hat{x}}, \sequnder{\hat{y}}) = \lim_{n\to\infty}{d(\sequnder{\hat{x}}_n,\sequnder{\hat{y}}_n)} = d(x,y),
+    \end{equation*}
+    hence \(\imath\) is an isometry.
+
+    Let \([\sequnder{z}] \in \tilde{X}\) and \(\varepsilon > 0\), then there exists \(N_\varepsilon > 0\) such that \(d(\sequnder{z}_n,  \sequnder{z}_m) < \varepsilon\) whenever \(n, m \geq N_\varepsilon\). We consider \(\iota(\sequnder{z}_{N_\varepsilon})\), for which we have
+    \begin{equation*}
+        \tilde{d}([\sequnder{z}], \iota(\sequnder{z}_{N_\varepsilon})) = \lim_{n\to\infty} d(\sequnder{z}_n, \sequnder{z}_{N_\varepsilon}) < \varepsilon,
+    \end{equation*}
+    hence \(\iota(X)\) is dense in \(\tilde{X}\).
+\end{proof}
+
+The canonical completion \(\tilde{X}\) is in fact a completion of \(\iota(X)\), but since isometries are injective, \(\imath\) is a bijection from \(X\) to \(\iota(X)\), \(X\) is isomorphic to the dense subset of \(\tilde{X}\). Now it remains to show \(\tilde{X}\) is indeed a complete metric space.
+\begin{theorem}{Canonical completion of a metric space}{canonical_completion}
+    Let \((X, d)\) be a metric space. There exists a complete metric space \((\tilde{X}, \tilde{d})\) and an isometry \(\imath : X \to \tilde{X}\) such that \(\tilde{X}\) is the completion of \(\imath(X)\). Moreover, up to isometries, this metric space is unique.
+\end{theorem}
+\begin{proof}
+    Let \(\xi : \mathbb{N} \to \tilde{X}\) be a Cauchy sequence in \(\tilde{X}\), which we'll denote by \(\xi(n) = [\sequnder{\xi^n}] \in \tilde{X}\). For all \(\varepsilon > 0\), there exists \(N(\varepsilon) \in \mathbb{N}\) such that for all \(n,m \geq N(\varepsilon)\) we have \(\tilde{d}\left(\xi(n), \xi(m)\right) < \varepsilon\), hence there exists \(M(\varepsilon) \in \mathbb{N}\) such that for all \(k \geq M(\varepsilon)\) we have \(d(\sequnder{\xi^n}_k, \sequnder{\xi^m}_k) < \varepsilon\). As \(\sequnder{\xi^n}\) is Cauchy for all \(n \in \mathbb{N}\), there exists \(L_n(\varepsilon) \in \mathbb{N}\) such that for all \(k, \ell \geq L_n(\varepsilon)\) we have \(d(\sequnder{\xi^n}_k, ,\sequnder{\xi^n}_\ell) < \varepsilon\).
+
+    For all \(n \in \mathbb{N}\) we define
+    \begin{equation*}
+        \alpha(n) = \max{\setc*{N(p^{-1})}{p \in \mathbb{N} : p \leq n}}
+    \end{equation*}
+    and
+    \begin{equation*}
+        \beta(n) = \max{\set*{\max{\setc*{M(p^{-1})}{p \in \mathbb{N} : p \leq n}}, \max{\setc*{L_{\alpha(p)}(p^{-1})}{p \in \mathbb{N} : p \leq n}}} },
+    \end{equation*}
+    then for all \(n > m\) we have \(\alpha(n) \geq \alpha(m) \geq N(m^{-1})\) and \(\beta(n) \geq \beta(m) \geq \max\set*{M(m^{-1}), L_{\alpha(m)}(m^{-1})}\). We consider the sequence \(\sequnder{x} : \mathbb{N} \to X\) defined by \(\sequnder{x}_n = \sequnder{\xi^{\alpha(n)}}_{\beta(n)}\) for all \(n \in \mathbb{N}\). Let \(n, m \in \mathbb{N}\) with \(n > m\), then
+    \begin{equation*}
+        d(\sequnder{x}_{n}, \sequnder{x}_{m}) = d\left(\sequnder{\xi^{\alpha(n)}}_{\beta(n)}, \sequnder{\xi^{\alpha(m)}}_{\beta(m)}\right) \leq d\left(\sequnder{\xi^{\alpha(n)}}_{\beta(n)}, \sequnder{\xi^{\alpha(m)}}_{\beta(n)}\right) + d\left(\sequnder{\xi^{\alpha(m)}}_{\beta(n)}, \sequnder{\xi^{\alpha(m)}}_{\beta(m)}\right),
+    \end{equation*}
+    then by construction we have
+    \begin{equation*}
+        d\left(\sequnder{\xi^{\alpha(n)}}_{\beta(n)}, \sequnder{\xi^{\alpha(m)}}_{\beta(n)}\right) \leq \frac1m
+        \quad\text{and}\quad
+        d\left(\sequnder{\xi^{\alpha(m)}}_{\beta(n)}, \sequnder{\xi^{\alpha(m)}}_{\beta(m)}\right) \leq \frac1m
+    \end{equation*}
+    hence \(\sequnder{x}\) is Cauchy as we have \(d(\sequnder{x}_n, \sequnder{x}_m) < \frac2m\) and we may make \(m\) arbitrarily large. We consider the subsequence \(\xi \circ \alpha\), for which we have
+    \begin{align*}
+        \tilde{d}\left(\xi(\alpha(n)), [\sequnder{x}]\right)
+        &= \lim_{k \to \infty} d(\sequnder{\xi^{\alpha(n)}}_{k}, \sequnder{x}_k)\\
+        &= \lim_{k\to\infty} d(\sequnder{\xi^{\alpha(n)}}_k, \sequnder{\xi^{\alpha(k)}}_{\beta(k)})\\
+        &\leq \lim_{k\to\infty}\left[d\left(\sequnder{\xi^{\alpha(n)}}_k, \sequnder{\xi^{\alpha(n)}}_{\beta(k)}\right) + d\left(\sequnder{\xi^{\alpha(n)}}_{\beta(k)}, \sequnder{\xi^{\alpha(n)}}_{\beta(k)}\right)\right]\\
+        &< \frac{2}{n}
+    \end{align*}
+    for all \(n \in \mathbb{N}\). This means \(\xi \circ \alpha\) converges against \([\sequnder{x}]\), hence \(\xi\) converges against \([\sequnder{x}]\) by \cref{prop:subsequence_Cauchy}, thus showing \((\tilde{X}, \tilde{d})\) is complete.
+
+    Suppose \(\jmath : X \to X'\) is an isometry where \((X', d')\) is a completion of \(\jmath(X)\). Due to \cref{prop:composition_isometry}, the map \(\psi = \imath \circ \jmath^{-1} : \jmath(X) \to \imath(X)\) is an isometry. Let \(\tilde{x}' \in X'\) and consider a sequence \(x' : \mathbb{N} \to \jmath(X)\) that converges against \(\tilde{x}'\), which exists due to \cref{prop:sequence_dense}, then \(\psi \circ x'\) is a Cauchy sequence in \(\imath(X)\), since we have
+    \begin{equation*}
+        \tilde{d}(\psi(x')_n, \psi(x')_m) = d'(x'_n, x'_m)
+    \end{equation*}
+    for all \(n,m \in \mathbb{N}\), hence \(\psi \circ x'\) converges against some \([\sequnder{x}] \in \tilde{X}\). Moreover, if \(y' : \mathbb{N} \to \jmath(X)\) is another sequence that converges against the same \(\tilde{x}'\), then
+    \begin{equation*}
+        \tilde{d}([\sequnder{x}], \psi(y')_n) \leq \tilde{d}([\sequnder{x}], \psi(x')_n) + \tilde{d}(\psi(x')_n, \psi(y')_n) = \tilde{d}([\sequnder{x}], \psi(x')_n) + d'(x'_n, y'_n),
+    \end{equation*}
+    hence \(\psi(y')\) also converges against \([\sequnder{x}]\). We have thus established the well-definition of the map
+    \begin{align*}
+        \Psi : X' &\to \tilde{X}\\
+               x' &\mapsto \lim_{n\to\infty}{\psi(x'_n)},
+    \end{align*}
+    where \(\family{x'_n}{n \in \mathbb{N}}\subset \jmath(X)\) is any sequence that converges against \(x' \in X'\). Taking constant sequences in \(\jmath(X)\) yields \(\restrict{\Psi}{\jmath(X)} = \psi\), that is, this map extends the isometry \(\psi\). 
+
+    Let \(x', y' \in X'\), then there exist sequences \(\family{x'_n}{n \in \mathbb{N}}, \family{y'_n}{n \in \mathbb{N}} \subset \jmath(X)\) that converge to \(x'\) and to \(y'\). \cref{prop:metric_continuous} yields
+    \begin{align*}
+        \tilde{d}(\Psi(x'), \Psi(y')) &= \tilde{d}(\lim_{n\to\infty}{\psi(x'_n)}, \lim_{n\to\infty}{\psi(y'_n)})\\
+                                      &= \lim_{n\to\infty}{\tilde{d}(\psi(x'_n), \psi(y'_n))}\\
+                                      &= \lim_{n\to\infty}{d'(x'_n, y'_n)}\\
+                                      &= d'(\lim_{n\to\infty}{x'_n}, \lim_{n\to\infty}{y'_n})\\
+                                      &= d'(x', y'),
+    \end{align*}
+    that is, \(\Psi\) is an isometry, hence injective. Let \([\sequnder{x}] \in \tilde{X},\) then there exists a Cauchy sequence \(\xi : \mathbb{N} \to \imath(X)\) that converges against \([\sequnder{x}]\). As \(\imath(X)\) is isomorphic to \(\jmath(X),\) there exists a Cauchy sequence \(x' : \mathbb{N} \to \jmath(X)\) such that \(\xi = \psi \circ x'\), hence there exists \(\tilde{x}' \in X'\) against which \(x'\) converges, and we have
+    \begin{equation*}
+        [\sequnder{x}] = \lim_{n\to\infty}{\xi(n)}= \lim_{n\to\infty}{\psi(x'_n)}= \Psi(\tilde{x}'),
+    \end{equation*}
+    thus \(\Psi\) is surjective. We have thus shown \((\tilde{X}, \tilde{d})\) and \((X', d')\) are isomorphic, as desired.
 \end{proof}
