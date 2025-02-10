@@ -169,6 +169,21 @@ Therefore, a Banach space \((V, \norm{\noarg})\) is a Hilbert space if and only 
     therefore this Banach space is not a pre-Hilbert space.
 \end{proof}
 
+We now show the canonical completion of a pre-Hilbert space is a Hilbert space.
+\begin{proposition}{Canonical completion of a pre-Hilbert space}{completion_Hilbert}
+    Let \((V, \norm{\noarg}_V)\) be a pre-Hilbert space. There exists a Hilbert space \((\hilbert, \inner{\noarg}{\noarg}_\hilbert)\) and a linear isometry \(\imath : V \to \hilbert\) such that \(\hilbert\) is the completion of \(\imath(V)\). Moreover, this Hilbert space is unique, up to isomorphism.
+\end{proposition}
+\begin{proof}
+    Up to isomorphism, we already know there exists a unique Banach space \((\hilbert, \norm{\noarg}_{\hilbert})\) and a linear isometry \(\imath : V \to \hilbert\) such that \(\hilbert\) is the completion of \(\imath(V)\). Let \(([\sequnder{u}], [\sequnder{v}] \in \hilbert\), then
+    \begin{align*}
+        \norm{[\sequnder{u}]+[\sequnder{v}]}_{\hilbert}^2 + \norm{[\sequnder{u}]-[\sequnder{v}]}_\hilbert^2 
+        &= \lim_{n\to\infty}{\left(\norm{\sequnder{u}_n + \sequnder{v}_n}_V^2 + \norm{\sequnder{u}_n - \sequnder{v}_n}_V^2\right)}\\
+        &= 2\lim_{n\to\infty}{\left(\norm{\sequnder{u}_n}_{V}^2 + \norm{\sequnder{v}_n}_{V}^2\right)}\\
+        &= 2\left(\norm{[\sequnder{u}]}_\hilbert^2 + \norm{[\sequnder{v}]}_\hilbert^2\right)
+    \end{align*}
+    as \(V\) is a pre-Hilbert space. It follows from \cref{thm:parallelogram} that the norm \(\norm{\noarg}_{\hilbert}\) is induced by an inner product, concluding the proof.
+\end{proof}
+
 \begin{lemma}{Necessary condition for a pre-Hilbert space}{parallelogram_inequality}
     Let \((V, \norm{\noarg})\) be a normed linear space. If for all \(x,y \in V\)
     \begin{equation*}
@@ -186,6 +201,7 @@ Therefore, a Banach space \((V, \norm{\noarg})\) is a Hilbert space if and only 
 \begin{remark}
     It is obvious we could start from the inequality in the proof and conclude the same result.
 \end{remark}
+
 \begin{theorem}{The topological dual of a Hilbert space is a Hilbert space}{dual_hilbert_maybe}
     Let \(\hilbert\) be a Hilbert space. Then, \(\hilbert^\dag\) is a Hilbert space.
 \end{theorem}
