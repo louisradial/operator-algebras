@@ -57,13 +57,13 @@ We have not shown the existence of representations, and we will prove by conclud
     \begin{equation*}
         \algebra{J}_\omega = \setc{a \in \algebra{A}}{\forall b \in \algebra{A} : \omega(b^*a) = 0}.
     \end{equation*}
-    Let \(a, b \in \algebra{J}_\omega\) and \(\lambda \in \mathbb{C}\), then
+    Let \(a, b \in \algebra{J}_\omega\) and \(\mu \in \mathbb{C}\), then
     \begin{equation*}
-        \forall c \in \algebra{A} : \omega(c^*a) + \lambda \omega(c^*b) = 0 \implies \forall c \in \algebra{A} : \omega(c^*(a + \lambda b)) = 0 \implies a + \lambda b \in \algebra{J}_\omega,
+        \forall c \in \algebra{A} : \omega(c^*a) + \mu \omega(c^*b) = 0 \implies \forall c \in \algebra{A} : \omega(c^*(a + \mu b)) = 0 \implies a + \mu b \in \algebra{J}_\omega,
     \end{equation*}
     hence \(\algebra{J}_\omega\) is a linear subspace of \(\algebra{A}\). Let \(a : \mathbb{N} \to \algebra{J}_\omega\) be a convergent sequence to some \(\tilde{a} \in \algebra{A},\) then
     \begin{equation*}
-        \omega(b^*\tilde{a}) = \lim_{n \to \mathbb{N}}{\omega(b^*a_n)} = 0
+        \omega(b^*\tilde{a}) = \lim_{n \to \infty}{\omega(b^*a_n)} = 0
     \end{equation*}
     for all \(b \in \algebra{A},\) hence \(\tilde{a} \in \algebra{J}_\omega\) and we conclude \(\algebra{J}_\omega\) is closed. Furthermore, \(\algebra{J}_\omega\) is a left ideal of \(\algebra{A}\) since 
     \begin{equation*}
@@ -84,30 +84,137 @@ We have not shown the existence of representations, and we will prove by conclud
     \begin{equation*}
         \inner{[a]}{[a]} = 0 \implies \omega(a^*a) = 0 \implies a \in \algebra{J}_\omega \implies [a] = [0].
     \end{equation*}
-    \todo[We define \(\hilbert_\omega\) as the canonical completion of \(\algebra{A}/\algebra{J}_\omega\),] and we'll denote the embedding of \(\algebra{A}/\algebra{J}_\omega\) in \(\hilbert_\omega\) by the linear isometry
+    As \(\algebra{A}/\algebra{I}_{\omega}\) is a pre-Hilbert space, we let \(\hilbert_\omega\) be its canonical completion, which is unique up to isomorphism, and let
     \begin{align*}
-        \Psi : \algebra{A} &\to \hilbert_\omega\\
-                         a &\mapsto \Psi_{[a]}
+        \Psi : \algebra{A}/\algebra{I}_\omega &\to \hilbert_\omega\\
+                                          [a] &\mapsto \Psi_{[a]}
     \end{align*}
-    with \(\preim{\Psi}{\set{\Psi_{[a]}}} = [a]\) for all \(a \in \algebra{A}\).
+    be the linear isometry whose image is dense in \(\hilbert_\omega\).
 
-    Let \(a,b \in \algebra{A}\), and \(\tilde{b} \in [b]\), then there exists \(j \in \algebra{I}_\omega\) and we have
-    \begin{equation*}
-        \Psi(a \tilde{b}) = \Psi(ab + aj) = \Psi(ab)
-    \end{equation*}
-    since \(\algebra{I}_\omega\) is a left ideal. This means for all \(a \in \algebra{A}\) the linear map
+    Let us consider the action of \(\algebra{A}\) in \(\Psi(\algebra{A}/\algebra{I}_\omega)\) with the map
     \begin{align*}
-        p_a : \Psi(\algebra{A}) &\to \Psi(\algebra{A})\\
-                         \Psi_b &\mapsto \Psi_{ab}
+        p : \algebra{A} \times \Psi(\algebra{A}/\algebra{I}_\omega) &\to \Psi(\algebra{A}/\algebra{I}_\omega)\\
+        \left(a, \Psi_{[b]}\right) &\mapsto \Psi_{[ab]},
     \end{align*}
-    is well-defined. Let \(b \in \algebra{A} \setminus \algebra{I}_\omega\), then \(\norm{b} \neq 0\) and we have
+    which we denote by \(p_a\Psi_{[b]} = \Psi_{[ab]}\), and is well-defined since \(\algebra{I}_\omega\) is a left ideal. Indeed, let \(\tilde{b} \in [b]\), then \(\Psi_{[\tilde{b}]} = \Psi_{[b]}\) and \(a(b - \tilde{b}) \in \algebra{I}_\omega\), hence \(\Psi_{[ab]} = \Psi_{[a\tilde{b}]}\). Notice for all \(a \in \algebra{A}\) the map \(p_a : \Psi(\algebra{A}/\algebra{I}_\omega) \to \Psi(\algebra{A}/\algebra{I}_\omega)\) is linear, as we have \(p_a(0) = p_a(\Psi_{[0]}) = \Psi_{[0]} = 0\) and
     \begin{equation*}
-        \norm{p_a \Psi_b}^2 = \norm{\Psi_{ab}}^2 = \omega(b^*a^*a b) \leq \omega(b^*b) \norm{a^*a} = \norm{a}^2\norm{\Psi_b}^2
+        p_a(\Psi_{[b_1]} + \beta \Psi_{[b_2]}) = p_a(\Psi_{[b_1 + \beta b_2]}) = \Psi_{[ab_1 + \beta ab_2]} = \Psi_{[ab_1]} + \beta \Psi_{[ab_2]} = p_a(\Psi_{[b_1]}) + \beta p_a(\Psi_{[b_2]}),
     \end{equation*}
-    by \cref{prop:state_properties}, hence \(p_a\) is bounded and densely defined. We thus define the map
+    for all \([b_1], [b_2] \in \algebra{A}/\algebra{I}_\omega\) and \(\beta \in \mathbb{C}\), as \(\Psi\) is linear. Moreover, \(p_a\) is bounded for all \(a \in \algebra{A}\) as we have
+    \begin{equation*}
+        \norm{p_a\Psi_{[b]}}^2 = \norm{\Psi_{[ab]}}^2 = \norm{[ab]}^2 = \omega(b^*a^*ab) \leq \omega(b^*b) \norm{a}^2 = \norm{a}^2 \norm{[b]}^2 = \norm{a}^2\norm{\Psi_{[b]}}^2
+    \end{equation*}
+    for all \(\Psi_{[b]} \in \Psi(\algebra{A}/\algebra{I}_\omega)\). We thus define the map
     \begin{align*}
         \pi_{\omega} : \algebra{A} &\to \bounded(\hilbert_\omega)\\
                                  a &\mapsto \pi_\omega(a),
     \end{align*}
-    where, for all \(a \in \algebra{A}\), \(\pi_\omega(a)\) is the bounded linear extension of \(p_a\) to \(\hilbert_\omega\) defined in \cref{thm:blt}.
+    where \(\pi_\omega(a)\) is the unique bounded linear extension of \(p_a\) to \(\hilbert_\omega\) defined in \cref{thm:blt}, that is,
+    \begin{align*}
+        \pi_\omega(a) : \hilbert_\omega &\to \hilbert_\omega\\
+                                   \phi &\mapsto \lim_{n\to\infty}{p_a(\phi_n)},
+    \end{align*}
+    where \(\family{\phi_n}{n\in \mathbb{N}} \subset \Psi(\algebra{A}/\algebra{I}_\omega)\) is any sequence that converges against \(\phi \in \hilbert_\omega\). Let \(a_1, a_2 \in \algebra{A}\), \(\mu\in \mathbb{C}\) and \(\phi, \psi \in \hilbert_\omega\), then there exists sequences \([b], [c]: \mathbb{N} \to \algebra{A}/\algebra{I}_\omega\) such that \(\Psi \circ [b]\) and \(\Psi \circ [c]\) converge against \(\phi\) and \(\psi\), and we have
+    \begin{align*}
+        \pi_\omega(a_1 + \mu a_2)\phi &= \lim_{n\to\infty}{p_{a_1 + \mu a_2}(\Psi_{[b_n]})}\\
+                                          &= \lim_{n\to\infty}{\Psi_{[(a_1 + \mu a_2)b_n]}}\\
+                                          &= \lim_{n\to\infty}{\left(\Psi_{[a_1b_n]} + \mu \Psi_{[a_2 b_n]}\right)}\\
+                                          &= \lim_{n\to\infty}{p_{a_1}\Psi_{[b_n]}} + \mu \lim_{n\to\infty}{p_{a_2}\Psi_{[b_n]}}\\
+                                          &= \pi_\omega(a_1)\phi + \mu\pi_\omega(a_2)\phi,
+    \end{align*}
+    \begin{align*}
+        \pi_\omega(a_1)\pi_\omega(a_2)\phi &= \pi_\omega(a_1) \lim_{n\to\infty}{p_{a_2}\Psi_{[b_n]}}\\
+                                           &= \lim_{n\to\infty}{\pi_\omega(a_1)\Psi_{[a_2b_n]}}\\
+                                           &= \lim_{n\to\infty}{p_{a_1}\Psi_{[a_2b_n]}}\\
+                                           &= \lim_{n\to\infty}{\Psi_{[a_1a_2b_n]}}\\
+                                           &= \lim_{n\to\infty}{p_{a_1a_2}\Psi_{[b_n]}}\\
+                                           &= \pi_\omega(a_1a_2)\phi,
+    \end{align*}
+    and
+    \begin{align*}
+        \inner{\psi}{\pi_\omega(a_1^*)\phi} &= \lim_{n\to\infty}{\inner{\Psi_{[c_n]}}{p_{a_1^*}\Psi_{[b_n]}}}\\
+                                            &= \lim_{n\to\infty}{\inner{\Psi_{[c_n]}}{\Psi_{[a_1^*b_n]}}}\\
+                                            &= \lim_{n\to\infty}{\omega(c_n^*a_1^*b_n)}\\
+                                            &= \lim_{n\to\infty}{\inner{\Psi_{[a_1c_n]}}{\Psi_{[b_n]}}}\\
+                                            &= \lim_{n\to\infty}{\inner{p_{a_1}\Psi_{[c_n]}}{\Psi_{[b_n]}}}\\
+                                            &= \inner{\pi_{\omega}(a_1)\psi}{\phi}\\
+                                            &= \inner{\psi}{\pi_{\omega}(a_1)^*\phi},
+    \end{align*}
+    hence \(\pi_\omega\) is a *-morphism, and thus \((\hilbert_\omega, \pi_\omega)\) is a representation.
+
+    If \(\algebra{A}\) is unital, we set \(\Omega_\omega = \Psi_{[\unity]}\), which yields
+    \begin{equation*}
+        \inner{\Omega_\omega}{\pi_\omega(a)\Omega_\omega} = \inner{\Psi_{[\unity]}}{\Psi_{[a]}} = \omega(\unity^*a) = \omega(a),
+    \end{equation*}
+    for all \(a \in \algebra{A}\) and \(\pi_\omega(\algebra{A})\Omega_\omega = \setc{\Psi_{[a]}}{a \in \algebra{A}} = \Psi(\algebra{A}/\algebra{I}_\omega)\), hence \((\hilbert_\omega, \pi_\omega, \Omega_\omega)\) is a cyclic representation. If \(\algebra{A}\) is not unital, let \((\hilbert_{\hat{\omega}},\pi_{\hat{\omega}}, \Omega_{\hat{\omega}})\) be the cyclic representation of \(\mathbb{C} \ltimes \algebra{A}\) constructed for the extended state \(\hat{\omega} : \mathbb{C} \ltimes \algebra{A} \to \mathbb{C}\) as above and let \(\imath : \algebra{A} \to \mathbb{C} \ltimes \algebra{A}\) be the *-isomorphism that lets us isometrically identify \(\algebra{A}\) with a C*-subalgebra of \(\mathbb{C} \ltimes \algebra{A}\), then \((\hilbert_{\hat{\omega}}, \pi_{\hat{\omega}} \circ \imath)\) is a representation of \(\algebra{A}\). Let \((\alpha, a) \in \mathbb{C} \ltimes \algebra{A}\), then
+    \begin{equation*}
+        \pi_{\hat{\omega}}(\alpha,a)\Omega_{\hat{\omega}} = \Psi_{[(\alpha,a)]} = \alpha \Psi_{[\unity]} + \Psi_{\imath(a)} = \alpha \Omega_{\hat{\omega}} + \pi_{\hat{\omega}}\circ \imath(a) \Omega_{\hat{\omega}},
+    \end{equation*}
+    so as \(\pi_{\hat{\omega}}(\mathbb{C}\ltimes\algebra{A})\Omega_{\hat{\omega}}\) is dense in \(\hilbert_{\hat{\omega}}\), then \(\pi_{\hat{\omega}}\circ\imath(\algebra{A}) \Omega_{\hat{\omega}}\) is dense in \(\hilbert_{\hat{\omega}}\) if \(\Omega_{\hat{\omega}}\) lies in the closure of \(\pi_{\hat{\omega}}\circ \imath(\algebra{A}) \Omega_{\hat{\omega}}\). Let \(e : \Lambda \to \algebra{A}_+\) be an approximate identity on \(\algebra{A}\) and let us denote \(\tilde{e} = \imath \circ e\), then
+    \begin{align*}
+        \norm{\pi_{\hat{\omega}}(\tilde{e}_{\lambda})\Omega_{\hat{\omega}} - \Omega_{\hat{\omega}}}^2 
+        &= \norm{\Omega_{\hat{\omega}}}^2 + \norm{\pi_{\hat{\omega}}(\tilde{e}_{\lambda})\Omega_{\hat{\omega}}}^2 - 2 \inner{\Omega_{\hat{\omega}}}{\pi_{\hat{\omega}}(\tilde{e}_{\lambda})\Omega_{\hat{\omega}}}\\
+        &= \norm{\unity}^2 + \inner{\Omega_{\hat{\omega}}}{\pi_{\hat{\omega}}(\tilde{e}_\lambda^2)\Omega_{\hat{\omega}}} - 2 \hat{\omega}(\tilde{e}_\lambda)\\
+        &= 1 + \hat{\omega}(\tilde{e}_{\lambda}^2) - 2 \omega(e_\lambda)\\
+        &= 1 + \omega(e_{\lambda}^2) - 2\omega(e_\lambda)
+    \end{align*}
+    for all \(\lambda \in \Lambda\), hence \(\pi_{\hat{\omega}}(\tilde{e}_{\lambda})\Omega_{\hat{\omega}} \to \Omega_{\hat{\omega}}\)\footnote{Since \(\pi_{\hat{\omega}}\) is a cyclic representation, we could have inferred this result from \cref{prop:representation_approximate_identity}.} and we conclude \((\hilbert_{\hat{\omega}}, \pi_{\hat{\omega}} \circ \imath, \Omega_{\hat{\omega}})\) is a cyclic representation of \(\algebra{A}\).
+
+    Let \((\tilde{\hilbert}_{\omega}, \tilde{\pi}_{\omega}, \tilde{\Omega}_{\omega})\) be another cyclic representation of \(\algebra{A}\) and define the linear map
+    \begin{align*}
+        U : \pi_\omega(\algebra{A})\Omega_{\omega} &\to \tilde{\pi}_{\omega}(\algebra{A}) \tilde{\Omega}_{\omega}\\
+        \pi_\omega(a)\Omega_{\omega} &\mapsto \tilde{\pi}_{\omega}(a) \tilde{\Omega}_{\omega}.
+    \end{align*}
+    Let \(a, b \in \algebra{A}\), then
+    \begin{align*}
+        \inner{U\pi_\omega(a)\Omega_{\omega}}{U\pi_\omega(b)\Omega_\omega} 
+        &= \inner{\tilde{\pi}_\omega(a)\tilde{\Omega}_\omega}{\tilde{\pi}_\omega(b)\tilde{\Omega}_\omega}\\ 
+        &= \inner{\tilde{\Omega}_\omega}{\tilde{\pi}_{\omega}(a^*b) \tilde{\Omega}_\omega}\\
+        &= \omega(a^*b)\\
+        &= \inner{\Omega_\omega}{\pi_\omega(a^*b)\Omega_\omega}\\
+        &= \inner{\pi_\omega(a)\Omega_\omega}{\pi_\omega(b)\Omega_\omega},
+    \end{align*}
+    hence \(U\) preserves the inner product, and thus, it is a linear isometry. In particular, \(U\) is bounded and densely defined in \(\hilbert_\omega\), hence the bounded linear map
+    \begin{align*}
+        \hat{U} : \hilbert_\omega &\to \tilde{\hilbert}_\omega\\
+                             \psi &\mapsto \lim_{n\to\infty} U \psi_n,
+    \end{align*}
+    where \(\family{\psi_n}{n\in \mathbb{N}} \subset \pi_\omega(\algebra{A})\Omega_\omega\) is any sequence that converges against \(\psi,\) is well defined. Let \(\psi \in \hilbert_\omega\) and let \(a : \mathbb{N} \to \algebra{A}\) be a sequence such that \(\pi_\omega(a_n)\Omega_\omega \to \psi\), then
+    \begin{align*}
+        \norm{\hat{U}\psi}
+        &= \norm*{\lim_{n\to\infty}{U \pi_{\omega}(a_n)\Omega_\omega}}\\
+        &= \lim_{n\to\infty}{\norm{U\pi_\omega(a_n)\Omega_\omega}}\\
+        &= \lim_{n\to\infty}{\norm{\pi_{\omega}(a_n)\Omega_\omega}}\\
+        &= \norm*{\lim_{n\to\infty}{\pi_\omega(a_n)\Omega_\omega}}\\
+        &= \norm{\psi},
+    \end{align*}
+    hence \(\hat{U}\) is an isometry. Let \(\tilde{\phi} \in \tilde{\hilbert}_\omega,\) and let \(b : \mathbb{N} \to \algebra{A}\) be a sequence such that \(\tilde{\pi}_\omega(b_n)\tilde{\Omega}_\omega \to \tilde{\phi}\), then \(U\pi_\omega(b_n)\Omega_\omega \to \tilde{\phi}\), and as \(U\) is an isometry, it follows that \(\pi_\omega(b_n)\Omega_\omega\) is a Cauchy sequence, thus convergent against some \(\phi \in \hilbert_\omega\), which satisfies \(\hat{U} \phi = \tilde{\phi},\) hence \(\hat{U}\) is surjective. By \cref{thm:unitary_iff}, we conclude \(\hat{U}\) is a unitary map. Let \(e : \Lambda \to \algebra{A}_+\) be an approximate identity on \(\algebra{A}\), then \(\pi_\omega \circ e\) and \(\tilde{\pi}_\omega \circ e\) are approximate identities on \(\hilbert_\omega\) and \(\tilde{\hilbert}_\omega\) with respect to the strong operator topology, hence 
+    \begin{equation*}
+        \hat{U} \Omega_\omega = \lim_{\lambda \in \Lambda}{U \pi_\omega(e_\lambda) \Omega_\omega =}\lim_{\lambda \in \Lambda}{\tilde{\pi}_\omega(e_\lambda)\tilde{\Omega}_\omega}= \tilde{\Omega}_\omega.
+    \end{equation*}
+    Let \(\tilde{\phi} \in \tilde{\hilbert}_\omega\), then there exists a sequence \(b : \mathbb{N} \to \algebra{A}\) such that \(\tilde{\pi}_\omega(b_n)\tilde{\Omega}_\omega \to \tilde{\phi}\) and hence
+    \begin{align*}
+        \tilde{\pi}_\omega(a)\tilde{\phi} &= \lim_{n\to\infty}{\tilde{\pi}_{\omega}(a)\tilde{\pi}_\omega(b_n)\tilde{\Omega}_\omega}\\
+                                          &= \lim_{n\to\infty}{\tilde{\pi}_{\omega}(ab_n)\tilde{\Omega}_\omega}\\
+                                          &= \lim_{n\to\infty}{\hat{U}\pi_{\omega}(ab_n)\Omega_\omega}\\
+                                          &= \hat{U}\pi_{\omega}(a)\hat{U}^*\lim_{n\to\infty}{\hat{U}\pi_{\omega}(b_n)\Omega_\omega}\\
+                                          &= \hat{U}\pi_\omega(a)\hat{U}^* \lim_{n\to\infty}{\tilde{\pi}_\omega(b_n)\tilde{\Omega}_\omega}\\
+                                          &= \hat{U}\pi_\omega(a)\hat{U}^* \tilde{\phi},
+    \end{align*}
+    for all \(a \in \algebra{A}\). We have thus shown \((\hilbert_\omega,\pi_\omega, \Omega_\omega)\) and \((\tilde{\hilbert}_\omega, \tilde{\pi}_\omega, \tilde{\Omega}_\omega)\) are unitarily equivalent, as there exists a unitary map \(\hat{U} : \hilbert_\omega \to \tilde{\hilbert}_\omega\) that satisfies \(\tilde{\pi}_\omega(a) = \hat{U}\pi_\omega(a)\hat{U}^*\) for all \(a \in \algebra{A}\) and \(\tilde{\Omega}_\omega = \hat{U}\Omega_\omega\).
+\end{proof}
+
+\begin{corollary}
+    Let \(\algebra{A}\) be a C*-algebra and let \(\omega \in E_\algebra{A}\) be a state over \(\algebra{A}\). If \(\tau : \algebra{A} \to \algebra{A}\) is a *-automorphism such that \(\omega \circ \tau = \omega\), then there exists a unique unitary operator \(U_\omega : \hilbert_\omega \to \hilbert_\omega\) such that
+    \begin{equation*}
+        U_\omega \pi_\omega(a) U_\omega^* = \pi_\omega\circ\tau(a)
+    \end{equation*}
+    for all \(a \in \algebra{A}\) and \(U_\omega\Omega_\omega = \Omega_\omega\), where \((\hilbert_\omega, \pi_\omega, \Omega_\omega)\) is the cyclic representation of \(\algebra{A}\) constructed from \(\omega\).
+\end{corollary}
+\begin{proof}
+    Notice \((\hilbert_\omega, \pi_\omega \circ \tau, \Omega_\omega)\) is another cyclic representation with \(\pi_\omega \circ \tau(\algebra{A})\Omega_\omega = \pi_\omega(\algebra{A})\Omega_\omega\) and
+    \begin{equation*}
+        \inner{\Omega_\omega}{\pi_\omega(\tau(a)) \Omega_\omega} = \omega(\tau(a)) = \omega(a),
+    \end{equation*}
+    hence the corollary follows from the uniqueness of the canonical cyclic representation.
 \end{proof}
