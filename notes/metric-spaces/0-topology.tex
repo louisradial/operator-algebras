@@ -310,13 +310,19 @@ It is possible to relate the continuity of a map with respect to a topology to t
     as claimed.
 \end{proof}
 
-\begin{theorem}{Necessary and sufficient condition for continuity}{continuity_basis}
+\begin{proposition}{Continuity with respect to a basis}{continuity_basis}
     Let \((X, \tau_X)\) and \((Y,\tau_Y)\) be topological spaces and let \(\mathcal{B}_Y\) be a basis for \(\tau_Y\). A map \(f : X \to Y\) is continuous if and only if the preimage of every basis element of \(\mathcal{B}_Y\) is open in \(X\).
-\end{theorem}
+\end{proposition}
 \begin{proof}
     Suppose \(f\) is continuous, then as \(\mathcal{B}_Y \subset \tau_Y,\) it follows that the preimage of basis elements is open. To show the converse, let \(V \in \tau_Y\), then there exists a collection \(\mathcal{V} \subset \mathcal{B}_Y\) such that \(V = \bigcup \mathcal{V}\), hence \(\preim{f}{V} = \bigcup_{B \in \mathcal{V}} \preim{f}{B}\) is a union of open sets in \(\tau_X\).
 \end{proof}
 
+\begin{proposition}{Continuity with respect to a subbasis}{continuity_subbasis}
+    Let \((X, \tau_X)\) and \((Y,\tau_Y)\) be topological spaces, and let \(\mathcal{S} \subset \tau_Y\) be a subbasis for \(\tau_Y\). A map \(f : X \to Y\) is continuous if and only if \(\preim{f}{S} \in \tau_X\) for all \(S \in \mathcal{S}\).
+\end{proposition}
+\begin{proof}
+    Suppose \(f\) is continuous, then as \(\mathcal{S} \subset \tau_Y,\) it follows that the preimage of elements of \(\mathcal{S}\) is open. To show the converse, denote \(\mathcal{B}_\mathcal{S}\) as the basis defined by the subbasis and let \(B \in \mathcal{B}_\mathcal{S},\) then there exists \(\mathcal{F} \subset \mathcal{S}\) finite such that \(B = \bigcap \mathcal{F}\) and we have \(\preim{f}{B} = \bigcap_{S \in \mathcal{F}}{\preim{f}{S}} \in \tau_X\), hence \(f\) is continuous by \cref{prop:continuity_basis}.
+\end{proof}
 
 \begin{proposition}{Initial topology}{initial_topology}
     Let \(X\) be a set, let \(\family{(Y_\lambda, \tau_\lambda)}{\lambda \in \Lambda}\) be an indexed family of topological spaces, and let \(\family{f_\lambda}{\lambda \in \Lambda}\) be an index family of maps \(f_\lambda : X \to Y_\lambda\). For all \(\lambda \in \Lambda\), let
