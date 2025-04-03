@@ -113,6 +113,23 @@ In short, a map is continuous if and only the preimages of (all) open sets are o
     Suppose the preimage of any closed set in \topology{Y} is closed in \topology{X}. Let \(U \in \tau_Y\) be an open set, then \(Y\setminus U\) is closed and so is \(\preim{f}{Y\setminus U}\). Since \(\preim{f}{U} = X \setminus \preim{f}{Y\setminus U}\), the preimage of \(U\) is open, hence \(f\) is continuous.
 \end{proof}
 
+\begin{proposition}{Inclusion map is continuous}{inclusion_continuous}
+    Let \((X, \tau_X)\) be a topological space, let \(S \subset X\) be a subset, and let \(\tau_S\) be the subspace topology on \(S\). The inclusion map \(\imath : S \to X\) defined by \(\imath = \restrict{\id{X}}{S}\) is continuous with respect to \(\tau_S\) and \(\tau_X\). Moreover, the map \(\jmath : X \to \set{x} \times X\) defined by \(y \mapsto (x,y)\) is continuous for all \(x \in X\) with respect to the subspace topology inherited by the product topology on \(X \times X\).
+\end{proposition}
+\begin{proof}
+    Let \(V \in \tau_X,\) then
+    \begin{equation*}
+        \preim{\imath}{V} = \setc{s \in S}{\imath(s) \in V} = \setc{s \in S}{s \in V} = S \cap V \in \tau_S,
+    \end{equation*}
+    hence \(\imath\) is continuous.
+
+    Let \(U \in \tau_{\set{x} \times X}\), then for all \(y \in X\), there exists \(V_y \in \tau_X\) such that \(\set{x} \times V_y \subset U,\) hence \(U = \bigcup_{y \in X} \set{x} \times V_y = \set{x} \times \bigcup_{y \in X} V_y\), and we conclude there exists \(\tilde{U} \in \tau_X\) such that \(U = \set{x} \times \tilde{U}\). We have
+    \begin{equation*}
+        \preim{\jmath}{U} = \setc{y \in X}{\jmath(y) \in U} = \setc{y \in X}{y \in \tilde{U}} = \tilde{U},
+    \end{equation*}
+    thus showing \(\jmath\) is continuous.
+\end{proof}
+
 We may now define the structure preserving map of a topological space.
 \begin{definition}{Homeomorphism}{homeomorphism}
     Let \topology{X} and \topology{Y} be topological spaces. A \emph{homeomorphism} is a continuous bijection \(f : X \to Y\) that is an open mapping.

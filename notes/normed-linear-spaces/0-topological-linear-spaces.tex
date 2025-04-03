@@ -1,7 +1,147 @@
 % vim spl=en_us
 \section{Topological linear spaces}
-Throughout these notes we will consider linear spaces equipped with some topology. We begin by studying semi-norms defined on a linear space.
+Throughout these notes we will consider linear spaces equipped with some topology.
+\begin{definition}{Topological linear space}{tvs}
+    Let \((X, +, \cdot)\) be a linear space over a field \(\mathbb{K}\) (either \(\mathbb{R}\) or \(\mathbb{C}\)). A \emph{vector topology} \(\tau\) is a topology on \(X\) such that
+    \begin{enumerate}[label=(\alph*)]
+        \item for all \(x \in X\), \(X \setminus \set{x} \in \tau\); and
+        \item the linear space operations are continuous with respect to \(\tau\);
+    \end{enumerate}
+    and we say \((X, \tau)\) is a \emph{topological linear space}.
+\end{definition}
 
+Some basic results follow from requiring the linear space operations to be continuous. First, let \(S,T \subset X\) be a subset of a topological linear space \(X\), let \(x \in X\), and let \(\alpha \in \mathbb{K}\), then we denote
+\begin{align*}
+    S + T &= \setc{v \in X}{\exists s \in S, \exists t \in T : v = s + t} = \setc{s + t}{s \in S, t \in T},\\
+    x + S &= \setc{v \in X}{\exists s \in S : v = x + s} = \setc{x + s}{s \in S},\quad\text{and}\\
+    \alpha S &= \setc{v \in X}{\exists s \in S : v = \alpha s} = \setc{\alpha s}{s \in S}
+\end{align*}
+as the images of these subsets under the basic linear space operations.
+
+\begin{proposition}{Characterization of open sets in topological linear spaces}{tvs}
+    Let \(X\) be a linear space and let \(\tau\) be a topology on \(X\) such that the linear space operations are continuous. Let us denote the translation and multiplication maps by
+    \begin{align*}
+        T_x : X &\to X&
+        M_\alpha : X &\to X\\
+        y &\mapsto x + y&
+              y &\mapsto \alpha y,
+    \end{align*}
+    where \(x \in X\) and \(\alpha \in \mathbb{K}\). Then
+    \begin{enumerate}[label=(\alph*)]
+        \item for all \(x \in X,\) the translation \(T_x\) is a homeomorphism;
+        \item a subset \(S \subset X\) is open if and only if \(x + S\) is open for all \(x \in X\);
+        \item for all \(\alpha \in \mathbb{K}\setminus\set{0}\), the multiplication \(M_\alpha\) is a homeomorphism; and
+        \item a subset \(S \subset X\) is open if and only if \(\alpha S\) is open for all \(\alpha \in \mathbb{K} \setminus\set{0}\).
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Let \(x \in X\), then \(T_x\) is a bijection as it has the inverse \(T_{-x}\). Let \(\jmath_{x} : X \to \set{x} \times X\) be the continuous map defined by \(y \mapsto (x,y)\), then \(T_x = \restrict{+}{\set{x}\times X} \circ \jmath_{x}\) is continuous. As \(x\) is arbitrary, then the inverse \(T_{-x}\) is also continuous, therefore translations are homeomorphisms. Let \(S \subset X\), then
+    \begin{equation*}
+        S = \preim{T_{x}}{S + x} = T_{-x}(S + x)
+    \end{equation*}
+    hence \(S\) is open if and only if \(S + x\) is open for all \(x \in X\). An analogous argument shows (c) and (d).
+\end{proof}
+
+
+Since a set is open if and only if its translates are open, we may characterize a vector topology with a system of neighborhoods of a vector.
+\begin{definition}{Local base}{local_basis}
+    Let \((X,\tau)\) be a topological space. A \emph{local basis at a point \(x \in X\)} is a collection \(\mathcal{B} \subset \tau\) such that if \(U \in \tau\) is a neighborhood of \(x\), then there exists \(B \in \mathcal{B}\) such that \(B \subset U\).
+\end{definition}
+In the context of linear topological spaces, we will use only local basis at the zero vector.
+\begin{proposition}{Open sets and local basis}{local_basis}
+    Let \((X, \tau)\) be a topological linear space and let \(\mathcal{B} \subset \tau\) be a local basis. Then the translates of the elements of \(\mathcal{B}\) form a basis for \(\tau,\) that is, if \(U \in \tau,\) then there exists \(\family{x_{\lambda}}{\lambda \in \Lambda} \subset X\) and \(\family{B_\lambda}{\lambda \in \Lambda} \subset \mathcal{B}\) such that \(U = \bigcup_{\lambda \in \Lambda}{x_\lambda + B_\lambda}\).
+\end{proposition}
+\begin{proof}
+    Let \(U\in \tau,\) then for every \(u \in U\) there exists \(V_u \in \tau\) with \(u \in V_u\) and \(V_u \subset U,\) hence \(U = \bigcup_{u \in U} V_u\). Moreover, each \(V_u - u\) is a neighborhood of zero, hence there exists \(B_u \in \mathcal{B}\) such that \(B_u \subset V_u - u,\) thus \(u \in B_u + u \subset V_u\) and we conclude \(U = \bigcup_{u \in U} u + B_u,\) as desired.
+\end{proof}
+
+In a linear space \(X,\) a subset \(S \subset X\) is \emph{balanced} if \(\alpha S \subset S\) for all \(\alpha \in \mathbb{K}\) with \(\abs{\alpha} \leq 1\); and it is \emph{convex} if \(\alpha S + (1 - \alpha) S \subset S\) for all \(\alpha \in [0,1].\) 
+\begin{proposition}{Properties}{}
+    Let \(X\) be a linear space and let \(\tau\) be a topology such that the linear space operations are continuous. Then
+    \begin{enumerate}[label=(\alph*)]
+        \item if \(S \subset X,\) then \(\cl_XS = \bigcap_{V \in \mathcal{V}} (S + V),\) where \(\mathcal{V} \subset \tau\) is the set of neighborhoods of zero;
+        \item if \(S, T \subset X,\) then \(\cl_XS + \cl_XT \subset \cl_X(S + T)\);
+        \item if \(S \subset X\) is a linear subspace, then so is \(\cl_XS\);
+        \item if \(S \subset X\) is convex, then so are \(\cl_XS\) and \(\inte_XS\);
+        \item if \(S \subset X\) is balanced, then so is \(\cl_XS\); and
+        \item if \(S \subset X\) is balanced and \(0 \in S,\) then \(\inte_XS\) is balanced.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Notice
+    \begin{equation*}
+        x \in \cl_XS \iff \forall V \in \mathcal{V} : (x + V) \cap S \neq \emptyset \iff \forall V \in \mathcal{V} : x \in S - V \iff x \in \bigcap_{V \in \mathcal{V}}(S + V),
+    \end{equation*}
+    and we conclude (a). From \cref{thm:closure_continuity} and the continuity of addition, (b) follows. 
+
+    Suppose \(S\) is a linear subspace. As multiplication is a homeomorphism, we have \(\cl_X(\lambda S) = \lambda\cl_XS\) for all \(\lambda \in \mathbb{K}\), hence the continuity of addition yields
+    \begin{equation*}
+        \alpha \cl_XS + \beta \cl_XS = \cl_X(\alpha S) + \cl_X(\beta S) \subset \cl_X(\alpha S + \beta S) \subset \cl_X(S),
+    \end{equation*}
+    for all \(\alpha, \beta \in \mathbb{K}\). If we suppose instead that \(S\) is convex, we have similarly
+    \begin{equation*}
+        \alpha \cl_XS + (1 - \alpha) \cl_XS \subset \cl_X\left(\alpha S + (1 - \alpha) S\right) \subset \cl_X S
+    \end{equation*}
+    for all \(\alpha \in [0,1]\). If we suppose that \(S\) is balanced
+\end{proof}
+
+\subsection{Separation properties of a topological linear space}
+Let us now show requiring the singletons to be closed is equivalent to requiring the topology to be Hausdorff.
+\begin{lemma}{Every neighborhood of zero contains a symmetric neighborhood of zero}{symmetric_neighborhood}
+    Let \(X\) be a linear space and let \(\tau\) be a topology on \(X\) such that the linear space operations are continuous. If \(U \in \tau\) is a neighborhood of zero, then there exists an open set \(W \in \tau\) such that
+    \begin{enumerate}[label=(\alph*)]
+        \item \(W\) is a neighborhood of zero;
+        \item \(W + W \subset U\); and
+        \item \(W = -W\).
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    Notice \((0,0) \in \preim{+}{U}\), hence there exists neighborhoods of zero \(V_1, V_2 \in \tau\) such that \(V_1 + V_2 \subset U.\) As \(0 \in V_1 \cap V_2\) and \(0 \in (-V_1) \cap (-V_2)\), the non-empty set \(W = V_1 \cap V_2 \cap (-V_1) \cap (-V_2)\) is an open neighborhood of \(0\). It is clear this set satisfies the desired properties.
+\end{proof}
+
+\begin{lemma}{Existence of disjoint open sets that contain disjoint compact and closed sets}{tvs_hausdorff}
+    Let \(X\) be a linear space and let \(\tau\) be a topology on \(X\) such that the linear space operations are continuous. Suppose \(K \subset X\) is compact, \(C \subset X\) is closed, and that \(K \cap C = \emptyset\). Then there exists a neighborhood of zero \(V \in \tau\) such that \((K + V) \cap (C + V) = \emptyset\) and \(\cl_X(K+V) \cap C = \emptyset\).
+\end{lemma}
+\begin{proof}
+    We may assume without loss of generality that \(K\) is non-empty, for \(\empty + V = \emptyset\) and the lemma follows trivially. Let \(x \in K\), then there exists a neighborhood of \(x\) that does not intersect \(C,\) hence there exists a symmetric neighborhood of zero \(V_x \in \tau\) such that \(C \cap (x + V_x + V_x + V_x) = \emptyset\), by \cref{lem:symmetric_neighborhood}.
+
+    Clearly the sets \(x + V_x\) form an open cover of \(K\), hence there exists \(N \in \mathbb{N}\) and a finite family \(\family{x_n}{n = 1}{N} \subset K\) such that \(\family{x_n + V_{x_n}}{n = 1}{N}\) is an open cover of \(K\). Let \(V = \bigcap_{n = 1}^{N} V_n\), then
+    \begin{equation*}
+        K + V \subset V + \bigcup_{n = 1}^N (x_n + V_{x_n}) = \bigcup_{n = 1}^N (x_n + V_{x_n} + V \subset \bigcup_{n = 1}^N (x_n + V_{x_n} + V_{x_n}),
+    \end{equation*}
+    hence
+    \begin{equation*}
+        (K + V)\cap(C + V) \subset (C + V) \cap \bigcup_{n = 1}^N (x_n + V_{x_n} + V_{x_n}) \subset \bigcup_{n = 1}^{N} C \cap (x_n + V_{x_n} + V_{x_n} + V_{x_n}) = \emptyset.
+    \end{equation*} 
+    Note \(C + V\) is open as we have \(C + V = \bigcup_{x \in C} (x + V)\), then we conclude \((C + V) \cap \cl_{X}(K + V) = \emptyset\), otherwise \(C + V\) would be a neighborhood for a point of closure of \(K + V\) that does not intersect \(K + V\). Furthermore, \(C \subset C + V\) does not intersect \(\cl_{X}(K+V)\).
+\end{proof}
+
+\begin{proposition}{Necessary and sufficient conditions for a vector topology}{vector_topology}
+    Let \(X\) be a linear space with a topology \(\tau\) such that the linear space operations are continuous. The following statements are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \item \((X, \tau)\) is Hausdorff;
+        \item \((X, \tau)\) is a topological linear space; and
+        \item for every \(x \in X\setminus\set{0}\), there exists an neighborhood of zero \(V \in \tau\) such that \(x \notin \cl_XV.\)
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Suppose \(\tau\) is Hausdorff. Let \(v \in X,\) and consider the set \(X \setminus \set{v}\). Let \(u \in X\setminus \set{v}\), then there exists \(S, T \in \tau\) such that \(u \in S\), \(v \in T\), and \(S \cap T = \emptyset\), hence \(u \in S \subset X \setminus \set{v}\), and we conclude \(X \setminus \set{v}\) is open, as desired.
+
+    Suppose \(\tau\) is a vector topology and let \(x \in X\setminus \set{0}\). As \(\set{x}\) is closed and \(\set{0}\) is compact, then by \cref{lem:tvs_hausdorff} there exists a neighborhood \(V \in \tau\) of zero such that \(\set{x} \cap (\set{0} + \cl_XV) = \emptyset,\) hence \(x \notin \cl_XV.\)
+
+    Suppose for every nonzero vector there exists an open neighborhood of zero that does not contain it and let \(u, v \in X\) with \(u \neq v\). Then there exists \(U \in \tau\) such that \(v - u \notin \cl_XU\) and \(0 \in U\), hence \(v \notin u + \cl_XU \subset \cl_X(u + U)\) by \cref{prop:tvs,thm:closure_continuity}. In particular, there exists a neighborhood \(V \in\ \tau\) of \(v\) that does not intersect \(u + U\), which is a neighborhood of \(U\), therefore \(\tau\) is Hausdorff.
+\end{proof}
+
+The \cref{lem:tvs_hausdorff} also lets us infer a result about local basis.
+\begin{proposition}{Every element of a local basis contains the closure of some basic element}{tvs_local_basis}
+    Let \((X, \tau)\) be a topological linear space and let \(\mathcal{B} \subset \tau\) be a local basis. If \(U \in \mathcal{B}\), then there exists \(V \in \mathcal{B}\) such that \(\cl_X V \subset U\).
+\end{proposition}
+\begin{proof}
+    Let \(U \in \mathcal{B}\), then by \cref{lem:tvs_hausdorff} there exists \(W \in \tau\) such that \(0 \in W\) and \(\cl_XW \cap (X\setminus U) = \emptyset\). That is, \(\cl_X W \subset U\). As \(W\) is a neighborhood of \(0,\) there exists \(V \in \mathcal{B}\) such that \(V \subset W,\) therefore \(\cl_X V \subset \cl_X W \subset U\).
+\end{proof}
+
+\subsection{Topology generated by a family of semi-norms on a linear space}
+We begin by studying semi-norms defined on a linear space.
 \begin{definition}{Seminorm on a linear space}{seminorm}
     Let \(V\) be a linear space over \(\mathbb{K}\). A map \(p : V \to \mathbb{R}\) satisfying
     \begin{enumerate}[label=(\alph*)]
@@ -91,28 +231,4 @@ Throughout these notes we will consider linear spaces equipped with some topolog
         p(\tilde{u} + \tilde{v} - x) \leq p(\tilde{u} - u) + p(\tilde{v} - v) + p(u + v - x) < \varepsilon,
     \end{equation*}
     hence \(C \times D \in \tilde{U}\), and we conclude \(\tilde{U}\) is open. By \cref{prop:continuity_subbasis}, it follows that addition and scalar multiplication is continuous.
-\end{proof}
-
-We now define a topological linear space.
-\begin{definition}{Topological linear space}{tvs}
-    Let \((V, +, \cdot)\) be a linear space over a field \(\mathbb{K}\) (either \(\mathbb{R}\) or \(\mathbb{C}\)). A \emph{vector topology} \(\tau\) is a topology on \(V\) such that
-    \begin{enumerate}[label=(\alph*)]
-        \item for all \(v \in V\), \(V \setminus \set{v} \in \tau\); and
-        \item the linear space operations are continuous with respect to \(\tau\);
-    \end{enumerate}
-    and we say \((V, \tau)\) is a \emph{topological linear space}.
-\end{definition}
-The first condition is equivalent to requiring a Hausdorff topology, as we now show.
-\begin{proposition}{Necessary and sufficient conditions for a vector topology}{vector_topology}
-    Let \(V\) be a linear space with a topology \(\tau\) such that the linear space operations are continuous. The following statements are equivalent:
-    \begin{enumerate}[label=(\alph*)]
-        \item \((V, \tau)\) is Hausdorff;
-        \item \((V, \tau)\) is a topological linear space;
-        \item for each \(v \in V \setminus\set{0}\), there exists \(U \in \tau\) such that \(0 \in U\) and \(x \notin U\).
-    \end{enumerate}
-\end{proposition}
-\begin{proof}
-    Suppose \(\tau\) is Hausdorff. Let \(v \in V,\) and consider the set \(V \setminus \set{v}\). Let \(u \in V\setminus \set{v}\), then there exists \(S, T \in \tau\) such that \(u \in S\), \(v \in T\), and \(S \cap T = \emptyset\), hence \(u \in S \subset V \setminus \set{v}\), and we conclude \(V \setminus \set{v}\) is open, as desired.
-
-    Suppose \(\tau\) is a vector topology. 
 \end{proof}
