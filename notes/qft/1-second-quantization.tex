@@ -1,0 +1,15 @@
+% vim: spl=en
+\section{Second quantization}
+We'll extend self-adjoint and unitary maps on a Hilbert space \(\hilbert\) to self-adjoint and unitary operators on the subspaces \(\mathfrak{F}_\pm(\hilbert),\) with a method named \emph{second quantization}, the unfortunate misnomer present in the literature. We'll denote \(\Gamma(U)\) for the second quantization of a unitary operator \(U : \hilbert \to \hilbert\) and \(d{\Gamma}(H)\) for the second quantization of a self-adjoint operator \(H : \domain{H} \subset \hilbert \to \hilbert\), and we will have, \todo[under certain circumstances], \(\Gamma(e^{it H}) = e^{i t d\Gamma(H)}.\)
+
+\begin{definition}{Second quantization of self-adjoint operators}{second_quantization_selfadjoint}
+    Let \(\hilbert\) be a Hilbert space, let \(\domain{H} \subset \hilbert\) be a dense subspace of \(\hilbert,\) and let \(H : \domain{H} \to \hilbert\) be a self-adjoint operator. Denote \(H_0 = 0,\) and \(H_n \) as the operator on \(\hilbert_\pm^n\) defined for \(f_i \in \domain{H}\) by
+    \begin{equation*}
+        H_n \mathscr{P}_\pm^{(n)}\left(f_1 \otimes \dots \otimes f_n\right) = \mathscr{P}_{\pm}^{(n)} \sum_{i = 1}^n{f_1 \otimes \dots \otimes H f_i \otimes \dots \otimes f_n}
+    \end{equation*}
+    and extended by linearity and continuity. The selfadjoint closure of the direct sum of all \(H_n,\)
+    \begin{equation*}
+        d \Gamma(H) = \closure{\bigoplus_{n = 0}^\infty H_n},
+    \end{equation*}
+    is the \emph{second quantization} \(d \Gamma(H)\) of \(H\) in \(\mathfrak{F}_\pm(\hilbert).\)
+\end{definition}

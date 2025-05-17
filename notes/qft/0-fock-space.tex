@@ -1,0 +1,302 @@
+% vim: spl=en
+\chapter{Continuous quantum systems}
+It is postulated by Quantum Mechanics that for a given physical system there exists a Hilbert space \(\hilbert\) with which physical states are associated to trace-class bounded operators and observables are self-adjoint operators. In the case of a pure physical state, the trace-class bounded operator that is associated with it is an orthogonal projector, and thus pure physical states can be associated one-to-one with vectors in \(\hilbert.\) 
+
+In the configuration space \(\mathbb{R}^\nu,\) a system of \(n\) identical particles can have pure states given by vectors in the Hilbert space \(L^2(\mathbb{R}^{n\nu})\) of square-integrable functions with respect to the Lebesgue measure. If the number of particles is not fixed, that is, if we allow \emph{creation} and \emph{annihilation} of particles, we consider the direct sum Hilbert space
+\begin{equation*}
+    \mathfrak{F} = \bigoplus_{n \in \mathbb{N}_0} L^2(\mathbb{R}^{n\nu}),
+\end{equation*}
+where its elements are sequences \(\psi = \family{\psi^{(n)}}{n \in \mathbb{N}_0},\) where \(\psi^{(0)} \in \mathbb{C},\) \(\psi^{(n)} \in L^2(\mathbb{R}^{n\nu})\) for \(n \in \mathbb{N}\), with the norm
+\begin{equation*}
+    \norm{\psi}^2 = \abs{\psi^{(0)}}^2 + \sum_{n \in \mathbb{N}} \int_{\mathbb{R}^{\nu}} \dln{\nu}{x_1} \dots \int_{\mathbb{R}^\nu} \dln{\nu}{x_{n}} \abs{\psi^{(n)}(x_1, \dots, x_n)}^2
+\end{equation*}
+well-defined. For a normalized vector \(\psi\) with \(\norm{\psi} = 1,\) the quantity 
+\begin{equation*}
+    \dln{\nu}{x_1} \dots \dln\nu{x_n}\abs{\psi^{(n)}(x_1, \dots, x_n)}^2
+\end{equation*}
+represents the probability density for \(n\) particles at a neighborhood of the points \(x_1, \dots, x_n.\) 
+
+The indistinguishability of the particles implies this probability density must be symmetric with respect to permutations of particles, and this must be in some way reflected in the state vectors \(\psi.\) Particles which follow the Bose-Einstein statistics, \emph{bosons}, have symmetric vectors with respect to permutation of the particles, whereas particles which follow the Fermi-Dirac statistics, \emph{fermions}, have antisymmetric vectors with respect to permutation. For each case, we consider a particular subspace of \(\mathfrak{F}\) which is invariant under the unitary representation of the permutation group.
+
+\section{Fock spaces}
+We generalize the discussion to an abstract Hilbert space \(\hilbert\) which describes a physical system of one particle, and define the Hilbert space for the many particles states. Before doing so, we must define the direct sum of countably many Hilbert spaces, as well as the tensor product of finitely many Hilbert spaces.
+
+\begin{proposition}{Direct sum of countably many Hilbert Spaces}{direct_sum_hilbert}
+    For \(j \in \mathbb{N},\) let \(\hilbert_j\) be the Hilbert space with inner product \(\inner{\noarg}{\noarg}_j : \hilbert_j \times \hilbert_j \to \mathbb{C}\) and norm \(\norm{\noarg}_j : \hilbert_j \to \mathbb{R}_+\). Let \(V\) be the linear space of the \emph{algebraic} direct sum of the collection of Hilbert space considered. The linear subspace
+    \begin{equation*}
+        \hilbert =  \setc*{\psi \in V}{\sum_{k = 1}^\infty{\norm{\psi_k}_k^2 < \infty}},
+    \end{equation*}
+    is a Hilbert space with the inner product
+    \begin{align*}
+        \inner{\noarg}{\noarg} : \hilbert \times \hilbert &\to \mathbb{C}\\
+                                              (\psi,\phi) &\mapsto \sum_{j = 1}^\infty \inner{\psi_j}{\phi_j}_j.
+    \end{align*}
+    We denote this Hilbert by 
+    \begin{equation*}
+        \hilbert = \bigoplus_{j = 1}^\infty{\hilbert_j},
+    \end{equation*}
+    and say it is the \emph{topological} direct sum of the Hilbert spaces considered.
+\end{proposition}
+\begin{proof}
+    It is clear \(0 \in \hilbert,\) so it is non-empty. Let \(\psi, \phi \in \hilbert\) and \(\alpha \in \mathbb{C}\), then for all \(n \in \mathbb{N},\) we have
+    \begin{equation*}
+        \norm{\psi_n + \alpha \phi_n}_n^2 \leq \left(\norm{\psi_n}_n + \abs{\alpha} \norm{\phi_n}_n\right)^2 \leq 2\norm{\psi_n}_n^2 + 2 \abs{\alpha}^2\norm{\phi_n}_n^2,
+    \end{equation*}
+    hence for all \(N \in \mathbb{N},\) we have
+    \begin{equation*}
+        \sum_{j = 1}^N{\norm{\psi_j + \alpha \phi_j}_j^2}\leq 2\sum_{j = 1}^N{\norm{\psi_j}_j^2} + 2 \abs{\alpha}^2 \sum_{j = 1}^N{\norm{\phi_j}_j^2}.
+    \end{equation*}
+    Now it is clear that \(N \mapsto \sum_{j = 1}^N \norm{\psi_j + \alpha \phi_j}_j^2\) is a Cauchy sequence, hence convergent to some finite positive number, thus showing that \(\psi + \alpha \phi \in \hilbert.\) We may conclude \(\hilbert\) is a linear subspace of \(V\). Furthermore, we have
+    \begin{equation*}
+        \sum_{j = 1}^\infty \abs{\inner{\phi_j}{\psi_j}_j} \leq \sum_{j = 1}^\infty \norm{\phi_j}_j \norm{\psi_j}_j \leq \sqrt{\sum_{j = 1}^\infty{\norm{\phi_j}_j^2}}\sqrt{\sum_{k = 1}^\infty{\norm{\psi_k}_k^2}}< \infty,
+    \end{equation*}
+    hence showing the map \(\inner{\noarg}{\noarg}\) is well-defined. It is clear it is an inner product, as each \(\inner{\noarg}{\noarg}_j\) is an inner product. We also note the maps
+    \begin{align*}
+        p_k : V &\to \mathbb{R}_+\\
+                  \psi &\mapsto \sqrt{\sum_{j = 1}^k{\norm{\psi_j}_j^2}}
+    \end{align*}
+    are seminorms on \(V\) for all \(k \in \mathbb{N}\) and, for \(\psi \in \hilbert\) we have the limit \(\lim_{k \to \infty}{p_k(\psi)} = \norm{\psi} = \sqrt{\inner{\psi}{\psi}}.\)
+
+    Let \(\Psi : \mathbb{N} \to \hilbert\) be a Cauchy sequence with respect to the norm induced by the inner product on \(\hilbert\), where we denote \(\Psi^m_n = \Psi(m)_n \in \hilbert_n\). For each \(j \in \mathbb{N},\) we have
+    \begin{equation*}
+    \norm{\Psi^m_j - \Psi^n_j}_j \leq \sqrt{\sum_{k = 1}^\infty{\norm{\Psi^m_k - \Psi^n_k}_k^2}} =  \norm{\Psi^m - \Psi^n},
+    \end{equation*}
+    thus showing the sequence \(\family{\Psi^m_j}{m \in \mathbb{N}} \subset \hilbert_j\) is is a Cauchy sequence, thus convergent against some \(\tilde{\Psi}_j \in \hilbert_j.\) 
+
+    We consider \(\tilde{\Psi} \in V,\) where its \(j\)th component is \(\tilde{\Psi}_j,\) and we aim to show that \(\tilde{\Psi} \in \hilbert\) is the limit against which \(\Psi\) converges. Let \(\varepsilon > 0\) and let \(N : \mathbb{N} \to \mathbb{N}\) be an increasing sequence such that \(n,m \geq N_k\) implies \(\norm{\Psi^m - \Psi^n} < 2^{-k}\epsilon.\) We consider the sequence \(M : \mathbb{N} \to \mathbb{N}\) with the property that \(M_k > N_k\) and the subsequence \(\Phi = \Psi \circ M,\) then \(\norm{\Phi^{\ell+1} - \Phi^\ell} < 2^{-\ell}\varepsilon\) for \(M_{\ell + 1} > M_\ell > N_\ell.\) As a subsequence, it is clear that for each \(j \in \mathbb{N},\) \(\Phi_j^\ell\) converges against \(\tilde{\Psi}_j.\) Notice
+    \begin{align*}
+        p_n(\Phi^k) &= p_n\left(\Phi^1 + \sum_{\ell = 1}^{k-1}{\left(\Phi^{\ell+1} - \Phi^\ell\right)}\right)\\
+                    &\leq p_n(\Phi^1) + \sum_{\ell = 1}^{k-1}{p_n(\Phi^{\ell+1} - \Phi^\ell)}\\
+                    &\leq \norm{\Phi^1} + \sum_{\ell = 1}^{k-1}{\norm{\Phi^{\ell+1} - \Phi^\ell}}\\
+                    &\leq \norm{\Phi^1} + \varepsilon \sum_{\ell = 1}^{k-1}{2^{-\ell}}\\
+                    &\leq \norm{\Phi^1} + \varepsilon,
+    \end{align*}
+    then with the limit \(k \to \infty,\) we have
+    \begin{equation*}
+        p_n(\tilde{\Psi}) = \sqrt{\sum_{j = 1}^n{\norm{\tilde{\Psi}_j}_j^2}} = \lim_{k\to\infty}{\sqrt{\sum_{j = 1}^n{\norm{\Phi^k_j}_j^2}}} \leq \norm{\Phi^1} + \varepsilon,
+    \end{equation*}
+    therefore
+    \begin{equation*}
+        \lim_{n \to \infty}{p_n(\tilde{\Psi})} \leq \norm{\Phi^1} + \varepsilon,
+    \end{equation*}
+    concluding that \(\tilde{\Psi} \in \hilbert.\) By the same telescopic sum argument, we have \(p_n(\Phi^k - \Phi^1) \leq \varepsilon\) for all \(n \in \mathbb{N}\) and \(k \in \mathbb{N},\) hence \(p_n(\tilde{\Psi} - \Psi^{M_1}) = p_n(\tilde{\Psi} - \Phi^1) \leq \varepsilon,\) and we infer \(\Psi\) converges against \(\tilde{\Psi}.\) That is, \(\hilbert\) is a Hilbert space.
+\end{proof}
+
+\begin{proposition}{Tensor product of finitely many Hilbert spaces}{tensor}
+    Let \((\hilbert_1, \inner{\noarg}{\noarg}_1), \dots, (\hilbert_L, \inner{\noarg}{\noarg}_L)\) be Hilbert spaces and let \(V\) be their \emph{algebraic} tensor product. The map
+    \begin{align*}
+        \inner{\noarg}{\noarg}_V : V \times V &\to \mathbb{C}\\
+        (u_1 \otimes \dots \otimes u_L, v_1 \otimes \dots \otimes v_L)
+                                             &\mapsto \prod_{j = 1}^L{\inner{u_j}{v_j}}_j
+    \end{align*}
+    extended by sesquilinearity defines an inner product on \(V.\) 
+\end{proposition}
+\begin{proof}
+    It suffices to show the \(L = 2\) case as the generalization differs only by the busier notation. It remains to show the sesquilinear form is positive and that it separates points. Let \(\Psi \in V,\) then there exists \(n \in \mathbb{N},\) \(\set{\chi_1, \dots, \chi_n} \subset \hilbert_1\)  and \(\set{\xi_1, \dots, \xi_n} \subset \hilbert_2\) and \(\set{\alpha_1, \dots, \alpha_n} \subset \mathbb{C}\) such that
+    \begin{equation*}
+        \Psi = \sum_{j = 1}^n{\alpha_j \chi_j \otimes \xi_j}.
+    \end{equation*}
+    Notice we may take the subsets of \(n\) vectors as orthonormal without loss of generality, as we may use the Gram-Schmidt procedure and relabel the resulting sets as the original sets and update the coefficients accordingly. Then 
+    \begin{equation*}
+        \inner{\chi_a \otimes \xi_b}{\chi_c \otimes \xi_d}_V = \inner{\chi_a}{\chi_c}_1 \inner{\xi_b}{\xi_d}_2 = \delta_{ac} \delta_{bd}
+    \end{equation*}
+    yields
+    \begin{align*}
+        \inner{\Psi}{\Psi}_V &= \inner*{\sum_{j = 1}^n{\alpha_j \chi_j \otimes \xi_j}}{\sum_{k = 1}^n{\alpha_k \chi_k \otimes \xi_k}}\\
+                             &= \sum_{j = 1}^n{\sum_{k = 1}^n{\conj{\alpha_j} \alpha_k \inner{\chi_j \otimes \xi_j}{\chi_k \otimes \xi_k}}}\\
+                             &= \sum_{j= 1}^n{\sum_{k = 1}^n{\conj{\alpha_j} \alpha_k \delta_{jk} \delta_{jk}}}\\
+                             &= \sum_{j = 1}^n{\abs{\alpha_j}^2}\geq 0,
+    \end{align*}
+    thus showing the sesquilinear form is positive-definite, thus an inner product on V.
+\end{proof}
+
+\begin{definition}{Topological tensor product of a collection of finitely many Hilbert spaces}{tensor}
+    Let \(\hilbert_1, \dots, \hilbert_n\) be Hilbert spaces. The \emph{topological} tensor product of these Hilbert spaces, denoted by
+    \begin{equation*}
+        \bigotimes_{j = 1}^n{\hilbert_j}
+    \end{equation*}
+    is defined as the canonical completion of their algebraic tensor product with respect to the inner product defined in \cref{prop:tensor}.
+\end{definition}
+
+We may now define the Fock space using the above constructions.
+\begin{definition}{Fock space}{fock}
+    Let \(\hilbert\) be a Hilbert space. Let \(\hilbert^0 = \mathbb{C},\) let \(\hilbert^1 = \hilbert\) and let
+    \begin{equation*}
+        \hilbert^n = \bigotimes_{j = 1}^n \hilbert
+    \end{equation*}
+    be the \(n\)-fold topological tensor product of \(\hilbert\) with inner product denoted by \(\inner{\noarg}{\noarg}_{\hilbert^n}.\) The \emph{Fock space} associated with \(\hilbert\) is the Hilbert space
+    \begin{equation*}
+        \mathfrak{F}(\hilbert) = \bigoplus_{n = 0}^\infty \hilbert^n,
+    \end{equation*}
+    where its elements are sequences \(\Psi : \mathbb{N}_0 \to \mathfrak{F}(\hilbert)\) with \(\Psi^{(n)} \in \hilbert^n\), and 
+    \begin{align*}
+        \inner{\noarg}{\noarg}_{\mathfrak{F}(\hilbert)} : \mathfrak{F}(\hilbert) \times \mathfrak{F}(\hilbert) &\to \mathbb{C}\\
+        (\Psi, \Phi) &\mapsto \conj{\Psi^{(0)}}\Phi^{(0)} + \sum_{n = 1}^\infty{\inner{\Psi^{(n)}}{\Phi^{(n)}}_{\hilbert^n}}
+    \end{align*}
+    is its inner product.
+\end{definition}
+
+We begin the discussion of Fock spaces by defining the bosonic and fermionic subspaces, which will be denoted by \(\mathfrak{F}_+(\hilbert)\) and \(\mathfrak{F}_-(\hilbert).\) We consider first a representation of the permutation group, \(S_n,\) on the tensor product \(\hilbert^n,\) where \(n\) is an integer greater than one.
+\begin{proposition}{Representation of the permutation group}{permutation}
+    Let \(\hilbert\) be a Hilbert space and let \(n \geq 2\) be an integer. The map \(\mathscr{P}_n : S_n \times \hilbert^n \to \hilbert^n\) defined for \(\sigma \in S_n\) by
+    \begin{equation*}
+        \mathscr{P}_n(\sigma)\left(u_1 \otimes \dots \otimes u_n\right) = u_{\sigma(1)} \otimes \dots \otimes u_{\sigma(n)}
+    \end{equation*}
+    and extended by continuity and linearity is a unitary representation of \(S_n\) on \(\hilbert^n.\)
+\end{proposition}
+\begin{proof}
+    Let \(V\) be the \(n\)-fold algebraic tensor product of \(\hilbert,\) and isometrically identify it with a dense subspace of topological tensor product \(\hilbert^n.\) We consider the map \(P : S_n \times V \to V\) defined for \(\sigma \in S_n\) by
+    \begin{equation*}
+        P(\sigma) \left(u_1 \otimes \dots \otimes u_n\right) = u_{\sigma(1)} \otimes \dots \otimes u_{\sigma(n)}
+    \end{equation*}
+    and extended by linearity to \(V\). Let \(\psi \in V,\) then there exists \(\ell \in \mathbb{N},\) \(\set{\alpha_1, \dots, \alpha_\ell} \subset \mathbb{C},\) \(\set{u_1^1, \dots, u_n^\ell} \subset \hilbert\) such that
+    \begin{equation*}
+        \psi = \sum_{j = 1}^\ell{\alpha_j u_1^j \otimes \dots \otimes u_n^j}.
+    \end{equation*}
+    It is clear that \(P(e) \psi = \psi\) and that for \(\pi, \sigma \in S_n\) we have
+    \begin{equation*}
+        P(\sigma) P(\pi) \psi = P(\sigma)\left(\sum_{j = 1}^\ell{\alpha_j u_{\pi(1)} \otimes \dots \otimes u_{\pi(n)}}\right)
+        = \sum_{j = 1}^\ell{\alpha_j u_{\sigma\pi(1)} \otimes \dots \otimes u_{\sigma\pi(n)}} 
+        = P(\sigma \pi) \psi,
+    \end{equation*}
+    hence in order to show that \(P\) is a unitary representation of \(S_n\) on \(V\), it remains to see that for all \(\sigma \in S_n\) the map \(V \ni \phi \mapsto P(\sigma) \phi\) is unitary. Notice that for \(j,k \in \set{1, \dots, \ell},\) we have
+    \begin{align*}
+        \inner*{P(\sigma) (u^j_1 \otimes \dots \otimes u^j_n)}{P(\sigma) (u^k_1 \otimes \dots \otimes u^k_n)}_{\hilbert^n} 
+        &= \inner*{u^j_{\sigma(1)} \otimes \dots \otimes u^j_{\sigma(n)}}{u^k_{\sigma(1)} \otimes \dots \otimes u^k_{\sigma(n)}}_{\hilbert^n}\\
+        &= \prod_{i = 1}^n \inner*{u^j_{\sigma(i)}}{u^k_{\sigma(i)}}_{\hilbert}\\
+        &= \prod_{i = 1}^n \inner*{u^j_i}{u^k_i}_{\hilbert}\\
+        &= \inner*{u^j_1 \otimes \dots \otimes u^j_n}{u^k_1 \otimes \dots \otimes u^k_n}_{\hilbert^n},
+    \end{align*}
+    then
+    \begin{align*}
+        \norm{P(\sigma)\psi}^2 &= \inner*{\sum_{j = 1}^\ell \alpha_j u_{\sigma(1)}^j \otimes \dots \otimes u_{\sigma(n)}^j}{\sum_{k = 1}^\ell \alpha_k u_{\sigma(1)}^k \otimes \dots \otimes u_{\sigma(n)}^k}\\
+                               &= \sum_{j = 1}^\ell{\sum_{k = 1}^\ell{\conj{\alpha_j} \alpha_k \inner*{u^j_{\sigma(1)}\otimes \dots u^j_{\sigma(n)}}{u^k_{\sigma(1)}\otimes \dots u^k_{\sigma(n)}}}}\\
+                               &= \sum_{j = 1}^\ell{\sum_{k = 1}^\ell{\conj{\alpha_j} \alpha_k \inner*{u_1^j \otimes \dots \otimes u_n^j}{u_1^k \otimes \dots \otimes u_n^k}}}\\
+                               &= \inner*{\sum_{j = 1}^\ell{\alpha_j u_{\sigma(1)}^j \otimes \dots \otimes u_{\sigma(n)}^j}}{\sum_{k = 1}^\ell{\alpha_k u_{\sigma(1)}^k \otimes \dots \otimes u_{\sigma(n)}^k}}\\
+                               &= \norm{\psi}^2,
+    \end{align*}
+    hence \(P(\sigma)\) is an isometry, therefore injective. By the composition \(P(\sigma) P(\pi) = P(\sigma \pi),\) it is clear that \(P(\sigma)\) admits the inverse map \(P(\sigma^{-1}),\) hence \(P(\sigma)\) is a unitary map. As \(V\) is dense in \(\hilbert^n,\) we extend \(P(\sigma)\) to a unitary operator on \(\hilbert^n\) for all \(\sigma \in S_n,\) thus obtaining the unitary representation \(\mathscr{P}_n\) of \(S_n\) on \(\hilbert^n.\)
+\end{proof}
+For the remainder spaces, \(\mathbb{C}\) and \(\hilbert,\) we simply define \(\mathscr{P}_0\) and \(\mathscr{P}_1\) as the trivial representations. We then define the symmetrization and antisymmetrization operators.
+\begin{definition}{Symmetrization and antisymmetrization operators}{symmetrization}
+    Let \(\hilbert\) be a Hilbert space. For \(n \in \mathbb{N}\) we define the symmetrization operator \(\mathscr{S}_n : \hilbert^n \to \hilbert^n\) and the antisymmetrization operator \(\mathscr{A}_n : \hilbert^n \to \hilbert^n\) by
+    \begin{equation*}
+        \mathscr{S}_n = \frac{1}{n!} \sum_{\sigma \in S_n}{\mathscr{P}_n(\sigma)}
+        \quad\text{and}\quad
+        \mathscr{A}_n = \frac{1}{n!} \sum_{\sigma \in S_n}{\sgn(\sigma)\mathscr{P}_n(\sigma)}.
+    \end{equation*}
+\end{definition}
+We will now show these operators are orthogonal projectors and that the subspaces of \(\hilbert^n\) onto which they project only have intersection if \(n = 0\) or \(n = 1.\)
+\begin{proposition}{Symmetrization and antisymmetrization operators}{symmetrization}
+    Let \(\hilbert\) be a Hilbert space. Then
+    \begin{enumerate}[label=(\alph*)]
+        \item For all \(n \in \mathbb{N}_0\) and \(\pi \in S_n,\) we have \(\mathscr{S}_n\mathscr{P}_n(\pi) = \mathscr{P}_n(\pi)\mathscr{S}_n = \mathscr{S}_n\);
+        \item For all \(n \in \mathbb{N}_0\) and \(\pi \in S_n,\) we have \(\mathscr{A}_n\mathscr{P}_n(\pi) = \mathscr{P}_n(\pi)\mathscr{A}_n = \sgn(\pi)\mathscr{A}_n\);
+        \item For all \(n \in \mathbb{N}_0,\) \(\mathscr{S}_n\) and \(\mathscr{A}_n\) are projectors;
+        \item For all \(n \in \mathbb{N}\) with \(n \geq 2,\) we have \(\mathscr{S}_n \mathscr{A}_n = \mathscr{A}_n\mathscr{S}_n = 0.\) For the other cases, \(n \in \set{0,1}\), we have \(\mathscr{S}_n \mathscr{A}_n = \mathscr{A}_n\mathscr{S}_n = \unity;\)
+        \item For all \(n \in \mathbb{N}_0,\) \(\mathscr{S}_n\) and \(\mathscr{A}_n\) are self-adjoint bounded operators.
+    \end{enumerate}
+\end{proposition}
+\begin{remark}
+    With the exception of (e), these statements follow assuming only that \(\mathscr{P}_n\) is a representation of the permutation group on any \(n\)-fold (algebraic or topological) tensor product space of some linear space.
+\end{remark}
+\begin{proof}
+    It is clear that for \(n \in \set{0,1},\) we have \(\mathscr{S}_n = \mathscr{A}_n = \unity,\) hence it suffices to show the proposition assuming the integer \(n\) is greater than one.
+
+    Let \(\pi \in S_n,\) then as the map \(S_n \ni \sigma \mapsto \pi \sigma \in S_n\) is a bijection, we have
+    \begin{equation*}
+        \mathscr{P}_n(\pi) \mathscr{S}_n = \frac1{n!} \sum_{\sigma \in S_n}{\mathscr{P}_n(\pi\sigma)} = \frac1{n!}\sum_{\sigma' \in S_n}{\mathscr{P}_n(\sigma')} = \mathscr{S}_n,
+    \end{equation*}
+    and as \(\sgn(\pi \sigma) = \sgn(\pi) \sgn(\sigma)\), we have
+    \begin{equation*}
+        \mathscr{P}_n(\pi) \mathscr{A}_n = \frac1{n!} \sum_{\sigma \in S_n}{\sgn(\sigma)\mathscr{P}_n(\pi\sigma)} = \frac{\sgn(\pi)}{n!}\sum_{\sigma' \in S_n}{\sgn(\sigma')\mathscr{P}_n(\sigma')} = \sgn(\pi)\mathscr{A}_n,
+    \end{equation*}
+    and we analogously conclude that \(\mathscr{S}_n \mathscr{P}_n(\pi) = \mathscr{S}_n\) and \(\mathscr{A}_n \mathscr{P}_n(\pi) = \sgn(\pi) \mathscr{A}_n\). With this, we have
+    \begin{equation*}
+        \mathscr{S}_n^2 = \frac1{n!}\sum_{\sigma \in S_n}{\mathscr{P}_n(\sigma)\mathscr{S}_n} = \frac{1}{n!} \sum_{\sigma \in S_n}{\mathscr{S}_n} = \mathscr{S}_n
+    \end{equation*}
+    and
+    \begin{equation*}
+        \mathscr{A}_n^2 = \frac1{n!}\sum_{\sigma \in S_n}{\sgn(\sigma)\mathscr{P}_n(\sigma)\mathscr{A}_n} = \frac{1}{n!} \sum_{\sigma \in S_n}{\sgn(\sigma)^2\mathscr{A}_n} = \mathscr{A}_n,
+    \end{equation*}
+    hence \(\mathscr{S}_n\) and \(\mathscr{A}_n\) are projectors. We note that
+    \begin{equation*}
+        \sum_{\sigma \in S_n}{\sgn(\sigma)} = \sum_{\sigma' \in S_n}{\sgn(\pi) \sgn(\sigma')} = \sgn(\pi) \sum_{\sigma \in S_n}{\sgn(\sigma)}
+    \end{equation*}
+    for any \(\pi \in S_n,\) hence this sum must equal zero. From statements (a) and (b) it follows that
+    \begin{equation*}
+        \mathscr{S}_n \mathscr{A}_n = \sum_{\sigma \in S_n}{\mathscr{P}_n(\sigma) \mathscr{A}_n} = \sum_{\sigma \in S_n}{\sgn(\sigma) \mathscr{A}_n} = 0
+    \end{equation*}
+    and analogously for \(\mathscr{A}_n \mathscr{S}_n.\)
+
+    As linear combinations of unitary maps, it is clear that \(\mathscr{S}_n\) and \(\mathscr{A}_n\) are bounded operators. From unitarity and group homomorphism properties of \(\mathscr{P}_n,\) we have \(\mathscr{P}_n(\sigma)^* = \mathscr{P}_n(\sigma)^{-1} = \mathscr{P}_n(\sigma^{-1})\) for all \(\sigma \in S_n,\) hence by the antilinearity of the involution we have
+    \begin{equation*}
+        \mathscr{S}_n^* = \sum_{\sigma \in S_n}{\mathscr{P}_n(\sigma)^*} = \sum_{\sigma \in S_n}{\mathscr{P}_n(\sigma^{-1})} = \sum_{\sigma' \in S_n}{\mathscr{P}_n(\sigma')} = \mathscr{S}_n
+    \end{equation*}
+    and
+    \begin{equation*}
+        \mathscr{A}_n^* = \sum_{\sigma \in S_n}{\sgn(\sigma)\mathscr{P}_n(\sigma)^*} = \sum_{\sigma \in S_n}{\sgn(\sigma)\mathscr{P}_n(\sigma^{-1})} = \sum_{\sigma' \in S_n}{\sgn({\sigma'}^{-1})\mathscr{P}_n(\sigma')} = \sum_{\sigma' \in S_n}{\sgn(\sigma')\mathscr{P}_n(\sigma')}  = \mathscr{A}_n,
+    \end{equation*}
+    that is, \(\mathscr{S}_n\) and \(\mathscr{A}_n\) are bounded self-adjoint operators.
+\end{proof}
+
+As \(\mathscr{S}_n\) and \(\mathscr{A}_n\) are orthogonal projectors, we define the subspaces invariant under these operators, \(\hilbert^n_+ = \mathscr{S}_n \hilbert^n\) and \(\hilbert^n_- = \mathscr{A}_n \hilbert^n\). As the images of orthogonal projectors, these subspaces are closed, hence Hilbert spaces.
+As each \(\hilbert^n_\pm\) is a closed subspace of \(\hilbert,\) it is reasonable that the bosonic and fermionic Fock spaces \(\mathfrak{F}_\pm(\hilbert)\) are subspaces of the Fock space \(\mathfrak{F}(\hilbert).\) Indeed, we use the symmetrization and antisymmetrization operators on each \(\hilbert^n\) to define the orthogonal projectors on the Fock space \(\mathfrak{F}(\hilbert).\)
+\begin{proposition}{Bosonic and Fermionic orthogonal projectors}{bose_fermi_projectors}
+    Let \(\hilbert\) be a Hilbert space. The maps \(\mathscr{P}_\pm : \mathfrak{F}(\hilbert) \to \mathfrak{F}(\hilbert)\) defined for \(\Psi \in \mathfrak{F}(\hilbert)\) and \(n \in \mathbb{N}_0\) by
+    \begin{equation*}
+        \left(\mathscr{P}_+ \Psi\right)^{(n)} = \mathscr{S}_n \Psi^{(n)}
+        \quad\text{and}\quad
+        \left(\mathscr{P}_- \Psi\right)^{(n)} = \mathscr{A}_n \Psi^{(n)}
+    \end{equation*}
+    are orthogonal projectors.
+\end{proposition}
+\begin{proof}
+    We will denote \(\mathscr{A}_n = \mathscr{P}^{(n)}_{-}\) and \(\mathscr{S}_n = \mathscr{P}_{+}^{(n)}\) as the arguments that follow are the same for these projectors. 
+    First, we have to show the maps have \(\mathfrak{F}(\hilbert)\) as its domain. As \(\mathscr{P}_\pm^{(n)}\) are bounded operators with \(\norm{\mathscr{P}^{(n)}_{\pm}} \leq 1\), we have for all \(\Psi \in \mathfrak{F}(\hilbert)\) that
+    \begin{equation*}
+        \abs{\mathscr{P}^{(0)}_{\pm} \Psi^{(0)}}^2 + \sum_{n = 1}^\infty{\norm{\mathscr{P}^{(n)}_{\pm}\Psi^{(n)}}^2} \leq \abs{\Psi^{(0)}}^2 + \sum_{n = 1}^\infty{\norm{\Psi^{(n)}}^2} = \norm{\Psi}^2 < \infty,
+    \end{equation*}
+    that is, \(\mathscr{P}_\pm\) are indeed well defined on \(\mathfrak{F}(\hilbert).\) From the self-adjointness of each \(\mathscr{P}^{(n)}_{\pm}\), it follows that \(\mathscr{P}_\pm\) is bounded and self-adjoint. Indeed, for \(\Phi, \Psi \in \mathfrak{F}(\hilbert)\) we have
+    \begin{align*}
+        \inner{\Psi}{\mathscr{P}_\pm\Phi} &= \conj{\Psi^{(0)}} \mathscr{P}^{(0)}_\pm \Phi^{(0)} + \sum_{n = 1}^\infty{\inner{\Psi^{(n)}}{\mathscr{P}^{(n)}_\pm\Phi^{(n)}}}\\
+                                          &= \conj{\mathscr{P}^{(0)}_\pm\Psi^{(0)}}  \Phi^{(0)} + \sum_{n = 1}^\infty{\inner{\mathscr{P}^{(n)}_\pm\Psi^{(n)}}{\Phi^{(n)}}}\\
+                                          &= \inner{\mathscr{P}_{\pm} \Psi}{\Phi},
+    \end{align*}
+    that is, \(\mathscr{P}_{\pm}\) are globally defined and symmetric, hence bounded and self-adjoint by the \nameref{thm:Hellinger_Toeplitz}. Now for all \(\Psi \in \mathfrak{F}(\hilbert)\) and all \(n \in \mathbb{N}_0,\) we have
+    \begin{equation*}
+        \left(\mathscr{P}_\pm^2 \Psi\right)^{(n)} = \mathscr{P}^{(n)}_{\pm} \left(\mathscr{P}_\pm \Psi\right)^{(n)} = \left(\mathscr{P}^{(n)}_{\pm}\right)^2 \Psi^{(n)} = \mathscr{P}^{(n)}_{\pm} \Psi^{(n)} = \left(\mathscr{P}_{\pm} \Psi\right)^{(n)}
+    \end{equation*}
+    that is, the operators \(\mathscr{P}_{\pm}\) are idempotent, hence orthogonal projectors.
+\end{proof}
+
+We define the bosonic and fermionic Fock spaces as the image of the Fock space under these orthogonal projectors.
+\begin{definition}{Bose-Fock and Fermi-Fock spaces}{fock_statistics}
+    Let \(\hilbert\) be a Hilbert space. The Bose-Fock space \(\mathfrak{F}_+(\hilbert)\) and the Fermi-Fock space \(\mathfrak{F}_-(\hilbert)\) are the Fock spaces
+    \begin{equation*}
+        \mathfrak{F}_+(\hilbert) = \mathscr{P}_+\mathscr{F}(\hilbert)
+        \quad\text{and}\quad
+        \mathfrak{F}_-(\hilbert) = \mathscr{P}_-\mathscr{F}(\hilbert).
+    \end{equation*}
+\end{definition}
+It is important to note these subspaces are not orthogonal, as for all \(\Psi, \Phi \in \mathfrak{F}(\hilbert)\) we have
+\begin{align*}
+    \inner{\mathscr{P}_-\Psi}{\mathscr{P}_+\Phi} &= \conj{\mathscr{P}_-^{(0)} \Psi^{(0)}} \mathscr{P}_+^{(0)} \Phi^{(0)} + \sum_{n = 1}^\infty{\inner{\mathscr{P}_-^{(n)} \Psi^{(n)}}{\mathscr{P}_+^{(n)} \Phi^{(n)}}}\\
+                                                 &= \conj{\Psi^{(0)}} \Phi^{(0)} + \sum_{n = 1}^\infty{\inner{\Psi^{(n)}}{\mathscr{P}_-^{(n)}\mathscr{P}_+^{(n)}\Phi^{(n)}}}\\
+                                                 &= \conj{\Psi^{(0)}}\Phi^{(0)} + \inner{\Psi^{(1)}}{\Phi^{(1)}}
+\end{align*}
+which is nonzero in general. In fact, this shows the intersection of the Fermi-Fock and Bose-Fock spaces is precisely \(\hilbert^0 \oplus \hilbert,\) which correspond to the zero and one particle states.
+
+We finish this initial discussion on Fock space with the definition of the \emph{number operator} which is motivated by the number operator of a quantum harmonic operator.
+\begin{definition}{Number operator}{number}
+    Let \(\hilbert\) be a Hilbert space. Let 
+    \begin{equation*}
+        \domain{N} = \setc*{\Psi \in \mathfrak{F}(\hilbert)}{\sum_{n = 0}^\infty{n^2\norm{\Psi^{(n)}}^2} < \infty},
+    \end{equation*}
+    then we define the \emph{number operator} \(N : \domain{N} \to \mathfrak{F}(\hilbert)\) for all \(\Psi \in \domain{N}\) by 
+    \begin{equation*}
+        \left(N \Psi\right)^{(n)} = n \Psi^{(n)}
+    \end{equation*}
+    for all \(n \in \mathbb{N}_0\).
+\end{definition}
+We have already defined \(N\) in its spectral representation, so it is a self-adjoint operator, but it can be shown with ease from the \cref{def:adjoint_densely_defined}. We will also use \(N\) denote its restrictions to the fermionic and bosonic Fock spaces.
