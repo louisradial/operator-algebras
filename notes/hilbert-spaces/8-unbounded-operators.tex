@@ -1,0 +1,186 @@
+% vim: spl=en
+\section{Unbounded operators in Hilbert spaces}
+We will now consider densely defined unbounded operators, the domains of which play a more substantial role than those of bounded operators, which may always be taken to be the entire Hilbert space. Of particular interest are the symmetric operators, which by \nameref{thm:Hellinger_Toeplitz}, can't be globally defined if they are unbounded.
+\begin{example}{Position operator}{position_unbounded}
+    Let \(\hilbert = L^2(\mathbb{R})\) be the Hilbert space of square-integrable functions defined on the real line. The operator \(Q : \domain{Q} \to \hilbert\) defined by 
+    \begin{equation*}
+        (Q\psi)(x) = x\psi(x)
+        \quad\text{for all}\quad
+        \psi \in \domain{Q} = \setc*{\psi \in \hilbert}{\int_{\mathbb{R}}\dli{x} x^2 \abs{\psi(x)}^2 < \infty}
+    \end{equation*}
+    is unbounded and symmetric.
+\end{example}
+\begin{proof}
+    Notice
+    \begin{equation*}
+        \inner{Q\phi}{\psi} = \int_{\mathbb{R}} \dli{x} \conj{x \phi(x)} \psi(x)\\
+                            = \int_{\mathbb{R}} \dli{x} \conj{\phi(x)} x\psi(x)\\
+                            = \inner{\phi}{Q\psi}
+    \end{equation*}
+    for all \(\phi, \psi \in \domain{Q},\) hence \(Q\) is symmetric.
+
+    Recall the standard result
+    \begin{equation*}
+        \int_{\mathbb{R}} \dli{x} e^{-\alpha x^2} = \sqrt{\frac{\pi}{\alpha}}
+    \end{equation*}
+    for \(\alpha > 0.\)
+    We consider \(\phi_0 \in \hilbert\) defined by
+    \begin{equation*}
+        \phi_0(x) = \pi^{-\frac14}\exp\left(-\frac12 x^2\right),
+    \end{equation*}
+    which clearly satisfies \(\norm{\phi_0} = 1.\) We consider the set \(G = \setc{\phi_{\tilde{x}} \in \hilbert}{\tilde{x} \in \mathbb{R}}\) where we define \(\phi_{\tilde{x}}(x) = \phi_0(x - \tilde{x}),\). It is easy to see that \(\norm{\phi_{\tilde{x}}} = 1\) for all \(\tilde{x} \in \mathbb{R}.\) This set lies in \(\domain{Q},\) for we have
+    \begin{align*}
+        \int_{\mathbb{R}} \dli{x} x^2 \abs{\phi_{\tilde{x}}(x)}^2 &= \frac{1}{\sqrt{\pi}}\int_{\mathbb{R}} \dli{x} x^2 e^{-(x-\tilde{x})^2}\\
+                                                        &= \frac{1}{\sqrt{\pi}}\int_{\mathbb{R}} \dli{x} (x + \tilde{x})^2 e^{-x^2}\\
+                                                        & = \frac{1}{\sqrt{\pi}} \left(\int_{\mathbb{R}} \dli{x} x^2 e^{-x^2} + 2\tilde{x} \int_{\mathbb{R}} \dli{x} x e^{-x^2} + \tilde{x}^2 \int_{\mathbb{R}} \dli{x} e^{-x^2}\right)\\
+                                                        &= \tilde{x}^2 \norm{\phi_0}^2 - \frac{1}{\sqrt{\pi}} \diff*{\int_{\mathbb{R}} \dli{x} e^{-\alpha x^2}}{\alpha}[\alpha = 1]\\
+                                                        &= \tilde{x}^2 + \frac12.
+    \end{align*}
+    As this set lies in the domain of the operator, the left-hand side of the previous computation equals \(\norm{Q \phi_{\tilde{x}}}^2,\) and we have
+    \begin{equation*}
+        \sup_{\substack{\psi \in \domain{Q}\\\norm{\psi} = 1}}{\norm{Q \psi}} \geq \sup_{\psi \in G}{\norm{Q \psi}} = \sup_{\tilde{x} \in \mathbb{R}}{\sqrt{\tilde{x}^2 + \frac12}} = \infty,
+    \end{equation*}
+    which shows \(Q\) is unbounded.
+\end{proof}
+
+\subsection{Closable operators and symmetric operators}
+We first discuss the relation of symmetric operators and closed operators. Recall that an operator \(T : \domain{T} \to \hilbert\) is closed if its graph \(\graph{T} = \set{(u, Tu) \in \domain{T} \times \hilbert}\) is a closed linear subspace of \(\hilbert \times \hilbert,\) with respect to the topology induced by the inner product 
+\begin{align*}
+    \inner{\noarg}{\noarg}_{\hilbert \times \hilbert} : (\hilbert\times\hilbert) \times (\hilbert \times \hilbert) &\to \mathbb{C}\\
+    ((\psi_1, \psi_2),(\phi_1,\phi_2)) &\mapsto \inner{\psi_1}{\phi_1}_\hilbert + \inner{\psi_2}{\phi_2}_\hilbert.
+\end{align*}
+For operators \(S, T\), if \(\graph{S} \supset \graph{T},\) it is clear that \(S\) extends \(T,\) and we'll write \(S \supset T\) to denote it.
+\begin{definition}{Closable operators and closure of operators}{closable}
+    Let \(\hilbert\) be a Hilbert space. An operator \(T : \domain{T} \to \hilbert\) is \emph{closable} if there exists a closed operator \(S : \domain{S} \to \hilbert\) with \(S \supset T.\) The closure \(\bar{T} : \domain{\bar{T}} \to \hilbert\) of \(T\) is the closed extension of \(T\) such that for any closed extension \(S \supset T,\) then \(S \supset \bar{T} \supset T.\)
+\end{definition}
+It is natural to consider the closure \(\cl_{\hilbert \times \hilbert}{\graph{T}}\) in order to obtain a closed extension of some operator \(T.\) For closable operators, this is indeed the graph of its closure, as we will soon show. However, for operators that are not closable, \(\cl{\graph{T}}\) may not even be the graph of an operator.
+\begin{example}{Closure of the graph of a non-closable operator}{closable}
+    Let \(\hilbert\) be a Hilbert space. Assume, for simplicity's sake, that \(\hilbert\) is separable. Let \(E = \family{e_n}{n \in \mathbb{N}} \subset \hilbert\) be a complete orthonormal basis, and let \(D = \lspan{E}\) be the set of \emph{finite} linear combinations of elements of such basis. Let \(e_\infty \in \hilbert \setminus D\) be any nonzero vector, let \(\domain{T} \lspan\left(\set{e_\infty} \cup E\right),\) and let the operator \(T : \domain{T} \to \hilbert\) be defined by
+    \begin{equation*}
+        T \left(\alpha e_{\infty} + \sum_{\ell = 1}^{N}{\beta^\ell e_\ell}\right) = \alpha e_{\infty}.
+    \end{equation*}
+    The closure \(\cl \graph{T}\) can't be the graph of an operator.
+\end{example}
+\begin{proof}
+    Notice that for all \(u, v \in \domain{T}\) and \(\gamma \in \mathbb{C}\) there exist \(N_u, N_v \in \mathbb{N},\) \(\alpha_u, \alpha_v \in \mathbb{C},\) 
+    \(\ffamily{\beta_u^\ell}{\ell = 1}{N_u}, \ffamily{\beta_v^\ell}{\ell = 1}{N_v} \subset \mathbb{C}\) such that
+    \begin{equation*}
+        u = \alpha_u e_\infty + \sum_{\ell = 1}^{N_u}{\beta_u^\ell e_\ell}
+        \quad\text{and}\quad
+        v = \alpha_v e_\infty + \sum_{\ell = 1}^{N_v}{\beta_v^\ell e_\ell},
+    \end{equation*}
+    hence
+    \begin{equation*}
+        T(u + \gamma v) = T\left((\alpha_u + \gamma\alpha_v)e_\infty + \sum_{\ell = 1}^{N_u}{\beta_u^\ell e_\ell} + \gamma\sum_{\ell = 1}^{N_v}{\beta_v^\ell e_\ell}\right) = (\alpha_u + \gamma \alpha_v) e_\infty = T(u) + \gamma T(v),
+    \end{equation*}
+    that is, \(T\) is an operator. Moreover, \(T\) is densely defined, as \(\cl \domain{T} = \cl \lspan E = \hilbert,\) since \(E\) is a complete orthonormal basis.
+
+    Consider the sequence \(\family{\varphi_n}{n \in \mathbb{N}} \subset D\), where \(\varphi_n = \sum_{\ell = 1}^n \inner{e_n}{e_\infty}e_n,\) which clearly converges against \(e_\infty.\) For all \(n \in \mathbb{N},\) we have \(T \varphi_n = 0,\) hence the sequence \(\family{(\varphi_n, 0)}{n \in \mathbb{N}} \subset \graph{T}\) converges against \((e_\infty, 0) \in \cl \graph{T}.\) However, we have \((e_\infty, e_\infty) \in \graph{T} \subset \cl \graph{T}.\) As \(\cl\graph{T}\) is a many-to-many relation, it can't be the graph of an operator.
+\end{proof}
+
+\begin{proposition}{Graph of the closure of a closable operator}{closable}
+    Let \(\hilbert\) be a Hilbert space and let \(T : \domain{T} \to \hilbert\) be an operator. If \(T\) is closable, then \(\graph{\bar{T}} = \cl \graph{T}.\)
+\end{proposition}
+\begin{proof}
+    Let \(S \supset T\) be a closed extension of \(T,\) then \(\graph{S} \supset \cl\graph{T} \supset \graph{T}.\) As \(\graph{S}\) is many-to-one, it follows that \(\cl\graph{T}\) is also many-to-one.
+
+    Let \(\domain{R} = \setc{\psi \in \hilbert}{\exists \phi \in \hilbert : (\psi, \phi) \in \cl \graph{T}}.\) Suppose that for \(\psi \in \domain{R}\) there exists \(\phi, \tilde{\phi} \in \hilbert\) such that \((\psi, \phi), (\psi, \tilde{\phi}) \in \cl\graph{T}.\) Then as \(\cl\graph{T}\) is many-to-one, we conclude \(\phi = \tilde{\phi}.\) We define, thus,
+    \begin{align*}
+        R : \domain{R} &\to \hilbert\\
+                  \psi &\mapsto \phi_\psi
+    \end{align*}
+    where \(\phi_\psi\) is the \emph{unique} element of \(\hilbert\) such that \((\psi, \phi_\psi) \in \cl\graph{T}.\) Then
+    \begin{equation*}
+        (\psi, \phi) \in \cl \graph{T} \iff \psi \in \domain{R} \land \phi = R \psi \iff (\psi, \phi) \in \graph{R},
+    \end{equation*}
+    that is, \(\graph{R} = \cl \graph{T},\) hence \(R\) is a closed extension of \(T.\) Moreover, we have \(\graph{S} \supset \graph{R} \supset \graph{T},\) for the arbitrary closed extension \(S,\) and we conclude \(R = \bar{T}.\)
+\end{proof}
+
+\begin{proposition}{Relationship of closure and adjoint of operators}{closure_adjoint}
+    Let \(\hilbert\) be a Hilbert space. If \(T : \domain{T} \to \hilbert\) is a densely defined operator,
+    \begin{enumerate}[label=(\alph*)]
+        \item \(T^*\) is closed;
+        \item \(T\) is closable if and only if \(\domain{T^*}\) is dense; and
+        \item if \(T\) is closable, then \(\bar{T} = T^{**}\) and \(\bar{T}^* = T^*.\)
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    We consider the map
+    \begin{align*}
+        U : \hilbert \times \hilbert &\to \hilbert \times \hilbert\\
+                         (\psi,\phi) &\mapsto (-\phi, \psi),
+    \end{align*}
+    For \(\Phi = (\phi_1, \phi_2) \in \hilbert \times \hilbert\) and \(\Psi = (\psi_1, \psi_2) \in \hilbert \times \hilbert,\) we have
+    \begin{equation*}
+        \inner{U\Psi}{U\Phi} = \inner{(-\psi_2, \psi_1)}{(-\phi_2, \phi_1)} = \inner{\psi_2}{\phi_2} + \inner{\psi_1}{\phi_1} = \inner{\Psi}{\Phi},
+    \end{equation*}
+    hence \(U\) is unitary. Now
+    \begin{align*}
+        (\psi,\phi) \in \left(U \graph{T}\right)^\perp &\iff \forall \eta \in \domain{T} : \inner{(\psi,\phi)}{(- T\eta,\eta)} = 0\\
+                                                       &\iff \forall \eta \in \domain{T} : \inner{\psi}{T \eta} = \inner{\phi}{\eta}\\
+                                                       &\iff (\psi, \phi) \in \graph{T^*},
+    \end{align*}
+    thus showing \(\graph{T^*} = (U \graph{T})^\perp\) is closed, and we conclude (a). 
+
+    As \(U\) is unitary, we have for any subset \(E \subset \hilbert \times \hilbert\) that
+    \begin{equation*}
+        \Psi \in (U E)^\perp \iff \forall \Phi \in E : \inner{\Psi}{U \Phi} = 0 \iff U^*\Psi \in E^\perp \iff \Psi \in U E^\perp,
+    \end{equation*}
+    that is, \(UE^\perp = (UE)^\perp\). Notice \(U^2 = -\unity,\) then
+    \begin{equation*}
+        \cl\graph{T} = (\graph{T}^\perp)^\perp = (U^2 \graph{T}^\perp)^{\perp} = \left[U\left(U \graph{T}\right)^\perp\right]^\perp = \left(U \graph{T^*}\right)^\perp = U \graph{T^*}^\perp.
+    \end{equation*}
+    Suppose \(\domain{T^*}\) is not dense and let \(\psi \in \domain{T^*}^\perp \setminus \set{0}.\) Then
+    \begin{align*}
+        \psi \in \domain{T^*}^\perp \setminus \set{0} &\implies \forall \eta \in \domain{T^*} : \inner{\psi}{\eta} = 0\\
+                                                      &\implies \forall \eta \in \domain{T^*} : \inner{(\psi,0)}{(\eta, T^*\eta)} = 0\\
+                                                      &\implies (\psi, 0) \in \graph{T^*}^\perp,
+    \end{align*}
+    and we have \((0, \psi) \in \cl \graph{T},\) hence \(\cl\graph{T}\) is not the graph of a linear operator, and we conclude \(T\) is not closable. Suppose \(\domain{T^*}\) is dense, then from the argument from (a) it follows that \(\cl\graph{T} = \graph{T^{**}},\) hence \(T\) is closable with \(\bar{T} = T^{**}.\) Moreover, we have \(T^* = \overline{(T^*)} = T^{***} = (\bar{T})^*.\)
+\end{proof}
+\begin{corollary}
+    Every self-adjoint operator is closed.
+\end{corollary}
+\begin{proof}
+    If \(T : \domain{T} \to \hilbert\) is self-adjoint, then \(T = T^*,\) which is closed.
+\end{proof}
+\begin{corollary}
+    A symmetric operator is closable and its adjoint extends its closure.
+\end{corollary}
+\begin{proof}
+    If \(T : \domain{T} \to \hilbert\) is symmetric, then \(T^* \supset T.\) In particular, \(\domain{T^*}\supset\domain{T}\) is dense, hence \(T\) is closable. As \(T^*\) is a closed extension of \(T,\) we have \(T \subset \bar{T} = T^{**} \subset T^*.\)
+\end{proof}
+\begin{corollary}
+    A closed symmetric operator is self-adjoint if and only if its adjoint is symmetric.
+\end{corollary}
+\begin{proof}
+    Let \(T : \domain{T} \to \hilbert\) be a closed symmetric operator, then \(T = T^{**} \subset T^*\). That is, \(T = T^*\) if and only if \(T^{**} \supset T^*.\) By \cref{prop:adjoint_extension}, we conclude that \(T = T^*\) if and only if \(T^*\) is symmetric.
+\end{proof}
+
+\subsection{Essentially self-adjoint operators}
+As every symmetric operator is closable, it is natural to ask whether it has a self-adjoint extension, and if it does, how many different self-adjoint extensions does it have. A way to answer this question is the following definition, which is enough to guarantee the existence and uniqueness of a self-adjoint extension, justifying the nomenclature.
+\begin{definition}{Essentially self-adjoint operator}{essentially_selfadjoint}
+    Let \(\hilbert\) be a Hilbert space. A densely defined operator \(T : \domain{T} \to \hilbert\) is \emph{essentially self-adjoint} if it is symmetric and if its closure \(\bar{T}\) is self-adjoint.
+\end{definition}
+\begin{remark}
+    It should be clear that an operator is self-adjoint if and only if it is closed and essentially self-adjoint.
+\end{remark}
+
+\begin{proposition}{Unique self-adjoint extension of a essentially self-adjoint operator}{essentially_selfadjoint}
+    Let \(\hilbert\) be a Hilbert space. If \(T : \domain{T} \to \hilbert\) be an essentially self-adjoint operator, then it has a unique self-adjoint extension, namely, its closure \(T^{**}.\)
+\end{proposition}
+\begin{proof}
+    Suppose \(S : \domain{S} \to \hilbert\) is a self-adjoint extension of \(T.\) As a close extension, we have \(T^{**} \subset S.\) \cref{prop:adjoint_of_extension} then yields \(S = S^* \subset T^{***} = T^{**},\) hence \(S = T^{**}.\)
+\end{proof}
+Another point of importance for essentially self-adjoint operators is that one may uniquely determine a self-adjoint operator \(T\) by a domain \(D \subset \domain{T}\) for which the restriction \(\restrict{T}{D}\) is essentially self-adjoint operator.
+\begin{definition}{Core of a self-adjoint operator}{core}
+    Let \(\hilbert\) be a Hilbert space and let \(A : \domain{A} \to \hilbert\) be a self-adjoint operator. A \emph{core} for \(A\) is a linear subspace \(D \subset \domain{A}\) dense in \(\hilbert\) such that \(\restrict{A}{D}\) is essentially self-adjoint.
+\end{definition}
+
+\subsection{Sum of unbounded operators}
+We now obtain the basic criterion for self-adjointness. First, we note that for a densely defined operator \(T : \domain{T} \to \hilbert\) and a bounded operator \(S : \hilbert \to \hilbert,\) then \(\domain{T + S} = \domain{T}\) and \(\domain{(T + S)^*} = \domain{T^*}\)
+
+\subsection{Criterion for self-adjointness}
+\begin{theorem}{Basic criterion for self-adjointness}{criterion_self_adjoint}
+    Let \(\hilbert\) be a Hilbert space.
+\end{theorem}
