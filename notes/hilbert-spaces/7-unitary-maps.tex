@@ -104,13 +104,36 @@ This result defines the \emph{adjoint} map of a densely defined linear operator.
     \end{equation*}
     for all \(v \in \domain{T}\) and all \(u \in \domain{T^*}\).
 \end{remark}
-
+\begin{proposition}{Sufficient and necessary condition for an element in the adjoint domain}{adjoint_domain}
+    Let \(\hilbert\) be a Hilbert space. If \(T : \domain{T} \subset \hilbert \to \hilbert\) is a densely defined operator, then the domain of its adjoint is \(\domain{T^*} = \setc*{v \in \hilbert}{\exists M \in \mathbb{R} : \abs{\inner{T u}{v}} \leq M\norm{u},\forall u \in \domain{T}}\).
+\end{proposition}
+\begin{proof}
+    For \(v \in \hilbert,\) we consider the linear functional
+    \begin{align*}
+        \lambda_u : \domain{T} &\to \mathbb{C}\\
+                          v &\mapsto \inner{u}{Tv}
+    \end{align*}
+    and define \(D\) as the set of vectors \(u \in \domain{T}\) such that \(\lambda_u\) is bounded. With the Riesz representation, we have
+    \begin{align*}
+        u \in \domain{T^*} &\iff \exists \eta_u \in \hilbert : \inner{u}{Tv} = \inner{\eta_u}{v}, \forall v \in \domain{T}\\
+                           &\iff \exists \eta_u \in \hilbert: \lambda_u(v) = \inner{\eta_u}{v}, \forall v \in \domain{T}\\
+                           &\iff \exists \eta_u \in \hilbert: \lambda_u(v) = \riesz^{-1}(\eta_u)v, \forall v \in \domain{T}\\
+                           &\iff \exists \eta_u \in \hilbert: \lambda_u = \restrict{\riesz^{-1}(\eta_u)}{\domain{T}}.
+    \end{align*}
+    Suppose \(u \in \domain{T^*},\) then \(\lambda_u\) is extended by the bounded linear functional \(\riesz^{-1}(\eta_u),\) hence it is bounded, and we have \(u \in D.\) Suppose \(u \in D,\) then \(\riesz^{-1}(\eta_u)\) is the unique bounded extension of \(\ell_u\) to \(\hilbert\), hence \(u \in \domain{T^*}.\) We have thus shown \(D = \domain{T^*},\) as desired.
+\end{proof}
+\begin{proposition}{Adjoint of an extension}{adjoint_of_extension}
+    Let \(\hilbert\) be a Hilbert space. If the densely defined operator \(T : \domain{T} \subset \hilbert \to \hilbert\) is extended by the densely defined operator \(S : \domain{S} \subset \hilbert \to \hilbert,\) then \(T^*\) extends \(S^*.\)
+\end{proposition}
+\begin{proof}
+    Let \(u \in \domain{S^*},\) then there exists \(\eta_u \in \hilbert\) such that \(\inner{u}{Sv} = \inner{\eta_u}{v}\) for all \(v \in \domain{S}.\) In particular, if we take \(v \in \domain{T} \subset \domain{S}\) and replace \(S \to T,\) we conclude \(u \in \domain{T^*},\) that is, \(\domain{T^*} \supset \domain{S^*}.\) Moreover, this also shows \(S^*u = \eta_u = T^*u\) for all \(u \in \domain{S^*},\) which shows \(T^*\) extends \(S^*.\)
+\end{proof}
 In Quantum Mechanics, the concept of the adjoint operator is of the utmost importance as the \emph{self-adjoint} operators represent observables. As we will later see, the Spectral Theorem holds for self-adjoint operators, which is intimately related to the probabilistic interpretation of Quantum Mechanics.
 \begin{definition}{Self-adjoint operator}{self_adjoint}
     Let \(\hilbert\) be a Hilbert space. A \emph{self-adjoint operator \(T : \domain{T} \subset \hilbert \to \hilbert\)} is a map such that \(T = T^*\).
 \end{definition}
 \begin{remark}
-    It is important to stress that \(T = T^*\) means \(\domain{T} = \domain{T^*}\) and \(Tu = Tu\) for all \(u \in \domain{T}\).
+    It is important to stress that \(T = T^*\) means \(\domain{T} = \domain{T^*}\) and \(Tu = T^*u\) for all \(u \in \domain{T}\).
 \end{remark}
 \begin{remark}
     For self-adjoint operators we have
@@ -373,6 +396,18 @@ Closely related to self-adjointness of a bounded operator is the notion of a sym
 \begin{definition}{Symmetric operator}{symmetric_operator}
     Let \(\hilbert\) be a Hilbert space. A densely defined operator \(T : \domain{T} \subset \hilbert \to \hilbert\) is \emph{symmetric} if for all \(x, y \in \domain{T}\) it satisfies \(\inner{x}{Ay} = \inner{Ax}{y}\).
 \end{definition}
+\begin{proposition}{Symmetric operator and adjoint extension}{adjoint_extension}
+    Let \(\hilbert\) be a Hilbert space. The densely defined operator \(T : \domain{T} \to \hilbert\) is symmetric if and only if \(T^*\) extends \(T\).
+\end{proposition}
+\begin{proof}
+    Suppose \(T\) is symmetric, and let \(u \in \domain{T}.\) Then for all \(v \in \domain{T},\) \(\eta = Tu\) is such that \(\inner{u}{Tv} = \inner{\eta}{v},\) hence \(u \in \domain{T^*},\) that is, \(\domain{T^*} \supset \domain{T}.\) This also shows \(Tu = T^*u\) for all \(u \in \domain{T},\) hence \(T^*\) is an extension of \(T.\)
+
+    Suppose \(T^*\) extends \(T.\) Then for all \(u, v \in \domain{T} \subset \domain{T^*},\) we have
+    \begin{equation*}
+        \inner{u}{Tv} = \inner{T^*u}{v} = \inner{Tu}{v},
+    \end{equation*}
+    that is, \(T\) is symmetric.
+\end{proof}
 It is clear that if a densely defined operator \(T : \domain{T} \subset \hilbert \to \hilbert\) is self-adjoint, then it is a symmetric operator. The following theorem shows a globally defined symmetric operator is bounded and self-adjoint.
 \begin{theorem}{Hellinger-Toeplitz theorem}{Hellinger_Toeplitz}
     Let \(\hilbert\) be a Hilbert space. Suppose the operator \(T : \domain{T} \subset \hilbert \to \hilbert\) is globally defined, that is, \(\domain{T} = \hilbert\). If \(T\) is symmetric, then it is bounded and self-adjoint.
